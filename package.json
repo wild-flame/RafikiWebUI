@@ -1,5 +1,6 @@
 {
   "name": "forkbase-webapp",
+  "description": "web application serving forkbase engine",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -10,7 +11,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "CI=true react-scripts test --env=jsdom",
+    "coverage": "CI=true react-scripts test --env=jsdom --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
