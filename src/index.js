@@ -12,6 +12,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 import App from './App';
 import rootReducer from "./store/rootReducer"
+import ErrorBoundary from "./containers/ErrorBoundary/ErrorBoundary"
 
 
 // compose to combine store enhancers
@@ -45,11 +46,17 @@ const theme = createMuiTheme({
 
 
 ReactDOM.render(
-  <MuiThemeProvider theme={theme}>
-    <CssBaseline />
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </MuiThemeProvider>,
+  <ErrorBoundary
+    render={() => (
+      <div>An error occurred in this page, please go back and refresh</div>
+    )}
+  >
+    <MuiThemeProvider theme={theme}>
+      <CssBaseline />
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </MuiThemeProvider>
+  </ErrorBoundary>,
   document.getElementById('root')
 );
