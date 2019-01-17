@@ -21,7 +21,7 @@ const store = createStore(
   rootReducer,
   composeEnhancers(
     applyMiddleware(
-
+      // add saga or thunk here
     )
   )
 );
