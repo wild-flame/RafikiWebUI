@@ -7,8 +7,9 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 
 // Material-UI
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import theme from "./theme"
 
 import App from './App';
 import rootReducer from "./store/rootReducer"
@@ -25,24 +26,6 @@ const store = createStore(
     )
   )
 );
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      // deepblue
-      main: "#1a237e"
-    },
-    secondary: {
-      // red
-      main: "#c62828"
-    }
-  },
-  typography: {
-    htmlFontSize: 14,
-    // Migration to typography v2
-    useNextVariants: true
-  }
-});
 
 
 ReactDOM.render(
