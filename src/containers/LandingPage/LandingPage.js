@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import LandingNavBar from "../../components/LandingNavBar/LandingNavBar"
+import LandingProductHero from "../../components/LandingProductHero/LandingProductHero"
 
 class LandingPage extends React.Component {
   render() {
     return (
-      <LandingNavBar />
+      <Fragment>
+        <LandingNavBar />
+        <LandingProductHero />
+      </Fragment>
     )
   }
 }

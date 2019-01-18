@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
-import AppBar from './AppBar';
-import Toolbar, { styles as toolbarStyles } from './Toolbar';
+import AppBar from '../LandingComponents/AppBar';
+import Toolbar, { styles as toolbarStyles } from '../LandingComponents/Toolbar';
 
 
 const styles = theme => ({
