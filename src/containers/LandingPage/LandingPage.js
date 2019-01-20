@@ -3,6 +3,7 @@ import LandingNavBar from "../../components/LandingNavBar/LandingNavBar"
 import LandingProductHero from "../../components/LandingProductHero/LandingProductHero"
 import LandingProductValues from "../../components/LandingProductValues/LandingProductValues"
 import LandingProductCategories from "../../components/LandingProductCategories/LandingProductCategories"
+import LandingProductHowItWorks from "../../components/LandingProductHowItWorks/LandingProductHowItWorks"
 
 class LandingPage extends React.Component {
   render() {
@@ -12,6 +13,7 @@ class LandingPage extends React.Component {
         <LandingProductHero />
         <LandingProductValues />
         <LandingProductCategories />
+        <LandingProductHowItWorks />
       </Fragment>
     )
   }
