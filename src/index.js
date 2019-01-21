@@ -10,11 +10,15 @@ import { Provider } from "react-redux";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "./theme"
+import 'typeface-roboto';
 
 import App from './App';
 import rootReducer from "./store/rootReducer"
 import ErrorBoundary from "./containers/ErrorBoundary/ErrorBoundary"
 
+
+// Load Roboto typeface
+require('typeface-roboto')
 
 // compose to combine store enhancers
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
