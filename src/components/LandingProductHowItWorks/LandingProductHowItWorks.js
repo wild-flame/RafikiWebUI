@@ -6,6 +6,9 @@ import Link from '@material-ui/core/Link';
 import LayoutBody from '../LandingComponents/LayoutBody';
 import Button from '../LandingComponents/Button';
 import Typography from '../LandingComponents/Typography';
+import LineStyle from "@material-ui/icons/LineStyle"
+import ChromeReaderMode from "@material-ui/icons/ChromeReaderMode"
+import Dashboard from "@material-ui/icons/Dashboard"
 
 const styles = theme => ({
   root: {
@@ -36,16 +39,10 @@ const styles = theme => ({
     color: theme.palette.secondary.main,
     fontWeight: theme.typography.fontWeightMedium,
   },
-  image: {
+  threeIcons: {
     height: 55,
     marginTop: theme.spacing.unit * 4,
     marginBottom: theme.spacing.unit * 4,
-  },
-  curvyLines: {
-    pointerEvents: 'none',
-    position: 'absolute',
-    top: -180,
-    opacity: 0.7,
   },
   button: {
     marginTop: theme.spacing.unit * 8,
@@ -58,11 +55,6 @@ function ProductHowItWorks(props) {
   return (
     <section className={classes.root}>
       <LayoutBody className={classes.layoutBody} width="large">
-        <img
-          src="/static/themes/onepirate/productCurvyLines.png"
-          className={classes.curvyLines}
-          alt="curvy lines"
-        />
         <Typography variant="h4" marked="center" className={classes.title} component="h2">
           How it works
         </Typography>
@@ -71,40 +63,36 @@ function ProductHowItWorks(props) {
             <Grid item xs={12} md={4}>
               <div className={classes.item}>
                 <div className={classes.number}>1.</div>
-                <img
-                  src="/static/themes/onepirate/productHowItWorks1.svg"
-                  alt="suitcase"
-                  className={classes.image}
+                <LineStyle
+                  className={classes.threeIcons}
+                  fontSize="large"
                 />
                 <Typography variant="h5" align="center">
-                  Appointment every Wednesday 9am.
+                  Basic commands for database: PUT, GET, MERGE, BRANCH, DELETE...
                 </Typography>
               </div>
             </Grid>
             <Grid item xs={12} md={4}>
               <div className={classes.item}>
                 <div className={classes.number}>2.</div>
-                <img
-                  src="/static/themes/onepirate/productHowItWorks2.svg"
-                  alt="graph"
-                  className={classes.image}
+                <ChromeReaderMode
+                  className={classes.threeIcons}
+                  fontSize="large"
                 />
                 <Typography variant="h5" align="center">
-                  First come, first served. Our offers are in limited quantities, so be quick.
+                  Relational (Columnar) Commands: GET_TABLE, LOAD_CSV...
                 </Typography>
               </div>
             </Grid>
             <Grid item xs={12} md={4}>
               <div className={classes.item}>
                 <div className={classes.number}>3.</div>
-                <img
-                  src="/static/themes/onepirate/productHowItWorks3.svg"
-                  alt="clock"
-                  className={classes.image}
+                <Dashboard
+                  className={classes.threeIcons}
+                  fontSize="large"
                 />
                 <Typography variant="h5" align="center">
-                  {'New offers every week. New experiences, new surprises. '}
-                  {'Your Sundays will no longer be alike.'}
+                  Dataset Management Commands: CREATE_DATASET, GET_DATASET...
                 </Typography>
               </div>
             </Grid>
@@ -119,7 +107,7 @@ function ProductHowItWorks(props) {
             <Link {...linkProps} href="/premium-themes/onepirate/sign-up" variant="button" />
           )}
         >
-          Get started
+          Go to Docs
         </Button>
       </LayoutBody>
     </section>
