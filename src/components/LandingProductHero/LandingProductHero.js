@@ -5,6 +5,7 @@ import Link from '@material-ui/core/Link';
 import Button from '../LandingComponents/Button';
 import Typography from '../LandingComponents/Typography';
 import ProductHeroLayout from './LandingProductHeroLayout';
+import heroImage from "../../assets/electrical-2476782_960_720.jpg"
 
 const backgroundImage =
   //'https://www.ebetfinder.com/wp-content/uploads/2016/11/dota-2-gameplay-ebetfinder-resized.jpg';
@@ -14,7 +15,7 @@ const backgroundImage =
 
 const styles = theme => ({
   background: {
-    backgroundImage: `url(${backgroundImage})`,
+    backgroundImage: `url(${heroImage})`,
     backgroundColor: '#7fc7d9', // Average color of the background image.
     backgroundPosition: 'center',
   },
@@ -55,7 +56,7 @@ function ProductHero(props) {
           <Link {...linkProps} href="/" variant="button" />
         )}
       >
-        Request Demo
+        Schedule Demo
       </Button>
       <Typography variant="body2" color="inherit" className={classes.more}>
         Discover the experience
