@@ -99,7 +99,13 @@ function ProductCategories(props) {
       url: WikiImg,
         //'http://new.cellconstraintcancer.com/wp-content/uploads/2017/11/wikipedia-grand-1080x675.jpg',
       title: 'Wiki Engine',
-      width: '60%',
+      width: '20%',
+    },
+    {
+      url: BlockchainImg,
+        //'https://www.joc.com/sites/default/files/field_feature_image/Blockchain%20art%20July%202018%202_1.jpg',
+      title: 'Transaction Management',
+      width: '40%',
     },
     {
       url:
@@ -116,7 +122,7 @@ function ProductCategories(props) {
     {
       url:
         'https://upload.wikimedia.org/wikipedia/en/f/f8/NUS_School_of_Computing.JPG',
-      title: 'More',
+      title: 'Git',
       width: '24%',
     }
   ];
@@ -124,7 +130,7 @@ function ProductCategories(props) {
   return (
     <LayoutBody className={classes.root} component="section" width="large">
       <Typography variant="h4" marked="center" align="center" component="h2">
-        For all kinds of applications
+        For all applications
       </Typography>
       <div className={classes.images}>
         {images.map(image => (
