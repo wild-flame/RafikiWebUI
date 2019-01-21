@@ -22,6 +22,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    paddingTop: 80
   },
   backdrop: {
     position: 'absolute',
