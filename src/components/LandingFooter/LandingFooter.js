@@ -6,6 +6,8 @@ import Link from '@material-ui/core/Link';
 import LayoutBody from '../LandingComponents/LayoutBody';
 import Typography from '../LandingComponents/Typography';
 import TextField from '../LandingComponents/TextField';
+import Public from "@material-ui/icons/Public"
+import GithubIcon from "../../assets/GithubIcon"
 
 const styles = theme => ({
   root: {
@@ -29,7 +31,7 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.palette.warning.main,
+    backgroundColor: theme.palette.primary.light,
     marginRight: theme.spacing.unit,
     '&:hover': {
       backgroundColor: theme.palette.warning.dark,
@@ -56,8 +58,8 @@ const LANGUAGES = [
     name: 'English',
   },
   {
-    code: 'fr-FR',
-    name: 'Français',
+    code: 'zh-CN',
+    name: '中文',
   },
 ];
 
@@ -77,14 +79,14 @@ function AppFooter(props) {
               spacing={16}
             >
               <Grid item className={classes.icons}>
-                <a href="https://material-ui.com/" className={classes.icon}>
-                  <img src="/static/themes/onepirate/appFooterFacebook.png" alt="Facebook" />
+                <a href="https://www.comp.nus.edu.sg/~dbsystem/forkbase/index.html" className={classes.icon}>
+                  <Public />
                 </a>
-                <a href="https://twitter.com/MaterialUI" className={classes.icon}>
-                  <img src="/static/themes/onepirate/appFooterTwitter.png" alt="Twitter" />
+                <a href="https://www.comp.nus.edu.sg/~dbsystem/forkbase/index.html" className={classes.icon}>
+                  <GithubIcon />
                 </a>
               </Grid>
-              <Grid item>© 2018 Onepirate</Grid>
+              <Grid item>© 2019 Forkbase</Grid>
             </Grid>
           </Grid>
           <Grid item xs={6} sm={4} md={2}>
@@ -120,23 +122,7 @@ function AppFooter(props) {
           </Grid>
           <Grid item>
             <Typography variant="caption">
-              {'Icons made by '}
-              <Link href="http://www.freepik.com" title="Freepik">
-                Freepik
-              </Link>
-              {' from '}
-              <Link href="https://www.flaticon.com/" title="Flaticon">
-                www.flaticon.com
-              </Link>
-              {' is licensed by '}
-              <Link
-                href="http://creativecommons.org/licenses/by/3.0/"
-                title="Creative Commons BY 3.0"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                CC 3.0 BY
-              </Link>
+              {'Forkbase is brought to you by the team from DBsystem NUS School of Computing'}
             </Typography>
           </Grid>
         </Grid>
