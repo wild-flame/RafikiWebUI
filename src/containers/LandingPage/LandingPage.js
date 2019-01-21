@@ -4,6 +4,8 @@ import LandingProductHero from "../../components/LandingProductHero/LandingProdu
 import LandingProductValues from "../../components/LandingProductValues/LandingProductValues"
 import LandingProductCategories from "../../components/LandingProductCategories/LandingProductCategories"
 import LandingProductHowItWorks from "../../components/LandingProductHowItWorks/LandingProductHowItWorks"
+import LandingProductCTA from '../../components/LandingProductCTA/LandingProductCTA'
+
 
 class LandingPage extends React.Component {
   render() {
@@ -14,6 +16,7 @@ class LandingPage extends React.Component {
         <LandingProductValues />
         <LandingProductCategories />
         <LandingProductHowItWorks />
+        <LandingProductCTA />
       </Fragment>
     )
   }
