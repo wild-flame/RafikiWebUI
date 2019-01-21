@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import LayoutBody from '../LandingComponents/LayoutBody';
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import { animateScroll as scroll } from 'react-scroll'
+
 
 const styles = theme => ({
   root: {
@@ -65,7 +67,7 @@ function ProductHeroLayout(props) {
         <ExpandMore
           className={classes.arrowDown}
           fontSize="large"
-          onClick={() => window.scrollBy(0, 500)}
+          onClick={() => scroll.scrollTo(550)}
         />
       </LayoutBody>
     </section>
