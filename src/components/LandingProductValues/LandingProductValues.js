@@ -17,7 +17,7 @@ const styles = theme => ({
   },
   layoutBody: {
     marginTop: theme.spacing.unit * 15,
-    marginBottom: theme.spacing.unit * 30,
+    marginBottom: theme.spacing.unit * 20,
     display: 'flex',
     position: 'relative',
   },
@@ -68,7 +68,7 @@ function ProductValues(props) {
                 Collaboration
               </Typography>
               <Typography variant="h5">
-                {'ForkBase supports both on-demand and on-conflict fork semantics to facilitate rich types of collaboration workflows.'}
+                {'ForkBase supports both on-demand and on-conflict fork semantics to facilitate various types of collaboration workflows.'}
                 {' It natively provides many built-in conflict resolution strategies for merging branches in various scenarios.'}
               </Typography>
             </div>
@@ -85,7 +85,7 @@ function ProductValues(props) {
               <Typography variant="h5">
                 {'All data objects in ForkBase are tamper-evident, '}
                 {'and hence can be leveraged to build better data models for blockchains. '}
-                {'The richer structured information captured in ForkBase makes the blockchain analytics-ready.'}
+                {'The detailed and structured information captured in ForkBase makes the blockchain analytics-ready.'}
               </Typography>
             </div>
           </Grid>
