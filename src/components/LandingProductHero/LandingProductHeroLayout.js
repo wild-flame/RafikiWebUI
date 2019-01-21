@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import LayoutBody from '../LandingComponents/LayoutBody';
+import ExpandMore from "@material-ui/icons/ExpandMore";
 
 const styles = theme => ({
   root: {
@@ -44,7 +45,12 @@ const styles = theme => ({
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     zIndex: -2,
-  }
+  },
+  arrowDown: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 4,
+    cursor: "pointer"
+  },
 });
 
 function ProductHeroLayout(props) {
@@ -56,6 +62,11 @@ function ProductHeroLayout(props) {
         {children}
         <div className={classes.backdrop} />
         <div className={classNames(classes.background, backgroundClassName)} />
+        <ExpandMore
+          className={classes.arrowDown}
+          fontSize="large"
+          onClick={() => window.scrollBy(0, 500)}
+        />
       </LayoutBody>
     </section>
   );

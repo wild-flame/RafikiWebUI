@@ -8,7 +8,9 @@ import ProductHeroLayout from './LandingProductHeroLayout';
 
 const backgroundImage =
   //'https://www.ebetfinder.com/wp-content/uploads/2016/11/dota-2-gameplay-ebetfinder-resized.jpg';
-  'https://www.comp.nus.edu.sg/~dbsystem/forkbase/pic/stack.jpg'
+  //'https://www.comp.nus.edu.sg/~dbsystem/forkbase/pic/stack.jpg'
+  //'https://www.geek.com/wp-content/uploads/2010/12/asfMod_02.jpg'
+  'https://cdn.pixabay.com/photo/2017/07/06/03/00/electrical-2476782_960_720.jpg'
 
 const styles = theme => ({
   background: {
@@ -53,7 +55,7 @@ function ProductHero(props) {
           <Link {...linkProps} href="/" variant="button" />
         )}
       >
-        Register
+        Request Demo
       </Button>
       <Typography variant="body2" color="inherit" className={classes.more}>
         Discover the experience

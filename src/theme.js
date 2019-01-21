@@ -9,7 +9,7 @@ import blueGrey from '@material-ui/core/colors/blueGrey';
 const rawTheme = createMuiTheme({
   palette: {
     primary: {
-      light: '#69696a',
+      light: blueGrey[100],
       main: blueGrey[900], // almost black
       dark: '#1e1e1f',
     },

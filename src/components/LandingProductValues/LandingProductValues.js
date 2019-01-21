@@ -4,6 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import LayoutBody from '../LandingComponents/LayoutBody';
 import Typography from '../LandingComponents/Typography';
+import EnhancedEncryption from "@material-ui/icons/EnhancedEncryption"
+import GroupAdd from "@material-ui/icons/GroupAdd"
+import Security from "@material-ui/icons/Security"
 
 
 const styles = theme => ({
@@ -24,18 +27,13 @@ const styles = theme => ({
     alignItems: 'center',
     padding: `0px ${theme.spacing.unit * 5}px`,
   },
-  image: {
+  valueIcon: {
     height: 55,
   },
   title: {
     marginTop: theme.spacing.unit * 5,
     marginBottom: theme.spacing.unit * 5,
-  },
-  curvyLines: {
-    pointerEvents: 'none',
-    position: 'absolute',
-    top: -180,
-  },
+  }
 });
 
 function ProductValues(props) {
@@ -44,57 +42,50 @@ function ProductValues(props) {
   return (
     <section className={classes.root}>
       <LayoutBody className={classes.layoutBody} width="large">
-        <img
-          src="/static/themes/onepirate/productCurvyLines.png"
-          className={classes.curvyLines}
-          alt="curvy lines"
-        />
         <Grid container spacing={40}>
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
-              <img
-                className={classes.image}
-                src="/static/themes/onepirate/productValues1.svg"
-                alt="suitcase"
+              <EnhancedEncryption
+                className={classes.valueIcon}
+                fontSize="large"
               />
               <Typography variant="h6" className={classes.title}>
-                The best luxury hotels
+                Immutability
               </Typography>
               <Typography variant="h5">
-                {'From the latest trendy boutique hotel to the iconic palace with XXL pool'}
-                {', go for a mini-vacation just a few subway stops away from your home.'}
+                {'ForkBase has a rich set of built-in data types (for both structured and unstructured data)'}
+                {', providing immutability and versioning for stored data.'}
               </Typography>
             </div>
           </Grid>
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
-              <img
-                className={classes.image}
-                src="/static/themes/onepirate/productValues2.svg"
-                alt="graph"
+              <GroupAdd
+                className={classes.valueIcon}
+                fontSize="large"
               />
               <Typography variant="h6" className={classes.title}>
-                New experiences
+                Collaboration
               </Typography>
               <Typography variant="h5">
-                {'Privatize a pool, take a Japanese bath or wake up in 900m2 of garden… '}
-                {'your Sundays will not be alike.'}
+                {'ForkBase supports both on-demand and on-conflict fork semantics to facilitate rich types of collaboration workflows.'}
+                {' It natively provides many built-in conflict resolution strategies for merging branches in various scenarios.'}
               </Typography>
             </div>
           </Grid>
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
-              <img
-                className={classes.image}
-                src="/static/themes/onepirate/productValues3.svg"
-                alt="clock"
+              <Security
+                className={classes.valueIcon}
+                fontSize="large"
               />
               <Typography variant="h6" className={classes.title}>
-                Exclusive rates
+                Security
               </Typography>
               <Typography variant="h5">
-                {'By registering, you will access specially negotiated rates '}
-                {'that you will not find anywhere else.'}
+                {'All data objects in ForkBase are tamper-evident, '}
+                {'and hence can be leveraged to build better data models for blockchains. '}
+                {'The richer structured information captured in ForkBase makes the blockchain analytics-ready.'}
               </Typography>
             </div>
           </Grid>

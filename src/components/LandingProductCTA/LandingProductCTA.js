@@ -21,7 +21,7 @@ const styles = theme => ({
   card: {
     display: 'flex',
     justifyContent: 'center',
-    backgroundColor: theme.palette.warning.main,
+    backgroundColor: theme.palette.secondary.light,
     padding: `${theme.spacing.unit * 8}px ${theme.spacing.unit * 3}px`,
   },
   cardContent: {
@@ -107,7 +107,7 @@ class ProductCTA extends React.Component {
             <Hidden smDown>
               <div className={classes.imageDots} />
               <img
-                src="https://images.unsplash.com/photo-1527853787696-f7be74f2e39a?auto=format&fit=crop&w=750&q=80"
+                src="https://www.comp.nus.edu.sg/~dbsystem/images/slider/slide-soc.jpg"
                 alt="call to action"
                 className={classes.image}
               />
