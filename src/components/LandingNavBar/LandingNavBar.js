@@ -100,7 +100,7 @@ function AppAppBar(props) {
             <Typography
               variant="h6"
             >
-              <Link to="/" className={classes.rightLink}>
+              <Link to="/sign-in" className={classes.rightLink}>
                 {'Sign In'}
               </Link>
             </Typography>
