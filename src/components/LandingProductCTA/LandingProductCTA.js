@@ -8,11 +8,13 @@ import TextField from '../LandingComponents/TextField';
 import Snackbar from '../LandingComponents/Snackbar';
 import LayoutBody from '../LandingComponents/LayoutBody';
 import Button from '../LandingComponents/Button';
+import FutureUIScreenShot from "../../assets/oX0t8.png"
 
 const styles = theme => ({
   root: {
     marginTop: theme.spacing.unit * 10,
-    marginBottom: 0,
+    //marginBottom: 0,
+    marginBottom: theme.spacing.unit * 9,
     display: 'flex',
   },
   cardWrapper: {
@@ -37,15 +39,6 @@ const styles = theme => ({
   },
   imagesWrapper: {
     position: 'relative',
-  },
-  imageDots: {
-    position: 'absolute',
-    top: -67,
-    left: -67,
-    right: 0,
-    bottom: 0,
-    width: '100%',
-    background: 'url(/static/onepirate/productCTAImageDots.png)',
   },
   image: {
     position: 'absolute',
@@ -86,10 +79,10 @@ class ProductCTA extends React.Component {
             <div className={classes.card}>
               <form onSubmit={this.handleSubmit} className={classes.cardContent}>
                 <Typography variant="h2" component="h2" gutterBottom>
-                  Receive offers
+                  Try Forkbase
                 </Typography>
                 <Typography variant="h5">
-                  something here
+                  A general distributed data storage system
                 </Typography>
                 <TextField noBorder className={classes.textField} placeholder="Your email" />
                 <Button
@@ -98,16 +91,15 @@ class ProductCTA extends React.Component {
                   variant="contained"
                   className={classes.button}
                 >
-                  Keep me updated
+                  Schedule a demo
                 </Button>
               </form>
             </div>
           </Grid>
           <Grid item xs={12} md={6} className={classes.imagesWrapper}>
             <Hidden smDown>
-              <div className={classes.imageDots} />
               <img
-                src="https://www.comp.nus.edu.sg/~dbsystem/images/slider/slide-soc.jpg"
+                src={FutureUIScreenShot}
                 alt="call to action"
                 className={classes.image}
               />

@@ -102,8 +102,8 @@ function ProductCategories(props) {
       width: '20%',
     },
     {
-      url: BlockchainImg,
-        //'https://www.joc.com/sites/default/files/field_feature_image/Blockchain%20art%20July%202018%202_1.jpg',
+      url:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Credit-cards.jpg/1200px-Credit-cards.jpg',
       title: 'Transaction Management',
       width: '40%',
     },
@@ -121,7 +121,7 @@ function ProductCategories(props) {
     },
     {
       url:
-        'https://upload.wikimedia.org/wikipedia/en/f/f8/NUS_School_of_Computing.JPG',
+        'https://git-scm.com/images/guis/git-kraken@2x.png',
       title: 'Git',
       width: '24%',
     }

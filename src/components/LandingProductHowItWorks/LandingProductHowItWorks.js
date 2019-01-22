@@ -68,7 +68,7 @@ function ProductHowItWorks(props) {
                   fontSize="large"
                 />
                 <Typography variant="h5" align="center">
-                  Basic commands for database: PUT, GET, MERGE, BRANCH, DELETE...
+                  Basic commands for interacting with data entries
                 </Typography>
               </div>
             </Grid>
@@ -80,7 +80,7 @@ function ProductHowItWorks(props) {
                   fontSize="large"
                 />
                 <Typography variant="h5" align="center">
-                  Relational (Columnar) Commands: GET_TABLE, LOAD_CSV...
+                  Relational (columnar) commands for tables and CSV formats
                 </Typography>
               </div>
             </Grid>
@@ -92,7 +92,7 @@ function ProductHowItWorks(props) {
                   fontSize="large"
                 />
                 <Typography variant="h5" align="center">
-                  Dataset Management Commands: CREATE_DATASET, GET_DATASET...
+                  Dataset management commands for modeling and machine learning
                 </Typography>
               </div>
             </Grid>

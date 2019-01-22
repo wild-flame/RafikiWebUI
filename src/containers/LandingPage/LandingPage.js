@@ -5,7 +5,6 @@ import LandingProductValues from "../../components/LandingProductValues/LandingP
 import LandingProductCategories from "../../components/LandingProductCategories/LandingProductCategories"
 import LandingProductHowItWorks from "../../components/LandingProductHowItWorks/LandingProductHowItWorks"
 import LandingProductCTA from '../../components/LandingProductCTA/LandingProductCTA'
-import LandingProductSmokingHero from '../../components/LandingProductSmokingHero/LandingProductSmokingHero'
 import LandingFooter from '../../components/LandingFooter/LandingFooter'
 
 
@@ -19,7 +18,6 @@ class LandingPage extends React.Component {
         <LandingProductCategories />
         <LandingProductHowItWorks />
         <LandingProductCTA />
-        <LandingProductSmokingHero />
         <LandingFooter />
       </Fragment>
     )
