@@ -86,7 +86,7 @@ function AppFooter(props) {
                   <GithubIcon />
                 </a>
               </Grid>
-              <Grid item>© 2019 Forkbase</Grid>
+              <Grid item>© 2019 ForkBase</Grid>
             </Grid>
           </Grid>
           <Grid item xs={6} sm={4} md={2}>
@@ -122,7 +122,7 @@ function AppFooter(props) {
           </Grid>
           <Grid item>
             <Typography variant="caption">
-              {'Forkbase is brought to you by the team from DBsystem NUS School of Computing'}
+              {'ForkBase is brought to you by the team from DBsystem NUS School of Computing'}
             </Typography>
           </Grid>
         </Grid>
