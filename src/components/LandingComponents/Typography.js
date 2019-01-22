@@ -5,6 +5,7 @@ import { capitalize } from '@material-ui/core/utils/helpers';
 import MuiTypography from '@material-ui/core/Typography';
 
 const styles = theme => ({
+  // markedSthSth is the span of color bar below the text
   markedH2Center: {
     height: 4,
     width: 73,
