@@ -67,6 +67,34 @@ function AppAppBar(props) {
                 {'ForkBase'}
               </Link>
             </Typography>
+            <Typography
+              variant="h5"
+            >
+              <Link to="/" className={classes.rightLink}>
+                {'Features'}
+              </Link>
+            </Typography>
+            <Typography
+              variant="h5"
+            >
+              <Link to="/" className={classes.rightLink}>
+                {'Use Cases'}
+              </Link>
+            </Typography>
+            <Typography
+              variant="h5"
+            >
+              <Link to="/" className={classes.rightLink}>
+                {'Docs'}
+              </Link>
+            </Typography>
+            <Typography
+              variant="h5"
+            >
+              <Link to="/" className={classes.rightLink}>
+                {'Connect'}
+              </Link>
+            </Typography>
           </div>
           <div className={classes.right}>
             <Typography
