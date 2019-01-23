@@ -11,6 +11,15 @@ import { email, required } from '../../components/LandingAppForm/validation';
 import RFTextField from '../../components/LandingAppForm/RFTextField';
 import FormButton from '../../components/LandingAppForm/FormButton';
 import FormFeedback from '../../components/LandingAppForm/FormFeedback';
+// import { Redirect } from "react-router-dom"
+
+/*
+    const { authError, authStatus } = this.props
+    if (authStatus) {
+      return <Redirect to="/console" />
+    }
+*/
+
 
 const styles = theme => ({
   form: {
