@@ -8,6 +8,7 @@ import {
 import BoilerPlate from './containers/BoilerPlate/BoilerPlate';
 import LandingPage from "./containers/LandingPage/LandingPage"
 import SignIn from "./containers/SignInPage/SignIn"
+import SignUp from "./containers/SignUpPage/SignUp"
 
 
 const NoMatch = ({ location }) => (
@@ -29,6 +30,11 @@ class App extends Component {
             exact
             path='/sign-in'
             component={SignIn}
+          />
+          <Route
+            exact
+            path='/sign-up'
+            component={SignUp}
           />
           <Route
             exact

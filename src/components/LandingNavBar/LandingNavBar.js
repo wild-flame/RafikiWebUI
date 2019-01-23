@@ -107,7 +107,7 @@ function AppAppBar(props) {
             <Typography
               variant="h6"
             >
-              <Link to="/" className={classNames(classes.rightLink, classes.linkSecondary)}>
+              <Link to="/sign-up" className={classNames(classes.rightLink, classes.linkSecondary)}>
                 {'Sign Up'}
               </Link>
             </Typography>
