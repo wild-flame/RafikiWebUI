@@ -18,6 +18,9 @@ import SettingsInputComponentIcon from '@material-ui/icons/SettingsInputComponen
 import TimerIcon from '@material-ui/icons/Timer';
 import SettingsIcon from '@material-ui/icons/Settings';
 import PhonelinkSetupIcon from '@material-ui/icons/PhonelinkSetup';
+import Logo from "../../assets/Logo-cleaned.png"
+import { Link } from "react-router-dom";
+
 
 const categories = [
   {
@@ -65,6 +68,10 @@ const styles = theme => ({
     fontFamily: theme.typography.fontFamily,
     color: theme.palette.common.white,
   },
+  logo: {
+    height: 28,
+    marginRight: 10
+  },
   itemActionable: {
     '&:hover': {
       backgroundColor: 'rgba(255, 255, 255, 0.08)',
@@ -92,7 +99,12 @@ function Navigator(props) {
   return (
     <Drawer variant="permanent" {...other}>
       <List disablePadding>
-        <ListItem className={classNames(classes.firebase, classes.item, classes.itemCategory)}>
+        <ListItem
+          component={Link}
+          to="/"
+          className={classNames(classes.firebase, classes.item, classes.itemCategory)}
+        >
+          <img alt="logo" src={Logo} className={classes.logo} />
           ForkBase
         </ListItem>
         <ListItem className={classNames(classes.item, classes.itemCategory)}>
