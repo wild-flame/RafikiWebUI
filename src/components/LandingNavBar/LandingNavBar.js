@@ -7,6 +7,8 @@ import Typography from "@material-ui/core/Typography"
 import AppBar from '../LandingComponents/AppBar';
 import Toolbar, { styles as toolbarStyles } from '../LandingComponents/Toolbar';
 import Logo from "../../assets/Logo-cleaned.png"
+import SignedInLinks from "./SignInLinks"
+import SignedOutLinks from "./SignOutLinks"
 
 
 const styles = theme => ({
@@ -51,6 +53,11 @@ const styles = theme => ({
 
 function AppAppBar(props) {
   const { classes } = props;
+
+  //const { auth } = props
+  //const links = auth.uid
+  //  ? <SignedInLinks />
+  //  : <SignedOutLinks />
 
   return (
     <div>
