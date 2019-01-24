@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography"
@@ -51,83 +50,70 @@ const styles = theme => ({
   },
 });
 
-function AppAppBar(props) {
-  const { classes } = props;
+class LandingNavBar extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    auth: PropTypes.object
+  }
 
-  //const { auth } = props
-  //const links = auth.uid
-  //  ? <SignedInLinks />
-  //  : <SignedOutLinks />
+  render() {
+    const { auth, classes } = this.props;
 
-  return (
-    <div>
-      <AppBar position="fixed">
-        <Toolbar className={classes.toolbar}>
-          <div className={classes.left}>
-            <Link to="/">
-              <img alt="logo" src={Logo} className={classes.logo} />
-            </Link>
-            <Typography
-              variant="h6"
-            >
-              <Link to="/" className={classes.title}>
-                {'ForkBase'}
+    const links = auth.uid
+      ? <SignedInLinks />
+      : <SignedOutLinks />
+
+    return (
+      <div>
+        <AppBar position="fixed">
+          <Toolbar className={classes.toolbar}>
+            <div className={classes.left}>
+              <Link to="/">
+                <img alt="logo" src={Logo} className={classes.logo} />
               </Link>
-            </Typography>
-            <Typography
-              variant="h5"
-            >
-              <Link to="/" className={classes.rightLink}>
-                {'Features'}
-              </Link>
-            </Typography>
-            <Typography
-              variant="h5"
-            >
-              <Link to="/" className={classes.rightLink}>
-                {'Use Cases'}
-              </Link>
-            </Typography>
-            <Typography
-              variant="h5"
-            >
-              <Link to="/" className={classes.rightLink}>
-                {'Docs'}
-              </Link>
-            </Typography>
-            <Typography
-              variant="h5"
-            >
-              <Link to="/" className={classes.rightLink}>
-                {'Connect'}
-              </Link>
-            </Typography>
-          </div>
-          <div className={classes.right}>
-            <Typography
-              variant="h6"
-            >
-              <Link to="/sign-in" className={classes.rightLink}>
-                {'Sign In'}
-              </Link>
-            </Typography>
-            <Typography
-              variant="h6"
-            >
-              <Link to="/sign-up" className={classNames(classes.rightLink, classes.linkSecondary)}>
-                {'Sign Up'}
-              </Link>
-            </Typography>
-          </div>
-        </Toolbar>
-      </AppBar>
-      <div className={classes.placeholder} />
-    </div>
-  );
+              <Typography
+                variant="h6"
+              >
+                <Link to="/" className={classes.title}>
+                  {'ForkBase'}
+                </Link>
+              </Typography>
+              <Typography
+                variant="h5"
+              >
+                <Link to="/" className={classes.rightLink}>
+                  {'Features'}
+                </Link>
+              </Typography>
+              <Typography
+                variant="h5"
+              >
+                <Link to="/" className={classes.rightLink}>
+                  {'Use Cases'}
+                </Link>
+              </Typography>
+              <Typography
+                variant="h5"
+              >
+                <Link to="/" className={classes.rightLink}>
+                  {'Docs'}
+                </Link>
+              </Typography>
+              <Typography
+                variant="h5"
+              >
+                <Link to="/" className={classes.rightLink}>
+                  {'Connect'}
+                </Link>
+              </Typography>
+            </div>
+            {links}
+          </Toolbar>
+        </AppBar>
+        <div className={classes.placeholder} />
+      </div>
+    )
+  }
 }
 
-AppAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(AppAppBar);
+export default withStyles(styles)(LandingNavBar);
