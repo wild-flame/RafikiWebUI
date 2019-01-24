@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
 import LandingNavBar from "../../components/LandingNavBar/LandingNavBar"
 import LandingProductHero from "../../components/LandingProductHero/LandingProductHero"
 import LandingProductValues from "../../components/LandingProductValues/LandingProductValues"
@@ -9,10 +11,15 @@ import LandingFooter from '../../components/LandingFooter/LandingFooter'
 
 
 class LandingPage extends React.Component {
+  static propTypes = {
+    auth: PropTypes.object
+  }
+
   render() {
+    const { auth } = this.props
     return (
       <Fragment>
-        <LandingNavBar />
+        <LandingNavBar auth={auth} />
         <LandingProductHero />
         <LandingProductValues />
         <LandingProductCategories />
@@ -24,4 +31,8 @@ class LandingPage extends React.Component {
   }
 }
 
-export default LandingPage
+const mapStateToProps = state => ({
+  auth: state.auth.auth
+})
+
+export default connect(mapStateToProps)(LandingPage)
