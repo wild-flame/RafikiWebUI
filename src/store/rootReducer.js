@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 
 import { BoilerPlate } from "../containers/BoilerPlate/reducer"
+import { auth } from "../containers/LandingPage/reducer"
 
 
 const rootReducer = combineReducers({
-  BoilerPlate
+  BoilerPlate,
+  auth
 })
 
 export default rootReducer;
