@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import axios from "axios"
 
 const styles = theme => ({
   paper: {
@@ -36,51 +37,67 @@ const styles = theme => ({
   },
 });
 
-function Content(props) {
-  const { classes } = props;
+class Content extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+  }
 
-  return (
-    <Paper className={classes.paper}>
-      <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
-        <Toolbar>
-          <Grid container spacing={16} alignItems="center">
-            <Grid item>
-              <SearchIcon className={classes.block} color="inherit" />
+  state = {
+    apiRes: ""
+  }
+
+  componentDidMount() {
+    axios.get("http://127.0.0.1:5000/api/list_key").then(res => {
+      this.setState({
+        apiRes: res.data
+      });
+    });
+
+  }
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <Paper className={classes.paper}>
+        <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
+          <Toolbar>
+            <Grid container spacing={16} alignItems="center">
+              <Grid item>
+                <SearchIcon className={classes.block} color="inherit" />
+              </Grid>
+              <Grid item xs>
+                <TextField
+                  fullWidth
+                  placeholder="Search by email address, phone number, or user UID"
+                  InputProps={{
+                    disableUnderline: true,
+                    className: classes.searchInput,
+                  }}
+                />
+              </Grid>
+              <Grid item>
+                <Button variant="contained" color="primary" className={classes.addUser}>
+                  Add user
+                </Button>
+                <Tooltip title="Reload">
+                  <IconButton>
+                    <RefreshIcon className={classes.block} color="inherit" />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
             </Grid>
-            <Grid item xs>
-              <TextField
-                fullWidth
-                placeholder="Search by email address, phone number, or user UID"
-                InputProps={{
-                  disableUnderline: true,
-                  className: classes.searchInput,
-                }}
-              />
-            </Grid>
-            <Grid item>
-              <Button variant="contained" color="primary" className={classes.addUser}>
-                Add user
-              </Button>
-              <Tooltip title="Reload">
-                <IconButton>
-                  <RefreshIcon className={classes.block} color="inherit" />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
-      <div className={classes.contentWrapper}>
-        <Typography color="textSecondary" align="center">
-          No users for this project yet
-        </Typography>
-      </div>
-    </Paper>
-  );
+          </Toolbar>
+        </AppBar>
+        <div className={classes.contentWrapper}>
+          <Typography color="textSecondary" align="center">
+            No users for this project yet
+            {this.state.apiRes.list_key_output}
+          </Typography>
+        </div>
+      </Paper>
+    );
+  }
 }
 
-Content.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(Content);
