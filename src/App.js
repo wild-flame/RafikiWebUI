@@ -38,7 +38,7 @@ class App extends Component {
             component={SignUp}
           />
           <Route
-            exact
+            // exact
             path='/console'
             component={ConsolePage}
           />

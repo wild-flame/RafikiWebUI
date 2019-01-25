@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Route } from "react-router-dom"
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
-import Navigator from './Navigator';
+import Navigator from '../../components/ConsoleSideBar/Navigator';
 import Content from './Content';
-import Header from './Header';
+import Header from '../../components/ConsoleHeader/Header';
 import ConsoleTheme from "./ConsoleTheme"
 // import { Redirect } from "react-router-dom"
 
@@ -75,7 +76,16 @@ class ConsolePage extends React.Component {
           <div className={classes.appContent}>
             <Header onDrawerToggle={this.handleDrawerToggle} />
             <main className={classes.mainContent}>
-              <Content />
+              <Route
+                exact
+                path='/console/lala'
+                component={() => <h1>hello you!</h1>}
+              />
+              <Route
+                exact
+                path='/console/authentication/users'
+                component={Content}
+              />
             </main>
           </div>
         </div>
