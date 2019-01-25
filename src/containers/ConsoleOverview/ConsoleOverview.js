@@ -4,7 +4,7 @@ import { Route } from "react-router-dom"
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
 import Navigator from '../../components/ConsoleSideBar/Navigator';
-import Content from './Content';
+import ConsoleAuth from '../ConsoleAuth/ConsoleAuth';
 import Header from '../../components/ConsoleHeader/Header';
 import ConsoleTheme from "./ConsoleTheme"
 // import { Redirect } from "react-router-dom"
@@ -41,7 +41,7 @@ const styles = theme => ({
   },
 })
 
-class ConsolePage extends React.Component {
+class ConsoleOverview extends React.Component {
   state = {
     mobileOpen: false,
   };
@@ -84,7 +84,7 @@ class ConsolePage extends React.Component {
               <Route
                 exact
                 path='/console/authentication/users'
-                component={Content}
+                component={ConsoleAuth}
               />
             </main>
           </div>
@@ -95,4 +95,4 @@ class ConsolePage extends React.Component {
 }
 
 
-export default withStyles(styles)(ConsolePage);
+export default withStyles(styles)(ConsoleOverview);

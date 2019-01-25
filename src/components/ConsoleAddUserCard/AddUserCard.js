@@ -12,7 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import axios from "axios"
+
 
 const styles = theme => ({
   paper: {
@@ -37,22 +37,9 @@ const styles = theme => ({
   },
 });
 
-class Content extends React.Component {
+class AddUserCard extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-  }
-
-  state = {
-    apiRes: ""
-  }
-
-  componentDidMount() {
-    axios.get("http://127.0.0.1:5000/api/list_key").then(res => {
-      this.setState({
-        apiRes: res.data
-      });
-    });
-
   }
 
   render() {
@@ -91,13 +78,11 @@ class Content extends React.Component {
         <div className={classes.contentWrapper}>
           <Typography color="textSecondary" align="center">
             No users for this project yet
-            {this.state.apiRes.list_key_output}
           </Typography>
         </div>
       </Paper>
-    );
+    )
   }
 }
 
-
-export default withStyles(styles)(Content);
+export default withStyles(styles)(AddUserCard);
