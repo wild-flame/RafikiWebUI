@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { compose } from "redux";
 import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
@@ -19,7 +20,7 @@ import TimerIcon from '@material-ui/icons/Timer';
 import SettingsIcon from '@material-ui/icons/Settings';
 import PhonelinkSetupIcon from '@material-ui/icons/PhonelinkSetup';
 import Logo from "../../assets/Logo-cleaned.png"
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 
 const categories = [
@@ -44,6 +45,8 @@ const categories = [
   },
 ];
 
+// Navigator basic color dark blue specified in
+// ConsoleTheme MuiDrawer's paper
 const styles = theme => ({
   categoryHeader: {
     paddingTop: 16,
@@ -77,8 +80,13 @@ const styles = theme => ({
       backgroundColor: 'rgba(255, 255, 255, 0.08)',
     },
   },
+  overviewHover: {
+    '&:hover': {
+      backgroundColor: 'rgba(216, 255, 255, 0.3)',
+    },
+  },
   itemActiveItem: {
-    color: theme.palette.secondary.main, //'#4fc3f7',
+    color: theme.palette.secondary.main,
   },
   itemPrimary: {
     color: 'inherit',
@@ -93,75 +101,95 @@ const styles = theme => ({
   },
 });
 
-function Navigator(props) {
-  const { classes, ...other } = props;
+class Navigator extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    location: PropTypes.object,
+  }
 
-  return (
-    <Drawer variant="permanent" {...other}>
-      <List disablePadding>
-        <ListItem
-          component={Link}
-          to="/"
-          className={classNames(classes.firebase, classes.item, classes.itemCategory)}
-        >
-          <img alt="logo" src={Logo} className={classes.logo} />
-          ForkBase
-        </ListItem>
-        <ListItem className={classNames(classes.item, classes.itemCategory)}>
-          <ListItemIcon>
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText
-            classes={{
-              primary: classes.itemPrimary,
-            }}
+  render() {
+    const { classes, location, staticContext, ...other } = this.props;
+    console.log(this.props)
+    return (
+      <Drawer variant="permanent" {...other}>
+        <List disablePadding>
+          <ListItem
+            component={Link}
+            to="/"
+            className={classNames(
+              classes.firebase,
+              classes.item,
+              classes.itemCategory)}
           >
-            Project Overview
-          </ListItemText>
-        </ListItem>
-        {categories.map(({ id, children }) => (
-          <React.Fragment key={id}>
-            <ListItem className={classes.categoryHeader}>
-              <ListItemText
-                classes={{
-                  primary: classes.categoryHeaderPrimary,
-                }}
-              >
-                {id}
-              </ListItemText>
-            </ListItem>
-            {children.map(({ id: childId, icon, active }) => (
-              <ListItem
-                button
-                dense
-                key={childId}
-                className={classNames(
-                  classes.item,
-                  classes.itemActionable,
-                  active && classes.itemActiveItem,
-                )}
-              >
-                <ListItemIcon>{icon}</ListItemIcon>
+            <img alt="logo" src={Logo} className={classes.logo} />
+            ForkBase
+          </ListItem>
+          <ListItem 
+            component={Link}
+            to="/console"
+            className={classNames(
+              classes.item,
+              classes.overviewHover,
+              classes.itemCategory,
+              location.pathname === "/console" &&
+              classes.itemActiveItem
+            )}
+          >
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText
+              classes={{
+                primary: classes.itemPrimary,
+              }}
+            >
+              Console Overview
+            </ListItemText>
+          </ListItem>
+          {categories.map(({ id, children }) => (
+            <React.Fragment key={id}>
+              <ListItem className={classes.categoryHeader}>
                 <ListItemText
                   classes={{
-                    primary: classes.itemPrimary,
-                    textDense: classes.textDense,
+                    primary: classes.categoryHeaderPrimary,
                   }}
                 >
-                  {childId}
+                  {id}
                 </ListItemText>
               </ListItem>
-            ))}
-            <Divider className={classes.divider} />
-          </React.Fragment>
-        ))}
-      </List>
-    </Drawer>
-  );
+              {children.map(({ id: childId, icon, active }) => (
+                <ListItem
+                  button
+                  dense
+                  key={childId}
+                  className={classNames(
+                    classes.item,
+                    classes.itemActionable,
+                    active && classes.itemActiveItem,
+                  )}
+                >
+                  <ListItemIcon>{icon}</ListItemIcon>
+                  <ListItemText
+                    classes={{
+                      primary: classes.itemPrimary,
+                      textDense: classes.textDense,
+                    }}
+                  >
+                    {childId}
+                  </ListItemText>
+                </ListItem>
+              ))}
+              <Divider className={classes.divider} />
+            </React.Fragment>
+          ))}
+        </List>
+      </Drawer>
+    );
+  }
 }
 
-Navigator.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
-export default withStyles(styles)(Navigator);
+export default compose(
+  withRouter,
+  withStyles(styles)
+)(Navigator)
