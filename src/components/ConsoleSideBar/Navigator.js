@@ -19,24 +19,51 @@ import SettingsInputComponentIcon from '@material-ui/icons/SettingsInputComponen
 import TimerIcon from '@material-ui/icons/Timer';
 import SettingsIcon from '@material-ui/icons/Settings';
 import PhonelinkSetupIcon from '@material-ui/icons/PhonelinkSetup';
+
+// for nested list
+import Collapse from '@material-ui/core/Collapse';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+
 import Logo from "../../assets/Logo-cleaned.png"
 import { Link, withRouter } from "react-router-dom";
 
 
 const categories = [
   {
-    id: 'Develop',
+    id: 'Row-based Table',
     children: [
-      { id: 'Authentication', icon: <PeopleIcon />, active: true },
-      { id: 'Database', icon: <DnsRoundedIcon /> },
-      { id: 'Storage', icon: <PermMediaOutlinedIcon /> },
-      { id: 'Hosting', icon: <PublicIcon /> },
-      { id: 'Functions', icon: <SettingsEthernetIcon /> },
-      { id: 'ML Kit', icon: <SettingsInputComponentIcon /> },
+      { id: 'Put Data by CSV', icon: <DnsRoundedIcon />, active: true },
+      { id: 'Put Data Entry', icon: <DnsRoundedIcon /> },
+      { id: 'Get Dataset', icon: <DnsRoundedIcon /> },
+      { id: 'Get Dataset Schema', icon: <DnsRoundedIcon /> },
+      { id: 'Get Data Entries', icon: <DnsRoundedIcon /> },
+      { id: 'Diff Dataset', icon: <DnsRoundedIcon /> },
     ],
   },
   {
-    id: 'Quality',
+    id: 'Column-based Table',
+    children: [
+      { id: 'Create Table', icon: <SettingsIcon /> },
+      { id: 'Load CSV', icon: <TimerIcon /> },
+      { id: 'Get Table', icon: <PhonelinkSetupIcon /> },
+      { id: 'Get Column', icon: <PhonelinkSetupIcon /> },
+      { id: 'List Column Branch', icon: <PhonelinkSetupIcon /> },
+      { id: 'Get Row', icon: <PhonelinkSetupIcon /> },
+      { id: 'Update Row', icon: <PhonelinkSetupIcon /> },
+      // and some more...
+    ],
+  },
+  {
+    id: 'Data Storage',
+    children: [
+      { id: 'Analytics', icon: <SettingsIcon /> },
+      { id: 'Performance', icon: <TimerIcon /> },
+      { id: 'Test Lab', icon: <PhonelinkSetupIcon /> },
+    ],
+  },
+  {
+    id: 'Key-Value Database',
     children: [
       { id: 'Analytics', icon: <SettingsIcon /> },
       { id: 'Performance', icon: <TimerIcon /> },
@@ -107,9 +134,47 @@ class Navigator extends React.Component {
     location: PropTypes.object,
   }
 
+  state = {
+    RowBasedTableOpen: true,
+    ColBasedTableOpen: false,
+    DataStorageOpen: false,
+    KeyValueDBOpen: false
+  };
+
+  handleClick = (categoryHeader) => {
+    switch(categoryHeader) {
+      case "Row":
+        this.setState(state => (
+          { RowBasedTableOpen: !state.RowBasedTableOpen }
+        ));
+        break
+      case "Col":
+        this.setState(state => (
+          { ColBasedTableOpen: !state.ColBasedTableOpen }
+        ));
+        break
+      case "Storage":
+        this.setState(state => (
+          { DataStorageOpen: !state.DataStorageOpen }
+        ));
+        break
+      case "KeyValue":
+        this.setState(state => (
+          { KeyValueDBOpen: !state.KeyValueDBOpen }
+        ));
+        break
+      default:
+        this.setState(state => (
+          { RowBasedTableOpen: !state.RowBasedTableOpen }
+        ));
+        return
+    }
+
+
+  };
+
   render() {
     const { classes, location, staticContext, ...other } = this.props;
-    console.log(this.props)
     return (
       <Drawer variant="permanent" {...other}>
         <List disablePadding>
@@ -143,45 +208,447 @@ class Navigator extends React.Component {
                 primary: classes.itemPrimary,
               }}
             >
-              Console Overview
+              Database Overview
             </ListItemText>
           </ListItem>
-          {categories.map(({ id, children }) => (
-            <React.Fragment key={id}>
-              <ListItem className={classes.categoryHeader}>
-                <ListItemText
-                  classes={{
-                    primary: classes.categoryHeaderPrimary,
+          <ListItem
+            button
+            onClick={() => this.handleClick("Row")}
+            className={classes.categoryHeader}
+          >
+            <ListItemText
+              classes={{
+                primary: classes.categoryHeaderPrimary,
+              }}
+            >
+              Row-based Table
+            </ListItemText>
+            {this.state.RowBasedTableOpen
+              ? <ExpandLess 
+                  style={{
+                    color: "white"
                   }}
-                >
-                  {id}
-                </ListItemText>
-              </ListItem>
-              {children.map(({ id: childId, icon, active }) => (
-                <ListItem
-                  button
-                  dense
-                  key={childId}
-                  className={classNames(
-                    classes.item,
-                    classes.itemActionable,
-                    active && classes.itemActiveItem,
-                  )}
-                >
-                  <ListItemIcon>{icon}</ListItemIcon>
-                  <ListItemText
-                    classes={{
-                      primary: classes.itemPrimary,
-                      textDense: classes.textDense,
-                    }}
-                  >
-                    {childId}
-                  </ListItemText>
-                </ListItem>
-              ))}
-              <Divider className={classes.divider} />
-            </React.Fragment>
-          ))}
+                />
+              : <ExpandMore
+                  style={{
+                    color: "white"
+                  }}
+                />}
+          </ListItem>
+          <Collapse in={this.state.RowBasedTableOpen} timeout="auto" unmountOnExit>
+            <ListItem
+              button
+              component={Link}
+              to="/console/row-based-table/put-data-by-csv"
+              dense
+              className={classNames(
+                classes.item,
+                classes.itemActionable,
+                location.pathname === "/console/row-based-table/put-data-by-csv" &&
+                classes.itemActiveItem,
+              )}
+            >
+              <ListItemIcon>
+                <DnsRoundedIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.itemPrimary,
+                  textDense: classes.textDense,
+                }}
+              >
+                Put Data by CSV
+              </ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              component={Link}
+              to="/console/row-based-table/put-data-entry"
+              dense
+              className={classNames(
+                classes.item,
+                classes.itemActionable,
+                location.pathname === "/console/row-based-table/put-data-entry" &&
+                classes.itemActiveItem,
+              )}
+            >
+              <ListItemIcon>
+                <DnsRoundedIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.itemPrimary,
+                  textDense: classes.textDense,
+                }}
+              >
+                Put Data Entry
+              </ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              component={Link}
+              to="/console/row-based-table/get-dataset"
+              dense
+              className={classNames(
+                classes.item,
+                classes.itemActionable,
+                location.pathname === "/console/row-based-table/get-dataset" &&
+                classes.itemActiveItem,
+              )}
+            >
+              <ListItemIcon>
+                <DnsRoundedIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.itemPrimary,
+                  textDense: classes.textDense,
+                }}
+              >
+                Get Dataset
+              </ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              component={Link}
+              to="/console/row-based-table/get-dataset-schema"
+              dense
+              className={classNames(
+                classes.item,
+                classes.itemActionable,
+                location.pathname === "/console/row-based-table/get-dataset-schema" &&
+                classes.itemActiveItem,
+              )}
+            >
+              <ListItemIcon>
+                <DnsRoundedIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.itemPrimary,
+                  textDense: classes.textDense,
+                }}
+              >
+                Get Dataset Schema
+              </ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              component={Link}
+              to="/console/row-based-table/get-data-entries"
+              dense
+              className={classNames(
+                classes.item,
+                classes.itemActionable,
+                location.pathname === "/console/row-based-table/get-data-entries" &&
+                classes.itemActiveItem,
+              )}
+            >
+              <ListItemIcon>
+                <DnsRoundedIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.itemPrimary,
+                  textDense: classes.textDense,
+                }}
+              >
+                Get Data Entries
+              </ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              component={Link}
+              to="/console/row-based-table/diff-dataset"
+              dense
+              className={classNames(
+                classes.item,
+                classes.itemActionable,
+                location.pathname === "/console/row-based-table/diff-dataset" &&
+                classes.itemActiveItem,
+              )}
+            >
+              <ListItemIcon>
+                <DnsRoundedIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.itemPrimary,
+                  textDense: classes.textDense,
+                }}
+              >
+                Diff Dataset
+              </ListItemText>
+            </ListItem>
+          </Collapse>
+          <Divider className={classes.divider} />
+          <ListItem
+            button
+            onClick={() => this.handleClick("Col")}
+            className={classes.categoryHeader}
+          >
+            <ListItemText
+              classes={{
+                primary: classes.categoryHeaderPrimary,
+              }}
+            >
+              Column-based Table
+            </ListItemText>
+            {this.state.ColBasedTableOpen
+              ? <ExpandLess 
+                  style={{
+                    color: "white"
+                  }}
+                />
+              : <ExpandMore
+                  style={{
+                    color: "white"
+                  }}
+                />}
+          </ListItem>
+          <Collapse in={this.state.ColBasedTableOpen} timeout="auto" unmountOnExit>
+            <ListItem
+              button
+              component={Link}
+              to="/console/col-based-table/create-table"
+              dense
+              className={classNames(
+                classes.item,
+                classes.itemActionable,
+                location.pathname === "/console/col-based-table/create-table" &&
+                classes.itemActiveItem,
+              )}
+            >
+              <ListItemIcon>
+                <DnsRoundedIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.itemPrimary,
+                  textDense: classes.textDense,
+                }}
+              >
+                Create Table
+              </ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              component={Link}
+              to="/console/col-based-table/load-csv"
+              dense
+              className={classNames(
+                classes.item,
+                classes.itemActionable,
+                location.pathname === "/console/col-based-table/load-csv" &&
+                classes.itemActiveItem,
+              )}
+            >
+              <ListItemIcon>
+                <DnsRoundedIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.itemPrimary,
+                  textDense: classes.textDense,
+                }}
+              >
+                Load CSV
+              </ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              component={Link}
+              to="/console/col-based-table/get-table"
+              dense
+              className={classNames(
+                classes.item,
+                classes.itemActionable,
+                location.pathname === "/console/col-based-table/get-table" &&
+                classes.itemActiveItem,
+              )}
+            >
+              <ListItemIcon>
+                <DnsRoundedIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.itemPrimary,
+                  textDense: classes.textDense,
+                }}
+              >
+                Get Table
+              </ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              component={Link}
+              to="/console/col-based-table/get-col"
+              dense
+              className={classNames(
+                classes.item,
+                classes.itemActionable,
+                location.pathname === "/console/col-based-table/get-col" &&
+                classes.itemActiveItem,
+              )}
+            >
+              <ListItemIcon>
+                <DnsRoundedIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.itemPrimary,
+                  textDense: classes.textDense,
+                }}
+              >
+                Get Column
+              </ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              component={Link}
+              to="/console/col-based-table/list-col-branch"
+              dense
+              className={classNames(
+                classes.item,
+                classes.itemActionable,
+                location.pathname === "/console/col-based-table/list-col-branch" &&
+                classes.itemActiveItem,
+              )}
+            >
+              <ListItemIcon>
+                <DnsRoundedIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.itemPrimary,
+                  textDense: classes.textDense,
+                }}
+              >
+                List Column Branch
+              </ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              component={Link}
+              to="/console/col-based-table/get-row"
+              dense
+              className={classNames(
+                classes.item,
+                classes.itemActionable,
+                location.pathname === "/console/col-based-table/get-row" &&
+                classes.itemActiveItem,
+              )}
+            >
+              <ListItemIcon>
+                <DnsRoundedIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.itemPrimary,
+                  textDense: classes.textDense,
+                }}
+              >
+                Get Row
+              </ListItemText>
+            </ListItem>
+          </Collapse>
+          <Divider className={classes.divider} />
+          <ListItem
+            button
+            onClick={() => this.handleClick("Storage")}
+            className={classes.categoryHeader}
+          >
+            <ListItemText
+              classes={{
+                primary: classes.categoryHeaderPrimary,
+              }}
+            >
+              Data Storage
+            </ListItemText>
+            {this.state.DataStorageOpen
+              ? <ExpandLess 
+                  style={{
+                    color: "white"
+                  }}
+                />
+              : <ExpandMore
+                  style={{
+                    color: "white"
+                  }}
+                />}
+          </ListItem>
+          <Collapse in={this.state.DataStorageOpen} timeout="auto" unmountOnExit>
+            <ListItem
+              button
+              dense
+              className={classNames(
+                classes.item,
+                classes.itemActionable,
+                classes.itemActiveItem,
+              )}
+            >
+              <ListItemIcon>
+                <DnsRoundedIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.itemPrimary,
+                  textDense: classes.textDense,
+                }}
+              >
+                Put Data by CSV
+              </ListItemText>
+            </ListItem>
+          </Collapse>
+          <Divider className={classes.divider} />
+          <ListItem
+            button
+            onClick={() => this.handleClick("KeyValue")}
+            className={classes.categoryHeader}
+          >
+            <ListItemText
+              classes={{
+                primary: classes.categoryHeaderPrimary,
+              }}
+            >
+              Key-value Database
+            </ListItemText>
+            {this.state.KeyValueDBOpen
+              ? <ExpandLess 
+                  style={{
+                    color: "white"
+                  }}
+                />
+              : <ExpandMore
+                  style={{
+                    color: "white"
+                  }}
+                />}
+          </ListItem>
+          <Collapse in={this.state.KeyValueDBOpen} timeout="auto" unmountOnExit>
+            <ListItem
+              button
+              dense
+              className={classNames(
+                classes.item,
+                classes.itemActionable,
+                classes.itemActiveItem,
+              )}
+            >
+              <ListItemIcon>
+                <DnsRoundedIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.itemPrimary,
+                  textDense: classes.textDense,
+                }}
+              >
+                Put Data by CSV
+              </ListItemText>
+            </ListItem>
+          </Collapse>
+          <Divider className={classes.divider} />
         </List>
       </Drawer>
     );

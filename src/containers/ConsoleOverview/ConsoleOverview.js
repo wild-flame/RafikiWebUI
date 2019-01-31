@@ -78,8 +78,8 @@ class ConsoleOverview extends React.Component {
             <main className={classes.mainContent}>
               <Route
                 exact
-                path='/console/lala'
-                component={() => <h1>hello you!</h1>}
+                path='/console/row-based-table/put-data-by-csv'
+                component={() => <h1>put-data-by-csv</h1>}
               />
               <Route
                 exact
