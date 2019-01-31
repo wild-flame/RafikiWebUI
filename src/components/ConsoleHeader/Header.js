@@ -65,7 +65,7 @@ function Header(props) {
             </Hidden>
             <Grid item xs>
               <Typography color="inherit" variant="h5">
-                Authentication
+                {props.title}
               </Typography>
             </Grid>
             <Grid item>
@@ -96,8 +96,8 @@ function Header(props) {
         elevation={0}
       >
         <Tabs value={0} textColor="inherit">
-          <Tab textColor="inherit" label="Users" />
-          <Tab textColor="inherit" label="Sign-in method" />
+          <Tab textColor="inherit" label="Info" />
+          <Tab textColor="inherit" label="Size" />
           <Tab textColor="inherit" label="Templates" />
           <Tab textColor="inherit" label="Usage" />
         </Tabs>

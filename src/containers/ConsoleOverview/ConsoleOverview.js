@@ -7,6 +7,7 @@ import Navigator from '../../components/ConsoleSideBar/Navigator';
 import ConsoleAuth from '../ConsoleAuth/ConsoleAuth';
 import Header from '../../components/ConsoleHeader/Header';
 import ConsoleTheme from "./ConsoleTheme"
+import ConsoleOverviewContent from "./ConsoleOverviewContent"
 // import { Redirect } from "react-router-dom"
 
 /*
@@ -74,8 +75,16 @@ class ConsoleOverview extends React.Component {
             </Hidden>
           </nav>
           <div className={classes.appContent}>
-            <Header onDrawerToggle={this.handleDrawerToggle} />
+            <Header
+              onDrawerToggle={this.handleDrawerToggle}
+              title={"Database Overview"}
+            />
             <main className={classes.mainContent}>
+              <Route
+                exact
+                path='/console'
+                component={ConsoleOverviewContent}
+              />
               <Route
                 exact
                 path='/console/row-based-table/put-data-by-csv'
