@@ -239,6 +239,30 @@ class Navigator extends React.Component {
             <ListItem
               button
               component={Link}
+              to="/console/row-based-table/list-dataset"
+              dense
+              className={classNames(
+                classes.item,
+                classes.itemActionable,
+                location.pathname === "/console/row-based-table/list-dataset" &&
+                classes.itemActiveItem,
+              )}
+            >
+              <ListItemIcon>
+                <DnsRoundedIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.itemPrimary,
+                  textDense: classes.textDense,
+                }}
+              >
+                List Dataset
+              </ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              component={Link}
               to="/console/row-based-table/put-data-by-csv"
               dense
               className={classNames(
@@ -410,6 +434,30 @@ class Navigator extends React.Component {
             <ListItem
               button
               component={Link}
+              to="/console/col-based-table/get-table"
+              dense
+              className={classNames(
+                classes.item,
+                classes.itemActionable,
+                location.pathname === "/console/col-based-table/get-table" &&
+                classes.itemActiveItem,
+              )}
+            >
+              <ListItemIcon>
+                <DnsRoundedIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{
+                  primary: classes.itemPrimary,
+                  textDense: classes.textDense,
+                }}
+              >
+                Get Table
+              </ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              component={Link}
               to="/console/col-based-table/create-table"
               dense
               className={classNames(
@@ -453,30 +501,6 @@ class Navigator extends React.Component {
                 }}
               >
                 Load CSV
-              </ListItemText>
-            </ListItem>
-            <ListItem
-              button
-              component={Link}
-              to="/console/col-based-table/get-table"
-              dense
-              className={classNames(
-                classes.item,
-                classes.itemActionable,
-                location.pathname === "/console/col-based-table/get-table" &&
-                classes.itemActiveItem,
-              )}
-            >
-              <ListItemIcon>
-                <DnsRoundedIcon />
-              </ListItemIcon>
-              <ListItemText
-                classes={{
-                  primary: classes.itemPrimary,
-                  textDense: classes.textDense,
-                }}
-              >
-                Get Table
               </ListItemText>
             </ListItem>
             <ListItem

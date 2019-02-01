@@ -96,10 +96,10 @@ function Header(props) {
         elevation={0}
       >
         <Tabs value={0} textColor="inherit">
-          <Tab textColor="inherit" label="Info" />
-          <Tab textColor="inherit" label="Size" />
-          <Tab textColor="inherit" label="Templates" />
-          <Tab textColor="inherit" label="Usage" />
+          <Tab textColor="inherit" label={props.Tab1} />
+          <Tab textColor="inherit" label={props.Tab2} />
+          <Tab textColor="inherit" label="" />
+          <Tab textColor="inherit" label="" />
         </Tabs>
       </AppBar>
     </React.Fragment>

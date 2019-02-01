@@ -5,9 +5,9 @@ import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
 import Navigator from '../../components/ConsoleSideBar/Navigator';
 import ConsoleAuth from '../ConsoleAuth/ConsoleAuth';
-import Header from '../../components/ConsoleHeader/Header';
 import ConsoleTheme from "./ConsoleTheme"
 import ConsoleOverviewContent from "./ConsoleOverviewContent"
+import PutDataByCSV from "../RowTableCmds/PutDataByCSV"
 // import { Redirect } from "react-router-dom"
 
 /*
@@ -43,6 +43,7 @@ const styles = theme => ({
 })
 
 class ConsoleOverview extends React.Component {
+  // TODO: lift this mobileOpen to redux as this is shared
   state = {
     mobileOpen: false,
   };
@@ -75,27 +76,21 @@ class ConsoleOverview extends React.Component {
             </Hidden>
           </nav>
           <div className={classes.appContent}>
-            <Header
-              onDrawerToggle={this.handleDrawerToggle}
-              title={"Database Overview"}
+            <Route
+              exact
+              path='/console'
+              component={ConsoleOverviewContent}
             />
-            <main className={classes.mainContent}>
-              <Route
-                exact
-                path='/console'
-                component={ConsoleOverviewContent}
-              />
-              <Route
-                exact
-                path='/console/row-based-table/put-data-by-csv'
-                component={() => <h1>put-data-by-csv</h1>}
-              />
-              <Route
-                exact
-                path='/console/authentication/users'
-                component={ConsoleAuth}
-              />
-            </main>
+            <Route
+              exact
+              path='/console/row-based-table/put-data-by-csv'
+              component={PutDataByCSV}
+            />
+            <Route
+              exact
+              path='/console/authentication/users'
+              component={ConsoleAuth}
+            />
           </div>
         </div>
       </MuiThemeProvider>
