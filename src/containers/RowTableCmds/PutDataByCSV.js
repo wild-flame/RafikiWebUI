@@ -11,11 +11,11 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import RefreshIcon from '@material-ui/icons/Refresh';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 import Header from '../../components/ConsoleHeader/Header';
+import Dropzone from 'react-dropzone'
 
 
 const styles = theme => ({
@@ -38,19 +38,71 @@ const styles = theme => ({
   block: {
     display: 'block',
   },
-  addUser: {
+  menu: {
+    width: 200,
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
+    width: 200,
   },
   contentWrapper: {
-    margin: '40px 16px',
-  },
+    margin: '10px 16px',
+  }
 })
+
+const currencies = [
+  {
+    value: 'USD',
+    label: '$',
+  },
+  {
+    value: 'EUR',
+    label: '€',
+  },
+  {
+    value: 'BTC',
+    label: '฿',
+  },
+  {
+    value: 'JPY',
+    label: '¥',
+  },
+];
+
+const baseStyle = {
+  width: 300,
+  height: 100,
+  borderWidth: 2,
+  borderColor: '#666',
+  borderStyle: 'dashed',
+  borderRadius: 5,
+  margin: "0 auto"
+};
+const activeStyle = {
+  borderStyle: 'solid',
+  borderColor: '#6c6',
+  backgroundColor: '#eee'
+};
+const rejectStyle = {
+  borderStyle: 'solid',
+  borderColor: '#c66',
+  backgroundColor: '#eee'
+};
+
 
 class ConsoleOverviewContent extends React.Component {
   state = {
     ResultLoading: false,
     apiRes: "",
-    mobileOpen: false
+    mobileOpen: false,
+    DataSetName: "",
+    BranchName: "",
+    files: []
+  }
+
+  onDrop = (files) => {
+    this.setState({files});
   }
 
   handleDrawerToggle = () => {
@@ -86,53 +138,210 @@ class ConsoleOverviewContent extends React.Component {
   }
 
   render() {
+    const files = this.state.files.map(file => (
+      <li key={file.name}>
+        {file.name} - {file.size} bytes
+      </li>
+    ))
     const { classes } = this.props;
     console.log(this.state.apiRes)
+    console.log(this.state.files)
     return (
       <React.Fragment>
         <Header
           onDrawerToggle={this.handleDrawerToggle}
-          title={"Row-based Table"}
-          Tab1={"List DataSet"}
-          Tab2={""}
+          title={"Row-based Table > Put Data by CSV"}
         />
         <main className={classes.mainContent}>
-        <Paper className={classes.paper}>
-          <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
-            <Toolbar>
-              <Grid container spacing={16} alignItems="center">
+          <Paper className={classes.paper}>
+            <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
+              <Toolbar>
+                <Typography variant="h5" gutterBottom>
+                  Put Data Entry by CSV
+                </Typography>
+              </Toolbar>
+            </AppBar>
+            <div className={classes.contentWrapper}>
+              <Typography variant="h5" gutterBottom align="center">
+                1. Dataset Name
+              </Typography>
+              <Grid
+                container
+                direction="row"
+                justify="space-evenly"
+                alignItems="center"
+              >
                 <Grid item>
-                  <SearchIcon className={classes.block} color="inherit" />
-                </Grid>
-                <Grid item xs>
                   <TextField
-                    fullWidth
-                    placeholder="Search by email address, phone number, or user UID"
-                    InputProps={{
-                      disableUnderline: true,
-                      className: classes.searchInput,
+                    id="existing-dataset-names"
+                    select
+                    label="Select from datasets"
+                    className={classes.textField}
+                    value={this.state.DataSetName}
+                    onChange={() => {}}
+                    SelectProps={{
+                      MenuProps: {
+                        className: classes.menu,
+                      },
                     }}
+                    helperText="Please select your dataset"
+                    margin="normal"
+                  >
+                    {currencies.map(option => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>                
+                <Grid item>
+                  <FormControlLabel
+                    className={classes.cock}
+                    control={
+                      <Checkbox
+                        checked={false}
+                        onChange={() => {}}
+                        value="useTeams"
+                      />
+                    }
+                    disabled={false}
+                    label="Create new dataset"
                   />
                 </Grid>
                 <Grid item>
-                  <Button variant="contained" color="primary" className={classes.addUser}>
-                    Add user
-                  </Button>
-                  <Tooltip title="Reload">
-                    <IconButton>
-                      <RefreshIcon className={classes.block} color="inherit" />
-                    </IconButton>
-                  </Tooltip>
+                  <TextField
+                    id="new-dataset-name"
+                    label="New Dataset"
+                    className={classes.textField}
+                    value={this.state.DataSetName}
+                    onChange={() => console.log("textfield clicked")}
+                    margin="normal"
+                  />              
                 </Grid>
               </Grid>
-            </Toolbar>
-          </AppBar>
-          <div className={classes.contentWrapper}>
-            <Typography color="textSecondary" align="center">
-              No users for this project yet
-            </Typography>
-          </div>
-        </Paper>
+              <Typography variant="h5" gutterBottom align="center">
+                2. Branch Name
+              </Typography>
+              <Grid
+                container
+                direction="row"
+                justify="space-evenly"
+                alignItems="center"
+              >
+                <Grid item>
+                  <TextField
+                    id="existing-branch-names"
+                    select
+                    label="Default is master"
+                    className={classes.textField}
+                    value={this.state.BranchName}
+                    onChange={() => {}}
+                    SelectProps={{
+                      MenuProps: {
+                        className: classes.menu,
+                      },
+                    }}
+                    helperText="Please select your branch"
+                    margin="normal"
+                  >
+                    {currencies.map(option => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+                <Grid item>
+                  <FormControlLabel
+                    className={classes.cock}
+                    control={
+                      <Checkbox
+                        checked={false}
+                        onChange={() => {}}
+                        value="useTeams"
+                      />
+                    }
+                    disabled={false}
+                    label="Create new branch"
+                  />
+                </Grid>
+                <Grid item>
+                  <TextField
+                    id="new-branch-name"
+                    label="New Branch"
+                    className={classes.textField}
+                    value={this.state.BranchName}
+                    onChange={() => console.log("textfield clicked")}
+                    margin="normal"
+                  />              
+                </Grid>
+              </Grid>
+              <Typography variant="h5" gutterBottom align="center">
+                3. Upload CSV
+              </Typography>
+              <Dropzone
+                accept={"text/plain, application/vnd.ms-excel"}
+                onDrop={this.onDrop}
+                multiple={false}
+              >
+                {({ getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject }) => {
+                  let styles = {...baseStyle}
+                  styles = isDragActive ? {...styles, ...activeStyle} : styles
+                  styles = isDragReject ? {...styles, ...rejectStyle} : styles
+
+                  return (
+                    <div
+                      {...getRootProps()}
+                      style={styles}
+                    >
+                      <input {...getInputProps()} />
+                      <div>
+                        {isDragAccept ? 'Drop' : 'Drag'} files here...
+                      </div>
+                      {isDragReject && <div>Unsupported file type...</div>}
+                    </div>
+                  )
+                }}
+              </Dropzone>
+              <h4>CSV File:</h4>
+              <ul>{files}</ul>
+              <br />
+              <Typography variant="h5" gutterBottom align="center">
+                4. Dataset Schema
+              </Typography>
+              <Grid
+                container
+                direction="row"
+                justify="space-evenly"
+                alignItems="center"
+              >
+                <Grid item>
+                  <FormControlLabel
+                    className={classes.cock}
+                    control={
+                      <Checkbox
+                        checked={false}
+                        onChange={() => {}}
+                        value="useTeams"
+                      />
+                    }
+                    disabled={false}
+                    label="CSV First Row as Schema"
+                  />
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                direction="row"
+                justify="flex-end"
+                alignItems="center"
+              >
+              <Button variant="contained" color="primary">
+                COMMIT
+              </Button>
+              </Grid>
+            </div>
+          </Paper>
           <pre>{this.state.apiRes}</pre>
         </main>
       </React.Fragment>
