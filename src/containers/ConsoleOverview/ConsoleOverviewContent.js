@@ -66,7 +66,10 @@ class ConsoleOverviewContent extends React.Component {
           Tab2={""}
         />
         <main className={classes.mainContent}>
-          <pre>{this.state.apiRes}</pre>
+          {this.state.ResultLoading
+            ? "updating..."
+            : <pre>{this.state.apiRes}</pre>
+          }
         </main>
       </React.Fragment>
     )

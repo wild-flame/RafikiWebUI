@@ -8,6 +8,7 @@ import ConsoleAuth from '../ConsoleAuth/ConsoleAuth';
 import ConsoleTheme from "./ConsoleTheme"
 import ConsoleOverviewContent from "./ConsoleOverviewContent"
 import PutDataByCSV from "../RowTableCmds/PutDataByCSV"
+import ListDataSet from "../RowTableCmds/ListDataSet"
 // import { Redirect } from "react-router-dom"
 
 /*
@@ -80,6 +81,11 @@ class ConsoleOverview extends React.Component {
               exact
               path='/console'
               component={ConsoleOverviewContent}
+            />
+            <Route
+              exact
+              path='/console/row-based-table/list-dataset'
+              component={ListDataSet}
             />
             <Route
               exact
