@@ -145,9 +145,9 @@ class ListDataSet extends React.Component {
               <Typography color="textSecondary" align="center">
                 {this.state.ResultLoading
                   ? "checking..."
-                  : this.state.apiRes === []
-                    ? "Datasets and Branches"
-                    : "You do not have any dataset"
+                  : this.state.apiRes.length === 0
+                    ? "You do not have any dataset"
+                    : "Datasets and Branches"
                 }
               </Typography>
               <Table className={classes.table}>
