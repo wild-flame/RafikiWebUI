@@ -4,6 +4,14 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import HTTPconfig from "../../HTTPConfig"
 import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import RefreshIcon from '@material-ui/icons/Refresh';
 import Header from '../../components/ConsoleHeader/Header';
 
 
@@ -13,12 +21,38 @@ const styles = theme => ({
     padding: '48px 36px 0',
     background: '#eaeff1', // light grey
   },
+  paper: {
+    maxWidth: 936,
+    margin: 'auto',
+    overflow: 'hidden',
+  },
+  searchBar: {
+    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+  },
+  searchInput: {
+    fontSize: theme.typography.fontSize,
+  },
+  block: {
+    display: 'block',
+  },
+  menu: {
+    width: 200,
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
+  },
+  contentWrapper: {
+    margin: '10px 16px',
+  }
 })
 
 class ConsoleOverviewContent extends React.Component {
   state = {
     ResultLoading: false,
-    apiRes: "",
+    apiResInfo: "",
+    apiResSize: "",
     mobileOpen: false
   }
 
@@ -40,9 +74,15 @@ class ConsoleOverviewContent extends React.Component {
         method: 'get',
         url: `${HTTPconfig.gateway}api/info`,
       });
+      const DBSize = await axios({
+        method: 'get',
+        url: `${HTTPconfig.gateway}api/size`,
+      })
+      console.log(DBSize)
       await this.setState({
         ResultLoading: false,
-        apiRes: DBInfo.data.DBInfo,
+        apiResInfo: DBInfo.data.DBInfo,
+        apiResSize: DBSize.data.DBSize
       });
     } catch (error) {
       // if server service error
@@ -56,20 +96,41 @@ class ConsoleOverviewContent extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log(this.state.apiRes)
     return (
       <React.Fragment>
         <Header
           onDrawerToggle={this.handleDrawerToggle}
           title={"Database Overview"}
-          Tab1={"Info"}
-          Tab2={""}
         />
         <main className={classes.mainContent}>
-          {this.state.ResultLoading
-            ? "updating..."
-            : <pre>{this.state.apiRes}</pre>
-          }
+          <Paper className={classes.paper}>
+            <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
+              <Toolbar>
+                <Grid container spacing={16} justify="space-between" alignItems="center">
+                  <Grid item>
+                    <Typography variant="h5" gutterBottom>
+                      Total Database Size: {this.state.apiResSize}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Tooltip title="Reload">
+                      <IconButton>
+                        <RefreshIcon className={classes.block} color="inherit" />
+                      </IconButton>
+                    </Tooltip>
+                  </Grid>
+                </Grid>
+              </Toolbar>
+            </AppBar>
+            <div className={classes.contentWrapper}>
+              <Typography color="textSecondary" align="center">
+                {this.state.ResultLoading
+                  ? "updating..."
+                  : <pre>{this.state.apiResInfo}</pre>
+                }
+              </Typography>
+            </div>
+          </Paper>
         </main>
       </React.Fragment>
     )
