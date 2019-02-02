@@ -91,7 +91,7 @@ const rejectStyle = {
 };
 
 
-class ConsoleOverviewContent extends React.Component {
+class PutDataByCSV extends React.Component {
   state = {
     ResultLoading: false,
     apiRes: "",
@@ -342,7 +342,6 @@ class ConsoleOverviewContent extends React.Component {
               </Grid>
             </div>
           </Paper>
-          <pre>{this.state.apiRes}</pre>
         </main>
       </React.Fragment>
     )
@@ -350,4 +349,4 @@ class ConsoleOverviewContent extends React.Component {
 }
 
 
-export default withStyles(styles)(ConsoleOverviewContent)
+export default withStyles(styles)(PutDataByCSV)
