@@ -354,12 +354,12 @@ class Navigator extends React.Component {
             <ListItem
               button
               component={Link}
-              to="/console/row-based-table/get-data-entries"
+              to="/console/row-based-table/get-data-entry"
               dense
               className={classNames(
                 classes.item,
                 classes.itemActionable,
-                location.pathname === "/console/row-based-table/get-data-entries" &&
+                location.pathname === "/console/row-based-table/get-data-entry" &&
                 classes.itemActiveItem,
               )}
             >
@@ -372,7 +372,7 @@ class Navigator extends React.Component {
                   textDense: classes.textDense,
                 }}
               >
-                Get Data Entries
+                Get Data Entry
               </ListItemText>
             </ListItem>
             <ListItem
