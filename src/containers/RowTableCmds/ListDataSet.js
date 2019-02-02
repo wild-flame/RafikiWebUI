@@ -18,6 +18,13 @@ import SearchIcon from '@material-ui/icons/Search';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import Header from '../../components/ConsoleHeader/Header';
 
+// table
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+
 
 const styles = theme => ({
   mainContent: {
@@ -47,10 +54,11 @@ const styles = theme => ({
   },
 })
 
+
 class ListDataSet extends React.Component {
   state = {
     ResultLoading: false,
-    apiRes: "",
+    apiRes: [],
     mobileOpen: false
   }
 
@@ -72,6 +80,13 @@ class ListDataSet extends React.Component {
         method: 'get',
         url: `${HTTPconfig.gateway}api/ls-ds`,
       });
+      if (result === []) {
+        await this.setState({
+          ResultLoading: false,
+          apiRes: [],
+        });
+        return
+      }
       await this.setState({
         ResultLoading: false,
         apiRes: result.data.result,
@@ -128,12 +143,39 @@ class ListDataSet extends React.Component {
             </AppBar>
             <div className={classes.contentWrapper}>
               <Typography color="textSecondary" align="center">
-                {this.state.apiRes === ""
-                  ? "no dataset exists yet"
-                  : this.state.apiRes
+                {this.state.ResultLoading
+                  ? "checking..."
+                  : this.state.apiRes === []
+                    ? "Datasets and Branches"
+                    : "You do not have any dataset"
                 }
               </Typography>
-              
+              <Table className={classes.table}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Dataset Name</TableCell>
+                    <TableCell>Branches</TableCell>
+                    <TableCell>Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {this.state.apiRes.map((row, index) => (
+                    <TableRow key={index}>
+                      <TableCell component="th" scope="row">
+                        {row[0]}
+                      </TableCell>
+                      <TableCell>
+                        {row[1]}
+                      </TableCell>
+                      <TableCell>
+                        <Button variant="contained" color="secondary">
+                          View History
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </div>
           </Paper>
         </main>
