@@ -49,22 +49,24 @@ const styles = theme => ({
   }
 })
 
-const currencies = [
+const datasetBranches = [
+  // ls-ds-branch -t ds9
+  // [SUCCESS: LIST_DATASET_BRANCH] Branches: ["master"]
   {
-    value: 'USD',
-    label: '$',
+    dataset: 'ds1',
+    branches: ["master"]
   },
   {
-    value: 'EUR',
-    label: '€',
+    dataset: 'ds9',
+    branches: ["master"]
   },
   {
-    value: 'BTC',
-    label: '฿',
+    dataset: 'BTC',
+    branches: ["master", "dev"]
   },
   {
-    value: 'JPY',
-    label: '¥',
+    dataset: 'JPY',
+    branches: ["master", "newFeature"]
   },
 ];
 
@@ -73,27 +75,23 @@ class PutDataEntry extends React.Component {
     ResultLoading: false,
     apiRes: "",
     mobileOpen: false,
-    putDeInput: {
-      key:"ds9",
-      branch:"master",
-      entry: "row2",
-      value:"this is the first key i put into the forkbase"
-    }
+    key:"",
+    branch:"",
+    entry: "",
+    value:""
   }
 
-  onDrop = (files) => {
-    this.setState({files});
-  }
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
 
   handleDrawerToggle = () => {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
 
-  async componentDidMount() {
-    await this.loadDBInfo()
-  }
-
-  async loadDBInfo() {
+  async uploadData() {
     await this.setState({
       ResultLoading: true,
     });
@@ -103,7 +101,15 @@ class PutDataEntry extends React.Component {
         method: 'post',
         url: `${HTTPconfig.gateway}api/put-de`,
         headers: HTTPconfig.HTTP_HEADER,
-        data: this.state.putDeInput,
+        data: Object.assign(
+          {
+            "key": this.state.key,
+            "branch": this.state.branch,
+            "entry": this.state.entry,
+            "value": this.state.value
+          },
+          {}
+        )
       });
       await this.setState({
         ResultLoading: false,
@@ -122,6 +128,7 @@ class PutDataEntry extends React.Component {
   render() {
     const { classes } = this.props;
     console.log(this.state.apiRes)
+    console.log(this.state)
     return (
       <React.Fragment>
         <Header
@@ -138,124 +145,156 @@ class PutDataEntry extends React.Component {
               </Toolbar>
             </AppBar>
             <div className={classes.contentWrapper}>
-              <Typography variant="h5" gutterBottom align="center">
-                1. Dataset Name
-              </Typography>
-              <Grid
-                container
-                direction="row"
-                justify="space-evenly"
-                alignItems="center"
-              >
-                <Grid item>
-                  <TextField
-                    id="existing-dataset-names"
-                    select
-                    label="Select from datasets"
-                    className={classes.textField}
-                    value={this.state.DataSetName}
-                    onChange={() => {}}
-                    SelectProps={{
-                      MenuProps: {
-                        className: classes.menu,
-                      },
-                    }}
-                    helperText="Please select your dataset"
-                    margin="normal"
-                  >
-                    {currencies.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
+              <Grid container spacing={24}>
+                <Grid item xs={6}>
+                  <Paper>
+                    <Typography variant="h5" gutterBottom align="center">
+                      1. Dataset Name
+                    </Typography>
+                    <Grid
+                      container
+                      direction="row"
+                      justify="space-evenly"
+                      alignItems="center"
+                    >
+                      <Grid item>
+                        <TextField
+                          id="existing-dataset-names"
+                          select
+                          label="Select from datasets"
+                          className={classes.textField}
+                          value={this.state.key}
+                          onChange={this.handleChange('key')}
+                          SelectProps={{
+                            MenuProps: {
+                              className: classes.menu,
+                            },
+                          }}
+                          helperText="Please select your dataset"
+                          margin="normal"
+                        >
+                          {datasetBranches.map(option => (
+                            <MenuItem key={option.dataset} value={option.dataset}>
+                              {option.dataset}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      </Grid>
+                    </Grid>
+                    <br />
+                    <Typography variant="h5" gutterBottom align="center">
+                      2. Branch Name
+                    </Typography>
+                    <Grid
+                      container
+                      direction="row"
+                      justify="space-evenly"
+                      alignItems="center"
+                    >
+                      <Grid item>
+                        <TextField
+                          id="existing-branch-names"
+                          select
+                          label="Default is master"
+                          className={classes.textField}
+                          value={this.state.branch}
+                          onChange={this.handleChange("branch")}
+                          SelectProps={{
+                            MenuProps: {
+                              className: classes.menu,
+                            },
+                          }}
+                          helperText="Please select your branch"
+                          margin="normal"
+                        >
+                          {this.state.key
+                            ? (datasetBranches.filter(item => item.dataset === this.state.key)[0]
+                                .branches.map(item => (
+                                  <MenuItem key={item} value={item}>
+                                    {item}
+                                  </MenuItem>
+                                ))
+                            )
+                            : (
+                              <MenuItem value={"master"}>
+                                {"master"}
+                              </MenuItem>
+                            )
+                          }
+                        </TextField>
+                      </Grid>
+                    </Grid>
+                    <br />
+                    <Typography variant="h5" gutterBottom align="center">
+                      3. Row Entry Key
+                    </Typography>
+                    <Grid
+                      container
+                      direction="row"
+                      justify="space-evenly"
+                      alignItems="center"
+                    >
+                      <Grid item>
+                        <TextField
+                          id="row-entry-key"
+                          label="Row Entry Key"
+                          className={classes.textField}
+                          value={this.state.DataSetName}
+                          onChange={this.handleChange("entry")}
+                          margin="normal"
+                        />
+                      </Grid>
+                    </Grid>
+                    <br />
+                    <Typography variant="h5" gutterBottom align="center">
+                      4. Value
+                    </Typography>
+                    <Grid
+                      container
+                      direction="row"
+                      justify="space-evenly"
+                      alignItems="center"
+                    >
+                      <Grid item>
+                        <TextField
+                          id="put-value"
+                          label="Value"
+                          className={classes.textField}
+                          value={this.state.DataSetName}
+                          onChange={this.handleChange("value")}
+                          margin="normal"
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid
+                      container
+                      direction="row"
+                      justify="flex-end"
+                      alignItems="center"
+                    >
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => this.uploadData()}
+                      >
+                        COMMIT
+                      </Button>
+                    </Grid>
+                  </Paper>
                 </Grid>
-              </Grid>
-              <br />
-              <Typography variant="h5" gutterBottom align="center">
-                2. Branch Name
-              </Typography>
-              <Grid
-                container
-                direction="row"
-                justify="space-evenly"
-                alignItems="center"
-              >
-                <Grid item>
-                  <TextField
-                    id="existing-branch-names"
-                    select
-                    label="Default is master"
-                    className={classes.textField}
-                    value={this.state.BranchName}
-                    onChange={() => {}}
-                    SelectProps={{
-                      MenuProps: {
-                        className: classes.menu,
-                      },
-                    }}
-                    helperText="Please select your branch"
-                    margin="normal"
-                  >
-                    {currencies.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
+                <Grid item xs={6}>
+                  <Paper>
+                    <Typography variant="h5" gutterBottom align="center">
+                      Forkbase Status:
+                    </Typography>
+                    <Typography component="p">
+                      <b>{this.state.apiRes[0]}</b>
+                      <br />
+                      {this.state.apiRes[1]}
+                    </Typography>
+                    <br />
+                  </Paper>
                 </Grid>
-              </Grid>
-              <br />
-              <Typography variant="h5" gutterBottom align="center">
-                3. Row Entry Key
-              </Typography>
-              <Grid
-                container
-                direction="row"
-                justify="space-evenly"
-                alignItems="center"
-              >
-                <Grid item>
-                  <TextField
-                    id="row-entry-key"
-                    label="Row Entry Key"
-                    className={classes.textField}
-                    value={this.state.DataSetName}
-                    onChange={() => console.log("textfield clicked")}
-                    margin="normal"
-                  />
-                </Grid>
-              </Grid>
-              <br />
-              <Typography variant="h5" gutterBottom align="center">
-                4. Value
-              </Typography>
-              <Grid
-                container
-                direction="row"
-                justify="space-evenly"
-                alignItems="center"
-              >
-                <Grid item>
-                  <TextField
-                    id="put-value"
-                    label="Value"
-                    className={classes.textField}
-                    value={this.state.DataSetName}
-                    onChange={() => console.log("textfield clicked")}
-                    margin="normal"
-                  />
-                </Grid>
-              </Grid>
-              <Grid
-                container
-                direction="row"
-                justify="flex-end"
-                alignItems="center"
-              >
-              <Button variant="contained" color="primary">
-                COMMIT
-              </Button>
               </Grid>
             </div>
           </Paper>
