@@ -9,6 +9,7 @@ import ConsoleTheme from "./ConsoleTheme"
 import ConsoleOverviewContent from "./ConsoleOverviewContent"
 import PutDataByCSV from "../RowTableCmds/PutDataByCSV"
 import ListDataSet from "../RowTableCmds/ListDataSet"
+import PutDataEntry from "../RowTableCmds/PutDataEntry"
 // import { Redirect } from "react-router-dom"
 
 /*
@@ -91,6 +92,11 @@ class ConsoleOverview extends React.Component {
               exact
               path='/console/row-based-table/put-data-by-csv'
               component={PutDataByCSV}
+            />
+            <Route
+              exact
+              path='/console/row-based-table/put-data-entry'
+              component={PutDataEntry}
             />
             <Route
               exact
