@@ -75,7 +75,7 @@ class PutDataEntry extends React.Component {
     ResultLoading: false,
     apiRes: "",
     mobileOpen: false,
-    key:"",
+    dataset:"",
     branch:"",
     entry: "",
     value:""
@@ -103,7 +103,7 @@ class PutDataEntry extends React.Component {
         headers: HTTPconfig.HTTP_HEADER,
         data: Object.assign(
           {
-            "key": this.state.key,
+            "dataset": this.state.dataset,
             "branch": this.state.branch,
             "entry": this.state.entry,
             "value": this.state.value
@@ -163,8 +163,8 @@ class PutDataEntry extends React.Component {
                           select
                           label="Select from datasets"
                           className={classes.textField}
-                          value={this.state.key}
-                          onChange={this.handleChange('key')}
+                          value={this.state.dataset}
+                          onChange={this.handleChange('dataset')}
                           SelectProps={{
                             MenuProps: {
                               className: classes.menu,
@@ -207,8 +207,8 @@ class PutDataEntry extends React.Component {
                           helperText="Please select your branch"
                           margin="normal"
                         >
-                          {this.state.key
-                            ? (datasetBranches.filter(item => item.dataset === this.state.key)[0]
+                          {this.state.dataset
+                            ? (datasetBranches.filter(item => item.dataset === this.state.dataset)[0]
                                 .branches.map(item => (
                                   <MenuItem key={item} value={item}>
                                     {item}
