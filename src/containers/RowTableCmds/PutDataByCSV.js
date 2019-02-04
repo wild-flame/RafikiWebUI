@@ -112,6 +112,7 @@ class PutDataByCSV extends React.Component {
     newDataset:"",
     branch:"",
     newBranch:"",
+    referBranch:"",
     files: []
   }
 
@@ -163,6 +164,67 @@ class PutDataByCSV extends React.Component {
     }
   }
 
+  async combinedCall() {
+    await this.createDS()
+    await this.uploadData()
+    await this.putCSV()
+  }
+
+  // create new dataset or new branch
+  async createDS() {
+    await this.setState({
+      DSLoading: true,
+    });
+    // send a POST request
+    try {
+      // create new dataset
+      if (this.state.checkedNewDataset) {
+        const result = await axios({
+          method: 'post',
+          url: `${HTTPconfig.gateway}api/create-ds`,
+          headers: HTTPconfig.HTTP_HEADER,
+          data: Object.assign(
+            {
+              "dataset": this.state.newDataset,
+              "branch": "master",
+            },
+            {}
+          )
+        });
+        await this.setState({
+          DSLoading: false,
+          ResponseDS: result.data.result,
+        });
+        // create new branch
+      } else if (this.state.checkedNewBranch) {
+        const result = await axios({
+          method: 'post',
+          url: `${HTTPconfig.gateway}api/branch-ds`,
+          headers: HTTPconfig.HTTP_HEADER,
+          data: Object.assign(
+            {
+              "dataset": this.state.dataset,
+              "branch": this.state.newBranch,
+              "referBranch": this.state.referBranch
+            },
+            {}
+          )
+        });
+        await this.setState({
+          DSLoading: false,
+          ResponseDS: result.data.result,
+        });
+      }
+    } catch (error) {
+      // if server service error
+      console.error(error);
+      // change state for UI
+      await this.setState({
+        DSLoading: false,
+      });
+    }
+  }
+
   // upload csv to python server and read the response
   async uploadData() {
     await this.setState({
@@ -193,6 +255,36 @@ class PutDataByCSV extends React.Component {
     }
   }
 
+  // upload csv to python server and read the response
+  async putCSV() {
+    await this.setState({
+      PUTCSVLoading: true,
+    });
+    // send a POST request
+    // Initial FormData
+    const formData = new FormData();
+    formData.append("file", this.state.files[0]);
+    try {
+      const result = await axios({
+        method: 'post',
+        url: `${HTTPconfig.gateway}api/put-de-by-csv`,
+        headers: HTTPconfig.HTTP_HEADER,
+        data: formData
+      });
+      await this.setState({
+        FileLoading: false,
+        ResponseFile: result.data.result,
+      });
+    } catch (error) {
+      // if server service error
+      console.error(error);
+      // change state for UI
+      await this.setState({
+        PUTCSVLoading: false,
+      });
+    }
+  }
+
   render() {
     const files = this.state.files.map(file => (
       <li key={file.name}>
@@ -200,8 +292,6 @@ class PutDataByCSV extends React.Component {
       </li>
     ))
     const { classes } = this.props;
-    console.log("apiRes returned is: ", this.state.apiRes)
-    console.log("state.files is: ", this.state.files[0])
     return (
       <React.Fragment>
         <Header
@@ -343,6 +433,39 @@ class PutDataByCSV extends React.Component {
                           disabled={!this.state.checkedNewBranch}
                         />              
                       </Grid>
+                      <Grid item>
+                        <TextField
+                          id="refer-branch-names"
+                          select
+                          label="Refer Branch"
+                          className={classes.textField}
+                          value={this.state.checkedNewBranch && this.state.referBranch}
+                          onChange={this.handleChange("referBranch")}
+                          SelectProps={{
+                            MenuProps: {
+                              className: classes.menu,
+                            },
+                          }}
+                          helperText="Please select a refer branch"
+                          margin="normal"
+                          disabled={!this.state.checkedNewBranch}
+                        >
+                          {this.state.dataset
+                            ? (datasetBranches.filter(item => item.dataset === this.state.dataset)[0]
+                                .branches.map(item => (
+                                  <MenuItem key={item} value={item}>
+                                    {item}
+                                  </MenuItem>
+                                ))
+                            )
+                            : (
+                              <MenuItem value={"master"}>
+                                {"master"}
+                              </MenuItem>
+                            )
+                          }
+                        </TextField>
+                      </Grid>
                     </Grid>
                     <Typography variant="h5" gutterBottom align="center">
                       3. Upload CSV
@@ -417,9 +540,9 @@ class PutDataByCSV extends React.Component {
                     <Typography variant="h5" gutterBottom align="center">
                       Forkbase Status:
                     </Typography>
-                    <div>...</div>
-                    <div>...</div>
-                    <div>...</div>
+                    <div>{this.state.ResponseDS}</div>
+                    <div>{this.state.ResponseFile}</div>
+                    <div>{this.state.ResponsePUT}</div>
                   </Paper>
                 </Grid>
               </Grid>
