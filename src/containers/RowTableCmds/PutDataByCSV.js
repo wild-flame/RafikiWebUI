@@ -414,6 +414,7 @@ class PutDataByCSV extends React.Component {
                         <FormControlLabel
                           control={
                             <Switch
+                              disabled={this.state.checkedNewDataset}
                               checked={this.state.checkedNewBranch}
                               onChange={this.handleSwitch("checkedNewBranch")}
                               value="checkedNewBranch"
@@ -427,10 +428,10 @@ class PutDataByCSV extends React.Component {
                           id="new-branch-name"
                           label="New Branch"
                           className={classes.textField}
-                          value={this.state.checkedNewBranch && this.state.newBranch}
+                          value={!this.state.checkedNewDataset && this.state.checkedNewBranch && this.state.newBranch}
                           onChange={this.handleChange("newBranch")}
                           margin="normal"
-                          disabled={!this.state.checkedNewBranch}
+                          disabled={this.state.checkedNewDataset || !this.state.checkedNewBranch}
                         />              
                       </Grid>
                       <Grid item>
@@ -439,7 +440,7 @@ class PutDataByCSV extends React.Component {
                           select
                           label="Refer Branch"
                           className={classes.textField}
-                          value={this.state.checkedNewBranch && this.state.referBranch}
+                          value={!this.state.checkedNewDataset && this.state.checkedNewBranch && this.state.referBranch}
                           onChange={this.handleChange("referBranch")}
                           SelectProps={{
                             MenuProps: {
