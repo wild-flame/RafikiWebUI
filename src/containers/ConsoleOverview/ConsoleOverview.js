@@ -1,8 +1,12 @@
 import React from 'react';
+import { connect } from "react-redux"
+import { compose } from "redux"
 import PropTypes from 'prop-types';
 import { Route } from "react-router-dom"
+
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
+
 import Navigator from '../../components/ConsoleSideBar/Navigator';
 import ConsoleTheme from "./ConsoleTheme"
 import ConsoleOverviewContent from "./ConsoleOverviewContent"
@@ -10,6 +14,9 @@ import PutDataByCSV from "../RowTableCmds/PutDataByCSV"
 import ListDataSet from "../RowTableCmds/ListDataSet"
 import PutDataEntry from "../RowTableCmds/PutDataEntry"
 import Header from '../../components/ConsoleHeader/Header';
+
+import * as actions from "./actions"
+
 // import { Redirect } from "react-router-dom"
 
 /*
@@ -45,21 +52,20 @@ const styles = theme => ({
 })
 
 class ConsoleOverview extends React.Component {
-  // TODO: lift this mobileOpen to redux as this is shared
-  state = {
-    mobileOpen: false,
-  };
-
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    mobileOpen: PropTypes.bool,
+    headerTitle: PropTypes.string,
+    handleDrawerToggle: PropTypes.func,
   }
 
-  handleDrawerToggle = () => {
-    this.setState(state => ({ mobileOpen: !state.mobileOpen }));
-  };
-
   render() {
-    const { classes } = this.props;
+    const {
+      classes,
+      handleDrawerToggle,
+      headerTitle,
+      mobileOpen
+    } = this.props;
 
     return (
       <MuiThemeProvider theme={ConsoleTheme}>
@@ -69,8 +75,8 @@ class ConsoleOverview extends React.Component {
               <Navigator
                 PaperProps={{ style: { width: drawerWidth } }}
                 variant="temporary"
-                open={this.state.mobileOpen}
-                onClose={this.handleDrawerToggle}
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
               />
             </Hidden>
             <Hidden xsDown implementation="css">
@@ -79,8 +85,8 @@ class ConsoleOverview extends React.Component {
           </nav>
           <div className={classes.appContent}>
             <Header
-              onDrawerToggle={this.handleDrawerToggle}
-              title={"Database Overview"}
+              onDrawerToggle={handleDrawerToggle}
+              title={headerTitle}
             />
             <Route
               exact
@@ -109,5 +115,20 @@ class ConsoleOverview extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  mobileOpen: state.ConsoleOverview.mobileOpen,
+  headerTitle: state.ConsoleOverview.headerTitle
+})
 
-export default withStyles(styles)(ConsoleOverview);
+const mapDispatchToProps = {
+  handleDrawerToggle: actions.handleDrawerToggle
+}
+
+
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
+  withStyles(styles)
+)(ConsoleOverview);
