@@ -172,14 +172,19 @@ class PutDataByCSV extends React.Component {
 
   // create new dataset or new branch
   async createDS() {
+    if (!this.state.checkedNewBranch || !this.state.checkedNewDataset) {
+      return
+    }
+    console.log("createDS called")
     await this.setState({
       DSLoading: true,
     });
     // send a POST request
+    let result
     try {
       // create new dataset
       if (this.state.checkedNewDataset) {
-        const result = await axios({
+        result = await axios({
           method: 'post',
           url: `${HTTPconfig.gateway}api/create-ds`,
           headers: HTTPconfig.HTTP_HEADER,
@@ -191,13 +196,9 @@ class PutDataByCSV extends React.Component {
             {}
           )
         });
-        await this.setState({
-          DSLoading: false,
-          ResponseDS: result.data.result,
-        });
-        // create new branch
+      // create new branch
       } else if (this.state.checkedNewBranch) {
-        const result = await axios({
+        result = await axios({
           method: 'post',
           url: `${HTTPconfig.gateway}api/branch-ds`,
           headers: HTTPconfig.HTTP_HEADER,
@@ -210,11 +211,11 @@ class PutDataByCSV extends React.Component {
             {}
           )
         });
-        await this.setState({
-          DSLoading: false,
-          ResponseDS: result.data.result,
-        });
       }
+      await this.setState({
+        DSLoading: false,
+        ResponseDS: result.data.result,
+      });
     } catch (error) {
       // if server service error
       console.error(error);
@@ -227,6 +228,7 @@ class PutDataByCSV extends React.Component {
 
   // upload csv to python server and read the response
   async uploadData() {
+    console.log("uploadData called")
     await this.setState({
       FileLoading: true,
     });
@@ -237,13 +239,14 @@ class PutDataByCSV extends React.Component {
     try {
       const result = await axios({
         method: 'post',
-        url: `${HTTPconfig.gateway}api/put-de-by-csv`,
+        url: `${HTTPconfig.gateway}api/upload-csv`,
         headers: HTTPconfig.UPLOAD_FILE,
         data: formData
       });
       await this.setState({
         FileLoading: false,
-        ResponseFile: result.data.result,
+        // ResponseFile is a path string
+        ResponseFile: result.data.result
       });
     } catch (error) {
       // if server service error
@@ -261,19 +264,60 @@ class PutDataByCSV extends React.Component {
       PUTCSVLoading: true,
     });
     // send a POST request
-    // Initial FormData
-    const formData = new FormData();
-    formData.append("file", this.state.files[0]);
+    let result
     try {
-      const result = await axios({
-        method: 'post',
-        url: `${HTTPconfig.gateway}api/put-de-by-csv`,
-        headers: HTTPconfig.HTTP_HEADER,
-        data: formData
-      });
+      // create new dataset
+      if (this.state.checkedNewDataset) {
+        result = await axios({
+          method: 'post',
+          url: `${HTTPconfig.gateway}api/put-de-by-csv`,
+          headers: HTTPconfig.HTTP_HEADER,
+          data: Object.assign(
+            {
+              "dataset": this.state.newDataset,
+              "branch": "master",
+              "filepath": this.state.ResponseFile,
+              "withSchema": "--with-schema"
+            },
+            {}
+          )
+        });
+      // create new branch
+      } else if (this.state.checkedNewBranch) {
+        result = await axios({
+          method: 'post',
+          url: `${HTTPconfig.gateway}api/put-de-by-csv`,
+          headers: HTTPconfig.HTTP_HEADER,
+          data: Object.assign(
+            {
+              "dataset": this.state.dataset,
+              "branch": this.state.newBranch,
+              "filepath": this.state.ResponseFile,
+              "withSchema": ""
+            },
+            {}
+          )
+        });
+      // update existing databast and branch
+      } else {
+        result = await axios({
+          method: 'post',
+          url: `${HTTPconfig.gateway}api/put-de-by-csv`,
+          headers: HTTPconfig.HTTP_HEADER,
+          data: Object.assign(
+            {
+              "dataset": this.state.dataset,
+              "branch": this.state.branch,
+              "filepath": this.state.ResponseFile,
+              "withSchema": ""
+            },
+            {}
+          )
+        })
+      }
       await this.setState({
-        FileLoading: false,
-        ResponseFile: result.data.result,
+        PUTCSVLoading: false,
+        ResponsePUT: result.data.result,
       });
     } catch (error) {
       // if server service error
@@ -529,7 +573,7 @@ class PutDataByCSV extends React.Component {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={() => this.uploadData()}
+                      onClick={() => this.combinedCall()}
                     >
                       COMMIT
                     </Button>
@@ -541,9 +585,21 @@ class PutDataByCSV extends React.Component {
                     <Typography variant="h5" gutterBottom align="center">
                       Forkbase Status:
                     </Typography>
-                    <div>{this.state.ResponseDS}</div>
-                    <div>{this.state.ResponseFile}</div>
-                    <div>{this.state.ResponsePUT}</div>
+                    <Typography component="p">
+                      <b>{this.state.ResponseDS[0]}</b>
+                      <br />
+                      {this.state.ResponseDS[1]}
+                    </Typography>
+                    {this.state.ResponseFile &&
+                      <div>{this.state.files[0]["name"]} uploaded!</div>
+                    }
+                    <Typography component="p">
+                      <b>{this.state.ResponsePUT[0]}</b>
+                      <br />
+                      {this.state.ResponsePUT[1]}
+                      <br />
+                      {this.state.ResponsePUT[2]}
+                    </Typography>
                   </Paper>
                 </Grid>
               </Grid>
