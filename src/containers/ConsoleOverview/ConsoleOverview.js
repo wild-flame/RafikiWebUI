@@ -4,12 +4,12 @@ import { Route } from "react-router-dom"
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
 import Navigator from '../../components/ConsoleSideBar/Navigator';
-import ConsoleAuth from '../ConsoleAuth/ConsoleAuth';
 import ConsoleTheme from "./ConsoleTheme"
 import ConsoleOverviewContent from "./ConsoleOverviewContent"
 import PutDataByCSV from "../RowTableCmds/PutDataByCSV"
 import ListDataSet from "../RowTableCmds/ListDataSet"
 import PutDataEntry from "../RowTableCmds/PutDataEntry"
+import Header from '../../components/ConsoleHeader/Header';
 // import { Redirect } from "react-router-dom"
 
 /*
@@ -78,6 +78,10 @@ class ConsoleOverview extends React.Component {
             </Hidden>
           </nav>
           <div className={classes.appContent}>
+            <Header
+              onDrawerToggle={this.handleDrawerToggle}
+              title={"Database Overview"}
+            />
             <Route
               exact
               path='/console'
@@ -97,11 +101,6 @@ class ConsoleOverview extends React.Component {
               exact
               path='/console/row-based-table/put-data-entry'
               component={PutDataEntry}
-            />
-            <Route
-              exact
-              path='/console/authentication/users'
-              component={ConsoleAuth}
             />
           </div>
         </div>
