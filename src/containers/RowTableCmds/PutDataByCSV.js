@@ -338,10 +338,6 @@ class PutDataByCSV extends React.Component {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        <Header
-          onDrawerToggle={this.handleDrawerToggle}
-          title={"Row-based Table > Put Data by CSV"}
-        />
         <main className={classes.mainContent}>
           <Paper className={classes.paper}>
             <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>

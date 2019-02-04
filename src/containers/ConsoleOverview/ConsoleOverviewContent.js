@@ -12,7 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import Header from '../../components/ConsoleHeader/Header';
+
 
 
 const styles = theme => ({
@@ -52,7 +52,7 @@ class ConsoleOverviewContent extends React.Component {
   state = {
     ResultLoading: false,
     apiResInfo: "",
-    apiResSize: "",
+    apiResSize: "...Bytes",
     mobileOpen: false
   }
 
@@ -98,10 +98,6 @@ class ConsoleOverviewContent extends React.Component {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        <Header
-          onDrawerToggle={this.handleDrawerToggle}
-          title={"Database Overview"}
-        />
         <main className={classes.mainContent}>
           <Paper className={classes.paper}>
             <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
@@ -123,7 +119,7 @@ class ConsoleOverviewContent extends React.Component {
               </Toolbar>
             </AppBar>
             <div className={classes.contentWrapper}>
-              <Typography color="textSecondary" align="center">
+              <Typography color="textPrimary" component="pre" align="center">
                 {this.state.ResultLoading
                   ? "updating..."
                   : <pre>{this.state.apiResInfo}</pre>

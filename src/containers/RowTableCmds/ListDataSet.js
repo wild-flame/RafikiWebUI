@@ -106,10 +106,6 @@ class ListDataSet extends React.Component {
     console.log(this.state.apiRes)
     return (
       <React.Fragment>
-        <Header
-          onDrawerToggle={this.handleDrawerToggle}
-          title={"Row-based Table > List DataSet"}
-        />
         <main className={classes.mainContent}>
           <Paper className={classes.paper}>
             <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>

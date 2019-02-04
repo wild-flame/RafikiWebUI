@@ -131,10 +131,6 @@ class PutDataEntry extends React.Component {
     console.log(this.state)
     return (
       <React.Fragment>
-        <Header
-          onDrawerToggle={this.handleDrawerToggle}
-          title={"Row-based Table > Put Data Entry"}
-        />
         <main className={classes.mainContent}>
           <Paper className={classes.paper}>
             <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
