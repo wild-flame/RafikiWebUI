@@ -7,6 +7,9 @@ const HTTPconfig = {
   HTTP_HEADER: {
     "Content-Type": "application/json",
   },
+  UPLOAD_FILE: {
+    'Content-Type':'multipart/form-data',
+  },
   gateway: "http://localhost:5000/",
 }
 

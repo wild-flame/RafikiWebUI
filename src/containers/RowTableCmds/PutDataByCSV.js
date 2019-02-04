@@ -97,8 +97,14 @@ const rejectStyle = {
 
 class PutDataByCSV extends React.Component {
   state = {
-    ResultLoading: false,
-    apiRes: "",
+    LSLoading: false,
+    DSLoading: false,
+    FileLoading: false,
+    PUTCSVLoading: false,
+    ResponseLS: "",
+    ResponseDS: "",
+    ResponseFile: "",
+    ResponsePUT: "",
     mobileOpen: false,
     checkedNewDataset: false,
     checkedNewBranch: false,
@@ -130,12 +136,12 @@ class PutDataByCSV extends React.Component {
   };
 
   async componentDidMount() {
-    await this.loadDBInfo()
+    await this.loadLS()
   }
 
-  async loadDBInfo() {
+  async loadLS() {
     await this.setState({
-      ResultLoading: true,
+      LSLoading: true,
     });
     // send a GET request
     try {
@@ -144,22 +150,23 @@ class PutDataByCSV extends React.Component {
         url: `${HTTPconfig.gateway}api/ls-ds`,
       });
       await this.setState({
-        ResultLoading: false,
-        apiRes: result.data.result,
+        LSLoading: false,
+        ResponseLS: result.data.result,
       });
     } catch (error) {
       // if server service error
       console.error(error);
       // change state for UI
       await this.setState({
-        ResultLoading: false,
+        LSLoading: false,
       });
     }
   }
 
+  // upload csv to python server and read the response
   async uploadData() {
     await this.setState({
-      ResultLoading: true,
+      FileLoading: true,
     });
     // send a POST request
     // Initial FormData
@@ -169,19 +176,19 @@ class PutDataByCSV extends React.Component {
       const result = await axios({
         method: 'post',
         url: `${HTTPconfig.gateway}api/put-de-by-csv`,
-        headers: {'Content-Type':'multipart/form-data'},//HTTPconfig.HTTP_HEADER,
+        headers: HTTPconfig.UPLOAD_FILE,
         data: formData
       });
       await this.setState({
-        ResultLoading: false,
-        apiRes: result.data.result,
+        FileLoading: false,
+        ResponseFile: result.data.result,
       });
     } catch (error) {
       // if server service error
       console.error(error);
       // change state for UI
       await this.setState({
-        ResultLoading: false,
+        FileLoading: false,
       });
     }
   }
