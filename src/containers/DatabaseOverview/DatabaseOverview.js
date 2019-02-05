@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux"
 import { compose } from "redux"
-//axios to send ajax request
-import axios from 'axios';
-import HTTPconfig from "../../HTTPConfig"
 
+import * as actions from "./actions"
 import * as ConsoleActions from "../ConsoleAppFrame/actions"
 
 import { withStyles } from '@material-ui/core/styles';
@@ -17,6 +15,8 @@ import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh';
+
+import LoadingBar from 'react-redux-loading-bar'
 
 
 const styles = theme => ({
@@ -53,56 +53,26 @@ const styles = theme => ({
 })
 
 class DatabaseOverview extends React.Component {
-  state = {
-    ResultLoading: false,
-    apiResInfo: "",
-    apiResSize: "...Bytes",
-  }
-
   static propTypes = {
     classes: PropTypes.object.isRequired,
     handleHeaderTitleChange: PropTypes.func,
+    requestDBSize: PropTypes.func,
+    requestDBInfo: PropTypes.func,
+    DBInfo: PropTypes.string,
+    DBSize: PropTypes.string
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.props.handleHeaderTitleChange("Database Overview")
-    await this.loadDBInfo()
-  }
-
-  async loadDBInfo() {
-    await this.setState({
-      ResultLoading: true,
-    });
-    // send a GET request
-    try {
-      const DBInfo = await axios({
-        method: 'get',
-        url: `${HTTPconfig.gateway}api/info`,
-      });
-      const DBSize = await axios({
-        method: 'get',
-        url: `${HTTPconfig.gateway}api/size`,
-      })
-      console.log(DBSize)
-      await this.setState({
-        ResultLoading: false,
-        apiResInfo: DBInfo.data.DBInfo,
-        apiResSize: DBSize.data.DBSize
-      });
-    } catch (error) {
-      // if server service error
-      console.error(error);
-      // change state for UI
-      await this.setState({
-        ResultLoading: false,
-      });
-    }
+    this.props.requestDBSize()
+    this.props.requestDBInfo()
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, DBInfo, DBSize } = this.props;
     return (
       <React.Fragment>
+        <LoadingBar />
         <main className={classes.mainContent}>
           <Paper className={classes.paper}>
             <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
@@ -110,7 +80,7 @@ class DatabaseOverview extends React.Component {
                 <Grid container spacing={16} justify="space-between" alignItems="center">
                   <Grid item>
                     <Typography variant="h5" gutterBottom>
-                      Total Database Size: {this.state.apiResSize}
+                      Total Database Size: {DBSize}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -125,10 +95,7 @@ class DatabaseOverview extends React.Component {
             </AppBar>
             <div className={classes.contentWrapper}>
               <Typography color="textPrimary" component="pre" align="center">
-                {this.state.ResultLoading
-                  ? "updating..."
-                  : <pre>{this.state.apiResInfo}</pre>
-                }
+                <pre>{DBInfo}</pre>
               </Typography>
             </div>
           </Paper>
@@ -138,12 +105,18 @@ class DatabaseOverview extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  DBSize: state.DatabaseOverview.DBSize,
+  DBInfo: state.DatabaseOverview.DBInfo
+})
 
 const mapDispatchToProps = {
-  handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange
+  handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
+  requestDBSize: actions.requestDBSize,
+  requestDBInfo: actions.requestDBInfo
 }
 
 export default compose(
-  connect(null, mapDispatchToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles)
 )(DatabaseOverview)

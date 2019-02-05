@@ -4,13 +4,16 @@ import {
   fork,
   put
 } from "redux-saga/effects"
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import * as actions from "../containers/DatabaseOverview/actions"
 import * as api from "../services/OverviewAPI"
 
 
 function* getDBSize() {
   try{
+    yield put(showLoading())
     const DBSize = yield call(api.requestDBSize)
+    yield put(hideLoading())
     yield put(actions.populateDBSize(DBSize.data.DBSize))
   } catch(e) {
     console.error(e)
