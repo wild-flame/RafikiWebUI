@@ -5,7 +5,6 @@ import {
   Route 
  } from 'react-router-dom'
 
-import BoilerPlate from './containers/BoilerPlate/BoilerPlate';
 import LandingPage from "./containers/LandingPage/LandingPage"
 import SignIn from "./containers/SignInPage/SignIn"
 import SignUp from "./containers/SignUpPage/SignUp"
@@ -41,11 +40,6 @@ class App extends Component {
             // exact
             path='/console'
             component={ConsoleOverview}
-          />
-          <Route
-            exact
-            path='/boilerplate'
-            component={BoilerPlate}
           />
           <Route component={NoMatch} />
         </Switch>
