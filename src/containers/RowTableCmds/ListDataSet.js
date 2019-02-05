@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from "react-redux"
+import { compose } from "redux"
 //axios to send ajax request
 import axios from 'axios';
 import HTTPconfig from "../../HTTPConfig"
+
+import * as ConsoleActions from "../ConsoleOverview/actions"
 
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -16,7 +20,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import Header from '../../components/ConsoleHeader/Header';
 
 // table
 import Table from '@material-ui/core/Table';
@@ -59,14 +62,15 @@ class ListDataSet extends React.Component {
   state = {
     ResultLoading: false,
     apiRes: [],
-    mobileOpen: false
   }
 
-  handleDrawerToggle = () => {
-    this.setState(state => ({ mobileOpen: !state.mobileOpen }));
-  };
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    handleHeaderTitleChange: PropTypes.func,
+  }
 
   async componentDidMount() {
+    this.props.handleHeaderTitleChange("Row-based Table > List Dataset")
     await this.loadDBInfo()
   }
 
@@ -181,4 +185,11 @@ class ListDataSet extends React.Component {
 }
 
 
-export default withStyles(styles)(ListDataSet)
+const mapDispatchToProps = {
+  handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange
+}
+
+export default compose(
+  connect(null, mapDispatchToProps),
+  withStyles(styles)
+)(ListDataSet)

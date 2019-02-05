@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from "react-redux"
+import { compose } from "redux"
 //axios to send ajax request
 import axios from 'axios';
 import HTTPconfig from "../../HTTPConfig"
+
+import * as ConsoleActions from "../ConsoleOverview/actions"
+
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,7 +20,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from '@material-ui/core/Switch';
 import Checkbox from "@material-ui/core/Checkbox";
-import Header from '../../components/ConsoleHeader/Header';
+
 import Dropzone from 'react-dropzone'
 
 
@@ -105,7 +110,7 @@ class PutDataByCSV extends React.Component {
     ResponseDS: "",
     ResponseFile: "",
     ResponsePUT: "",
-    mobileOpen: false,
+
     checkedNewDataset: false,
     checkedNewBranch: false,
     dataset:"",
@@ -114,6 +119,11 @@ class PutDataByCSV extends React.Component {
     newBranch:"",
     referBranch:"",
     files: []
+  }
+
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    handleHeaderTitleChange: PropTypes.func,
   }
 
   handleChange = name => event => {
@@ -132,14 +142,11 @@ class PutDataByCSV extends React.Component {
     this.setState({files});
   }
 
-  handleDrawerToggle = () => {
-    this.setState(state => ({ mobileOpen: !state.mobileOpen }));
-  };
-
   async componentDidMount() {
+    this.props.handleHeaderTitleChange("Row-based Table > Put Data By CSV")
     await this.loadLS()
   }
-
+  
   async loadLS() {
     await this.setState({
       LSLoading: true,
@@ -609,4 +616,11 @@ class PutDataByCSV extends React.Component {
 }
 
 
-export default withStyles(styles)(PutDataByCSV)
+const mapDispatchToProps = {
+  handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange
+}
+
+export default compose(
+  connect(null, mapDispatchToProps),
+  withStyles(styles)
+)(PutDataByCSV)

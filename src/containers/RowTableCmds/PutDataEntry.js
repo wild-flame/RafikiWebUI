@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from "react-redux"
+import { compose } from "redux"
 //axios to send ajax request
 import axios from 'axios';
 import HTTPconfig from "../../HTTPConfig"
+
+import * as ConsoleActions from "../ConsoleOverview/actions"
+
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,7 +17,6 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-import Header from '../../components/ConsoleHeader/Header';
 
 
 const styles = theme => ({
@@ -74,21 +78,26 @@ class PutDataEntry extends React.Component {
   state = {
     ResultLoading: false,
     apiRes: "",
-    mobileOpen: false,
     dataset:"",
     branch:"",
     entry: "",
     value:""
   }
 
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    handleHeaderTitleChange: PropTypes.func,
+  }
+
+  async componentDidMount() {
+    this.props.handleHeaderTitleChange("Row-based Table > Put Data Entry")
+    //await this.loadLS()
+  }
+
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
     });
-  };
-
-  handleDrawerToggle = () => {
-    this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
 
   async uploadData() {
@@ -301,4 +310,11 @@ class PutDataEntry extends React.Component {
 }
 
 
-export default withStyles(styles)(PutDataEntry)
+const mapDispatchToProps = {
+  handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange
+}
+
+export default compose(
+  connect(null, mapDispatchToProps),
+  withStyles(styles)
+)(PutDataEntry)

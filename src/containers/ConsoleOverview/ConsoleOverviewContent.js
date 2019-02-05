@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from "react-redux"
+import { compose } from "redux"
 //axios to send ajax request
 import axios from 'axios';
 import HTTPconfig from "../../HTTPConfig"
+
+import * as actions from "./actions"
+
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,7 +17,6 @@ import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh';
-
 
 
 const styles = theme => ({
@@ -53,14 +57,15 @@ class ConsoleOverviewContent extends React.Component {
     ResultLoading: false,
     apiResInfo: "",
     apiResSize: "...Bytes",
-    mobileOpen: false
   }
 
-  handleDrawerToggle = () => {
-    this.setState(state => ({ mobileOpen: !state.mobileOpen }));
-  };
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    handleHeaderTitleChange: PropTypes.func,
+  }
 
   async componentDidMount() {
+    this.props.handleHeaderTitleChange("Database Overview")
     await this.loadDBInfo()
   }
 
@@ -134,4 +139,11 @@ class ConsoleOverviewContent extends React.Component {
 }
 
 
-export default withStyles(styles)(ConsoleOverviewContent)
+const mapDispatchToProps = {
+  handleHeaderTitleChange: actions.handleHeaderTitleChange
+}
+
+export default compose(
+  connect(null, mapDispatchToProps),
+  withStyles(styles)
+)(ConsoleOverviewContent)
