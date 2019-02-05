@@ -9,7 +9,7 @@ import Hidden from '@material-ui/core/Hidden';
 
 import Navigator from '../../components/ConsoleSideBar/Navigator';
 import ConsoleTheme from "./ConsoleTheme"
-import ConsoleOverviewContent from "../DatabaseOverview/DatabaseOverview"
+import DatabaseOverview from "../DatabaseOverview/DatabaseOverview"
 import PutDataByCSV from "../RowTableCmds/PutDataByCSV"
 import ListDataSet from "../RowTableCmds/ListDataSet"
 import PutDataEntry from "../RowTableCmds/PutDataEntry"
@@ -91,7 +91,7 @@ class ConsoleAppFrame extends React.Component {
             <Route
               exact
               path='/console'
-              component={ConsoleOverviewContent}
+              component={DatabaseOverview}
             />
             <Route
               exact
@@ -116,8 +116,8 @@ class ConsoleAppFrame extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  mobileOpen: state.ConsoleOverview.mobileOpen,
-  headerTitle: state.ConsoleOverview.headerTitle
+  mobileOpen: state.ConsoleAppFrame.mobileOpen,
+  headerTitle: state.ConsoleAppFrame.headerTitle
 })
 
 const mapDispatchToProps = {

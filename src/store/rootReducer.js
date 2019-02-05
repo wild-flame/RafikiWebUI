@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 
 import { auth } from "../containers/LandingPage/reducer"
-import { ConsoleOverview } from "../containers/ConsoleOverview/reducer"
+import { ConsoleAppFrame } from "../containers/ConsoleAppFrame/reducer"
 
 
 const rootReducer = combineReducers({
   auth,
-  ConsoleOverview,
+  ConsoleAppFrame,
 })
 
 export default rootReducer;

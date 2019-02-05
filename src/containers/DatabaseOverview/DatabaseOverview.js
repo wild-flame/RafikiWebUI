@@ -6,7 +6,7 @@ import { compose } from "redux"
 import axios from 'axios';
 import HTTPconfig from "../../HTTPConfig"
 
-import * as actions from "./actions"
+import * as ConsoleActions from "../ConsoleAppFrame/actions"
 
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -140,7 +140,7 @@ class DatabaseOverview extends React.Component {
 
 
 const mapDispatchToProps = {
-  handleHeaderTitleChange: actions.handleHeaderTitleChange
+  handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange
 }
 
 export default compose(

@@ -8,7 +8,7 @@ import {
 import LandingPage from "./containers/LandingPage/LandingPage"
 import SignIn from "./containers/SignInPage/SignIn"
 import SignUp from "./containers/SignUpPage/SignUp"
-import ConsoleOverview from "./containers/ConsoleOverview/ConsoleOverview"
+import ConsoleAppFrame from "./containers/ConsoleAppFrame/ConsoleAppFrame"
 
 
 const NoMatch = ({ location }) => (
@@ -37,9 +37,8 @@ class App extends Component {
             component={SignUp}
           />
           <Route
-            // exact
             path='/console'
-            component={ConsoleOverview}
+            component={ConsoleAppFrame}
           />
           <Route component={NoMatch} />
         </Switch>

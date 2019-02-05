@@ -6,7 +6,7 @@ import { compose } from "redux"
 import axios from 'axios';
 import HTTPconfig from "../../HTTPConfig"
 
-import * as ConsoleActions from "../ConsoleOverview/actions"
+import * as ConsoleActions from "../ConsoleAppFrame/actions"
 
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';

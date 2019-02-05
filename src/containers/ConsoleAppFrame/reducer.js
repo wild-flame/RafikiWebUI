@@ -1,4 +1,4 @@
-import { Types } from "../ConsoleAppFrame/actions"
+import { Types } from "./actions"
 
 
 const initialState = {
@@ -6,7 +6,7 @@ const initialState = {
   headerTitle: "Database Overview"
 };
 
-export const ConsoleOverview = (state = initialState, action) => {
+export const ConsoleAppFrame = (state = initialState, action) => {
   switch (action.type) {
     case Types.DRAWER_TOGGLE :
       return {
