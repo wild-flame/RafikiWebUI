@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux"
 import { compose } from "redux"
-//axios to send ajax request
-import axios from 'axios';
-import HTTPconfig from "../../HTTPConfig"
 
 import * as ConsoleActions from "../ConsoleAppFrame/actions"
+import * as actions from "./actions"
 
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -27,6 +25,8 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+
+import LoadingBar from 'react-redux-loading-bar'
 
 
 const styles = theme => ({
@@ -59,57 +59,23 @@ const styles = theme => ({
 
 
 class ListDataSet extends React.Component {
-  state = {
-    ResultLoading: false,
-    apiRes: [],
-  }
-
   static propTypes = {
     classes: PropTypes.object.isRequired,
     handleHeaderTitleChange: PropTypes.func,
+    DatasetList: PropTypes.array,
+    requestListDS: PropTypes.func
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.props.handleHeaderTitleChange("Row-based Table > List Dataset")
-    await this.loadDBInfo()
-  }
-
-  async loadDBInfo() {
-    await this.setState({
-      ResultLoading: true,
-    });
-    // send a GET request
-    try {
-      const result = await axios({
-        method: 'get',
-        url: `${HTTPconfig.gateway}api/ls-ds`,
-      });
-      if (result === []) {
-        await this.setState({
-          ResultLoading: false,
-          apiRes: [],
-        });
-        return
-      }
-      await this.setState({
-        ResultLoading: false,
-        apiRes: result.data.result,
-      });
-    } catch (error) {
-      // if server service error
-      console.error(error);
-      // change state for UI
-      await this.setState({
-        ResultLoading: false,
-      });
-    }
+    this.props.requestListDS()
   }
 
   render() {
-    const { classes } = this.props;
-    console.log(this.state.apiRes)
+    const { classes, DatasetList } = this.props;
     return (
       <React.Fragment>
+        <LoadingBar />
         <main className={classes.mainContent}>
           <Paper className={classes.paper}>
             <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
@@ -143,9 +109,7 @@ class ListDataSet extends React.Component {
             </AppBar>
             <div className={classes.contentWrapper}>
               <Typography color="textSecondary" align="center">
-                {this.state.ResultLoading
-                  ? "checking..."
-                  : this.state.apiRes.length === 0
+                {DatasetList.length === 0
                     ? "You do not have any dataset"
                     : "Datasets and Branches"
                 }
@@ -159,7 +123,7 @@ class ListDataSet extends React.Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {this.state.apiRes.map((row, index) => (
+                  {DatasetList.map((row, index) => (
                     <TableRow key={index}>
                       <TableCell component="th" scope="row">
                         {row[0]}
@@ -185,11 +149,16 @@ class ListDataSet extends React.Component {
 }
 
 
+const mapStateToProps = state => ({
+  DatasetList: state.RowTableCmds.DatasetList
+})
+
 const mapDispatchToProps = {
-  handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange
+  handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
+  requestListDS: actions.requestListDS
 }
 
 export default compose(
-  connect(null, mapDispatchToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles)
 )(ListDataSet)

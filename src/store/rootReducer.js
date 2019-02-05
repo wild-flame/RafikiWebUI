@@ -5,6 +5,7 @@ import { loadingBarReducer } from 'react-redux-loading-bar'
 import { auth } from "../containers/LandingPage/reducer"
 import { ConsoleAppFrame } from "../containers/ConsoleAppFrame/reducer"
 import { DatabaseOverview } from "../containers/DatabaseOverview/reducer"
+import { RowTableCmds } from "../containers/RowTableCmds/reducer"
 
 
 const rootReducer = combineReducers({
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   // app reducers:
   auth,
   ConsoleAppFrame,
-  DatabaseOverview
+  DatabaseOverview,
+  RowTableCmds
 })
 
 export default rootReducer;
