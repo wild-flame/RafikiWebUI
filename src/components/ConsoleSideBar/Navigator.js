@@ -283,6 +283,7 @@ class Navigator extends React.Component {
           <ListItem 
             component={Link}
             to="/console"
+            onClick={onClose}
             className={classNames(
               classes.item,
               classes.overviewHover,
