@@ -1,4 +1,4 @@
-import { Types } from "./actions"
+import { Types } from "../ConsoleAppFrame/actions"
 
 
 const initialState = {

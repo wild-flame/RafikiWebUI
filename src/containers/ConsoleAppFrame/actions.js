@@ -1,6 +1,6 @@
 export const Types = {
-  DRAWER_TOGGLE: "ConsoleOverview/drawer_toggle",
-  CHANGE_HEADER_TITLE: "ConsoleOverview/change_header_title"
+  DRAWER_TOGGLE: "ConsoleAppFrame/drawer_toggle",
+  CHANGE_HEADER_TITLE: "ConsoleAppFrame/change_header_title"
 }
 
 export const handleDrawerToggle = () => ({

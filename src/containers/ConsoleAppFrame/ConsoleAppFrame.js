@@ -9,7 +9,7 @@ import Hidden from '@material-ui/core/Hidden';
 
 import Navigator from '../../components/ConsoleSideBar/Navigator';
 import ConsoleTheme from "./ConsoleTheme"
-import ConsoleOverviewContent from "./ConsoleOverviewContent"
+import ConsoleOverviewContent from "../DatabaseOverview/DatabaseOverview"
 import PutDataByCSV from "../RowTableCmds/PutDataByCSV"
 import ListDataSet from "../RowTableCmds/ListDataSet"
 import PutDataEntry from "../RowTableCmds/PutDataEntry"
@@ -51,7 +51,7 @@ const styles = theme => ({
   },
 })
 
-class ConsoleOverview extends React.Component {
+class ConsoleAppFrame extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     mobileOpen: PropTypes.bool,
@@ -131,4 +131,4 @@ export default compose(
     mapDispatchToProps
   ),
   withStyles(styles)
-)(ConsoleOverview);
+)(ConsoleAppFrame);

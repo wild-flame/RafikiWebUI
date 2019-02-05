@@ -52,7 +52,7 @@ const styles = theme => ({
   }
 })
 
-class ConsoleOverviewContent extends React.Component {
+class DatabaseOverview extends React.Component {
   state = {
     ResultLoading: false,
     apiResInfo: "",
@@ -146,4 +146,4 @@ const mapDispatchToProps = {
 export default compose(
   connect(null, mapDispatchToProps),
   withStyles(styles)
-)(ConsoleOverviewContent)
+)(DatabaseOverview)
