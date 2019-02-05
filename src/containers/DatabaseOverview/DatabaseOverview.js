@@ -64,6 +64,10 @@ class DatabaseOverview extends React.Component {
 
   componentDidMount() {
     this.props.handleHeaderTitleChange("Database Overview")
+    this.requestDBSizeInfo()
+  }
+
+  requestDBSizeInfo = () => {
     this.props.requestDBSize()
     this.props.requestDBInfo()
   }
@@ -85,7 +89,9 @@ class DatabaseOverview extends React.Component {
                   </Grid>
                   <Grid item>
                     <Tooltip title="Reload">
-                      <IconButton>
+                      <IconButton
+                        onClick={this.requestDBSizeInfo}
+                      >
                         <RefreshIcon className={classes.block} color="inherit" />
                       </IconButton>
                     </Tooltip>
