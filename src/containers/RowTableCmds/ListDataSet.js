@@ -39,6 +39,7 @@ const styles = theme => ({
     maxWidth: 936,
     margin: 'auto',
     overflow: 'hidden',
+    marginBottom: 20
   },
   searchBar: {
     borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
@@ -72,7 +73,7 @@ class ListDataSet extends React.Component {
   }
 
   render() {
-    const { classes, DatasetList } = this.props;
+    const { classes, DatasetList, requestListDS } = this.props;
     return (
       <React.Fragment>
         <LoadingBar />
@@ -99,7 +100,9 @@ class ListDataSet extends React.Component {
                       Search by Dataset
                     </Button>
                     <Tooltip title="Reload">
-                      <IconButton>
+                      <IconButton
+                        onClick={requestListDS}
+                      >
                         <RefreshIcon className={classes.block} color="inherit" />
                       </IconButton>
                     </Tooltip>
