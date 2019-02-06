@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux"
 import { compose } from "redux"
-//axios to send ajax request
-import axios from 'axios';
-import HTTPconfig from "../../HTTPConfig"
 
 import * as ConsoleActions from "../ConsoleAppFrame/actions"
+import * as actions from "./actions"
 
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -17,6 +15,8 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+
+import LoadingBar from 'react-redux-loading-bar'
 
 
 const styles = theme => ({
@@ -76,8 +76,6 @@ const datasetBranches = [
 
 class PutDataEntry extends React.Component {
   state = {
-    ResultLoading: false,
-    apiRes: "",
     dataset:"",
     branch:"",
     entry: "",
@@ -87,11 +85,14 @@ class PutDataEntry extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     handleHeaderTitleChange: PropTypes.func,
+    requestPutDE: PropTypes.func,
+    requestListDS: PropTypes.func,
+    Response_PutDE: PropTypes.array
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.props.handleHeaderTitleChange("Row-based Table > Put Data Entry")
-    //await this.loadLS()
+    this.props.requestListDS()
   }
 
   handleChange = name => event => {
@@ -100,46 +101,22 @@ class PutDataEntry extends React.Component {
     });
   };
 
-  async uploadData() {
-    await this.setState({
-      ResultLoading: true,
-    });
-    // send a POST request
-    try {
-      const result = await axios({
-        method: 'post',
-        url: `${HTTPconfig.gateway}api/put-de`,
-        headers: HTTPconfig.HTTP_HEADER,
-        data: Object.assign(
-          {
-            "dataset": this.state.dataset,
-            "branch": this.state.branch,
-            "entry": this.state.entry,
-            "value": this.state.value
-          },
-          {}
-        )
-      });
-      await this.setState({
-        ResultLoading: false,
-        apiRes: result.data.result,
-      });
-    } catch (error) {
-      // if server service error
-      console.error(error);
-      // change state for UI
-      await this.setState({
-        ResultLoading: false,
-      });
-    }
-  }
-
   render() {
-    const { classes } = this.props;
-    console.log(this.state.apiRes)
-    console.log(this.state)
+    const { classes, requestPutDE, Response_PutDE } = this.props;
+
+    const dataEntry = Object.assign(
+      {
+        "dataset": this.state.dataset,
+        "branch": this.state.branch,
+        "entry": this.state.entry,
+        "value": this.state.value
+      },
+      {}
+    )
+
     return (
       <React.Fragment>
+        <LoadingBar />
         <main className={classes.mainContent}>
           <Paper className={classes.paper}>
             <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
@@ -244,7 +221,7 @@ class PutDataEntry extends React.Component {
                           id="row-entry-key"
                           label="Row Entry Key"
                           className={classes.textField}
-                          value={this.state.DataSetName}
+                          value={this.state.entry}
                           onChange={this.handleChange("entry")}
                           margin="normal"
                         />
@@ -265,7 +242,7 @@ class PutDataEntry extends React.Component {
                           id="put-value"
                           label="Value"
                           className={classes.textField}
-                          value={this.state.DataSetName}
+                          value={this.state.value}
                           onChange={this.handleChange("value")}
                           margin="normal"
                         />
@@ -280,7 +257,7 @@ class PutDataEntry extends React.Component {
                       <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => this.uploadData()}
+                        onClick={() => requestPutDE(dataEntry)}
                       >
                         COMMIT
                       </Button>
@@ -293,9 +270,9 @@ class PutDataEntry extends React.Component {
                       Forkbase Status:
                     </Typography>
                     <Typography component="p">
-                      <b>{this.state.apiRes[0]}</b>
+                      <b>{Response_PutDE[0]}</b>
                       <br />
-                      {this.state.apiRes[1]}
+                      {Response_PutDE[1]}
                     </Typography>
                     <br />
                   </Paper>
@@ -310,11 +287,17 @@ class PutDataEntry extends React.Component {
 }
 
 
+const mapStateToProps = state => ({
+  Response_PutDE: state.RowTableCmds.Response_PutDE
+})
+
 const mapDispatchToProps = {
-  handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange
+  handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
+  requestPutDE: actions.requestPutDE,
+  requestListDS: actions.requestListDS
 }
 
 export default compose(
-  connect(null, mapDispatchToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles)
 )(PutDataEntry)

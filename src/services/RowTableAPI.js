@@ -8,3 +8,12 @@ export const requestListDataset = () => {
     url: `${HTTPconfig.gateway}api/ls-ds`,
   });
 }
+
+export const requestPutDataEntry = dataEntry => {
+  return axios({
+    method: 'post',
+    url: `${HTTPconfig.gateway}api/put-de`,
+    headers: HTTPconfig.HTTP_HEADER,
+    data: dataEntry
+  })
+}

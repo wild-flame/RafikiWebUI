@@ -21,13 +21,32 @@ function* getDatasetList() {
     // yield put(actions.getErrorStatus("failed to deleteUser"))
   }
 }
+
 function* watchGetDSListRequest() {
   yield takeLatest(actions.Types.REQUEST_LS_DS, getDatasetList)
 }
 
+
+function* getPutDEresponse(action) {
+  try{
+    yield put(showLoading())
+    const Response_PutDE = yield call(api.requestPutDataEntry, action.dataEntry)
+    yield put(hideLoading())
+    yield put(actions.populatePutDEresponse(Response_PutDE.data.result))
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+function* watchGetPutDEresponse() {
+  yield takeLatest(actions.Types.REQUEST_PUT_DE, getPutDEresponse)
+}
+
+
 // fork is for process creation, run in separate processes
 const RowTableCmdsSagas = [
   fork(watchGetDSListRequest),
+  fork(watchGetPutDEresponse)
 ]
 
 export default RowTableCmdsSagas

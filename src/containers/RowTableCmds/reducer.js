@@ -2,7 +2,8 @@ import { Types } from "./actions"
 
 
 const initialState = {
-  DatasetList: []
+  DatasetList: [],
+  Response_PutDE: []
 };
 
 export const RowTableCmds = (state = initialState, action) => {
@@ -13,6 +14,11 @@ export const RowTableCmds = (state = initialState, action) => {
         DatasetList: action.DatasetList.length === 0
           ? []
           : action.DatasetList
+      }
+    case Types.POPULATE_PUT_DE_RESPONSE :
+      return {
+        ...state,
+        Response_PutDE: action.Response_PutDE
       }
     default:
       return state
