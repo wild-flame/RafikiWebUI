@@ -17,3 +17,39 @@ export const requestPutDataEntry = dataEntry => {
     data: dataEntry
   })
 }
+
+export const requestCreateDS = dataEntryForCreateDS => {
+  return axios({
+    method: 'post',
+    url: `${HTTPconfig.gateway}api/create-ds`,
+    headers: HTTPconfig.HTTP_HEADER,
+    data: dataEntryForCreateDS
+  });
+}
+
+export const requestBranchDS = dataEntryForBranchDS => {
+  return axios({
+    method: 'post',
+    url: `${HTTPconfig.gateway}api/branch-ds`,
+    headers: HTTPconfig.HTTP_HEADER,
+    data: dataEntryForBranchDS
+  });
+}
+
+export const requestUploadCSV = formData => {
+  return axios({
+    method: 'post',
+    url: `${HTTPconfig.gateway}api/upload-csv`,
+    headers: HTTPconfig.UPLOAD_FILE,
+    data: formData
+  });
+}
+
+export const requestPutCSV = dataEntryForPutCSV => {
+  return axios({
+    method: 'post',
+    url: `${HTTPconfig.gateway}api/put-de-by-csv`,
+    headers: HTTPconfig.HTTP_HEADER,
+    data: dataEntryForPutCSV
+  });
+}

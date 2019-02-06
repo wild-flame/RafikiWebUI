@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux"
 import { compose } from "redux"
-//axios to send ajax request
-import axios from 'axios';
-import HTTPconfig from "../../HTTPConfig"
 
 import * as ConsoleActions from "../ConsoleAppFrame/actions"
+import * as actions from "./actions"
 
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -103,15 +101,6 @@ const rejectStyle = {
 
 class PutDataByCSV extends React.Component {
   state = {
-    LSLoading: false,
-    DSLoading: false,
-    FileLoading: false,
-    PUTCSVLoading: false,
-    ResponseLS: "",
-    ResponseDS: "",
-    ResponseFile: "",
-    ResponsePUT: "",
-
     checkedNewDataset: false,
     checkedNewBranch: false,
     dataset:"",
@@ -125,6 +114,13 @@ class PutDataByCSV extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     handleHeaderTitleChange: PropTypes.func,
+    triggerCreateDS_PutCSV_Combo: PropTypes.func,
+    triggerBranchDS_PutCSV_Combo: PropTypes.func,
+    triggerPutCSV_Combo: PropTypes.func,
+    Response_PutDataCSV: PropTypes.array,
+    Response_CreateDS: PropTypes.array,
+    Response_BranchDS: PropTypes.array,
+    Response_UploadCSV: PropTypes.string
   }
 
   handleChange = name => event => {
@@ -143,197 +139,79 @@ class PutDataByCSV extends React.Component {
     this.setState({files});
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.props.handleHeaderTitleChange("Row-based Table > Put Data By CSV")
-    await this.loadLS()
+    this.props.requestListDS()
   }
   
-  async loadLS() {
-    await this.setState({
-      LSLoading: true,
-    });
-    // send a GET request
-    try {
-      const result = await axios({
-        method: 'get',
-        url: `${HTTPconfig.gateway}api/ls-ds`,
-      });
-      await this.setState({
-        LSLoading: false,
-        ResponseLS: result.data.result,
-      });
-    } catch (error) {
-      // if server service error
-      console.error(error);
-      // change state for UI
-      await this.setState({
-        LSLoading: false,
-      });
-    }
-  }
-
-  async combinedCall() {
-    await this.createDS()
-    await this.uploadData()
-    await this.putCSV()
-  }
-
-  // create new dataset or new branch
-  async createDS() {
-    if (!this.state.checkedNewBranch || !this.state.checkedNewDataset) {
-      return
-    }
-    console.log("createDS called")
-    await this.setState({
-      DSLoading: true,
-    });
-    // send a POST request
-    let result
-    try {
-      // create new dataset
-      if (this.state.checkedNewDataset) {
-        result = await axios({
-          method: 'post',
-          url: `${HTTPconfig.gateway}api/create-ds`,
-          headers: HTTPconfig.HTTP_HEADER,
-          data: Object.assign(
-            {
-              "dataset": this.state.newDataset,
-              "branch": "master",
-            },
-            {}
-          )
-        });
-      // create new branch
-      } else if (this.state.checkedNewBranch) {
-        result = await axios({
-          method: 'post',
-          url: `${HTTPconfig.gateway}api/branch-ds`,
-          headers: HTTPconfig.HTTP_HEADER,
-          data: Object.assign(
-            {
-              "dataset": this.state.dataset,
-              "branch": this.state.newBranch,
-              "referBranch": this.state.referBranch
-            },
-            {}
-          )
-        });
-      }
-      await this.setState({
-        DSLoading: false,
-        ResponseDS: result.data.result,
-      });
-    } catch (error) {
-      // if server service error
-      console.error(error);
-      // change state for UI
-      await this.setState({
-        DSLoading: false,
-      });
-    }
-  }
-
-  // upload csv to python server and read the response
-  async uploadData() {
-    console.log("uploadData called")
-    await this.setState({
-      FileLoading: true,
-    });
-    // send a POST request
+  // TWO BUGS:
+  // 1. toggle bug, 2. xxx uploaded! is not true
+  combinedCall() {
+    const dataEntryForCreateDS = Object.assign(
+      {
+        "dataset": this.state.newDataset,
+        "branch": "master",
+      },
+      {}
+    )
+    const dataEntryForBranchDS = Object.assign(
+      {
+        "dataset": this.state.dataset,
+        "branch": this.state.newBranch,
+        "referBranch": this.state.referBranch
+      },
+      {}
+    )
+    const dataEntryForCombo_CreateDS = Object.assign(
+      {
+        "dataset": this.state.newDataset,
+        "branch": "master",
+        "withSchema": "--with-schema"
+      },
+      {}
+    )
+    const dataEntryForCombo_BranchDS = Object.assign(
+      {
+        "dataset": this.state.dataset,
+        "branch": this.state.newBranch,
+        "withSchema": ""
+      },
+      {}
+    )
+    const dataEntryForPutCSV = Object.assign(
+      {
+        "dataset": this.state.dataset,
+        "branch": this.state.branch,
+        "withSchema": ""
+      },
+      {}
+    )
     // Initial FormData
     const formData = new FormData();
     formData.append("file", this.state.files[0]);
-    try {
-      const result = await axios({
-        method: 'post',
-        url: `${HTTPconfig.gateway}api/upload-csv`,
-        headers: HTTPconfig.UPLOAD_FILE,
-        data: formData
-      });
-      await this.setState({
-        FileLoading: false,
-        // ResponseFile is a path string
-        ResponseFile: result.data.result
-      });
-    } catch (error) {
-      // if server service error
-      console.error(error);
-      // change state for UI
-      await this.setState({
-        FileLoading: false,
-      });
-    }
-  }
-
-  // upload csv to python server and read the response
-  async putCSV() {
-    await this.setState({
-      PUTCSVLoading: true,
-    });
-    // send a POST request
-    let result
-    try {
-      // create new dataset
-      if (this.state.checkedNewDataset) {
-        result = await axios({
-          method: 'post',
-          url: `${HTTPconfig.gateway}api/put-de-by-csv`,
-          headers: HTTPconfig.HTTP_HEADER,
-          data: Object.assign(
-            {
-              "dataset": this.state.newDataset,
-              "branch": "master",
-              "filepath": this.state.ResponseFile,
-              "withSchema": "--with-schema"
-            },
-            {}
-          )
-        });
-      // create new branch
-      } else if (this.state.checkedNewBranch) {
-        result = await axios({
-          method: 'post',
-          url: `${HTTPconfig.gateway}api/put-de-by-csv`,
-          headers: HTTPconfig.HTTP_HEADER,
-          data: Object.assign(
-            {
-              "dataset": this.state.dataset,
-              "branch": this.state.newBranch,
-              "filepath": this.state.ResponseFile,
-              "withSchema": ""
-            },
-            {}
-          )
-        });
-      // update existing databast and branch
-      } else {
-        result = await axios({
-          method: 'post',
-          url: `${HTTPconfig.gateway}api/put-de-by-csv`,
-          headers: HTTPconfig.HTTP_HEADER,
-          data: Object.assign(
-            {
-              "dataset": this.state.dataset,
-              "branch": this.state.branch,
-              "filepath": this.state.ResponseFile,
-              "withSchema": ""
-            },
-            {}
-          )
-        })
-      }
-      await this.setState({
-        PUTCSVLoading: false,
-        ResponsePUT: result.data.result,
-      });
-    } catch (error) {
-      // if server service error
-      console.error(error);
-      // change state for UI
-      await this.setState({
-        PUTCSVLoading: false,
-      });
+    // create new dataset
+    if (this.state.checkedNewDataset) {
+      // combo_CreateDS_PutCSV()
+      this.props.triggerCreateDS_PutCSV_Combo(
+        dataEntryForCreateDS,
+        formData,
+        dataEntryForCombo_CreateDS
+        // filepath will be added in sagas
+      )
+    // create new branch
+    } else if (this.state.checkedNewBranch) {
+      // combo_BranchDS_PutCSV()
+      this.props.triggerBranchDS_PutCSV_Combo(
+        dataEntryForBranchDS,
+        formData,
+        dataEntryForCombo_BranchDS
+      )
+    } else {
+      // combo_putCSV()
+      this.props.triggerPutCSV_Combo(
+        formData,
+        dataEntryForPutCSV
+      )
     }
   }
 
@@ -343,7 +221,13 @@ class PutDataByCSV extends React.Component {
         {file.name} - {file.size} bytes
       </li>
     ))
-    const { classes } = this.props;
+    const {
+      classes,
+      Response_CreateDS,
+      Response_BranchDS,
+      Response_UploadCSV,
+      Response_PutDataCSV
+    } = this.props;
     return (
       <React.Fragment>
         <main className={classes.mainContent}>
@@ -590,24 +474,28 @@ class PutDataByCSV extends React.Component {
                       Forkbase Status:
                     </Typography>
                     <Typography component="p">
-                      <b>{this.state.ResponseDS[0]}</b>
+                      <b>{Response_CreateDS[0]}</b>
                       <br />
-                      {this.state.ResponseDS[1]}
+                      {Response_CreateDS[1]}
                     </Typography>
-                    {this.state.ResponseFile &&
+                    <Typography component="p">
+                      <b>{Response_BranchDS[0]}</b>
+                      <br />
+                      {Response_BranchDS[1]}
+                    </Typography>
+                    {Response_UploadCSV &&
                       <div>{this.state.files[0]["name"]} uploaded!</div>
                     }
                     <Typography component="p">
-                      <b>{this.state.ResponsePUT[0]}</b>
+                      <b>{Response_PutDataCSV[0]}</b>
                       <br />
-                      {this.state.ResponsePUT[1]}
+                      {Response_PutDataCSV[1]}
                       <br />
-                      {this.state.ResponsePUT[2]}
+                      {Response_PutDataCSV[2]}
                     </Typography>
                   </Paper>
                 </Grid>
               </Grid>
- 
             </div>
           </Paper>
         </main>
@@ -617,11 +505,22 @@ class PutDataByCSV extends React.Component {
 }
 
 
+const mapStateToProps = state => ({
+  Response_PutDataCSV: state.RowTableCmds.Response_PutDataCSV,
+  Response_CreateDS: state.RowTableCmds.Response_CreateDS,
+  Response_BranchDS: state.RowTableCmds.Response_BranchDS,
+  Response_UploadCSV: state.RowTableCmds.Response_UploadCSV
+})
+
 const mapDispatchToProps = {
-  handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange
+  handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
+  requestListDS: actions.requestListDS,
+  triggerCreateDS_PutCSV_Combo: actions.triggerCreateDS_PutCSV_Combo,
+  triggerBranchDS_PutCSV_Combo: actions.triggerBranchDS_PutCSV_Combo,
+  triggerPutCSV_Combo: actions.triggerPutCSV_Combo
 }
 
 export default compose(
-  connect(null, mapDispatchToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles)
 )(PutDataByCSV)

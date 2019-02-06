@@ -2,8 +2,15 @@ import { Types } from "./actions"
 
 
 const initialState = {
+  // Ls-ds
   DatasetList: [],
-  Response_PutDE: []
+  // put-de
+  Response_PutDE: [],
+  // put-csv
+  Response_PutDataCSV: [],
+  Response_CreateDS: [],
+  Response_BranchDS: [],
+  Response_UploadCSV: ""
 };
 
 export const RowTableCmds = (state = initialState, action) => {
@@ -19,6 +26,26 @@ export const RowTableCmds = (state = initialState, action) => {
       return {
         ...state,
         Response_PutDE: action.Response_PutDE
+      }
+    case Types.POPULATE_CREATE_DS_RESPONSE :
+      return {
+        ...state,
+        Response_CreateDS: action.Response_CreateDS
+      }
+    case Types.POPULATE_BRANCH_DS_RESPONSE :
+      return {
+        ...state,
+        Response_BranchDS: action.Response_BranchDS
+      }
+    case Types.POPULATE_UPLOAD_CSV_RESPONSE :
+      return {
+        ...state,
+        Response_UploadCSV: action.Response_UploadCSV
+      }
+    case Types.POPULATE_PUT_DATA_CSV_RESPONSE :
+      return {
+        ...state,
+        Response_PutDataCSV: action.Response_PutDataCSV
       }
     default:
       return state

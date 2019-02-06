@@ -43,10 +43,120 @@ function* watchGetPutDEresponse() {
 }
 
 
+function* getCreateDS_PutCSVresponse(action) {
+  try{
+    yield put(actions.requestCreateDS(action.dataEntryForCreateDS))
+    const Response_CreateDS = yield call(api.requestCreateDS, action.dataEntryForCreateDS)
+    yield put(actions.populateCreateDSresponse(Response_CreateDS.data.result))
+
+    yield put(actions.requestUploadCSV())
+    const Response_UploadCSV = yield call(api.requestUploadCSV, action.formData)
+    yield put(actions.populateUploadCSVresponse(Response_UploadCSV.data.result))
+
+    const UploadCSVFilePath = Response_UploadCSV.data.result
+    yield put(actions.requestPutDataCSV(Object.assign(
+      {
+        "filepath": UploadCSVFilePath,
+      },
+      action.dataEntryForCombo_CreateDS
+    )))
+    const Response_PutDataCSV = yield call(
+      api.requestPutCSV,
+      Object.assign(
+        {
+          "filepath": UploadCSVFilePath,
+        },
+        action.dataEntryForCombo_CreateDS
+      )
+    )
+    yield put(actions.populatePutDataCSVresponse(Response_PutDataCSV.data.result))
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+function* watchCreateDSPutCSVCombo() {
+  yield takeLatest(actions.Types.COMBO_CREATE_DS_PUT_CSV, getCreateDS_PutCSVresponse)
+}
+
+
+function* getBranchDS_PutCSVresponse(action) {
+  try{
+    yield put(actions.requestCreateDS(action.dataEntryForBranchDS))
+    const Response_BranchDS = yield call(api.requestBranchDS, action.dataEntryForBranchDS)
+    yield put(actions.populateBranchDSresponse(Response_BranchDS.data.result))
+
+    yield put(actions.requestUploadCSV())
+    const Response_UploadCSV = yield call(api.requestUploadCSV, action.formData)
+    yield put(actions.populateUploadCSVresponse(Response_UploadCSV.data.result))
+
+    const UploadCSVFilePath = Response_UploadCSV.data.result
+    yield put(actions.requestPutDataCSV(Object.assign(
+      {
+        "filepath": UploadCSVFilePath,
+      },
+      action.dataEntryForCombo_BranchDS
+    )))
+    const Response_PutDataCSV = yield call(
+      api.requestPutCSV,
+      Object.assign(
+        {
+          "filepath": UploadCSVFilePath,
+        },
+        action.dataEntryForCombo_BranchDS
+      )
+    )
+    yield put(actions.populatePutDataCSVresponse(Response_PutDataCSV.data.result))
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+function* watchBranchDSPutCSVCombo() {
+  yield takeLatest(actions.Types.COMBO_BRANCH_DS_PUT_CSV, getBranchDS_PutCSVresponse)
+}
+
+
+function* getPutCSVComboResponse(action) {
+  try{
+    yield put(actions.requestUploadCSV())
+    const Response_UploadCSV = yield call(api.requestUploadCSV, action.formData)
+    yield put(actions.populateUploadCSVresponse(Response_UploadCSV.data.result))
+
+    const UploadCSVFilePath = Response_UploadCSV.data.result
+    yield put(actions.requestPutDataCSV(Object.assign(
+      {
+        "filepath": UploadCSVFilePath,
+      },
+      action.dataEntryForPutCSV
+    )))
+    const Response_PutDataCSV = yield call(
+      api.requestPutCSV,
+      Object.assign(
+        {
+          "filepath": UploadCSVFilePath,
+        },
+        action.dataEntryForPutCSV
+      )
+    )
+    yield put(actions.populatePutDataCSVresponse(Response_PutDataCSV.data.result))
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+function* watchPutCSVCombo() {
+  yield takeLatest(actions.Types.COMBO_PUT_CSV, getPutCSVComboResponse)
+}
+
+
 // fork is for process creation, run in separate processes
 const RowTableCmdsSagas = [
   fork(watchGetDSListRequest),
-  fork(watchGetPutDEresponse)
+  fork(watchGetPutDEresponse),
+  fork(watchCreateDSPutCSVCombo),
+  fork(watchBranchDSPutCSVCombo),
+  fork(watchPutCSVCombo)
 ]
 
 export default RowTableCmdsSagas
