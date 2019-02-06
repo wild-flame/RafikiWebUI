@@ -21,6 +21,8 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 import Dropzone from 'react-dropzone'
 
+import LoadingBar from 'react-redux-loading-bar'
+
 
 const styles = theme => ({
   mainContent: {
@@ -76,6 +78,18 @@ const datasetBranches = [
     branches: ["master", "newFeature"]
   },
 ];
+
+const Normalized = {
+  ds1: {
+    branches: ["master"]
+  },
+  ds9: {
+    branches: ["master"]
+  },
+  BTC: {
+    branches: ["master", "dev"]
+  },
+}
 
 // for file dropzone
 const baseStyle = {
@@ -144,8 +158,6 @@ class PutDataByCSV extends React.Component {
     this.props.requestListDS()
   }
   
-  // TWO BUGS:
-  // 1. toggle bug, 2. xxx uploaded! is not true
   combinedCall() {
     const dataEntryForCreateDS = Object.assign(
       {
@@ -215,6 +227,33 @@ class PutDataByCSV extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.checkedNewDataset !== prevState.checkedNewDataset) {
+      if (this.state.checkedNewDataset) {
+        this.setState({
+          checkedNewBranch: false,
+          newBranch: ""
+        })
+      } else if (!this.state.checkedNewDataset) {
+        this.setState({
+          newDataset: ""
+        })
+      }
+    }
+    if (this.state.checkedNewBranch !== prevState.checkedNewBranch) {
+      if (this.state.checkedNewBranch) {
+        this.setState({
+          checkedNewDataset: false,
+          newDataset: ""
+        })
+      } else if (!this.state.checkedNewBranch) {
+        this.setState({
+          newBranch: ""
+        })
+      }
+    }
+  }
+
   render() {
     const files = this.state.files.map(file => (
       <li key={file.name}>
@@ -228,8 +267,10 @@ class PutDataByCSV extends React.Component {
       Response_UploadCSV,
       Response_PutDataCSV
     } = this.props;
+
     return (
       <React.Fragment>
+        <LoadingBar />
         <main className={classes.mainContent}>
           <Paper className={classes.paper}>
             <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
@@ -293,7 +334,7 @@ class PutDataByCSV extends React.Component {
                           id="new-dataset-name"
                           label="New Dataset"
                           className={classes.textField}
-                          value={this.state.checkedNewDataset && this.state.newDataset}
+                          value={this.state.newDataset}
                           onChange={this.handleChange("newDataset")}
                           margin="normal"
                           disabled={!this.state.checkedNewDataset}
@@ -360,7 +401,7 @@ class PutDataByCSV extends React.Component {
                           id="new-branch-name"
                           label="New Branch"
                           className={classes.textField}
-                          value={!this.state.checkedNewDataset && this.state.checkedNewBranch && this.state.newBranch}
+                          value={this.state.newBranch}
                           onChange={this.handleChange("newBranch")}
                           margin="normal"
                           disabled={this.state.checkedNewDataset || !this.state.checkedNewBranch}
