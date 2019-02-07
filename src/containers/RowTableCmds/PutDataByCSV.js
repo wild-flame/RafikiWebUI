@@ -7,7 +7,6 @@ import * as ConsoleActions from "../ConsoleAppFrame/actions"
 import * as actions from "./actions"
 
 import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -21,28 +20,11 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 import Dropzone from 'react-dropzone'
 
+import MainContent from '../../components/ConsoleContents/MainContent'
+import ContentBar from "../../components/ConsoleContents/ContentBar"
+
 
 const styles = theme => ({
-  mainContent: {
-    flex: 1,
-    padding: '48px 36px 0',
-    background: '#eaeff1', // light grey
-  },
-  paper: {
-    maxWidth: 936,
-    margin: 'auto',
-    overflow: 'hidden',
-    marginBottom: 20
-  },
-  searchBar: {
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-  },
-  searchInput: {
-    fontSize: theme.typography.fontSize,
-  },
-  block: {
-    display: 'block',
-  },
   menu: {
     width: 200,
   },
@@ -275,275 +257,273 @@ class PutDataByCSV extends React.Component {
 
     return (
       <React.Fragment>
-        <main className={classes.mainContent}>
-          <Paper className={classes.paper}>
-            <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
-              <Toolbar>
-                <Typography variant="h5" gutterBottom>
-                  Put Data Entry by CSV
-                </Typography>
-              </Toolbar>
-            </AppBar>
-            <div className={classes.contentWrapper}>
-              <Grid container spacing={24}>
-                <Grid item xs={6}>
-                  <Paper>
-                    <Typography variant="h5" gutterBottom align="center">
-                      1. Dataset Name
-                    </Typography>
-                    <Grid
-                      container
-                      direction="row"
-                      justify="space-evenly"
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <TextField
-                          id="existing-dataset-names"
-                          select
-                          label="Select from datasets"
-                          className={classes.textField}
-                          value={!this.state.checkedNewDataset && this.state.dataset}
-                          onChange={this.handleChange("dataset")}
-                          SelectProps={{
-                            MenuProps: {
-                              className: classes.menu,
-                            },
-                          }}
-                          helperText="Please select your dataset"
-                          margin="normal"
-                          disabled={this.state.checkedNewDataset}
-                        >
-                          {datasetBranches.map(option => (
-                            <MenuItem key={option.dataset} value={option.dataset}>
-                              {option.dataset}
+        <MainContent>
+          <ContentBar>
+            <Toolbar>
+              <Typography variant="h5" gutterBottom>
+                Put Data Entry by CSV
+              </Typography>
+            </Toolbar>
+          </ContentBar>
+          <div className={classes.contentWrapper}>
+            <Grid container spacing={24}>
+              <Grid item xs={6}>
+                <Paper>
+                  <Typography variant="h5" gutterBottom align="center">
+                    1. Dataset Name
+                  </Typography>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-evenly"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <TextField
+                        id="existing-dataset-names"
+                        select
+                        label="Select from datasets"
+                        className={classes.textField}
+                        value={!this.state.checkedNewDataset && this.state.dataset}
+                        onChange={this.handleChange("dataset")}
+                        SelectProps={{
+                          MenuProps: {
+                            className: classes.menu,
+                          },
+                        }}
+                        helperText="Please select your dataset"
+                        margin="normal"
+                        disabled={this.state.checkedNewDataset}
+                      >
+                        {datasetBranches.map(option => (
+                          <MenuItem key={option.dataset} value={option.dataset}>
+                            {option.dataset}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>                
+                    <Grid item>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={this.state.checkedNewDataset}
+                            onChange={this.handleSwitch("checkedNewDataset")}
+                            value="checkedNewDataset"
+                          />
+                        }
+                        label="Create new dataset"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        id="new-dataset-name"
+                        label="New Dataset"
+                        className={classes.textField}
+                        value={this.state.newDataset}
+                        onChange={this.handleChange("newDataset")}
+                        margin="normal"
+                        disabled={!this.state.checkedNewDataset}
+                      />              
+                    </Grid>
+                  </Grid>
+                  <Typography variant="h5" gutterBottom align="center">
+                    2. Branch Name
+                  </Typography>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-evenly"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <TextField
+                        id="existing-branch-names"
+                        select
+                        label="Default is master"
+                        className={classes.textField}
+                        value={!this.state.checkedNewBranch && this.state.branch}
+                        onChange={this.handleChange("branch")}
+                        SelectProps={{
+                          MenuProps: {
+                            className: classes.menu,
+                          },
+                        }}
+                        helperText="Please select your branch"
+                        margin="normal"
+                        disabled={this.state.checkedNewBranch}
+                      >
+                        {this.state.dataset
+                          ? (datasetBranches.filter(item => item.dataset === this.state.dataset)[0]
+                              .branches.map(item => (
+                                <MenuItem key={item} value={item}>
+                                  {item}
+                                </MenuItem>
+                              ))
+                          )
+                          : (
+                            <MenuItem value={"master"}>
+                              {"master"}
                             </MenuItem>
-                          ))}
-                        </TextField>
-                      </Grid>                
-                      <Grid item>
-                        <FormControlLabel
-                          control={
-                            <Switch
-                              checked={this.state.checkedNewDataset}
-                              onChange={this.handleSwitch("checkedNewDataset")}
-                              value="checkedNewDataset"
-                            />
-                          }
-                          label="Create new dataset"
-                        />
-                      </Grid>
-                      <Grid item>
-                        <TextField
-                          id="new-dataset-name"
-                          label="New Dataset"
-                          className={classes.textField}
-                          value={this.state.newDataset}
-                          onChange={this.handleChange("newDataset")}
-                          margin="normal"
-                          disabled={!this.state.checkedNewDataset}
-                        />              
-                      </Grid>
+                          )
+                        }
+                      </TextField>
                     </Grid>
-                    <Typography variant="h5" gutterBottom align="center">
-                      2. Branch Name
-                    </Typography>
-                    <Grid
-                      container
-                      direction="row"
-                      justify="space-evenly"
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <TextField
-                          id="existing-branch-names"
-                          select
-                          label="Default is master"
-                          className={classes.textField}
-                          value={!this.state.checkedNewBranch && this.state.branch}
-                          onChange={this.handleChange("branch")}
-                          SelectProps={{
-                            MenuProps: {
-                              className: classes.menu,
-                            },
-                          }}
-                          helperText="Please select your branch"
-                          margin="normal"
-                          disabled={this.state.checkedNewBranch}
-                        >
-                          {this.state.dataset
-                            ? (datasetBranches.filter(item => item.dataset === this.state.dataset)[0]
-                                .branches.map(item => (
-                                  <MenuItem key={item} value={item}>
-                                    {item}
-                                  </MenuItem>
-                                ))
-                            )
-                            : (
-                              <MenuItem value={"master"}>
-                                {"master"}
-                              </MenuItem>
-                            )
-                          }
-                        </TextField>
-                      </Grid>
-                      <Grid item>
-                        <FormControlLabel
-                          control={
-                            <Switch
-                              disabled={this.state.checkedNewDataset}
-                              checked={this.state.checkedNewBranch}
-                              onChange={this.handleSwitch("checkedNewBranch")}
-                              value="checkedNewBranch"
-                            />
-                          }
-                          label="Create new branch"
-                        />
-                      </Grid>
-                      <Grid item>
-                        <TextField
-                          id="new-branch-name"
-                          label="New Branch"
-                          className={classes.textField}
-                          value={this.state.newBranch}
-                          onChange={this.handleChange("newBranch")}
-                          margin="normal"
-                          disabled={this.state.checkedNewDataset || !this.state.checkedNewBranch}
-                        />              
-                      </Grid>
-                      <Grid item>
-                        <TextField
-                          id="refer-branch-names"
-                          select
-                          label="Refer Branch"
-                          className={classes.textField}
-                          value={!this.state.checkedNewDataset && this.state.checkedNewBranch && this.state.referBranch}
-                          onChange={this.handleChange("referBranch")}
-                          SelectProps={{
-                            MenuProps: {
-                              className: classes.menu,
-                            },
-                          }}
-                          helperText="Please select a refer branch"
-                          margin="normal"
-                          disabled={!this.state.checkedNewBranch}
-                        >
-                          {this.state.dataset
-                            ? (datasetBranches.filter(item => item.dataset === this.state.dataset)[0]
-                                .branches.map(item => (
-                                  <MenuItem key={item} value={item}>
-                                    {item}
-                                  </MenuItem>
-                                ))
-                            )
-                            : (
-                              <MenuItem value={"master"}>
-                                {"master"}
-                              </MenuItem>
-                            )
-                          }
-                        </TextField>
-                      </Grid>
+                    <Grid item>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            disabled={this.state.checkedNewDataset}
+                            checked={this.state.checkedNewBranch}
+                            onChange={this.handleSwitch("checkedNewBranch")}
+                            value="checkedNewBranch"
+                          />
+                        }
+                        label="Create new branch"
+                      />
                     </Grid>
-                    <Typography variant="h5" gutterBottom align="center">
-                      3. Upload CSV
-                    </Typography>
-                    <Dropzone
-                      accept={"*.csv, text/csv, application/vnd.ms-excel"}
-                      onDrop={this.onDrop}
-                      multiple={false}
-                    >
-                      {({ getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject }) => {
-                        let styles = {...baseStyle}
-                        styles = isDragActive ? {...styles, ...activeStyle} : styles
-                        styles = isDragReject ? {...styles, ...rejectStyle} : styles
+                    <Grid item>
+                      <TextField
+                        id="new-branch-name"
+                        label="New Branch"
+                        className={classes.textField}
+                        value={this.state.newBranch}
+                        onChange={this.handleChange("newBranch")}
+                        margin="normal"
+                        disabled={this.state.checkedNewDataset || !this.state.checkedNewBranch}
+                      />              
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        id="refer-branch-names"
+                        select
+                        label="Refer Branch"
+                        className={classes.textField}
+                        value={!this.state.checkedNewDataset && this.state.checkedNewBranch && this.state.referBranch}
+                        onChange={this.handleChange("referBranch")}
+                        SelectProps={{
+                          MenuProps: {
+                            className: classes.menu,
+                          },
+                        }}
+                        helperText="Please select a refer branch"
+                        margin="normal"
+                        disabled={!this.state.checkedNewBranch}
+                      >
+                        {this.state.dataset
+                          ? (datasetBranches.filter(item => item.dataset === this.state.dataset)[0]
+                              .branches.map(item => (
+                                <MenuItem key={item} value={item}>
+                                  {item}
+                                </MenuItem>
+                              ))
+                          )
+                          : (
+                            <MenuItem value={"master"}>
+                              {"master"}
+                            </MenuItem>
+                          )
+                        }
+                      </TextField>
+                    </Grid>
+                  </Grid>
+                  <Typography variant="h5" gutterBottom align="center">
+                    3. Upload CSV
+                  </Typography>
+                  <Dropzone
+                    accept={"*.csv, text/csv, application/vnd.ms-excel"}
+                    onDrop={this.onDrop}
+                    multiple={false}
+                  >
+                    {({ getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject }) => {
+                      let styles = {...baseStyle}
+                      styles = isDragActive ? {...styles, ...activeStyle} : styles
+                      styles = isDragReject ? {...styles, ...rejectStyle} : styles
 
-                        return (
-                          <div
-                            {...getRootProps()}
-                            style={styles}
-                          >
-                            <input {...getInputProps()} />
-                            <div>
-                              {isDragAccept ? 'Drop' : 'Drag'} files here...
-                            </div>
-                            {isDragReject && <div>Unsupported file type...</div>}
+                      return (
+                        <div
+                          {...getRootProps()}
+                          style={styles}
+                        >
+                          <input {...getInputProps()} />
+                          <div>
+                            {isDragAccept ? 'Drop' : 'Drag'} files here...
                           </div>
-                        )
-                      }}
-                    </Dropzone>
-                    <h4>CSV File:</h4>
-                    <ul>{files}</ul>
-                    <br />
-                    <Typography variant="h5" gutterBottom align="center">
-                      4. Dataset Schema
-                    </Typography>
-                    <Grid
-                      container
-                      direction="row"
-                      justify="space-evenly"
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={this.state.checkedNewDataset}
-                              value="checkedWithSchema"
-                            />
-                          }
-                          disabled={false}
-                          label="CSV First Row as Schema"
-                        />
-                      </Grid>
+                          {isDragReject && <div>Unsupported file type...</div>}
+                        </div>
+                      )
+                    }}
+                  </Dropzone>
+                  <h4>CSV File:</h4>
+                  <ul>{files}</ul>
+                  <br />
+                  <Typography variant="h5" gutterBottom align="center">
+                    4. Dataset Schema
+                  </Typography>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-evenly"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={this.state.checkedNewDataset}
+                            value="checkedWithSchema"
+                          />
+                        }
+                        disabled={false}
+                        label="CSV First Row as Schema"
+                      />
                     </Grid>
-                    <Grid
-                      container
-                      direction="row"
-                      justify="flex-end"
-                      alignItems="center"
-                    >
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => this.combinedCall()}
-                    >
-                      COMMIT
-                    </Button>
-                    </Grid>
-                  </Paper>
-                </Grid>
-                <Grid item xs={6}>
-                  <Paper>
-                    <Typography variant="h5" gutterBottom align="center">
-                      Forkbase Status:
-                    </Typography>
-                    <Typography component="p">
-                      <b>{Response_CreateDS[0]}</b>
-                      <br />
-                      {Response_CreateDS[1]}
-                    </Typography>
-                    <Typography component="p">
-                      <b>{Response_BranchDS[0]}</b>
-                      <br />
-                      {Response_BranchDS[1]}
-                    </Typography>
-                    {Response_UploadCSV &&
-                      <div>{this.state.files[0]["name"]} uploaded!</div>
-                    }
-                    <Typography component="p">
-                      <b>{Response_PutDataCSV[0]}</b>
-                      <br />
-                      {Response_PutDataCSV[1]}
-                      <br />
-                      {Response_PutDataCSV[2]}
-                    </Typography>
-                  </Paper>
-                </Grid>
+                  </Grid>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="flex-end"
+                    alignItems="center"
+                  >
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => this.combinedCall()}
+                  >
+                    COMMIT
+                  </Button>
+                  </Grid>
+                </Paper>
               </Grid>
-            </div>
-          </Paper>
-        </main>
+              <Grid item xs={6}>
+                <Paper>
+                  <Typography variant="h5" gutterBottom align="center">
+                    Forkbase Status:
+                  </Typography>
+                  <Typography component="p">
+                    <b>{Response_CreateDS[0]}</b>
+                    <br />
+                    {Response_CreateDS[1]}
+                  </Typography>
+                  <Typography component="p">
+                    <b>{Response_BranchDS[0]}</b>
+                    <br />
+                    {Response_BranchDS[1]}
+                  </Typography>
+                  {Response_UploadCSV &&
+                    <div>{this.state.files[0]["name"]} uploaded!</div>
+                  }
+                  <Typography component="p">
+                    <b>{Response_PutDataCSV[0]}</b>
+                    <br />
+                    {Response_PutDataCSV[1]}
+                    <br />
+                    {Response_PutDataCSV[2]}
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </div>
+        </MainContent>
       </React.Fragment>
     )
   }

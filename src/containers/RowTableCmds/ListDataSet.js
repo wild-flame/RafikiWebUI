@@ -7,10 +7,8 @@ import * as ConsoleActions from "../ConsoleAppFrame/actions"
 import * as actions from "./actions"
 
 import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -26,22 +24,11 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+import MainContent from '../../components/ConsoleContents/MainContent'
+import ContentBar from "../../components/ConsoleContents/ContentBar"
+
 
 const styles = theme => ({
-  mainContent: {
-    flex: 1,
-    padding: '48px 36px 0',
-    background: '#eaeff1', // light grey
-  },
-  paper: {
-    maxWidth: 936,
-    margin: 'auto',
-    overflow: 'hidden',
-    marginBottom: 20
-  },
-  searchBar: {
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-  },
   searchInput: {
     fontSize: theme.typography.fontSize,
   },
@@ -74,75 +61,73 @@ class ListDataSet extends React.Component {
     const { classes, DatasetList, requestListDS } = this.props;
     return (
       <React.Fragment>
-        <main className={classes.mainContent}>
-          <Paper className={classes.paper}>
-            <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
-              <Toolbar>
-                <Grid container spacing={16} alignItems="center">
-                  <Grid item>
-                    <SearchIcon className={classes.block} color="inherit" />
-                  </Grid>
-                  <Grid item xs>
-                    <TextField
-                      fullWidth
-                      placeholder="Search by dataset name"
-                      InputProps={{
-                        disableUnderline: true,
-                        className: classes.searchInput,
-                      }}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <Button variant="contained" color="primary" className={classes.addUser}>
-                      Search by Dataset
-                    </Button>
-                    <Tooltip title="Reload">
-                      <IconButton
-                        onClick={requestListDS}
-                      >
-                        <RefreshIcon className={classes.block} color="inherit" />
-                      </IconButton>
-                    </Tooltip>
-                  </Grid>
+        <MainContent>
+          <ContentBar>
+            <Toolbar>
+              <Grid container spacing={16} alignItems="center">
+                <Grid item>
+                  <SearchIcon className={classes.block} color="inherit" />
                 </Grid>
-              </Toolbar>
-            </AppBar>
-            <div className={classes.contentWrapper}>
-              <Typography color="textSecondary" align="center">
-                {DatasetList.length === 0
-                    ? "You do not have any dataset"
-                    : "Datasets and Branches"
-                }
-              </Typography>
-              <Table className={classes.table}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Dataset Name</TableCell>
-                    <TableCell>Branches</TableCell>
-                    <TableCell>Actions</TableCell>
+                <Grid item xs>
+                  <TextField
+                    fullWidth
+                    placeholder="Search by dataset name"
+                    InputProps={{
+                      disableUnderline: true,
+                      className: classes.searchInput,
+                    }}
+                  />
+                </Grid>
+                <Grid item>
+                  <Button variant="contained" color="primary" className={classes.addUser}>
+                    Search by Dataset
+                  </Button>
+                  <Tooltip title="Reload">
+                    <IconButton
+                      onClick={requestListDS}
+                    >
+                      <RefreshIcon className={classes.block} color="inherit" />
+                    </IconButton>
+                  </Tooltip>
+                </Grid>
+              </Grid>
+            </Toolbar>
+          </ContentBar>
+          <div className={classes.contentWrapper}>
+            <Typography color="textSecondary" align="center">
+              {DatasetList.length === 0
+                  ? "You do not have any dataset"
+                  : "Datasets and Branches"
+              }
+            </Typography>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Dataset Name</TableCell>
+                  <TableCell>Branches</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {DatasetList.map((row, index) => (
+                  <TableRow key={index}>
+                    <TableCell component="th" scope="row">
+                      {row[0]}
+                    </TableCell>
+                    <TableCell>
+                      {row[1]}
+                    </TableCell>
+                    <TableCell>
+                      <Button variant="contained" color="secondary">
+                        View History
+                      </Button>
+                    </TableCell>
                   </TableRow>
-                </TableHead>
-                <TableBody>
-                  {DatasetList.map((row, index) => (
-                    <TableRow key={index}>
-                      <TableCell component="th" scope="row">
-                        {row[0]}
-                      </TableCell>
-                      <TableCell>
-                        {row[1]}
-                      </TableCell>
-                      <TableCell>
-                        <Button variant="contained" color="secondary">
-                          View History
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </Paper>
-        </main>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </MainContent>
       </React.Fragment>
     )
   }

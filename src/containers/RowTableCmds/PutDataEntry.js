@@ -7,7 +7,6 @@ import * as ConsoleActions from "../ConsoleAppFrame/actions"
 import * as actions from "./actions"
 
 import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -18,25 +17,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from '@material-ui/core/Switch';
 
+import MainContent from '../../components/ConsoleContents/MainContent'
+import ContentBar from "../../components/ConsoleContents/ContentBar"
+
 
 const styles = theme => ({
-  mainContent: {
-    flex: 1,
-    padding: '48px 36px 0',
-    background: '#eaeff1', // light grey
-  },
-  paper: {
-    maxWidth: 936,
-    margin: 'auto',
-    overflow: 'hidden',
-    marginBottom: 20
-  },
-  searchBar: {
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-  },
-  searchInput: {
-    fontSize: theme.typography.fontSize,
-  },
   block: {
     display: 'block',
   },
@@ -179,232 +164,230 @@ class PutDataEntry extends React.Component {
 
     return (
       <React.Fragment>
-        <main className={classes.mainContent}>
-          <Paper className={classes.paper}>
-            <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
-              <Toolbar>
-                <Typography variant="h5" gutterBottom>
-                  Put Data Entry
-                </Typography>
-              </Toolbar>
-            </AppBar>
-            <div className={classes.contentWrapper}>
-              <Grid container spacing={24}>
-                <Grid item xs={6}>
-                  <Paper>
-                    <Typography variant="h5" gutterBottom align="center">
-                      1. Dataset Name
-                    </Typography>
-                    <Grid
-                      container
-                      direction="row"
-                      justify="space-evenly"
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <TextField
-                          id="existing-dataset-names"
-                          select
-                          label="Select from datasets"
-                          className={classes.textField}
-                          value={this.state.dataset}
-                          onChange={this.handleChange('dataset')}
-                          SelectProps={{
-                            MenuProps: {
-                              className: classes.menu,
-                            },
-                          }}
-                          helperText="Please select your dataset"
-                          margin="normal"
-                        >
-                          {datasetBranches.map(option => (
-                            <MenuItem key={option.dataset} value={option.dataset}>
-                              {option.dataset}
-                            </MenuItem>
-                          ))}
-                        </TextField>
-                      </Grid>
-                    </Grid>
-                    <br />
-                    <Typography variant="h5" gutterBottom align="center">
-                      2. Branch Name
-                    </Typography>
-                    <Grid
-                      container
-                      direction="row"
-                      justify="space-evenly"
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <TextField
-                          id="existing-branch-names"
-                          select
-                          label="Default is master"
-                          className={classes.textField}
-                          value={!this.state.checkedNewBranch && this.state.branch}
-                          onChange={this.handleChange("branch")}
-                          SelectProps={{
-                            MenuProps: {
-                              className: classes.menu,
-                            },
-                          }}
-                          helperText="Please select your branch"
-                          margin="normal"
-                          disabled={this.state.checkedNewBranch}
-                        >
-                          {this.state.dataset
-                            ? (datasetBranches.filter(item => item.dataset === this.state.dataset)[0]
-                                .branches.map(item => (
-                                  <MenuItem key={item} value={item}>
-                                    {item}
-                                  </MenuItem>
-                                ))
-                            )
-                            : (
-                              <MenuItem value={"master"}>
-                                {"master"}
-                              </MenuItem>
-                            )
-                          }
-                        </TextField>
-                      </Grid>
-                      <Grid item>
-                        <FormControlLabel
-                          control={
-                            <Switch
-                              checked={this.state.checkedNewBranch}
-                              onChange={this.handleSwitch("checkedNewBranch")}
-                              value="checkedNewBranch"
-                            />
-                          }
-                          label="Create new branch"
-                        />
-                      </Grid>
-                      <Grid item>
-                        <TextField
-                          id="new-branch-name"
-                          label="New Branch"
-                          className={classes.textField}
-                          value={this.state.newBranch}
-                          onChange={this.handleChange("newBranch")}
-                          margin="normal"
-                          disabled={!this.state.checkedNewBranch}
-                        />              
-                      </Grid>
-                      <Grid item>
-                        <TextField
-                          id="refer-branch-names"
-                          select
-                          label="Refer Branch"
-                          className={classes.textField}
-                          value={this.state.checkedNewBranch && this.state.referBranch}
-                          onChange={this.handleChange("referBranch")}
-                          SelectProps={{
-                            MenuProps: {
-                              className: classes.menu,
-                            },
-                          }}
-                          helperText="Please select a refer branch"
-                          margin="normal"
-                          disabled={!this.state.checkedNewBranch}
-                        >
-                          {this.state.dataset
-                            ? (datasetBranches.filter(item => item.dataset === this.state.dataset)[0]
-                                .branches.map(item => (
-                                  <MenuItem key={item} value={item}>
-                                    {item}
-                                  </MenuItem>
-                                ))
-                            )
-                            : (
-                              <MenuItem value={"master"}>
-                                {"master"}
-                              </MenuItem>
-                            )
-                          }
-                        </TextField>
-                      </Grid>
-                    </Grid>
-                    <br />
-                    <Typography variant="h5" gutterBottom align="center">
-                      3. Row Entry Key
-                    </Typography>
-                    <Grid
-                      container
-                      direction="row"
-                      justify="space-evenly"
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <TextField
-                          id="row-entry-key"
-                          label="Row Entry Key"
-                          className={classes.textField}
-                          value={this.state.entry}
-                          onChange={this.handleChange("entry")}
-                          margin="normal"
-                        />
-                      </Grid>
-                    </Grid>
-                    <br />
-                    <Typography variant="h5" gutterBottom align="center">
-                      4. Value
-                    </Typography>
-                    <Grid
-                      container
-                      direction="row"
-                      justify="space-evenly"
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <TextField
-                          id="put-value"
-                          label="Value"
-                          className={classes.textField}
-                          value={this.state.value}
-                          onChange={this.handleChange("value")}
-                          margin="normal"
-                        />
-                      </Grid>
-                    </Grid>
-                    <Grid
-                      container
-                      direction="row"
-                      justify="flex-end"
-                      alignItems="center"
-                    >
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => this.combinedCall()}
+        <MainContent>
+          <ContentBar>
+            <Toolbar>
+              <Typography variant="h5" gutterBottom>
+                Put Data Entry
+              </Typography>
+            </Toolbar>
+          </ContentBar>
+          <div className={classes.contentWrapper}>
+            <Grid container spacing={24}>
+              <Grid item xs={6}>
+                <Paper>
+                  <Typography variant="h5" gutterBottom align="center">
+                    1. Dataset Name
+                  </Typography>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-evenly"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <TextField
+                        id="existing-dataset-names"
+                        select
+                        label="Select from datasets"
+                        className={classes.textField}
+                        value={this.state.dataset}
+                        onChange={this.handleChange('dataset')}
+                        SelectProps={{
+                          MenuProps: {
+                            className: classes.menu,
+                          },
+                        }}
+                        helperText="Please select your dataset"
+                        margin="normal"
                       >
-                        COMMIT
-                      </Button>
+                        {datasetBranches.map(option => (
+                          <MenuItem key={option.dataset} value={option.dataset}>
+                            {option.dataset}
+                          </MenuItem>
+                        ))}
+                      </TextField>
                     </Grid>
-                  </Paper>
-                </Grid>
-                <Grid item xs={6}>
-                  <Paper>
-                    <Typography variant="h5" gutterBottom align="center">
-                      Forkbase Status:
-                    </Typography>
-                    <Typography component="p">
-                      <b>{Response_BranchDS[0]}</b>
-                      <br />
-                      {Response_BranchDS[1]}
-                    </Typography>
-                    <Typography component="p">
-                      <b>{Response_PutDE[0]}</b>
-                      <br />
-                      {Response_PutDE[1]}
-                    </Typography>
-                    <br />
-                  </Paper>
-                </Grid>
+                  </Grid>
+                  <br />
+                  <Typography variant="h5" gutterBottom align="center">
+                    2. Branch Name
+                  </Typography>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-evenly"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <TextField
+                        id="existing-branch-names"
+                        select
+                        label="Default is master"
+                        className={classes.textField}
+                        value={!this.state.checkedNewBranch && this.state.branch}
+                        onChange={this.handleChange("branch")}
+                        SelectProps={{
+                          MenuProps: {
+                            className: classes.menu,
+                          },
+                        }}
+                        helperText="Please select your branch"
+                        margin="normal"
+                        disabled={this.state.checkedNewBranch}
+                      >
+                        {this.state.dataset
+                          ? (datasetBranches.filter(item => item.dataset === this.state.dataset)[0]
+                              .branches.map(item => (
+                                <MenuItem key={item} value={item}>
+                                  {item}
+                                </MenuItem>
+                              ))
+                          )
+                          : (
+                            <MenuItem value={"master"}>
+                              {"master"}
+                            </MenuItem>
+                          )
+                        }
+                      </TextField>
+                    </Grid>
+                    <Grid item>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={this.state.checkedNewBranch}
+                            onChange={this.handleSwitch("checkedNewBranch")}
+                            value="checkedNewBranch"
+                          />
+                        }
+                        label="Create new branch"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        id="new-branch-name"
+                        label="New Branch"
+                        className={classes.textField}
+                        value={this.state.newBranch}
+                        onChange={this.handleChange("newBranch")}
+                        margin="normal"
+                        disabled={!this.state.checkedNewBranch}
+                      />              
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                        id="refer-branch-names"
+                        select
+                        label="Refer Branch"
+                        className={classes.textField}
+                        value={this.state.checkedNewBranch && this.state.referBranch}
+                        onChange={this.handleChange("referBranch")}
+                        SelectProps={{
+                          MenuProps: {
+                            className: classes.menu,
+                          },
+                        }}
+                        helperText="Please select a refer branch"
+                        margin="normal"
+                        disabled={!this.state.checkedNewBranch}
+                      >
+                        {this.state.dataset
+                          ? (datasetBranches.filter(item => item.dataset === this.state.dataset)[0]
+                              .branches.map(item => (
+                                <MenuItem key={item} value={item}>
+                                  {item}
+                                </MenuItem>
+                              ))
+                          )
+                          : (
+                            <MenuItem value={"master"}>
+                              {"master"}
+                            </MenuItem>
+                          )
+                        }
+                      </TextField>
+                    </Grid>
+                  </Grid>
+                  <br />
+                  <Typography variant="h5" gutterBottom align="center">
+                    3. Row Entry Key
+                  </Typography>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-evenly"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <TextField
+                        id="row-entry-key"
+                        label="Row Entry Key"
+                        className={classes.textField}
+                        value={this.state.entry}
+                        onChange={this.handleChange("entry")}
+                        margin="normal"
+                      />
+                    </Grid>
+                  </Grid>
+                  <br />
+                  <Typography variant="h5" gutterBottom align="center">
+                    4. Value
+                  </Typography>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-evenly"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <TextField
+                        id="put-value"
+                        label="Value"
+                        className={classes.textField}
+                        value={this.state.value}
+                        onChange={this.handleChange("value")}
+                        margin="normal"
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="flex-end"
+                    alignItems="center"
+                  >
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => this.combinedCall()}
+                    >
+                      COMMIT
+                    </Button>
+                  </Grid>
+                </Paper>
               </Grid>
-            </div>
-          </Paper>
-        </main>
+              <Grid item xs={6}>
+                <Paper>
+                  <Typography variant="h5" gutterBottom align="center">
+                    Forkbase Status:
+                  </Typography>
+                  <Typography component="p">
+                    <b>{Response_BranchDS[0]}</b>
+                    <br />
+                    {Response_BranchDS[1]}
+                  </Typography>
+                  <Typography component="p">
+                    <b>{Response_PutDE[0]}</b>
+                    <br />
+                    {Response_PutDE[1]}
+                  </Typography>
+                  <br />
+                </Paper>
+              </Grid>
+            </Grid>
+          </div>
+        </MainContent>
       </React.Fragment>
     )
   }
