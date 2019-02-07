@@ -18,8 +18,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from '@material-ui/core/Switch';
 
-import LoadingBar from 'react-redux-loading-bar'
-
 
 const styles = theme => ({
   mainContent: {
@@ -181,7 +179,6 @@ class PutDataEntry extends React.Component {
 
     return (
       <React.Fragment>
-        <LoadingBar />
         <main className={classes.mainContent}>
           <Paper className={classes.paper}>
             <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>

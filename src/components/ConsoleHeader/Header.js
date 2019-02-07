@@ -20,9 +20,6 @@ const styles = theme => ({
     color: '#fff',
     backgroundColor: theme.palette.secondary.main,
   },
-  secondaryBar: {
-    zIndex: 0,
-  },
   menuButton: {
     marginLeft: -theme.spacing.unit,
   },

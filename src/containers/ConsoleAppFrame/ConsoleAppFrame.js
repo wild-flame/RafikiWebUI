@@ -17,6 +17,8 @@ import Header from '../../components/ConsoleHeader/Header';
 
 import * as actions from "./actions"
 
+import LoadingBar from 'react-redux-loading-bar'
+
 // import { Redirect } from "react-router-dom"
 
 /*
@@ -69,6 +71,7 @@ class ConsoleAppFrame extends React.Component {
 
     return (
       <MuiThemeProvider theme={ConsoleTheme}>
+        <LoadingBar style={{ backgroundColor: 'orange', zIndex: 2000 }} />
         <div className={classes.root}>
           <nav className={classes.drawer}>
             <Hidden smUp implementation="js">

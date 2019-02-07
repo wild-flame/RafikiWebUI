@@ -6,7 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import { withStyles } from '@material-ui/core/styles';
 
 
-const styles = theme => ({
+const styles = () => ({
   secondaryBar: {
     zIndex: 0,
   },

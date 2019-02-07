@@ -14,8 +14,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh';
 
-import LoadingBar from 'react-redux-loading-bar'
-
 import DatabaseOverviewHeader from "../../components/ConsoleHeader/DatabaseOverviewHeader"
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
@@ -56,7 +54,6 @@ class DatabaseOverview extends React.Component {
     return (
       <React.Fragment>
         <DatabaseOverviewHeader />
-        <LoadingBar />
         <MainContent>
           <ContentBar>
             <Toolbar>

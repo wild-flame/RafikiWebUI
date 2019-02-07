@@ -26,8 +26,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import LoadingBar from 'react-redux-loading-bar'
-
 
 const styles = theme => ({
   mainContent: {
@@ -76,7 +74,6 @@ class ListDataSet extends React.Component {
     const { classes, DatasetList, requestListDS } = this.props;
     return (
       <React.Fragment>
-        <LoadingBar />
         <main className={classes.mainContent}>
           <Paper className={classes.paper}>
             <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>

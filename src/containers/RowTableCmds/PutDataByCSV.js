@@ -21,8 +21,6 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 import Dropzone from 'react-dropzone'
 
-import LoadingBar from 'react-redux-loading-bar'
-
 
 const styles = theme => ({
   mainContent: {
@@ -277,7 +275,6 @@ class PutDataByCSV extends React.Component {
 
     return (
       <React.Fragment>
-        <LoadingBar />
         <main className={classes.mainContent}>
           <Paper className={classes.paper}>
             <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
