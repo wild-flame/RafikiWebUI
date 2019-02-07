@@ -18,6 +18,8 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 
 import LoadingBar from 'react-redux-loading-bar'
 
+import DatabaseOverviewHeader from "../../components/ConsoleHeader/DatabaseOverviewHeader"
+
 
 const styles = theme => ({
   mainContent: {
@@ -77,6 +79,7 @@ class DatabaseOverview extends React.Component {
     const { classes, DBInfo, DBSize } = this.props;
     return (
       <React.Fragment>
+        <DatabaseOverviewHeader />
         <LoadingBar />
         <main className={classes.mainContent}>
           <Paper className={classes.paper}>
