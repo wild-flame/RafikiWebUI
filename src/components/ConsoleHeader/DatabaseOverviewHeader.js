@@ -5,7 +5,6 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { withStyles } from '@material-ui/core/styles';
 
-const lightColor = 'rgba(255, 255, 255, 0.7)';
 
 const styles = theme => ({
   secondaryBar: {

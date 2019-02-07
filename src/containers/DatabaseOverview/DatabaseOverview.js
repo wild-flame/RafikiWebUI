@@ -7,10 +7,8 @@ import * as actions from "./actions"
 import * as ConsoleActions from "../ConsoleAppFrame/actions"
 
 import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
@@ -19,41 +17,19 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import LoadingBar from 'react-redux-loading-bar'
 
 import DatabaseOverviewHeader from "../../components/ConsoleHeader/DatabaseOverviewHeader"
+import MainContent from '../../components/ConsoleContents/MainContent'
+import ContentBar from "../../components/ConsoleContents/ContentBar"
 
 
-const styles = theme => ({
-  mainContent: {
-    flex: 1,
-    padding: '48px 36px 0',
-    background: '#eaeff1', // light grey
-  },
-  paper: {
-    maxWidth: 936,
-    margin: 'auto',
-    overflow: 'hidden',
-    marginBottom: 20
-  },
-  searchBar: {
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-  },
-  searchInput: {
-    fontSize: theme.typography.fontSize,
-  },
+const styles = () => ({
   block: {
     display: 'block',
-  },
-  menu: {
-    width: 200,
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
   },
   contentWrapper: {
     margin: '10px 16px',
   }
 })
+
 
 class DatabaseOverview extends React.Component {
   static propTypes = {
@@ -81,35 +57,33 @@ class DatabaseOverview extends React.Component {
       <React.Fragment>
         <DatabaseOverviewHeader />
         <LoadingBar />
-        <main className={classes.mainContent}>
-          <Paper className={classes.paper}>
-            <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
-              <Toolbar>
-                <Grid container spacing={16} justify="space-between" alignItems="center">
-                  <Grid item>
-                    <Typography variant="h5" gutterBottom>
-                      Total Database Size: {DBSize}
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Tooltip title="Reload">
-                      <IconButton
-                        onClick={this.requestDBSizeInfo}
-                      >
-                        <RefreshIcon className={classes.block} color="inherit" />
-                      </IconButton>
-                    </Tooltip>
-                  </Grid>
+        <MainContent>
+          <ContentBar>
+            <Toolbar>
+              <Grid container spacing={16} justify="space-between" alignItems="center">
+                <Grid item>
+                  <Typography variant="h5" gutterBottom>
+                    Total Database Size: {DBSize}
+                  </Typography>
                 </Grid>
-              </Toolbar>
-            </AppBar>
+                <Grid item>
+                  <Tooltip title="Reload">
+                    <IconButton
+                      onClick={this.requestDBSizeInfo}
+                    >
+                      <RefreshIcon className={classes.block} color="inherit" />
+                    </IconButton>
+                  </Tooltip>
+                </Grid>
+              </Grid>
+            </Toolbar>
+          </ContentBar>
             <div className={classes.contentWrapper}>
               <Typography color="textPrimary" component="pre" align="center">
                 <pre>{DBInfo}</pre>
               </Typography>
             </div>
-          </Paper>
-        </main>
+        </MainContent>
       </React.Fragment>
     )
   }
