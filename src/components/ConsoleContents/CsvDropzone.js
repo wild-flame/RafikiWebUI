@@ -3,26 +3,35 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 
+// File List
+import FolderIcon from '@material-ui/icons/Folder';
+import List from '@material-ui/core/List';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+import Typography from '@material-ui/core/Typography';
+
 import Dropzone from 'react-dropzone'
 
 
 const styles = theme => ({
-  menu: {
-    width: 200,
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
-  contentWrapper: {
-    margin: '10px 16px',
-  }
 })
 
 // for file dropzone
 const baseStyle = {
-  width: 300,
+  width: "100%",
+  maxWidth: 360,
   height: 100,
   borderWidth: 2,
   borderColor: '#666',
@@ -45,11 +54,14 @@ const rejectStyle = {
 class CsvDropzone extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    onCsvDrop: PropTypes.func,
+    files: PropTypes.array
   }
 
   render() {
     const {
       classes,
+      files,
       onCsvDrop
     } = this.props;
 
@@ -72,13 +84,40 @@ class CsvDropzone extends React.Component {
               >
                 <input {...getInputProps()} />
                 <div>
-                  {isDragAccept ? 'Drop' : 'Drag'} files here...
+                  <br />
+                  <br />
+                  <Typography variant="body1" gutterBottom align="center">
+                    {isDragAccept ? 'Drop' : 'Drag'} files here...
+                  </Typography>
                 </div>
                 {isDragReject && <div>Unsupported file type...</div>}
               </div>
             )
           }}
         </Dropzone>
+        <List
+         subheader={<ListSubheader>CSV File:</ListSubheader>}
+         className={classes.root}
+        >
+          {files.map(file => (
+            <ListItem key={file.name}>
+              <ListItemAvatar>
+                <Avatar>
+                  <FolderIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary={file.name}
+                secondary={file.size + " bytes"}
+              />
+              <ListItemSecondaryAction>
+                <IconButton aria-label="Delete">
+                  <DeleteIcon />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+          ))}
+        </List>
       </React.Fragment>
     )
   }

@@ -18,6 +18,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from '@material-ui/core/Switch';
 import Checkbox from "@material-ui/core/Checkbox";
 
+import FormHelperText from '@material-ui/core/FormHelperText';
+
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
 import CsvDropzone from "../../components/ConsoleContents/CsvDropzone"
@@ -221,11 +223,6 @@ class PutDataByCSV extends React.Component {
   }
 
   render() {
-    const files = this.state.files.map(file => (
-      <li key={file.name}>
-        {file.name} - {file.size} bytes
-      </li>
-    ))
     const {
       classes,
       Response_CreateDS,
@@ -409,10 +406,9 @@ class PutDataByCSV extends React.Component {
                     3. Upload CSV
                   </Typography>
                   <CsvDropzone
+                    files={this.state.files}
                     onCsvDrop={this.onDrop}
                   />
-                  <h4>CSV File:</h4>
-                  <ul>{files}</ul>
                   <br />
                   <Typography variant="h5" gutterBottom align="center">
                     4. Dataset Schema
@@ -434,8 +430,10 @@ class PutDataByCSV extends React.Component {
                         disabled={false}
                         label="CSV First Row as Schema"
                       />
+                      <FormHelperText>Auto-select for new dataset</FormHelperText>
                     </Grid>
                   </Grid>
+                  <br />
                   <Grid
                     container
                     direction="row"
