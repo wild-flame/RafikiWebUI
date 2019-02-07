@@ -18,10 +18,9 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from '@material-ui/core/Switch';
 import Checkbox from "@material-ui/core/Checkbox";
 
-import Dropzone from 'react-dropzone'
-
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
+import CsvDropzone from "../../components/ConsoleContents/CsvDropzone"
 
 
 const styles = theme => ({
@@ -70,27 +69,6 @@ const Normalized = {
     branches: ["master", "dev"]
   },
 }
-
-// for file dropzone
-const baseStyle = {
-  width: 300,
-  height: 100,
-  borderWidth: 2,
-  borderColor: '#666',
-  borderStyle: 'dashed',
-  borderRadius: 5,
-  margin: "0 auto"
-};
-const activeStyle = {
-  borderStyle: 'solid',
-  borderColor: '#6c6',
-  backgroundColor: '#eee'
-};
-const rejectStyle = {
-  borderStyle: 'solid',
-  borderColor: '#c66',
-  backgroundColor: '#eee'
-};
 
 
 class PutDataByCSV extends React.Component {
@@ -184,6 +162,7 @@ class PutDataByCSV extends React.Component {
     // Initial FormData
     const formData = new FormData();
     formData.append("file", this.state.files[0]);
+
     // create new dataset
     if (this.state.checkedNewDataset) {
       // combo_CreateDS_PutCSV()
@@ -429,30 +408,9 @@ class PutDataByCSV extends React.Component {
                   <Typography variant="h5" gutterBottom align="center">
                     3. Upload CSV
                   </Typography>
-                  <Dropzone
-                    accept={"*.csv, text/csv, application/vnd.ms-excel"}
-                    onDrop={this.onDrop}
-                    multiple={false}
-                  >
-                    {({ getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject }) => {
-                      let styles = {...baseStyle}
-                      styles = isDragActive ? {...styles, ...activeStyle} : styles
-                      styles = isDragReject ? {...styles, ...rejectStyle} : styles
-
-                      return (
-                        <div
-                          {...getRootProps()}
-                          style={styles}
-                        >
-                          <input {...getInputProps()} />
-                          <div>
-                            {isDragAccept ? 'Drop' : 'Drag'} files here...
-                          </div>
-                          {isDragReject && <div>Unsupported file type...</div>}
-                        </div>
-                      )
-                    }}
-                  </Dropzone>
+                  <CsvDropzone
+                    onCsvDrop={this.onDrop}
+                  />
                   <h4>CSV File:</h4>
                   <ul>{files}</ul>
                   <br />
