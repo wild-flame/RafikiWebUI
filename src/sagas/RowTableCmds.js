@@ -8,7 +8,7 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import * as actions from "../containers/RowTableCmds/actions"
 import * as api from "../services/RowTableAPI"
 
-
+/* for List Dataset command */
 function* getDatasetList() {
   try{
     yield put(showLoading())
@@ -27,10 +27,11 @@ function* watchGetDSListRequest() {
 }
 
 
+/* for Put Data Entry page */
 function* getPutDEresponse(action) {
   try{
     yield put(showLoading())
-    const Response_PutDE = yield call(api.requestPutDataEntry, action.dataEntry)
+    const Response_PutDE = yield call(api.requestPutDataEntry, action.dataEntryPutDE)
     yield put(hideLoading())
     yield put(actions.populatePutDEresponse(Response_PutDE.data.result))
   } catch(e) {
@@ -43,6 +44,26 @@ function* watchGetPutDEresponse() {
 }
 
 
+function* getBranchDS_PutDEresponse(action) {
+  try {
+    yield put(actions.requestBranchDS(action.dataEntryForBranchDS))
+    const Response_BranchDS = yield call(api.requestBranchDS, action.dataEntryForBranchDS)
+    yield put(actions.populateBranchDSresponse(Response_BranchDS.data.result))
+
+    // yield put(actions.requestPutDE(action.dataEntryForCombo_BranchDS))
+    const Response_PutDE = yield call(api.requestPutDataEntry, action.dataEntryForCombo_BranchDS)
+    yield put(actions.populatePutDEresponse(Response_PutDE.data.result))
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+function* watchBranchDSPutDECombo() {
+  yield takeLatest(actions.Types.COMBO_BRANCH_DS_PUT_DE, getBranchDS_PutDEresponse)
+}
+
+
+/* for Put Data Entry by CSV page, combining createDS, branchDS and uploadCSV */
 function* getCreateDS_PutCSVresponse(action) {
   try{
     yield put(actions.requestCreateDS(action.dataEntryForCreateDS))
@@ -82,7 +103,7 @@ function* watchCreateDSPutCSVCombo() {
 
 function* getBranchDS_PutCSVresponse(action) {
   try{
-    yield put(actions.requestCreateDS(action.dataEntryForBranchDS))
+    yield put(actions.requestBranchDS(action.dataEntryForBranchDS))
     const Response_BranchDS = yield call(api.requestBranchDS, action.dataEntryForBranchDS)
     yield put(actions.populateBranchDSresponse(Response_BranchDS.data.result))
 
@@ -154,6 +175,7 @@ function* watchPutCSVCombo() {
 const RowTableCmdsSagas = [
   fork(watchGetDSListRequest),
   fork(watchGetPutDEresponse),
+  fork(watchBranchDSPutDECombo),
   fork(watchCreateDSPutCSVCombo),
   fork(watchBranchDSPutCSVCombo),
   fork(watchPutCSVCombo)

@@ -14,7 +14,8 @@ export const Types = {
   // combined action to trigger sagas
   COMBO_CREATE_DS_PUT_CSV: "RowTableCmds/call_combo_create_ds_put_csv",
   COMBO_BRANCH_DS_PUT_CSV: "RowTableCmds/call_combo_branch_ds_put_csv",
-  COMBO_PUT_CSV: "RowTableCmds/call_combo_put_csv"
+  COMBO_PUT_CSV: "RowTableCmds/call_combo_put_csv",
+  COMBO_BRANCH_DS_PUT_DE: "RowTableCmds/call_combo_branch_ds_put_de"
 }
 
 // LIST_DATASET{_ALL}
@@ -28,9 +29,9 @@ export const populateDSList = DatasetList => ({
 })
 
 // PUT_DATA_ENTRY
-export const requestPutDE = dataEntry => ({
+export const requestPutDE = dataEntryPutDE => ({
   type: Types.REQUEST_PUT_DE,
-  dataEntry
+  dataEntryPutDE
 })
 
 export const populatePutDEresponse = Response_PutDE => ({
@@ -113,4 +114,14 @@ export const triggerPutCSV_Combo = (
   type: Types.COMBO_PUT_CSV,
   formData,
   dataEntryForPutCSV
+})
+
+// trigger combo_BranchDS_PutDE()
+export const triggerBranchDS_PutDE_Combo = (
+  dataEntryForBranchDS,
+  dataEntryForCombo_BranchDS
+) => ({
+  type: Types.COMBO_BRANCH_DS_PUT_DE,
+  dataEntryForBranchDS,
+  dataEntryForCombo_BranchDS
 })
