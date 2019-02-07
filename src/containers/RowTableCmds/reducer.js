@@ -47,6 +47,17 @@ export const RowTableCmds = (state = initialState, action) => {
         ...state,
         Response_PutDataCSV: action.Response_PutDataCSV
       }
+    case Types.RESET_RESPONSES :
+      return {
+        ...state,
+        // put-de
+        Response_PutDE: [],
+        // put-csv
+        Response_PutDataCSV: [],
+        Response_CreateDS: [],
+        Response_BranchDS: [],
+        Response_UploadCSV: ""
+      }
     default:
       return state
   }

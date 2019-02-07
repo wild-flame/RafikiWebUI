@@ -127,10 +127,13 @@ class PutDataByCSV extends React.Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
+
     handleHeaderTitleChange: PropTypes.func,
     triggerCreateDS_PutCSV_Combo: PropTypes.func,
     triggerBranchDS_PutCSV_Combo: PropTypes.func,
     triggerPutCSV_Combo: PropTypes.func,
+    resetResponses: PropTypes.func,
+
     Response_PutDataCSV: PropTypes.array,
     Response_CreateDS: PropTypes.array,
     Response_BranchDS: PropTypes.array,
@@ -252,6 +255,10 @@ class PutDataByCSV extends React.Component {
         })
       }
     }
+  }
+
+  componentWillUnmount() {
+    this.props.resetResponses()
   }
 
   render() {
@@ -558,7 +565,8 @@ const mapDispatchToProps = {
   requestListDS: actions.requestListDS,
   triggerCreateDS_PutCSV_Combo: actions.triggerCreateDS_PutCSV_Combo,
   triggerBranchDS_PutCSV_Combo: actions.triggerBranchDS_PutCSV_Combo,
-  triggerPutCSV_Combo: actions.triggerPutCSV_Combo
+  triggerPutCSV_Combo: actions.triggerPutCSV_Combo,
+  resetResponses: actions.resetResponses
 }
 
 export default compose(

@@ -89,9 +89,12 @@ class PutDataEntry extends React.Component {
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
+
     handleHeaderTitleChange: PropTypes.func,
     requestPutDE: PropTypes.func,
     requestListDS: PropTypes.func,
+    resetResponses: PropTypes.func,
+
     Response_PutDE: PropTypes.array,
     Response_BranchDS: PropTypes.array,
     triggerBranchDS_PutDE_Combo: PropTypes.func
@@ -163,6 +166,10 @@ class PutDataEntry extends React.Component {
         })
       }
     }
+  }
+
+  componentWillUnmount() {
+    this.props.resetResponses()
   }
 
   render() {
@@ -417,6 +424,7 @@ const mapDispatchToProps = {
   requestPutDE: actions.requestPutDE,
   requestListDS: actions.requestListDS,
   triggerBranchDS_PutDE_Combo: actions.triggerBranchDS_PutDE_Combo,
+  resetResponses: actions.resetResponses
 }
 
 export default compose(

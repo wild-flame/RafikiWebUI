@@ -15,7 +15,9 @@ export const Types = {
   COMBO_CREATE_DS_PUT_CSV: "RowTableCmds/call_combo_create_ds_put_csv",
   COMBO_BRANCH_DS_PUT_CSV: "RowTableCmds/call_combo_branch_ds_put_csv",
   COMBO_PUT_CSV: "RowTableCmds/call_combo_put_csv",
-  COMBO_BRANCH_DS_PUT_DE: "RowTableCmds/call_combo_branch_ds_put_de"
+  COMBO_BRANCH_DS_PUT_DE: "RowTableCmds/call_combo_branch_ds_put_de",
+  // reset responses when route change
+  RESET_RESPONSES: "RowTableCmds/reset_responses"
 }
 
 // LIST_DATASET{_ALL}
@@ -124,4 +126,9 @@ export const triggerBranchDS_PutDE_Combo = (
   type: Types.COMBO_BRANCH_DS_PUT_DE,
   dataEntryForBranchDS,
   dataEntryForCombo_BranchDS
+})
+
+// clear the Response_* when route unmount
+export const resetResponses = () => ({
+  type: Types.RESET_RESPONSES
 })
