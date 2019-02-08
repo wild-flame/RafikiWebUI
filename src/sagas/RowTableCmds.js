@@ -170,6 +170,20 @@ function* watchPutCSVCombo() {
   yield takeLatest(actions.Types.COMBO_PUT_CSV, getPutCSVComboResponse)
 }
 
+/* for Get Dataset */
+function* getGetDatasetResponse(action) {
+  try{
+    const Response_GetDataset = yield call(api.requestGetDataset, action.dataEntryForGetDS)
+    yield put(actions.populateGetDatasetResponse(Response_GetDataset.data.result))
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+function* watchGetDataset() {
+  yield takeLatest(actions.Types.REQUEST_GET_DATASET, getGetDatasetResponse)
+}
+
 
 // fork is for process creation, run in separate processes
 const RowTableCmdsSagas = [
@@ -178,7 +192,8 @@ const RowTableCmdsSagas = [
   fork(watchBranchDSPutDECombo),
   fork(watchCreateDSPutCSVCombo),
   fork(watchBranchDSPutCSVCombo),
-  fork(watchPutCSVCombo)
+  fork(watchPutCSVCombo),
+  fork(watchGetDataset)
 ]
 
 export default RowTableCmdsSagas

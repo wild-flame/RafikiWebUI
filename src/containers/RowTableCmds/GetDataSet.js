@@ -12,7 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
@@ -20,12 +19,7 @@ import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
 
 
-const styles = theme => ({
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
+const styles = () => ({
   contentWrapper: {
     margin: '10px 16px',
   }
@@ -52,32 +46,25 @@ const datasetBranches = [
   },
 ];
 
-class PutDataEntry extends React.Component {
+class GetDataSet extends React.Component {
   state = {
-    checkedNewBranch: false,
     dataset:"",
     branch:"",
-    newBranch: "",
-    referBranch:"",
-    entry: "",
-    value:""
   }
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
 
     handleHeaderTitleChange: PropTypes.func,
-    requestPutDE: PropTypes.func,
+    requestGetDataset: PropTypes.func,
     requestListDS: PropTypes.func,
     resetResponses: PropTypes.func,
 
-    Response_PutDE: PropTypes.array,
-    Response_BranchDS: PropTypes.array,
-    triggerBranchDS_PutDE_Combo: PropTypes.func
+    Response_GetDataset: PropTypes.array
   }
 
   componentDidMount() {
-    this.props.handleHeaderTitleChange("Row-based Table > Put Data Entry")
+    this.props.handleHeaderTitleChange("Row-based Table > Get Dataset")
     this.props.requestListDS()
   }
 
@@ -87,61 +74,15 @@ class PutDataEntry extends React.Component {
     });
   };
 
-  handleSwitch = name => event => {
-    this.setState({
-      [name]: event.target.checked
-    });
-  }
-
-  combinedCall() {
-    const dataEntryForBranchDS = Object.assign(
+  handleCommit = () => {
+    const dataEntryForGetDS = Object.assign(
       {
         "dataset": this.state.dataset,
-        "branch": this.state.newBranch,
-        "referBranch": this.state.referBranch
+        "branch": this.state.branch
       },
       {}
     )
-    const dataEntryForCombo_BranchDS = Object.assign(
-      {
-        "dataset": this.state.dataset,
-        "branch": this.state.newBranch,
-        "entry": this.state.entry,
-        "value": this.state.value
-      },
-      {}
-    )
-    const dataEntryPutDE = Object.assign(
-      {
-        "dataset": this.state.dataset,
-        "branch": this.state.branch,
-        "entry": this.state.entry,
-        "value": this.state.value
-      },
-      {}
-    )
-    // create new branch
-    if (this.state.checkedNewBranch) {
-      // combo_BranchDS_PutDE()
-      this.props.triggerBranchDS_PutDE_Combo(
-        dataEntryForBranchDS,
-        dataEntryForCombo_BranchDS
-      )
-    // or raw put data entry
-    } else {
-      this.props.requestPutDE(
-        dataEntryPutDE
-      )
-    }
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.checkedNewBranch !== prevState.checkedNewBranch) {
-      if (!this.state.checkedNewBranch) {
-        this.setState({
-          newBranch: ""
-        })
-      }
-    }
+    this.props.requestGetDataset(dataEntryForGetDS)
   }
 
   componentWillUnmount() {
@@ -151,8 +92,7 @@ class PutDataEntry extends React.Component {
   render() {
     const {
       classes,
-      Response_PutDE,
-      Response_BranchDS
+      Response_GetDataset,
     } = this.props;
 
     return (
@@ -161,7 +101,7 @@ class PutDataEntry extends React.Component {
           <ContentBar>
             <Toolbar>
               <Typography variant="h5" gutterBottom>
-                Put Data Entry
+                Get Dataset
               </Typography>
             </Toolbar>
           </ContentBar>
@@ -190,50 +130,9 @@ class PutDataEntry extends React.Component {
                   referBranch={this.state.referBranch}
                   onHandleChange={this.handleChange}
                   onHandleSwitch={this.handleSwitch}
-                  AllowNewBranch={true}
+                  AllowNewBranch={false}
                 />
                 <br />
-                <Typography variant="h5" gutterBottom align="center">
-                  3. Row Entry Key
-                </Typography>
-                <Grid
-                  container
-                  direction="row"
-                  justify="space-evenly"
-                  alignItems="center"
-                >
-                  <Grid item>
-                    <TextField
-                      id="row-entry-key"
-                      label="Row Entry Key"
-                      className={classes.textField}
-                      value={this.state.entry}
-                      onChange={this.handleChange("entry")}
-                      margin="normal"
-                    />
-                  </Grid>
-                </Grid>
-                <br />
-                <Typography variant="h5" gutterBottom align="center">
-                  4. Value
-                </Typography>
-                <Grid
-                  container
-                  direction="row"
-                  justify="space-evenly"
-                  alignItems="center"
-                >
-                  <Grid item>
-                    <TextField
-                      id="put-value"
-                      label="Value"
-                      className={classes.textField}
-                      value={this.state.value}
-                      onChange={this.handleChange("value")}
-                      margin="normal"
-                    />
-                  </Grid>
-                </Grid>
                 <Grid
                   container
                   direction="row"
@@ -243,7 +142,7 @@ class PutDataEntry extends React.Component {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => this.combinedCall()}
+                    onClick={this.handleCommit}
                   >
                     COMMIT
                   </Button>
@@ -255,14 +154,7 @@ class PutDataEntry extends React.Component {
                     Forkbase Status:
                   </Typography>
                   <Typography component="p">
-                    <b>{Response_BranchDS[0]}</b>
-                    <br />
-                    {Response_BranchDS[1]}
-                  </Typography>
-                  <Typography component="p">
-                    <b>{Response_PutDE[0]}</b>
-                    <br />
-                    {Response_PutDE[1]}
+                    <b>{Response_GetDataset[0]}</b>
                   </Typography>
                   <br />
                 </Paper>
@@ -277,19 +169,17 @@ class PutDataEntry extends React.Component {
 
 
 const mapStateToProps = state => ({
-  Response_PutDE: state.RowTableCmds.Response_PutDE,
-  Response_BranchDS: state.RowTableCmds.Response_BranchDS,
+  Response_GetDataset: state.RowTableCmds.Response_GetDataset
 })
 
 const mapDispatchToProps = {
   handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
-  requestPutDE: actions.requestPutDE,
   requestListDS: actions.requestListDS,
-  triggerBranchDS_PutDE_Combo: actions.triggerBranchDS_PutDE_Combo,
+  requestGetDataset: actions.requestGetDataset,
   resetResponses: actions.resetResponses
 }
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles)
-)(PutDataEntry)
+)(GetDataSet)

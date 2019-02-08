@@ -53,3 +53,12 @@ export const requestPutCSV = dataEntryForPutCSV => {
     data: dataEntryForPutCSV
   });
 }
+
+export const requestGetDataset = dataEntryForGetDS => {
+  return axios({
+    method: 'post',
+    url: `${HTTPconfig.gateway}api/get-ds`,
+    headers: HTTPconfig.HTTP_HEADER,
+    data: dataEntryForGetDS
+  });
+}

@@ -36,6 +36,7 @@ class BranchName extends React.Component {
     referBranch: PropTypes.string,
     onHandleChange: PropTypes.func,
     onHandleSwitch: PropTypes.func,
+    AllowNewBranch: PropTypes.bool
   }
 
   render() {
@@ -50,7 +51,8 @@ class BranchName extends React.Component {
       newBranch,
       referBranch,
       onHandleChange,
-      onHandleSwitch
+      onHandleSwitch,
+      AllowNewBranch
     } = this.props;
 
     return (
@@ -97,63 +99,67 @@ class BranchName extends React.Component {
               }
             </TextField>
           </Grid>
-          <Grid item>
-            <FormControlLabel
-              control={
-                <Switch
-                  disabled={checkedNewDataset}
-                  checked={checkedNewBranch}
-                  onChange={onHandleSwitch("checkedNewBranch")}
-                  value="checkedNewBranch"
-                />
-              }
-              label="Create new branch"
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              id="new-branch-name"
-              label="New Branch"
-              className={classes.textField}
-              value={newBranch}
-              onChange={onHandleChange("newBranch")}
-              margin="normal"
-              disabled={checkedNewDataset || !checkedNewBranch}
-            />              
-          </Grid>
-          <Grid item>
-            <TextField
-              id="refer-branch-names"
-              select
-              label="Refer Branch"
-              className={classes.textField}
-              value={!checkedNewDataset && checkedNewBranch && referBranch}
-              onChange={onHandleChange("referBranch")}
-              SelectProps={{
-                MenuProps: {
-                  className: classes.menu,
-                },
-              }}
-              helperText="Please select a refer branch"
-              margin="normal"
-              disabled={!checkedNewBranch}
-            >
-              {dataset
-                ? (dsList.filter(item => item.dataset === dataset)[0]
-                    .branches.map(item => (
-                      <MenuItem key={item} value={item}>
-                        {item}
-                      </MenuItem>
-                    ))
-                )
-                : (
-                  <MenuItem value={"master"}>
-                    {"master"}
-                  </MenuItem>
-                )
-              }
-            </TextField>
-          </Grid>
+          {AllowNewBranch &&
+          <React.Fragment>
+            <Grid item>
+              <FormControlLabel
+                control={
+                  <Switch
+                    disabled={checkedNewDataset}
+                    checked={checkedNewBranch}
+                    onChange={onHandleSwitch("checkedNewBranch")}
+                    value="checkedNewBranch"
+                  />
+                }
+                label="Create new branch"
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                id="new-branch-name"
+                label="New Branch"
+                className={classes.textField}
+                value={newBranch}
+                onChange={onHandleChange("newBranch")}
+                margin="normal"
+                disabled={checkedNewDataset || !checkedNewBranch}
+              />              
+            </Grid>
+            <Grid item>
+              <TextField
+                id="refer-branch-names"
+                select
+                label="Refer Branch"
+                className={classes.textField}
+                value={!checkedNewDataset && checkedNewBranch && referBranch}
+                onChange={onHandleChange("referBranch")}
+                SelectProps={{
+                  MenuProps: {
+                    className: classes.menu,
+                  },
+                }}
+                helperText="Please select a refer branch"
+                margin="normal"
+                disabled={!checkedNewBranch}
+              >
+                {dataset
+                  ? (dsList.filter(item => item.dataset === dataset)[0]
+                      .branches.map(item => (
+                        <MenuItem key={item} value={item}>
+                          {item}
+                        </MenuItem>
+                      ))
+                  )
+                  : (
+                    <MenuItem value={"master"}>
+                      {"master"}
+                    </MenuItem>
+                  )
+                }
+              </TextField>
+            </Grid>
+          </React.Fragment>
+          }
         </Grid>
       </React.Fragment>
     )

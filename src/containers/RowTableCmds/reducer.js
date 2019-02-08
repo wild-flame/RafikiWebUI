@@ -10,7 +10,9 @@ const initialState = {
   Response_PutDataCSV: [],
   Response_CreateDS: [],
   Response_BranchDS: [],
-  Response_UploadCSV: ""
+  Response_UploadCSV: "",
+  // get-ds
+  Response_GetDataset: []
 };
 
 export const RowTableCmds = (state = initialState, action) => {
@@ -47,6 +49,11 @@ export const RowTableCmds = (state = initialState, action) => {
         ...state,
         Response_PutDataCSV: action.Response_PutDataCSV
       }
+    case Types.POPULATE_GET_DATASET_RESPONSE :
+      return {
+        ...state,
+        Response_GetDataset: action.Response_GetDataset
+      }
     case Types.RESET_RESPONSES :
       return {
         ...state,
@@ -56,7 +63,9 @@ export const RowTableCmds = (state = initialState, action) => {
         Response_PutDataCSV: [],
         Response_CreateDS: [],
         Response_BranchDS: [],
-        Response_UploadCSV: ""
+        Response_UploadCSV: "",
+        // get-ds
+        Response_GetDataset: []
       }
     default:
       return state

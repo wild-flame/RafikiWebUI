@@ -258,6 +258,7 @@ class PutDataByCSV extends React.Component {
                   referBranch={this.state.referBranch}
                   onHandleChange={this.handleChange}
                   onHandleSwitch={this.handleSwitch}
+                  AllowNewBranch={true}
                 />
                 <br />
                 <Typography variant="h5" gutterBottom align="center">

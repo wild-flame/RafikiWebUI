@@ -166,6 +166,16 @@ class Navigator extends React.Component {
             icon: <DnsRoundedIcon />,
             pathname: "/console/row-based-table/diff-dataset"
           },
+          {
+            id: 'Delete Dataset',
+            icon: <DnsRoundedIcon />,
+            pathname: "/console/row-based-table/delete-dataset"
+          },
+          {
+            id: 'Export Dataset',
+            icon: <DnsRoundedIcon />,
+            pathname: "/console/row-based-table/export-dataset"
+          },
         ],
       },
       {
