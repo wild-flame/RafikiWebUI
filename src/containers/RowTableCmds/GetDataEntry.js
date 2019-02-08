@@ -123,6 +123,7 @@ class GetDataEntry extends React.Component {
                   dataset={this.state.dataset}
                   newDataset=""
                   onHandleChange={this.handleChange}
+                  DatasetState={"dataset"}
                   onHandleSwitch={this.handleSwitch}
                   AllowNewDataset={false}
                 />
@@ -137,6 +138,7 @@ class GetDataEntry extends React.Component {
                   newBranch={this.state.newBranch}
                   referBranch={this.state.referBranch}
                   onHandleChange={this.handleChange}
+                  BranchState={"branch"}
                   onHandleSwitch={this.handleSwitch}
                   AllowNewBranch={false}
                 />

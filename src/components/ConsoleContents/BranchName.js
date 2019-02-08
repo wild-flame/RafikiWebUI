@@ -35,6 +35,7 @@ class BranchName extends React.Component {
     newBranch: PropTypes.string,
     referBranch: PropTypes.string,
     onHandleChange: PropTypes.func,
+    BranchState: PropTypes.string,
     onHandleSwitch: PropTypes.func,
     AllowNewBranch: PropTypes.bool
   }
@@ -51,6 +52,7 @@ class BranchName extends React.Component {
       newBranch,
       referBranch,
       onHandleChange,
+      BranchState,
       onHandleSwitch,
       AllowNewBranch
     } = this.props;
@@ -73,7 +75,7 @@ class BranchName extends React.Component {
               label="Default is master"
               className={classes.textField}
               value={!checkedNewBranch && branch}
-              onChange={onHandleChange("branch")}
+              onChange={onHandleChange(BranchState)}
               SelectProps={{
                 MenuProps: {
                   className: classes.menu,

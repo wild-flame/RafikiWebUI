@@ -31,6 +31,7 @@ class DatasetName extends React.Component {
     dataset: PropTypes.string,
     newDataset: PropTypes.string,
     onHandleChange: PropTypes.func,
+    DatasetState: PropTypes.string,
     onHandleSwitch: PropTypes.func,
     AllowNewDataset: PropTypes.bool
   }
@@ -44,6 +45,7 @@ class DatasetName extends React.Component {
       dataset,
       newDataset,
       onHandleChange,
+      DatasetState,
       onHandleSwitch,
       AllowNewDataset
     } = this.props;
@@ -66,7 +68,7 @@ class DatasetName extends React.Component {
               label="Select from datasets"
               className={classes.textField}
               value={!checkedNewDataset && dataset}
-              onChange={onHandleChange("dataset")}
+              onChange={onHandleChange(DatasetState)}
               SelectProps={{
                 MenuProps: {
                   className: classes.menu,

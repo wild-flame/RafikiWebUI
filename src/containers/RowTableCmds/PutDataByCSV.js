@@ -243,6 +243,7 @@ class PutDataByCSV extends React.Component {
                   dataset={this.state.dataset}
                   newDataset={this.state.newDataset}
                   onHandleChange={this.handleChange}
+                  DatasetState={"dataset"}
                   onHandleSwitch={this.handleSwitch}
                   AllowNewDataset={true}
                 />
@@ -257,6 +258,7 @@ class PutDataByCSV extends React.Component {
                   newBranch={this.state.newBranch}
                   referBranch={this.state.referBranch}
                   onHandleChange={this.handleChange}
+                  BranchState={"branch"}
                   onHandleSwitch={this.handleSwitch}
                   AllowNewBranch={true}
                 />
