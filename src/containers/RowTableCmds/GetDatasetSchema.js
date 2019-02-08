@@ -46,7 +46,7 @@ const datasetBranches = [
   },
 ];
 
-class GetDataSet extends React.Component {
+class GetDatasetSchema extends React.Component {
   state = {
     dataset:"",
     branch:"",
@@ -56,15 +56,15 @@ class GetDataSet extends React.Component {
     classes: PropTypes.object.isRequired,
 
     handleHeaderTitleChange: PropTypes.func,
-    requestGetDataset: PropTypes.func,
+    requestGetDSSchema: PropTypes.func,
     requestListDS: PropTypes.func,
     resetResponses: PropTypes.func,
 
-    Response_GetDataset: PropTypes.array
+    Response_GetDSSchema: PropTypes.array
   }
 
   componentDidMount() {
-    this.props.handleHeaderTitleChange("Row-based Table > Get Dataset")
+    this.props.handleHeaderTitleChange("Row-based Table > Get Dataset Schema")
     this.props.requestListDS()
   }
 
@@ -75,14 +75,14 @@ class GetDataSet extends React.Component {
   };
 
   handleCommit = () => {
-    const dataEntryForGetDS = Object.assign(
+    const dataEntryForGetDSSchema = Object.assign(
       {
         "dataset": this.state.dataset,
         "branch": this.state.branch
       },
       {}
     )
-    this.props.requestGetDataset(dataEntryForGetDS)
+    this.props.requestGetDSSchema(dataEntryForGetDSSchema)
   }
 
   componentWillUnmount() {
@@ -92,7 +92,7 @@ class GetDataSet extends React.Component {
   render() {
     const {
       classes,
-      Response_GetDataset,
+      Response_GetDSSchema,
     } = this.props;
 
     return (
@@ -101,7 +101,7 @@ class GetDataSet extends React.Component {
           <ContentBar>
             <Toolbar>
               <Typography variant="h5" gutterBottom>
-                Get Dataset
+                Get Dataset Schema
               </Typography>
             </Toolbar>
           </ContentBar>
@@ -154,9 +154,9 @@ class GetDataSet extends React.Component {
                     Forkbase Status:
                   </Typography>
                   <Typography component="p">
-                    <b>{Response_GetDataset[0]}</b>
+                    <b>{Response_GetDSSchema[0]}</b>
                     <br />
-                    {Response_GetDataset[1]}
+                    {Response_GetDSSchema[1]}
                   </Typography>
                   <br />
                 </Paper>
@@ -171,17 +171,17 @@ class GetDataSet extends React.Component {
 
 
 const mapStateToProps = state => ({
-  Response_GetDataset: state.RowTableCmds.Response_GetDataset
+  Response_GetDSSchema: state.RowTableCmds.Response_GetDSSchema
 })
 
 const mapDispatchToProps = {
   handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
   requestListDS: actions.requestListDS,
-  requestGetDataset: actions.requestGetDataset,
+  requestGetDSSchema: actions.requestGetDSSchema,
   resetResponses: actions.resetResponses
 }
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles)
-)(GetDataSet)
+)(GetDatasetSchema)

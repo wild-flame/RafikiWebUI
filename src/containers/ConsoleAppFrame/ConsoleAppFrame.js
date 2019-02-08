@@ -17,6 +17,7 @@ import PutDataByCSV from "../RowTableCmds/PutDataByCSV"
 import ListDataSet from "../RowTableCmds/ListDataSet"
 import PutDataEntry from "../RowTableCmds/PutDataEntry"
 import GetDataSet from "../RowTableCmds/GetDataSet"
+import GetDatasetSchema from "../RowTableCmds/GetDatasetSchema"
 
 
 import * as actions from "./actions"
@@ -119,6 +120,11 @@ class ConsoleAppFrame extends React.Component {
               exact
               path='/console/row-based-table/get-dataset'
               component={GetDataSet}
+            />
+            <Route
+              exact
+              path='/console/row-based-table/get-dataset-schema'
+              component={GetDatasetSchema}
             />
           </div>
         </div>
