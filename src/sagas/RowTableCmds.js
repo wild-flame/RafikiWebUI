@@ -184,6 +184,7 @@ function* watchGetDataset() {
   yield takeLatest(actions.Types.REQUEST_GET_DATASET, getGetDatasetResponse)
 }
 
+
 /* for Get Dataset Schema */
 function* getGetDSSchemaResponse(action) {
   try{
@@ -199,6 +200,21 @@ function* watchGetDSSchema() {
 }
 
 
+/* for Get Data Entry */
+function* getGetDataEntryResponse(action) {
+  try{
+    const Response_GetDataEntry = yield call(api.requestGetDataEntry, action.dataEntryForGetDataEntry)
+    yield put(actions.populateGetDataEntryResponse(Response_GetDataEntry.data.result))
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+function* watchGetDataEntry() {
+  yield takeLatest(actions.Types.REQUEST_GET_DATA_ENTRY, getGetDataEntryResponse)
+}
+
+
 // fork is for process creation, run in separate processes
 const RowTableCmdsSagas = [
   fork(watchGetDSListRequest),
@@ -208,7 +224,8 @@ const RowTableCmdsSagas = [
   fork(watchBranchDSPutCSVCombo),
   fork(watchPutCSVCombo),
   fork(watchGetDataset),
-  fork(watchGetDSSchema)
+  fork(watchGetDSSchema),
+  fork(watchGetDataEntry)
 ]
 
 export default RowTableCmdsSagas

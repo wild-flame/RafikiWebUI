@@ -71,3 +71,12 @@ export const requestGetDSSchema = dataEntryForGetDSSchema => {
     data: dataEntryForGetDSSchema
   });
 }
+
+export const requestGetDataEntry = dataEntryForGetDataEntry => {
+  return axios({
+    method: 'post',
+    url: `${HTTPconfig.gateway}api/get-data-entry`,
+    headers: HTTPconfig.HTTP_HEADER,
+    data: dataEntryForGetDataEntry
+  });
+}

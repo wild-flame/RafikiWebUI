@@ -15,6 +15,8 @@ export const Types = {
   POPULATE_GET_DATASET_RESPONSE: "RowTableCmds/populate_get_dataset_response",
   REQUEST_GET_DSSCHEMA: "RowTableCmds/request_get_dsschema",
   POPULATE_GET_DSSCHEMA_RESPONSE: "RowTableCmds/populate_get_dsschema_response",
+  REQUEST_GET_DATA_ENTRY: "RowTableCmds/request_get_data_entry",
+  POPULATE_GET_DATA_ENTRY_RESPONSE: "RowTableCmds/populate_get_data_entry_response",
   // combined action to trigger sagas
   COMBO_CREATE_DS_PUT_CSV: "RowTableCmds/call_combo_create_ds_put_csv",
   COMBO_BRANCH_DS_PUT_CSV: "RowTableCmds/call_combo_branch_ds_put_csv",
@@ -154,6 +156,16 @@ export const populateGetDSSchemaResponse = Response_GetDSSchema => ({
   Response_GetDSSchema
 })
 
+// GET_DATA_ENTRY
+export const requestGetDataEntry = dataEntryForGetDataEntry => ({
+  type: Types.REQUEST_GET_DATA_ENTRY,
+  dataEntryForGetDataEntry
+})
+
+export const populateGetDataEntryResponse = Response_GetDataEntry => ({
+  type: Types.POPULATE_GET_DATA_ENTRY_RESPONSE,
+  Response_GetDataEntry
+})
 
 // clear the Response_* when route unmount
 export const resetResponses = () => ({

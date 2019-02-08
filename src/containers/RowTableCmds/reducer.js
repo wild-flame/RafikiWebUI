@@ -14,7 +14,9 @@ const initialState = {
   // get-ds
   Response_GetDataset: [],
   // get-ds-sch
-  Response_GetDSSchema: []
+  Response_GetDSSchema: [],
+  // get-de
+  Response_GetDataEntry: []
 };
 
 export const RowTableCmds = (state = initialState, action) => {
@@ -61,6 +63,11 @@ export const RowTableCmds = (state = initialState, action) => {
         ...state,
         Response_GetDSSchema: action.Response_GetDSSchema
       }
+    case Types.POPULATE_GET_DATA_ENTRY_RESPONSE :
+      return {
+        ...state,
+        Response_GetDataEntry: action.Response_GetDataEntry
+      }
     case Types.RESET_RESPONSES :
       return {
         ...state,
@@ -74,7 +81,9 @@ export const RowTableCmds = (state = initialState, action) => {
         // get-ds
         Response_GetDataset: [],
         // get-ds-sch
-        Response_GetDSSchema: []
+        Response_GetDSSchema: [],
+        // get-de
+        Response_GetDataEntry: []
       }
     default:
       return state
