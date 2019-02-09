@@ -55,38 +55,13 @@ class DatasetName extends React.Component {
         <Typography variant="h5" gutterBottom align="center">
           {title}
         </Typography>
-        <Grid
-          container
-          direction="row"
-          justify="space-evenly"
-          alignItems="center"
-        >
-          <Grid item>
-            <TextField
-              id="existing-dataset-names"
-              select
-              label="Select from datasets"
-              className={classes.textField}
-              value={!checkedNewDataset && dataset}
-              onChange={onHandleChange(DatasetState)}
-              SelectProps={{
-                MenuProps: {
-                  className: classes.menu,
-                },
-              }}
-              helperText="Please select your dataset"
-              margin="normal"
-              disabled={checkedNewDataset}
-            >
-              {dsList.map(option => (
-                <MenuItem key={option.dataset} value={option.dataset}>
-                  {option.dataset}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Grid>
-          {AllowNewDataset &&
-          <React.Fragment>
+        {AllowNewDataset &&
+          <Grid
+            container
+            direction="row"
+            justify="space-evenly"
+            alignItems="center"
+          >
             <Grid item>
               <FormControlLabel
                 control={
@@ -99,6 +74,16 @@ class DatasetName extends React.Component {
                 label="Create new dataset"
               />
             </Grid>
+          </Grid>
+        }
+        <Grid
+          container
+          direction="row"
+          justify="space-evenly"
+          alignItems="center"
+        >
+          {checkedNewDataset
+            ? (
             <Grid item>
               <TextField
                 id="new-dataset-name"
@@ -110,7 +95,33 @@ class DatasetName extends React.Component {
                 disabled={!checkedNewDataset}
               />              
             </Grid>
-          </React.Fragment>
+            )
+            : (
+            <Grid item>
+              <TextField
+                id="existing-dataset-names"
+                select
+                label="Select from datasets"
+                className={classes.textField}
+                value={!checkedNewDataset && dataset}
+                onChange={onHandleChange(DatasetState)}
+                SelectProps={{
+                  MenuProps: {
+                    className: classes.menu,
+                  },
+                }}
+                helperText="Please select your dataset"
+                margin="normal"
+                disabled={checkedNewDataset}
+              >
+                {dsList.map(option => (
+                  <MenuItem key={option.dataset} value={option.dataset}>
+                    {option.dataset}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            )
           }
         </Grid>
       </React.Fragment>

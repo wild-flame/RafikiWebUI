@@ -62,47 +62,13 @@ class BranchName extends React.Component {
         <Typography variant="h5" gutterBottom align="center">
           {title}
         </Typography>
-        <Grid
-          container
-          direction="row"
-          justify="space-evenly"
-          alignItems="center"
-        >
-          <Grid item>
-            <TextField
-              id="existing-branch-names"
-              select
-              label="Default is master"
-              className={classes.textField}
-              value={!checkedNewBranch && branch}
-              onChange={onHandleChange(BranchState)}
-              SelectProps={{
-                MenuProps: {
-                  className: classes.menu,
-                },
-              }}
-              helperText="Please select your branch"
-              margin="normal"
-              disabled={checkedNewBranch}
-            >
-              {dataset
-                ? (dsList.filter(item => item.dataset === dataset)[0]
-                    .branches.map(item => (
-                      <MenuItem key={item} value={item}>
-                        {item}
-                      </MenuItem>
-                    ))
-                )
-                : (
-                  <MenuItem value={"master"}>
-                    {"master"}
-                  </MenuItem>
-                )
-              }
-            </TextField>
-          </Grid>
-          {AllowNewBranch &&
-          <React.Fragment>
+        {AllowNewBranch &&
+          <Grid
+            container
+            direction="row"
+            justify="space-evenly"
+            alignItems="center"
+          >
             <Grid item>
               <FormControlLabel
                 control={
@@ -116,33 +82,80 @@ class BranchName extends React.Component {
                 label="Create new branch"
               />
             </Grid>
+          </Grid>
+        }
+        <Grid
+          container
+          direction="row"
+          justify="space-evenly"
+          alignItems="center"
+        >
+          {checkedNewBranch
+            ? (
+            <React.Fragment>
+              <Grid item>
+                <TextField
+                  id="new-branch-name"
+                  label="New Branch"
+                  className={classes.textField}
+                  value={newBranch}
+                  onChange={onHandleChange("newBranch")}
+                  margin="normal"
+                  disabled={checkedNewDataset || !checkedNewBranch}
+                />              
+              </Grid>
+              <Grid item>
+                <TextField
+                  id="refer-branch-names"
+                  select
+                  label="Refer Branch"
+                  className={classes.textField}
+                  value={!checkedNewDataset && checkedNewBranch && referBranch}
+                  onChange={onHandleChange("referBranch")}
+                  SelectProps={{
+                    MenuProps: {
+                      className: classes.menu,
+                    },
+                  }}
+                  helperText="Please select a refer branch"
+                  margin="normal"
+                  disabled={!checkedNewBranch}
+                >
+                  {dataset
+                    ? (dsList.filter(item => item.dataset === dataset)[0]
+                        .branches.map(item => (
+                          <MenuItem key={item} value={item}>
+                            {item}
+                          </MenuItem>
+                        ))
+                    )
+                    : (
+                      <MenuItem value={"master"}>
+                        {"master"}
+                      </MenuItem>
+                    )
+                  }
+                </TextField>
+              </Grid>
+            </React.Fragment>
+            )
+            : (
             <Grid item>
               <TextField
-                id="new-branch-name"
-                label="New Branch"
-                className={classes.textField}
-                value={newBranch}
-                onChange={onHandleChange("newBranch")}
-                margin="normal"
-                disabled={checkedNewDataset || !checkedNewBranch}
-              />              
-            </Grid>
-            <Grid item>
-              <TextField
-                id="refer-branch-names"
+                id="existing-branch-names"
                 select
-                label="Refer Branch"
+                label="Default is master"
                 className={classes.textField}
-                value={!checkedNewDataset && checkedNewBranch && referBranch}
-                onChange={onHandleChange("referBranch")}
+                value={!checkedNewBranch && branch}
+                onChange={onHandleChange(BranchState)}
                 SelectProps={{
                   MenuProps: {
                     className: classes.menu,
                   },
                 }}
-                helperText="Please select a refer branch"
+                helperText="Please select your branch"
                 margin="normal"
-                disabled={!checkedNewBranch}
+                disabled={checkedNewBranch}
               >
                 {dataset
                   ? (dsList.filter(item => item.dataset === dataset)[0]
@@ -160,7 +173,7 @@ class BranchName extends React.Component {
                 }
               </TextField>
             </Grid>
-          </React.Fragment>
+            )
           }
         </Grid>
       </React.Fragment>
