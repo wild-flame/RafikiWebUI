@@ -80,3 +80,21 @@ export const requestGetDataEntry = dataEntryForGetDataEntry => {
     data: dataEntryForGetDataEntry
   });
 }
+
+export const requestDiffSameDS = dataEntryForSameDS => {
+  return axios({
+    method: 'post',
+    url: `${HTTPconfig.gateway}api/diff-ds-same-ds`,
+    headers: HTTPconfig.HTTP_HEADER,
+    data: dataEntryForSameDS
+  });
+}
+
+export const requestDiffDifferentDS = dataEntryForDifferentDS => {
+  return axios({
+    method: 'post',
+    url: `${HTTPconfig.gateway}api/diff-ds-diff-ds`,
+    headers: HTTPconfig.HTTP_HEADER,
+    data: dataEntryForDifferentDS
+  });
+}

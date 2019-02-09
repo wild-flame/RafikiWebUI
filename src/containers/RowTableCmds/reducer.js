@@ -16,7 +16,9 @@ const initialState = {
   // get-ds-sch
   Response_GetDSSchema: [],
   // get-de
-  Response_GetDataEntry: []
+  Response_GetDataEntry: [],
+  // diff-ds
+  Response_DiffDS: []
 };
 
 export const RowTableCmds = (state = initialState, action) => {
@@ -68,6 +70,11 @@ export const RowTableCmds = (state = initialState, action) => {
         ...state,
         Response_GetDataEntry: action.Response_GetDataEntry
       }
+    case Types.POPULATE_DIFFDS_RESPONSE :
+      return {
+        ...state,
+        Response_DiffDS: action.Response_DiffDS
+      }
     case Types.RESET_RESPONSES :
       return {
         ...state,
@@ -83,7 +90,9 @@ export const RowTableCmds = (state = initialState, action) => {
         // get-ds-sch
         Response_GetDSSchema: [],
         // get-de
-        Response_GetDataEntry: []
+        Response_GetDataEntry: [],
+        // diff-ds
+        Response_DiffDS: []
       }
     default:
       return state

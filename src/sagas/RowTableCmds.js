@@ -214,6 +214,33 @@ function* watchGetDataEntry() {
   yield takeLatest(actions.Types.REQUEST_GET_DATA_ENTRY, getGetDataEntryResponse)
 }
 
+/* for Diff Dataset */
+function* getDiffSameDSresponse(action) {
+  try{
+    const Response_DiffDS = yield call(api.requestDiffSameDS, action.dataEntryForSameDS)
+    yield put(actions.populateDiffDSresponse(Response_DiffDS.data.result))
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+function* watchDiffSameDS() {
+  yield takeLatest(actions.Types.REQUEST_DIFF_SAME_DS, getDiffSameDSresponse)
+}
+
+function* getDiffDifferentDSresponse(action) {
+  try{
+    const Response_DiffDS = yield call(api.requestDiffDifferentDS, action.dataEntryForDifferentDS)
+    yield put(actions.populateDiffDSresponse(Response_DiffDS.data.result))
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+function* watchDiffDifferentDS() {
+  yield takeLatest(actions.Types.REQUEST_DIFF_DIFFERENT_DS, getDiffDifferentDSresponse)
+}
+
 
 // fork is for process creation, run in separate processes
 const RowTableCmdsSagas = [
@@ -225,7 +252,9 @@ const RowTableCmdsSagas = [
   fork(watchPutCSVCombo),
   fork(watchGetDataset),
   fork(watchGetDSSchema),
-  fork(watchGetDataEntry)
+  fork(watchGetDataEntry),
+  fork(watchDiffSameDS),
+  fork(watchDiffDifferentDS)
 ]
 
 export default RowTableCmdsSagas

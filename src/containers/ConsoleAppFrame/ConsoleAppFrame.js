@@ -19,6 +19,7 @@ import PutDataEntry from "../RowTableCmds/PutDataEntry"
 import GetDataSet from "../RowTableCmds/GetDataSet"
 import GetDatasetSchema from "../RowTableCmds/GetDatasetSchema"
 import GetDataEntry from "../RowTableCmds/GetDataEntry"
+import DiffDataSet from "../RowTableCmds/DiffDataSet"
 
 
 import * as actions from "./actions"
@@ -131,6 +132,21 @@ class ConsoleAppFrame extends React.Component {
               exact
               path='/console/row-based-table/get-data-entry'
               component={GetDataEntry}
+            />
+            <Route
+              exact
+              path='/console/row-based-table/diff-dataset'
+              component={DiffDataSet}
+            />
+            <Route
+              exact
+              path='/console/row-based-table/delete-dataset'
+              component={DiffDataSet}
+            />
+            <Route
+              exact
+              path='/console/row-based-table/export-dataset'
+              component={DiffDataSet}
             />
           </div>
         </div>
