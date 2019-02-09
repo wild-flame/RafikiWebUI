@@ -20,6 +20,7 @@ import GetDataSet from "../RowTableCmds/GetDataSet"
 import GetDatasetSchema from "../RowTableCmds/GetDatasetSchema"
 import GetDataEntry from "../RowTableCmds/GetDataEntry"
 import DiffDataSet from "../RowTableCmds/DiffDataSet"
+import DeleteDataSet from "../RowTableCmds/DeleteDataSet"
 
 
 import * as actions from "./actions"
@@ -141,7 +142,7 @@ class ConsoleAppFrame extends React.Component {
             <Route
               exact
               path='/console/row-based-table/delete-dataset'
-              component={DiffDataSet}
+              component={DeleteDataSet}
             />
             <Route
               exact

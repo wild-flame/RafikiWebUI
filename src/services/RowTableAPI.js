@@ -98,3 +98,12 @@ export const requestDiffDifferentDS = dataEntryForDifferentDS => {
     data: dataEntryForDifferentDS
   });
 }
+
+export const requestDeleteDataset = dataEntryForDeleteDS => {
+  return axios({
+    method: 'post',
+    url: `${HTTPconfig.gateway}api/delete-dataset`,
+    headers: HTTPconfig.HTTP_HEADER,
+    data: dataEntryForDeleteDS
+  });
+}

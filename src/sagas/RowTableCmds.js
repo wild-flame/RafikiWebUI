@@ -241,6 +241,20 @@ function* watchDiffDifferentDS() {
   yield takeLatest(actions.Types.REQUEST_DIFF_DIFFERENT_DS, getDiffDifferentDSresponse)
 }
 
+/* for Delete Dataset */
+function* getDeleteDatasetResponse(action) {
+  try{
+    const Response_DeleteDS = yield call(api.requestDeleteDataset, action.dataEntryForDeleteDS)
+    yield put(actions.populateDeleteDatasetResponse(Response_DeleteDS.data.result))
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+function* watchDeleteDS() {
+  yield takeLatest(actions.Types.REQUEST_DELETE_DATASET, getDeleteDatasetResponse)
+}
+
 
 // fork is for process creation, run in separate processes
 const RowTableCmdsSagas = [
@@ -254,7 +268,8 @@ const RowTableCmdsSagas = [
   fork(watchGetDSSchema),
   fork(watchGetDataEntry),
   fork(watchDiffSameDS),
-  fork(watchDiffDifferentDS)
+  fork(watchDiffDifferentDS),
+  fork(watchDeleteDS)
 ]
 
 export default RowTableCmdsSagas

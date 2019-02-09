@@ -18,7 +18,9 @@ const initialState = {
   // get-de
   Response_GetDataEntry: [],
   // diff-ds
-  Response_DiffDS: []
+  Response_DiffDS: [],
+  // delete-dataset
+  Response_DeleteDS: []
 };
 
 export const RowTableCmds = (state = initialState, action) => {
@@ -75,6 +77,11 @@ export const RowTableCmds = (state = initialState, action) => {
         ...state,
         Response_DiffDS: action.Response_DiffDS
       }
+    case Types.POPULATE_DELETE_DATASET_RESPONSE :
+      return {
+        ...state,
+        Response_DeleteDS: action.Response_DeleteDS
+      }
     case Types.RESET_RESPONSES :
       return {
         ...state,
@@ -92,7 +99,9 @@ export const RowTableCmds = (state = initialState, action) => {
         // get-de
         Response_GetDataEntry: [],
         // diff-ds
-        Response_DiffDS: []
+        Response_DiffDS: [],
+        // delete-dataset
+        Response_DeleteDS: []
       }
     default:
       return state
