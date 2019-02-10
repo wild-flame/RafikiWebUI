@@ -255,6 +255,20 @@ function* watchDeleteDS() {
   yield takeLatest(actions.Types.REQUEST_DELETE_DATASET, getDeleteDatasetResponse)
 }
 
+/* for Export Dataset Binary */
+function* getExportDSresponse(action) {
+  try{
+    const Response_ExportDS = yield call(api.requestExportDS, action.dataEntryForExportDS)
+    yield put(actions.populateExportDSresponse(Response_ExportDS.data.result))
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+function* watchExportDS() {
+  yield takeLatest(actions.Types.REQUEST_EXPORT_DS, getExportDSresponse)
+}
+
 
 // fork is for process creation, run in separate processes
 const RowTableCmdsSagas = [
@@ -269,7 +283,8 @@ const RowTableCmdsSagas = [
   fork(watchGetDataEntry),
   fork(watchDiffSameDS),
   fork(watchDiffDifferentDS),
-  fork(watchDeleteDS)
+  fork(watchDeleteDS),
+  fork(watchExportDS)
 ]
 
 export default RowTableCmdsSagas

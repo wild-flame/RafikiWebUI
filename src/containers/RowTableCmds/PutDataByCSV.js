@@ -113,7 +113,7 @@ class PutDataByCSV extends React.Component {
     this.props.requestListDS()
   }
   
-  combinedCall() {
+  handleCommit = () => {
     const dataEntryForCreateDS = Object.assign(
       {
         "dataset": this.state.newDataset,
@@ -304,7 +304,7 @@ class PutDataByCSV extends React.Component {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => this.combinedCall()}
+                    onClick={this.handleCommit}
                   >
                     COMMIT
                   </Button>

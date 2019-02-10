@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from "react-redux"
 import { compose } from "redux"
 
+import HTTPconfig from "../../HTTPConfig"
+
 import * as ConsoleActions from "../ConsoleAppFrame/actions"
 import * as actions from "./actions"
 
@@ -13,6 +15,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
@@ -52,32 +55,27 @@ const datasetBranches = [
   },
 ];
 
-class PutDataEntry extends React.Component {
+class ExportDataSet extends React.Component {
   state = {
-    checkedNewBranch: false,
     dataset:"",
     branch:"",
-    newBranch: "",
-    referBranch:"",
-    entry: "",
-    value:""
+    filename:"",
+    filePath:""
   }
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
 
     handleHeaderTitleChange: PropTypes.func,
-    requestPutDE: PropTypes.func,
     requestListDS: PropTypes.func,
     resetResponses: PropTypes.func,
 
-    Response_PutDE: PropTypes.array,
-    Response_BranchDS: PropTypes.array,
-    triggerBranchDS_PutDE_Combo: PropTypes.func
+    requestExportDS: PropTypes.func,
+    Response_ExportDS: PropTypes.array
   }
 
   componentDidMount() {
-    this.props.handleHeaderTitleChange("Row-based Table > Put Data Entry")
+    this.props.handleHeaderTitleChange("Row-based Table > Export Dataset")
     this.props.requestListDS()
   }
 
@@ -87,61 +85,25 @@ class PutDataEntry extends React.Component {
     });
   };
 
-  handleSwitch = name => event => {
-    this.setState({
-      [name]: event.target.checked
-    });
-  }
-
   handleCommit = () => {
-    const dataEntryForBranchDS = Object.assign(
-      {
-        "dataset": this.state.dataset,
-        "branch": this.state.newBranch,
-        "referBranch": this.state.referBranch
-      },
-      {}
-    )
-    const dataEntryForCombo_BranchDS = Object.assign(
-      {
-        "dataset": this.state.dataset,
-        "branch": this.state.newBranch,
-        "entry": this.state.entry,
-        "value": this.state.value
-      },
-      {}
-    )
-    const dataEntryPutDE = Object.assign(
+    // temp ID random number 100,000 - 999,999
+    const generateRandommID = Math.floor(Math.random()*(999999-100000+1)+100000)
+
+    const filePath = `./static/${generateRandommID}/${this.state.filename}.csv`
+
+    this.setState({
+      filePath: `${HTTPconfig.gateway}${filePath}`
+    })
+
+    const dataEntryForExportDS = Object.assign(
       {
         "dataset": this.state.dataset,
         "branch": this.state.branch,
-        "entry": this.state.entry,
-        "value": this.state.value
+        "filename": filePath
       },
       {}
     )
-    // create new branch
-    if (this.state.checkedNewBranch) {
-      // combo_BranchDS_PutDE()
-      this.props.triggerBranchDS_PutDE_Combo(
-        dataEntryForBranchDS,
-        dataEntryForCombo_BranchDS
-      )
-    // or raw put data entry
-    } else {
-      this.props.requestPutDE(
-        dataEntryPutDE
-      )
-    }
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.checkedNewBranch !== prevState.checkedNewBranch) {
-      if (!this.state.checkedNewBranch) {
-        this.setState({
-          newBranch: ""
-        })
-      }
-    }
+    this.props.requestExportDS(dataEntryForExportDS)
   }
 
   componentWillUnmount() {
@@ -151,8 +113,7 @@ class PutDataEntry extends React.Component {
   render() {
     const {
       classes,
-      Response_PutDE,
-      Response_BranchDS
+      Response_ExportDS
     } = this.props;
 
     return (
@@ -161,7 +122,7 @@ class PutDataEntry extends React.Component {
           <ContentBar>
             <Toolbar>
               <Typography variant="h5" gutterBottom>
-                Put Data Entry
+                Export Dataset
               </Typography>
             </Toolbar>
           </ContentBar>
@@ -176,7 +137,7 @@ class PutDataEntry extends React.Component {
                   newDataset=""
                   onHandleChange={this.handleChange}
                   DatasetState={"dataset"}
-                  onHandleSwitch={this.handleSwitch}
+                  onHandleSwitch={() => {}}
                   AllowNewDataset={false}
                 />
                 <br />
@@ -184,19 +145,19 @@ class PutDataEntry extends React.Component {
                   title="2. Branch Name"
                   dsList={datasetBranches}
                   checkedNewDataset={false}
-                  checkedNewBranch={this.state.checkedNewBranch}
+                  checkedNewBranch={false}
                   dataset={this.state.dataset}
                   branch={this.state.branch}
-                  newBranch={this.state.newBranch}
-                  referBranch={this.state.referBranch}
+                  newBranch=""
+                  referBranch=""
                   onHandleChange={this.handleChange}
                   BranchState={"branch"}
-                  onHandleSwitch={this.handleSwitch}
-                  AllowNewBranch={true}
+                  onHandleSwitch={() => {}}
+                  AllowNewBranch={false}
                 />
                 <br />
                 <Typography variant="h5" gutterBottom align="center">
-                  3. Row Entry Key
+                  3. Export as
                 </Typography>
                 <Grid
                   container
@@ -206,36 +167,20 @@ class PutDataEntry extends React.Component {
                 >
                   <Grid item>
                     <TextField
-                      id="row-entry-key"
-                      label="Row Entry Key"
+                      id="outlined-adornment-weight"
                       className={classes.textField}
-                      value={this.state.entry}
-                      onChange={this.handleChange("entry")}
-                      margin="normal"
+                      variant="outlined"
+                      label="Filename"
+                      value={this.state.filename}
+                      onChange={this.handleChange('filename')}
+                      helperText="Export as filename"
+                      InputProps={{
+                        endAdornment: <InputAdornment position="end">.csv</InputAdornment>,
+                      }}
                     />
                   </Grid>
                 </Grid>
                 <br />
-                <Typography variant="h5" gutterBottom align="center">
-                  4. Value
-                </Typography>
-                <Grid
-                  container
-                  direction="row"
-                  justify="space-evenly"
-                  alignItems="center"
-                >
-                  <Grid item>
-                    <TextField
-                      id="put-value"
-                      label="Value"
-                      className={classes.textField}
-                      value={this.state.value}
-                      onChange={this.handleChange("value")}
-                      margin="normal"
-                    />
-                  </Grid>
-                </Grid>
                 <Grid
                   container
                   direction="row"
@@ -257,16 +202,20 @@ class PutDataEntry extends React.Component {
                     Forkbase Status:
                   </Typography>
                   <Typography component="p">
-                    <b>{Response_BranchDS[0]}</b>
+                    <b>{Response_ExportDS[0]}</b>
                     <br />
-                    {Response_BranchDS[1]}
-                  </Typography>
-                  <Typography component="p">
-                    <b>{Response_PutDE[0]}</b>
+                    {Response_ExportDS[1]}
                     <br />
-                    {Response_PutDE[1]}
+                    {Response_ExportDS[2]}
                   </Typography>
                   <br />
+                  {this.state.filePath &&
+                    <a href={this.state.filePath}>
+                      <Button>
+                        Download CSV
+                      </Button>
+                    </a>
+                  }
                 </Paper>
               </Grid>
             </Grid>
@@ -279,19 +228,17 @@ class PutDataEntry extends React.Component {
 
 
 const mapStateToProps = state => ({
-  Response_PutDE: state.RowTableCmds.Response_PutDE,
-  Response_BranchDS: state.RowTableCmds.Response_BranchDS,
+  Response_ExportDS: state.RowTableCmds.Response_ExportDS
 })
 
 const mapDispatchToProps = {
   handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
-  requestPutDE: actions.requestPutDE,
+  requestExportDS: actions.requestExportDS,
   requestListDS: actions.requestListDS,
-  triggerBranchDS_PutDE_Combo: actions.triggerBranchDS_PutDE_Combo,
   resetResponses: actions.resetResponses
 }
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles)
-)(PutDataEntry)
+)(ExportDataSet)

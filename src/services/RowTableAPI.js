@@ -107,3 +107,12 @@ export const requestDeleteDataset = dataEntryForDeleteDS => {
     data: dataEntryForDeleteDS
   });
 }
+
+export const requestExportDS = dataEntryForExportDS => {
+  return axios({
+    method: 'post',
+    url: `${HTTPconfig.gateway}api/export-dataset`,
+    headers: HTTPconfig.HTTP_HEADER,
+    data: dataEntryForExportDS
+  });
+}

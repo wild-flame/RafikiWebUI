@@ -22,6 +22,8 @@ export const Types = {
   POPULATE_DIFFDS_RESPONSE: "RowTableCmds/populate_diffds_response",
   REQUEST_DELETE_DATASET: "RowTableCmds/request_delete_dataset",
   POPULATE_DELETE_DATASET_RESPONSE: "RowTableCmds/populate_delete_dataset_response",
+  REQUEST_EXPORT_DS: "RowTableCmds/request_export_ds",
+  POPULATE_EXPORT_DS_RESPONSE: "RowTableCmds/populate_export_ds_response",
   // combined action to trigger sagas
   COMBO_CREATE_DS_PUT_CSV: "RowTableCmds/call_combo_create_ds_put_csv",
   COMBO_BRANCH_DS_PUT_CSV: "RowTableCmds/call_combo_branch_ds_put_csv",
@@ -197,6 +199,17 @@ export const requestDeleteDataset = dataEntryForDeleteDS => ({
 export const populateDeleteDatasetResponse = Response_DeleteDS => ({
   type: Types.POPULATE_DELETE_DATASET_RESPONSE,
   Response_DeleteDS
+})
+
+// EXPORT_DATASET_BINARY
+export const requestExportDS = dataEntryForExportDS => ({
+  type: Types.REQUEST_EXPORT_DS,
+  dataEntryForExportDS
+})
+
+export const populateExportDSresponse = Response_ExportDS => ({
+  type: Types.POPULATE_EXPORT_DS_RESPONSE,
+  Response_ExportDS
 })
 
 // clear the Response_* when route unmount
