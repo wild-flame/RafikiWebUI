@@ -3,7 +3,12 @@ import { Types } from "./actions"
 
 const initialState = {
   // Ls-ds
-  DatasetList: [],
+  DatasetList: [
+    {
+      'dataset': '...',
+      'branches': ['']
+    }
+  ],
   // put-de
   Response_PutDE: [],
   // put-csv

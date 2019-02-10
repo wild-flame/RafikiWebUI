@@ -24,6 +24,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+import Chip from '@material-ui/core/Chip';
+
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
 
@@ -40,6 +42,9 @@ const styles = theme => ({
   },
   contentWrapper: {
     margin: '40px 16px',
+  },
+  chip: {
+    margin: theme.spacing.unit,
   },
 })
 
@@ -109,13 +114,19 @@ class ListDataSet extends React.Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {DatasetList.map((row, index) => (
+                {DatasetList.map((item, index) => (
                   <TableRow key={index}>
                     <TableCell component="th" scope="row">
-                      {row[0]}
+                      {item["dataset"]}
                     </TableCell>
                     <TableCell>
-                      {row[1]}
+                      {item["branches"].map(item =>
+                        <Chip
+                          key={index}
+                          label={item}
+                          className={classes.chip}
+                        />
+                      )}
                     </TableCell>
                     <TableCell>
                       <Button variant="contained" color="secondary">
