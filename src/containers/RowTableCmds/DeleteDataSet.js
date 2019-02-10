@@ -25,26 +25,6 @@ const styles = () => ({
   }
 })
 
-const datasetBranches = [
-  // ls-ds-branch -t ds9
-  // [SUCCESS: LIST_DATASET_BRANCH] Branches: ["master"]
-  {
-    dataset: 'ds1',
-    branches: ["master"]
-  },
-  {
-    dataset: 'ds9',
-    branches: ["master"]
-  },
-  {
-    dataset: 'BTC',
-    branches: ["master", "dev"]
-  },
-  {
-    dataset: 'JPY',
-    branches: ["master", "newFeature"]
-  },
-];
 
 class DeleteDataSet extends React.Component {
   state = {
@@ -59,6 +39,8 @@ class DeleteDataSet extends React.Component {
     requestDeleteDataset: PropTypes.func,
     requestListDS: PropTypes.func,
     resetResponses: PropTypes.func,
+
+    DatasetList: PropTypes.array,
 
     Response_DeleteDS: PropTypes.array
   }
@@ -92,6 +74,7 @@ class DeleteDataSet extends React.Component {
   render() {
     const {
       classes,
+      DatasetList,
       Response_DeleteDS,
     } = this.props;
 
@@ -110,7 +93,7 @@ class DeleteDataSet extends React.Component {
               <Grid item xs={6}>
                 <DatasetName
                   title="1. Dataset Name"
-                  dsList={datasetBranches}
+                  dsList={DatasetList}
                   checkedNewDataset={false}
                   dataset={this.state.dataset}
                   newDataset=""
@@ -122,7 +105,7 @@ class DeleteDataSet extends React.Component {
                 <br />
                 <BranchName
                   title="2. Branch Name"
-                  dsList={datasetBranches}
+                  dsList={DatasetList}
                   checkedNewDataset={false}
                   checkedNewBranch={this.state.checkedNewBranch}
                   dataset={this.state.dataset}
@@ -173,6 +156,7 @@ class DeleteDataSet extends React.Component {
 
 
 const mapStateToProps = state => ({
+  DatasetList: state.RowTableCmds.DatasetList,
   Response_DeleteDS: state.RowTableCmds.Response_DeleteDS
 })
 

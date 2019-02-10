@@ -31,39 +31,6 @@ const styles = () => ({
   }
 })
 
-const datasetBranches = [
-  // ls-ds-branch -t ds9
-  // [SUCCESS: LIST_DATASET_BRANCH] Branches: ["master"]
-  {
-    dataset: 'ds1',
-    branches: ["master"]
-  },
-  {
-    dataset: 'ds9',
-    branches: ["master"]
-  },
-  {
-    dataset: 'BTC',
-    branches: ["master", "dev"]
-  },
-  {
-    dataset: 'JPY',
-    branches: ["master", "newFeature"]
-  },
-];
-
-const Normalized = {
-  ds1: {
-    branches: ["master"]
-  },
-  ds9: {
-    branches: ["master"]
-  },
-  BTC: {
-    branches: ["master", "dev"]
-  },
-}
-
 
 class PutDataByCSV extends React.Component {
   state = {
@@ -85,6 +52,8 @@ class PutDataByCSV extends React.Component {
     triggerBranchDS_PutCSV_Combo: PropTypes.func,
     triggerPutCSV_Combo: PropTypes.func,
     resetResponses: PropTypes.func,
+
+    DatasetList: PropTypes.array,
 
     Response_PutDataCSV: PropTypes.array,
     Response_CreateDS: PropTypes.array,
@@ -217,6 +186,7 @@ class PutDataByCSV extends React.Component {
   render() {
     const {
       classes,
+      DatasetList,
       Response_CreateDS,
       Response_BranchDS,
       Response_UploadCSV,
@@ -238,7 +208,7 @@ class PutDataByCSV extends React.Component {
               <Grid item xs={6}>
                 <DatasetName
                   title="1. Dataset Name"
-                  dsList={datasetBranches}
+                  dsList={DatasetList}
                   checkedNewDataset={this.state.checkedNewDataset}
                   dataset={this.state.dataset}
                   newDataset={this.state.newDataset}
@@ -250,7 +220,7 @@ class PutDataByCSV extends React.Component {
                 <br />
                 <BranchName
                   title="2. Branch Name"
-                  dsList={datasetBranches}
+                  dsList={DatasetList}
                   checkedNewDataset={this.state.checkedNewDataset}
                   checkedNewBranch={this.state.checkedNewBranch}
                   dataset={this.state.dataset}
@@ -347,6 +317,7 @@ class PutDataByCSV extends React.Component {
 
 
 const mapStateToProps = state => ({
+  DatasetList: state.RowTableCmds.DatasetList,
   Response_PutDataCSV: state.RowTableCmds.Response_PutDataCSV,
   Response_CreateDS: state.RowTableCmds.Response_CreateDS,
   Response_BranchDS: state.RowTableCmds.Response_BranchDS,

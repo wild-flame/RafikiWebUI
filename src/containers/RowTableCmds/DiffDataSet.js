@@ -27,26 +27,6 @@ const styles = () => ({
   }
 })
 
-const datasetBranches = [
-  // ls-ds-branch -t ds9
-  // [SUCCESS: LIST_DATASET_BRANCH] Branches: ["master"]
-  {
-    dataset: 'ds1',
-    branches: ["master"]
-  },
-  {
-    dataset: 'ds9',
-    branches: ["master"]
-  },
-  {
-    dataset: 'BTC',
-    branches: ["master", "dev"]
-  },
-  {
-    dataset: 'JPY',
-    branches: ["master", "newFeature"]
-  },
-];
 
 class DiffDataSet extends React.Component {
   state = {
@@ -65,6 +45,8 @@ class DiffDataSet extends React.Component {
     resetResponses: PropTypes.func,
     requestDiffSameDS: PropTypes.func,
     requestDiffDifferentDS: PropTypes.func,
+
+    DatasetList: PropTypes.array,
 
     Response_DiffDS: PropTypes.array
   }
@@ -131,6 +113,7 @@ class DiffDataSet extends React.Component {
   render() {
     const {
       classes,
+      DatasetList,
       Response_DiffDS,
     } = this.props;
     console.log(this.state)
@@ -149,7 +132,7 @@ class DiffDataSet extends React.Component {
               <Grid item xs={6}>
                 <DatasetName
                   title="1. Dataset Name"
-                  dsList={datasetBranches}
+                  dsList={DatasetList}
                   checkedNewDataset={false}
                   dataset={this.state.dataset}
                   newDataset=""
@@ -161,7 +144,7 @@ class DiffDataSet extends React.Component {
                 <br />
                 <BranchName
                   title="2. Branch Name"
-                  dsList={datasetBranches}
+                  dsList={DatasetList}
                   checkedNewDataset={false}
                   checkedNewBranch={false}
                   dataset={this.state.dataset}
@@ -197,7 +180,7 @@ class DiffDataSet extends React.Component {
                 {this.state.checkedCompareDS &&
                   <DatasetName
                     title="Compare Dataset"
-                    dsList={datasetBranches}
+                    dsList={DatasetList}
                     checkedNewDataset={false}
                     dataset={this.state.dataset_2}
                     newDataset=""
@@ -210,7 +193,7 @@ class DiffDataSet extends React.Component {
                 <br />
                 <BranchName
                   title="Compare Branch"
-                  dsList={datasetBranches}
+                  dsList={DatasetList}
                   checkedNewDataset={false}
                   checkedNewBranch={false}
                   dataset={this.state.dataset_2}
@@ -261,6 +244,7 @@ class DiffDataSet extends React.Component {
 
 
 const mapStateToProps = state => ({
+  DatasetList: state.RowTableCmds.DatasetList,
   Response_DiffDS: state.RowTableCmds.Response_DiffDS
 })
 

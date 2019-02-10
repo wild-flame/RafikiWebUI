@@ -31,26 +31,6 @@ const styles = theme => ({
   }
 })
 
-const datasetBranches = [
-  // ls-ds-branch -t ds9
-  // [SUCCESS: LIST_DATASET_BRANCH] Branches: ["master"]
-  {
-    dataset: 'ds1',
-    branches: ["master"]
-  },
-  {
-    dataset: 'ds9',
-    branches: ["master"]
-  },
-  {
-    dataset: 'BTC',
-    branches: ["master", "dev"]
-  },
-  {
-    dataset: 'JPY',
-    branches: ["master", "newFeature"]
-  },
-];
 
 class GetDataEntry extends React.Component {
   state = {
@@ -66,6 +46,8 @@ class GetDataEntry extends React.Component {
     requestGetDataEntry: PropTypes.func,
     requestListDS: PropTypes.func,
     resetResponses: PropTypes.func,
+
+    DatasetList: PropTypes.array,
 
     Response_GetDataEntry: PropTypes.array
   }
@@ -100,6 +82,7 @@ class GetDataEntry extends React.Component {
   render() {
     const {
       classes,
+      DatasetList,
       Response_GetDataEntry,
     } = this.props;
 
@@ -118,7 +101,7 @@ class GetDataEntry extends React.Component {
               <Grid item xs={6}>
                 <DatasetName
                   title="1. Dataset Name"
-                  dsList={datasetBranches}
+                  dsList={DatasetList}
                   checkedNewDataset={false}
                   dataset={this.state.dataset}
                   newDataset=""
@@ -130,7 +113,7 @@ class GetDataEntry extends React.Component {
                 <br />
                 <BranchName
                   title="2. Branch Name"
-                  dsList={datasetBranches}
+                  dsList={DatasetList}
                   checkedNewDataset={false}
                   checkedNewBranch={this.state.checkedNewBranch}
                   dataset={this.state.dataset}
@@ -202,6 +185,7 @@ class GetDataEntry extends React.Component {
 
 
 const mapStateToProps = state => ({
+  DatasetList: state.RowTableCmds.DatasetList,
   Response_GetDataEntry: state.RowTableCmds.Response_GetDataEntry
 })
 
