@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux"
 import { compose } from "redux"
+import { Link } from 'react-router-dom'
 
 import * as ConsoleActions from "../ConsoleAppFrame/actions"
 import * as actions from "./actions"
@@ -11,10 +12,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
 import RefreshIcon from '@material-ui/icons/Refresh';
 
 // table
@@ -31,13 +30,10 @@ import ContentBar from "../../components/ConsoleContents/ContentBar"
 
 
 const styles = theme => ({
-  searchInput: {
-    fontSize: theme.typography.fontSize,
-  },
   block: {
     display: 'block',
   },
-  addUser: {
+  addDS: {
     marginRight: theme.spacing.unit,
   },
   contentWrapper: {
@@ -69,24 +65,36 @@ class ListDataSet extends React.Component {
         <MainContent>
           <ContentBar>
             <Toolbar>
-              <Grid container spacing={16} alignItems="center">
-                <Grid item>
-                  <SearchIcon className={classes.block} color="inherit" />
+              <Grid
+                container
+                direction="row"
+                justify="space-between"
+                spacing={24}
+                alignItems="center"
+              >
+                <Grid item xs={8}>
+                  <Typography variant="h5" gutterBottom>
+                    List Dataset
+                  </Typography>
                 </Grid>
-                <Grid item xs>
-                  <TextField
-                    fullWidth
-                    placeholder="Search by dataset name"
-                    InputProps={{
-                      disableUnderline: true,
-                      className: classes.searchInput,
-                    }}
-                  />
-                </Grid>
-                <Grid item>
-                  <Button variant="contained" color="primary" className={classes.addUser}>
-                    Search by Dataset
-                  </Button>
+                <Grid container item xs={4}
+                  direction="row"
+                  justify="space-between"
+                  spacing={24}
+                  alignItems="baseline"
+                >
+                  <Grid item xs={8}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.addDS}
+                      component={Link}
+                      to="/console/row-based-table/put-data-by-csv"
+                    >
+                      Add Dataset
+                    </Button>
+                  </Grid>
+                  <Grid item xs={4}>
                   <Tooltip title="Reload">
                     <IconButton
                       onClick={requestListDS}
@@ -94,6 +102,7 @@ class ListDataSet extends React.Component {
                       <RefreshIcon className={classes.block} color="inherit" />
                     </IconButton>
                   </Tooltip>
+                  </Grid>
                 </Grid>
               </Grid>
             </Toolbar>
