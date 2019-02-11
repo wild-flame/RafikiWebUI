@@ -12,12 +12,12 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
 import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
+import RowEntryName from "../../components/ConsoleContents/RowEntryName"
 
 
 const styles = theme => ({
@@ -37,6 +37,8 @@ class GetDataEntry extends React.Component {
     dataset:"",
     branch:"",
     entry: "",
+    EntriesLoaded: false,
+    EntryArray: []
   }
 
   static propTypes = {
@@ -44,12 +46,14 @@ class GetDataEntry extends React.Component {
 
     handleHeaderTitleChange: PropTypes.func,
     requestGetDataEntry: PropTypes.func,
+    requestGetDataset: PropTypes.func,
     requestListDS: PropTypes.func,
     resetResponses: PropTypes.func,
 
     DatasetList: PropTypes.array,
 
-    Response_GetDataEntry: PropTypes.array
+    Response_GetDataEntry: PropTypes.array,
+    Response_GetDataset: PropTypes.array
   }
 
   componentDidMount() {
@@ -75,6 +79,41 @@ class GetDataEntry extends React.Component {
     this.props.requestGetDataEntry(dataEntryForGetDataEntry)
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      (this.state.branch !== prevState.branch &&
+      this.state.dataset !== "") ||
+      (this.state.dataset !== prevState.dataset &&
+      this.state.branch !== "")
+    ) {
+      this.setState({
+        EntriesLoaded: false
+      })
+      const dataEntryForGetDS = Object.assign(
+        {
+          "dataset": this.state.dataset,
+          "branch": this.state.branch
+        },
+        {}
+      )
+      this.props.requestGetDataset(dataEntryForGetDS)
+    }
+    if (
+      this.props.Response_GetDataset !== prevProps.Response_GetDataset
+    ) {
+      if (this.props.Response_GetDataset.length !== 0) {
+        // eslint-disable-next-line
+        const EntryArray = eval(
+          this.props.Response_GetDataset[1].slice(9)
+        )
+        this.setState({
+          EntriesLoaded: true,
+          EntryArray
+        })
+      }
+    }
+  }
+
   componentWillUnmount() {
     this.props.resetResponses()
   }
@@ -84,6 +123,7 @@ class GetDataEntry extends React.Component {
       classes,
       DatasetList,
       Response_GetDataEntry,
+      Response_GetDataset
     } = this.props;
 
     return (
@@ -126,26 +166,18 @@ class GetDataEntry extends React.Component {
                   AllowNewBranch={false}
                 />
                 <br />
-                <Typography variant="h5" gutterBottom align="center">
-                  3. Row Entry Key
-                </Typography>
-                <Grid
-                  container
-                  direction="row"
-                  justify="space-evenly"
-                  alignItems="center"
-                >
-                  <Grid item>
-                    <TextField
-                      id="row-entry-key"
-                      label="Row Entry Key"
-                      className={classes.textField}
-                      value={this.state.entry}
-                      onChange={this.handleChange("entry")}
-                      margin="normal"
-                    />
-                  </Grid>
-                </Grid>
+                <RowEntryName
+                  title="3. Row Entry Key"
+                  EntryArray={this.state.EntryArray}
+                  checkedNewEntry={false}
+                  entry={this.state.entry}
+                  newDataset=""
+                  onHandleChange={this.handleChange}
+                  RowEntryState={"entry"}
+                  onHandleSwitch={() => {}}
+                  disabled={!this.state.EntriesLoaded}
+                  AllowNewEntry={false}
+                />
                 <br />
                 <Grid
                   container
@@ -168,6 +200,11 @@ class GetDataEntry extends React.Component {
                     Forkbase Status:
                   </Typography>
                   <Typography component="p">
+                    <b>{Response_GetDataset[0]}</b>
+                    <br />
+                    {Response_GetDataset[1]}
+                  </Typography>
+                  <Typography component="p">
                     <b>{Response_GetDataEntry[0]}</b>
                     <br />
                     {Response_GetDataEntry[1]}
@@ -186,14 +223,16 @@ class GetDataEntry extends React.Component {
 
 const mapStateToProps = state => ({
   DatasetList: state.RowTableCmds.DatasetList,
-  Response_GetDataEntry: state.RowTableCmds.Response_GetDataEntry
+  Response_GetDataEntry: state.RowTableCmds.Response_GetDataEntry,
+  Response_GetDataset: state.RowTableCmds.Response_GetDataset
 })
 
 const mapDispatchToProps = {
   handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
   requestListDS: actions.requestListDS,
   requestGetDataEntry: actions.requestGetDataEntry,
-  resetResponses: actions.resetResponses
+  resetResponses: actions.resetResponses,
+  requestGetDataset: actions.requestGetDataset,
 }
 
 export default compose(
