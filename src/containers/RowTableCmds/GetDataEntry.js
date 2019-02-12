@@ -122,8 +122,7 @@ class GetDataEntry extends React.Component {
     const {
       classes,
       DatasetList,
-      Response_GetDataEntry,
-      Response_GetDataset
+      Response_GetDataEntry
     } = this.props;
 
     return (
@@ -171,7 +170,6 @@ class GetDataEntry extends React.Component {
                   EntryArray={this.state.EntryArray}
                   checkedNewEntry={false}
                   entry={this.state.entry}
-                  newDataset=""
                   onHandleChange={this.handleChange}
                   RowEntryState={"entry"}
                   onHandleSwitch={() => {}}
@@ -198,11 +196,6 @@ class GetDataEntry extends React.Component {
                 <Paper>
                   <Typography variant="h5" gutterBottom align="center">
                     Forkbase Status:
-                  </Typography>
-                  <Typography component="p">
-                    <b>{Response_GetDataset[0]}</b>
-                    <br />
-                    {Response_GetDataset[1]}
                   </Typography>
                   <Typography component="p">
                     <b>{Response_GetDataEntry[0]}</b>

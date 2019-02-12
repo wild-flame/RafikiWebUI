@@ -72,78 +72,86 @@ class RowEntryName extends React.Component {
                     value="checkedNewEntry"
                   />
                 }
-                label="New row entry"
+                label="Create new entry"
               />
             </Grid>
           </Grid>
         }
-        <Grid
-          container
-          direction="row"
-          justify="space-evenly"
-          alignItems="center"
-        >
-          <Grid item>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={!disabled}
-                  value="checkedRowEntriesLoaded"
-                />
-              }
-              disabled={false}
-              label="Row Entries Loaded"
-            />
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          direction="row"
-          justify="space-evenly"
-          alignItems="center"
-        >
           {checkedNewEntry
             ? (
-            <Grid item>
-              <TextField
-                id="new-entry-name"
-                label="New Row Entry"
-                className={classes.textField}
-                value={entry}
-                onChange={onHandleChange("entry")}
-                margin="normal"
-                disabled={!disabled}
-              />              
+            <Grid
+              container
+              direction="row"
+              justify="space-evenly"
+              alignItems="center"
+            >
+              <Grid item>
+                <TextField
+                  id="new-entry-name"
+                  label="New Row Entry"
+                  className={classes.textField}
+                  value={entry}
+                  onChange={onHandleChange("entry")}
+                  margin="normal"
+                />              
+              </Grid>
             </Grid>
             )
             : (
-            <Grid item>
-              <TextField
-                id="existing-entry-names"
-                select
-                label="Select row entry"
-                className={classes.textField}
-                value={!checkedNewEntry && entry}
-                onChange={onHandleChange(RowEntryState)}
-                SelectProps={{
-                  MenuProps: {
-                    className: classes.menu,
-                  },
-                }}
-                helperText="Please select from row entries"
-                margin="normal"
-                disabled={disabled}
-              >
-                {EntryArray.map((entry, index) => (
-                  <MenuItem key={index} value={entry}>
-                    {entry}
-                  </MenuItem>
-                ))}
-              </TextField>
+            <React.Fragment>
+            <Grid
+              container
+              direction="row"
+              justify="space-evenly"
+              alignItems="center"
+            >
+              <Grid item>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={!disabled}
+                      value="checkedRowEntriesLoaded"
+                    />
+                  }
+                  disabled={false}
+                  label="Row Entries Loaded"
+                />
+              </Grid>
             </Grid>
+            <Grid
+              container
+              direction="row"
+              justify="space-evenly"
+              alignItems="center"
+            >
+              <Grid item>
+                <TextField
+                  id="existing-entry-names"
+                  select
+                  label="Select row entry"
+                  className={classes.textField}
+                  value={!checkedNewEntry && entry}
+                  onChange={onHandleChange(RowEntryState)}
+                  SelectProps={{
+                    MenuProps: {
+                      className: classes.menu,
+                    },
+                  }}
+                  helperText="Please select from row entries"
+                  margin="normal"
+                  disabled={disabled}
+                >
+                  {EntryArray.map((entry, index) => (
+                    <MenuItem key={index} value={entry}>
+                      {entry}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+            </Grid>
+            </React.Fragment>
             )
           }
-        </Grid>
       </React.Fragment>
     )
   }

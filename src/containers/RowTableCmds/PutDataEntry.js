@@ -18,6 +18,7 @@ import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
 import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
+import RowEntryName from "../../components/ConsoleContents/RowEntryName"
 
 
 const styles = theme => ({
@@ -40,7 +41,10 @@ class PutDataEntry extends React.Component {
     newBranch: "",
     referBranch:"",
     entry: "",
-    value:""
+    value:"",
+    EntriesLoaded: false,
+    EntryArray: [],
+    checkedNewEntry: false
   }
 
   static propTypes = {
@@ -50,11 +54,13 @@ class PutDataEntry extends React.Component {
     requestPutDE: PropTypes.func,
     requestListDS: PropTypes.func,
     resetResponses: PropTypes.func,
+    requestGetDataset: PropTypes.func,
 
     DatasetList: PropTypes.array,
 
     Response_PutDE: PropTypes.array,
     Response_BranchDS: PropTypes.array,
+    Response_GetDataset: PropTypes.array,
     triggerBranchDS_PutDE_Combo: PropTypes.func
   }
 
@@ -117,10 +123,77 @@ class PutDataEntry extends React.Component {
     }
   }
   componentDidUpdate(prevProps, prevState) {
+    // when toggle back "Create new branch" option, reset newBranch/Branch state
     if (this.state.checkedNewBranch !== prevState.checkedNewBranch) {
       if (!this.state.checkedNewBranch) {
         this.setState({
           newBranch: ""
+        })
+      } else {
+        this.setState({
+          branch: ""
+        })
+      }
+    }
+    // when toggle back "Create new entry" option, reset entry state
+    if (this.state.checkedNewEntry !== prevState.checkedNewEntry) {
+      if (!this.state.checkedNewEntry) {
+        this.setState({
+          entry: ""
+        })
+      }
+    }
+    // if referBranch and dataset both selected, call getDS
+    if (
+      this.state.checkedNewBranch &&
+      ((this.state.referBranch !== prevState.referBranch &&
+      this.state.dataset !== "") ||
+      (this.state.dataset !== prevState.dataset &&
+      this.state.referBranch !== ""))
+    ) {
+      this.setState({
+        EntriesLoaded: false
+      })
+      const dataEntryForGetDS = Object.assign(
+        {
+          "dataset": this.state.dataset,
+          "branch": this.state.referBranch
+        },
+        {}
+      )
+      this.props.requestGetDataset(dataEntryForGetDS)
+    }
+    // if branch and dataset both selected, call getDS
+    if (
+      (this.state.branch !== prevState.branch &&
+      this.state.dataset !== "") ||
+      (this.state.dataset !== prevState.dataset &&
+      this.state.branch !== "")
+    ) {
+      this.setState({
+        EntriesLoaded: false
+      })
+      const dataEntryForGetDS = Object.assign(
+        {
+          "dataset": this.state.dataset,
+          "branch": this.state.branch
+        },
+        {}
+      )
+      this.props.requestGetDataset(dataEntryForGetDS)
+    }
+    // when GetDataset response arrives, convert to array
+    if (
+      this.props.Response_GetDataset !== prevProps.Response_GetDataset
+    ) {
+      if (this.props.Response_GetDataset.length !== 0) {
+        // eslint-disable-next-line
+        const EntryArray = eval(
+          this.props.Response_GetDataset[1].slice(9)
+        )
+        this.setState({
+          EntriesLoaded: true,
+          EntryArray
         })
       }
     }
@@ -178,26 +251,17 @@ class PutDataEntry extends React.Component {
                   AllowNewBranch={true}
                 />
                 <br />
-                <Typography variant="h5" gutterBottom align="center">
-                  3. Row Entry Key
-                </Typography>
-                <Grid
-                  container
-                  direction="row"
-                  justify="space-evenly"
-                  alignItems="center"
-                >
-                  <Grid item>
-                    <TextField
-                      id="row-entry-key"
-                      label="Row Entry Key"
-                      className={classes.textField}
-                      value={this.state.entry}
-                      onChange={this.handleChange("entry")}
-                      margin="normal"
-                    />
-                  </Grid>
-                </Grid>
+                <RowEntryName
+                  title="3. Row Entry Key"
+                  EntryArray={this.state.EntryArray}
+                  checkedNewEntry={this.state.checkedNewEntry}
+                  entry={this.state.entry}
+                  onHandleChange={this.handleChange}
+                  RowEntryState={"entry"}
+                  onHandleSwitch={this.handleSwitch}
+                  disabled={!this.state.EntriesLoaded}
+                  AllowNewEntry={true}
+                />
                 <br />
                 <Typography variant="h5" gutterBottom align="center">
                   4. Value
@@ -265,6 +329,7 @@ const mapStateToProps = state => ({
   DatasetList: state.RowTableCmds.DatasetList,
   Response_PutDE: state.RowTableCmds.Response_PutDE,
   Response_BranchDS: state.RowTableCmds.Response_BranchDS,
+  Response_GetDataset: state.RowTableCmds.Response_GetDataset
 })
 
 const mapDispatchToProps = {
@@ -272,7 +337,8 @@ const mapDispatchToProps = {
   requestPutDE: actions.requestPutDE,
   requestListDS: actions.requestListDS,
   triggerBranchDS_PutDE_Combo: actions.triggerBranchDS_PutDE_Combo,
-  resetResponses: actions.resetResponses
+  resetResponses: actions.resetResponses,
+  requestGetDataset: actions.requestGetDataset,
 }
 
 export default compose(
