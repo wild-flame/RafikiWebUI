@@ -22,6 +22,9 @@ import ContentBar from "../../components/ConsoleContents/ContentBar"
 import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
 
+// RegExp rules
+import { validDsAndBranch } from "../../regexp-rules";
+
 
 const styles = theme => ({
   textField: {
@@ -40,7 +43,8 @@ class ExportDataSet extends React.Component {
     dataset:"",
     branch:"",
     filename:"",
-    filePath:""
+    filePath:"",
+    validFileName: true
   }
 
   static propTypes = {
@@ -62,6 +66,24 @@ class ExportDataSet extends React.Component {
   }
 
   handleChange = name => event => {
+    if (name === "filename") {
+      if (
+        validDsAndBranch.test(event.target.value) &&
+        event.target.value.length <= 50
+      ) {
+        this.setState({
+          validFileName: true
+        });
+      } else if (event.target.value === "") {
+        this.setState({
+          validFileName: true
+        });
+      } else {
+        this.setState({
+          validFileName: false
+        });
+      }
+    }
     this.setState({
       [name]: event.target.value,
     });
@@ -122,6 +144,7 @@ class ExportDataSet extends React.Component {
                   DatasetState={"dataset"}
                   onHandleSwitch={() => {}}
                   AllowNewDataset={false}
+                  isCorrectInput={true}
                 />
                 <br />
                 <BranchName
@@ -137,6 +160,7 @@ class ExportDataSet extends React.Component {
                   BranchState={"branch"}
                   onHandleSwitch={() => {}}
                   AllowNewBranch={false}
+                  isCorrectInput={true}
                 />
                 <br />
                 <Typography variant="h5" gutterBottom align="center">
@@ -156,7 +180,12 @@ class ExportDataSet extends React.Component {
                       label="Filename"
                       value={this.state.filename}
                       onChange={this.handleChange('filename')}
-                      helperText="Export as filename"
+                      error={!this.state.validFileName}
+                      helperText={
+                        this.state.validFileName
+                        ? "Export as filename"
+                        :"invalid filename"
+                      }
                       InputProps={{
                         endAdornment: <InputAdornment position="end">.csv</InputAdornment>,
                       }}
