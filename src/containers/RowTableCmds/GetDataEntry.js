@@ -148,6 +148,7 @@ class GetDataEntry extends React.Component {
                   DatasetState={"dataset"}
                   onHandleSwitch={this.handleSwitch}
                   AllowNewDataset={false}
+                  isCorrectInput={true}
                 />
                 <br />
                 <BranchName
@@ -163,6 +164,7 @@ class GetDataEntry extends React.Component {
                   BranchState={"branch"}
                   onHandleSwitch={this.handleSwitch}
                   AllowNewBranch={false}
+                  isCorrectInput={true}
                 />
                 <br />
                 <RowEntryName
@@ -175,6 +177,7 @@ class GetDataEntry extends React.Component {
                   onHandleSwitch={() => {}}
                   disabled={!this.state.EntriesLoaded}
                   AllowNewEntry={false}
+                  isCorrectInput={true}
                 />
                 <br />
                 <Grid

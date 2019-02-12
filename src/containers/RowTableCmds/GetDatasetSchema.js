@@ -101,6 +101,7 @@ class GetDatasetSchema extends React.Component {
                   DatasetState={"dataset"}
                   onHandleSwitch={this.handleSwitch}
                   AllowNewDataset={false}
+                  isCorrectInput={true}
                 />
                 <br />
                 <BranchName
@@ -116,6 +117,7 @@ class GetDatasetSchema extends React.Component {
                   BranchState={"branch"}
                   onHandleSwitch={this.handleSwitch}
                   AllowNewBranch={false}
+                  isCorrectInput={true}
                 />
                 <br />
                 <Grid

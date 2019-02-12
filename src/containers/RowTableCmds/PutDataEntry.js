@@ -20,6 +20,9 @@ import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
 import RowEntryName from "../../components/ConsoleContents/RowEntryName"
 
+// RegExp rules
+import { validDsAndBranch } from "../../regexp-rules";
+
 
 const styles = theme => ({
   textField: {
@@ -44,7 +47,9 @@ class PutDataEntry extends React.Component {
     value:"",
     EntriesLoaded: false,
     EntryArray: [],
-    checkedNewEntry: false
+    checkedNewEntry: false,
+    validBranchName: true,
+    validEntryName: true
   }
 
   static propTypes = {
@@ -70,6 +75,42 @@ class PutDataEntry extends React.Component {
   }
 
   handleChange = name => event => {
+    if (name === "newBranch") {
+      if (
+        validDsAndBranch.test(event.target.value) &&
+        event.target.value.length <= 50
+      ) {
+        this.setState({
+          validBranchName: true
+        });
+      } else if (event.target.value === "") {
+        this.setState({
+          validBranchName: true
+        });
+      } else {
+        this.setState({
+          validBranchName: false
+        });
+      }
+    }
+    if (name === "entry") {
+      if (
+        validDsAndBranch.test(event.target.value) &&
+        event.target.value.length <= 50
+      ) {
+        this.setState({
+          validEntryName: true
+        });
+      } else if (event.target.value === "") {
+        this.setState({
+          validEntryName: true
+        });
+      } else {
+        this.setState({
+          validEntryName: false
+        });
+      }
+    }
     this.setState({
       [name]: event.target.value,
     });
@@ -234,6 +275,7 @@ class PutDataEntry extends React.Component {
                   DatasetState={"dataset"}
                   onHandleSwitch={this.handleSwitch}
                   AllowNewDataset={false}
+                  isCorrectInput={true}
                 />
                 <br />
                 <BranchName
@@ -249,6 +291,7 @@ class PutDataEntry extends React.Component {
                   BranchState={"branch"}
                   onHandleSwitch={this.handleSwitch}
                   AllowNewBranch={true}
+                  isCorrectInput={this.state.validBranchName}
                 />
                 <br />
                 <RowEntryName
@@ -261,6 +304,7 @@ class PutDataEntry extends React.Component {
                   onHandleSwitch={this.handleSwitch}
                   disabled={!this.state.EntriesLoaded}
                   AllowNewEntry={true}
+                  isCorrectInput={this.state.validEntryName}
                 />
                 <br />
                 <Typography variant="h5" gutterBottom align="center">

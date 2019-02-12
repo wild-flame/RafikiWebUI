@@ -37,7 +37,8 @@ class BranchName extends React.Component {
     onHandleChange: PropTypes.func,
     BranchState: PropTypes.string,
     onHandleSwitch: PropTypes.func,
-    AllowNewBranch: PropTypes.bool
+    AllowNewBranch: PropTypes.bool,
+    isCorrectInput: PropTypes.bool
   }
 
   render() {
@@ -54,7 +55,8 @@ class BranchName extends React.Component {
       onHandleChange,
       BranchState,
       onHandleSwitch,
-      AllowNewBranch
+      AllowNewBranch,
+      isCorrectInput
     } = this.props;
 
     return (
@@ -102,6 +104,12 @@ class BranchName extends React.Component {
                   onChange={onHandleChange("newBranch")}
                   margin="normal"
                   disabled={checkedNewDataset || !checkedNewBranch}
+                  error={!isCorrectInput}
+                  helperText={
+                    isCorrectInput
+                    ? ""
+                    :"invalid branch name"
+                  }
                 />              
               </Grid>
               <Grid item>

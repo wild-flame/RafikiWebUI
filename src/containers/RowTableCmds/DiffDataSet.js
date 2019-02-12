@@ -140,6 +140,7 @@ class DiffDataSet extends React.Component {
                   DatasetState={"dataset"}
                   onHandleSwitch={() => {}}
                   AllowNewDataset={false}
+                  isCorrectInput={true}
                 />
                 <br />
                 <BranchName
@@ -155,6 +156,7 @@ class DiffDataSet extends React.Component {
                   BranchState={"branch"}
                   onHandleSwitch={() => {}}
                   AllowNewBranch={false}
+                  isCorrectInput={true}
                 />
                 <br />
                 <Grid
@@ -188,6 +190,7 @@ class DiffDataSet extends React.Component {
                     DatasetState={"dataset_2"}
                     onHandleSwitch={() => {}}
                     AllowNewDataset={false}
+                    isCorrectInput={true}
                   />
                 }
                 <br />
@@ -204,6 +207,7 @@ class DiffDataSet extends React.Component {
                   BranchState={"branch_2"}
                   onHandleSwitch={() => {}}
                   AllowNewBranch={false}
+                  isCorrectInput={true}
                 />
                 <br />
                 <Grid

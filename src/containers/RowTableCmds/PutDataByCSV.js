@@ -23,6 +23,9 @@ import CsvDropzone from "../../components/ConsoleContents/CsvDropzone"
 import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
 
+// RegExp rules
+import { validDsAndBranch } from "../../regexp-rules";
+
 
 
 const styles = () => ({
@@ -41,7 +44,9 @@ class PutDataByCSV extends React.Component {
     branch:"",
     newBranch:"",
     referBranch:"",
-    files: []
+    files: [],
+    validDsName: true,
+    validBranchName: true
   }
 
   static propTypes = {
@@ -62,6 +67,42 @@ class PutDataByCSV extends React.Component {
   }
 
   handleChange = name => event => {
+    if (name === "newDataset") {
+      if (
+        validDsAndBranch.test(event.target.value) &&
+        event.target.value.length <= 50
+      ) {
+        this.setState({
+          validDsName: true
+        });
+      } else if (event.target.value === "") {
+        this.setState({
+          validDsName: true
+        });
+      } else {
+        this.setState({
+          validDsName: false
+        });
+      }
+    }
+    if (name === "newBranch") {
+      if (
+        validDsAndBranch.test(event.target.value) &&
+        event.target.value.length <= 50
+      ) {
+        this.setState({
+          validBranchName: true
+        });
+      } else if (event.target.value === "") {
+        this.setState({
+          validBranchName: true
+        });
+      } else {
+        this.setState({
+          validBranchName: false
+        });
+      }
+    }
     this.setState({
       [name]: event.target.value,
     });
@@ -216,6 +257,7 @@ class PutDataByCSV extends React.Component {
                   DatasetState={"dataset"}
                   onHandleSwitch={this.handleSwitch}
                   AllowNewDataset={true}
+                  isCorrectInput={this.state.validDsName}
                 />
                 <br />
                 <BranchName
@@ -231,6 +273,7 @@ class PutDataByCSV extends React.Component {
                   BranchState={"branch"}
                   onHandleSwitch={this.handleSwitch}
                   AllowNewBranch={true}
+                  isCorrectInput={this.state.validBranchName}
                 />
                 <br />
                 <Typography variant="h5" gutterBottom align="center">

@@ -34,7 +34,8 @@ class RowEntryName extends React.Component {
     RowEntryState: PropTypes.string,
     onHandleSwitch: PropTypes.func,
     disabled: PropTypes.bool,
-    AllowNewEntry: PropTypes.bool
+    AllowNewEntry: PropTypes.bool,
+    isCorrectInput: PropTypes.bool
   }
 
   render() {
@@ -48,7 +49,8 @@ class RowEntryName extends React.Component {
       RowEntryState,
       onHandleSwitch,
       disabled,
-      AllowNewEntry
+      AllowNewEntry,
+      isCorrectInput
     } = this.props;
 
     return (
@@ -93,6 +95,12 @@ class RowEntryName extends React.Component {
                   value={entry}
                   onChange={onHandleChange("entry")}
                   margin="normal"
+                  error={!isCorrectInput}
+                  helperText={
+                    isCorrectInput
+                    ? ""
+                    :"invalid entry name"
+                  }
                 />              
               </Grid>
             </Grid>

@@ -33,7 +33,8 @@ class DatasetName extends React.Component {
     onHandleChange: PropTypes.func,
     DatasetState: PropTypes.string,
     onHandleSwitch: PropTypes.func,
-    AllowNewDataset: PropTypes.bool
+    AllowNewDataset: PropTypes.bool,
+    isCorrectInput: PropTypes.bool
   }
 
   render() {
@@ -47,7 +48,8 @@ class DatasetName extends React.Component {
       onHandleChange,
       DatasetState,
       onHandleSwitch,
-      AllowNewDataset
+      AllowNewDataset,
+      isCorrectInput
     } = this.props;
 
     return (
@@ -92,7 +94,12 @@ class DatasetName extends React.Component {
                 value={newDataset}
                 onChange={onHandleChange("newDataset")}
                 margin="normal"
-                disabled={!checkedNewDataset}
+                error={!isCorrectInput}
+                helperText={
+                  isCorrectInput
+                  ? ""
+                  :"invalid dataset name"
+                }
               />              
             </Grid>
             )
@@ -112,7 +119,6 @@ class DatasetName extends React.Component {
                 }}
                 helperText="Please select your dataset"
                 margin="normal"
-                disabled={checkedNewDataset}
               >
                 {dsList.map(option => (
                   <MenuItem key={option.dataset} value={option.dataset}>
