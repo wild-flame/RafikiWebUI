@@ -129,7 +129,7 @@ class ListDataSet extends React.Component {
                       {item["dataset"]}
                     </TableCell>
                     <TableCell>
-                      {item["branches"].map(item =>
+                      {item["branches"].map((item, index) =>
                         <Chip
                           key={index}
                           label={item}
