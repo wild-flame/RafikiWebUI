@@ -102,8 +102,9 @@ class ExportDataSet extends React.Component {
     const generateRandommID = Math.floor(Math.random()*(999999-100000+1)+100000)
   
     const nativeFilePath = "static/ExportDsBinary/" +
-      formatTime + "-" + generateRandommID + this.state.filename +
-      ".csv"
+      "ForkBaseExport-" + formatTime +
+      "-ID" + generateRandommID + "-" +
+      this.state.filename + ".csv"
 
     const filePath = "../../frontend/build/" + nativeFilePath
 
