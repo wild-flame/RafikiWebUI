@@ -63,6 +63,7 @@ class LandingNavBar extends React.Component {
       ? <SignedInLinks />
       : <SignedOutLinks />
 
+    // use complex button from MUI for hover effects
     return (
       <div>
         <AppBar position="fixed">
@@ -103,7 +104,7 @@ class LandingNavBar extends React.Component {
                 variant="h5"
               >
                 <Link to="/" className={classes.rightLink}>
-                  {'Connect'}
+                  {'About Us'}
                 </Link>
               </Typography>
             </div>
