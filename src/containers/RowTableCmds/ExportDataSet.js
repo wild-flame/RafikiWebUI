@@ -90,13 +90,25 @@ class ExportDataSet extends React.Component {
   };
 
   handleCommit = () => {
+    // append timestamp with UTC time
+    const CommitTime = new Date()
+    const formatTime = CommitTime
+      .toUTCString()
+      .replace(/\s+/g, "")
+      .replace(/,+/g, "")
+      .replace(/:+/g, "")
+    //  = Wed13Feb2019101814GMT
     // temp ID random number 100,000 - 999,999
     const generateRandommID = Math.floor(Math.random()*(999999-100000+1)+100000)
+  
+    const nativeFilePath = "static/ExportDsBinary/" +
+      formatTime + "-" + generateRandommID + this.state.filename +
+      ".csv"
 
-    const filePath = `./static/${generateRandommID}/${this.state.filename}.csv`
+    const filePath = "../../frontend/build/" + nativeFilePath
 
     this.setState({
-      filePath: `${HTTPconfig.gateway}${filePath}`
+      filePath: `${HTTPconfig.gateway}${nativeFilePath}`
     })
 
     const dataEntryForExportDS = Object.assign(
@@ -120,6 +132,7 @@ class ExportDataSet extends React.Component {
       DatasetList,
       Response_ExportDS
     } = this.props;
+    console.log(this.state.filePath)
 
     return (
       <React.Fragment>
