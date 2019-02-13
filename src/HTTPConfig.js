@@ -14,7 +14,7 @@ const HTTPconfig = {
 }
 
 if (process.env.NODE_ENV === "production") {
-  HTTPconfig.gateway = "http://some-aws-ip";
+  HTTPconfig.gateway = "http://3.0.229.71/";
 }
 
 export default HTTPconfig;
