@@ -5,15 +5,40 @@ import {
   Route 
  } from 'react-router-dom'
 
-import LandingPage from "./containers/LandingPage/LandingPage"
-import SignIn from "./containers/SignInPage/SignIn"
-import SignUp from "./containers/SignUpPage/SignUp"
-import ConsoleAppFrame from "./containers/ConsoleAppFrame/ConsoleAppFrame"
+ import Loadable from 'react-loadable';
+ import LinearProgress from "@material-ui/core/LinearProgress";
 
+import LandingPage from "./containers/LandingPage/LandingPage"
+// import SignIn from "./containers/SignInPage/SignIn"
+// import SignUp from "./containers/SignUpPage/SignUp"
+// import ConsoleAppFrame from "./containers/ConsoleAppFrame/ConsoleAppFrame"
+
+function Loading(props) {
+  if (props.error) {
+    return <div>Error! <button onClick={ props.retry }>Retry</button></div>;
+  } else {
+    return <LinearProgress color="secondary" />;
+  }
+}
 
 const NoMatch = ({ location }) => (
   <h3>No page found for <code>{location.pathname}</code></h3>
 )
+
+const SignInLoadable = Loadable({
+  loader: () => import("./containers/SignInPage/SignIn"),
+  loading: Loading,
+});
+
+const SignUpLoadable = Loadable({
+  loader: () => import("./containers/SignUpPage/SignUp"),
+  loading: Loading,
+});
+
+const ConsoleAppFrameLoadable = Loadable({
+  loader: () => import("./containers/ConsoleAppFrame/ConsoleAppFrame"),
+  loading: Loading,
+});
 
 
 class App extends Component {
@@ -29,16 +54,16 @@ class App extends Component {
           <Route
             exact
             path='/sign-in'
-            component={SignIn}
+            component={SignInLoadable}
           />
           <Route
             exact
             path='/sign-up'
-            component={SignUp}
+            component={SignUpLoadable}
           />
           <Route
             path='/console'
-            component={ConsoleAppFrame}
+            component={ConsoleAppFrameLoadable}
           />
           <Route component={NoMatch} />
         </Switch>
