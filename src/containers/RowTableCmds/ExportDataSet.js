@@ -133,7 +133,6 @@ class ExportDataSet extends React.Component {
       DatasetList,
       Response_ExportDS
     } = this.props;
-    console.log(this.state.filePath)
 
     return (
       <React.Fragment>

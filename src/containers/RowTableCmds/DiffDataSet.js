@@ -116,7 +116,7 @@ class DiffDataSet extends React.Component {
       DatasetList,
       Response_DiffDS,
     } = this.props;
-    console.log(this.state)
+
     return (
       <React.Fragment>
         <MainContent>
