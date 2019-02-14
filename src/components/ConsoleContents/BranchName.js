@@ -165,19 +165,24 @@ class BranchName extends React.Component {
                 margin="normal"
                 disabled={checkedNewBranch}
               >
-                {dataset
-                  ? (dsList.filter(item => item.dataset === dataset)[0]
-                      .branches.map(item => (
-                        <MenuItem key={item} value={item}>
-                          {item}
-                        </MenuItem>
-                      ))
-                  )
-                  : (
+                {checkedNewDataset
+                  ? (
                     <MenuItem value={"master"}>
                       {"master"}
                     </MenuItem>
                   )
+                  : dataset
+                    ? dsList.filter(item => item.dataset === dataset)[0]
+                        .branches.map(item => (
+                          <MenuItem key={item} value={item}>
+                            {item}
+                          </MenuItem>
+                        ))
+                    : (
+                      <MenuItem value={"master"}>
+                        {"master"}
+                      </MenuItem>
+                    )
                 }
               </TextField>
             </Grid>
