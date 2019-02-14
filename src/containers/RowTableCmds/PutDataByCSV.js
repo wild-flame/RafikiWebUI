@@ -138,7 +138,7 @@ class PutDataByCSV extends React.Component {
   
   handleCommit = () => {
     // reset the ForkBase Status field:
-    this.props.requestListDS()
+    this.props.resetResponses()
     // first reset COMMIT disabled
     this.setState({
       FormIsValid: false
@@ -411,6 +411,7 @@ class PutDataByCSV extends React.Component {
                   {Response_UploadCSV &&
                     <div>{this.state.files[0]["name"]} uploaded!</div>
                   }
+                  <br />
                   <Typography component="p">
                     <b>{Response_PutDataCSV[0]}</b>
                     <br />
