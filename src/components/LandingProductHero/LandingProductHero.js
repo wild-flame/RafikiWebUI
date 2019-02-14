@@ -16,7 +16,7 @@ const backgroundImage =
 const styles = theme => ({
   background: {
     backgroundImage: `url(${heroImage})`,
-    backgroundColor: '#7fc7d9', // Average color of the background image.
+    backgroundColor: '#333333', // Average color of the background image.
     backgroundPosition: 'center',
   },
   button: {
