@@ -46,7 +46,8 @@ class PutDataByCSV extends React.Component {
     referBranch:"",
     files: [],
     validDsName: true,
-    validBranchName: true
+    validBranchName: true,
+    FormIsValid: false
   }
 
   static propTypes = {
@@ -103,6 +104,12 @@ class PutDataByCSV extends React.Component {
         });
       }
     }
+    if (name === "dataset") {
+      this.setState({
+        branch: "",
+        checkedNewBranch: false
+      })
+    }
     this.setState({
       [name]: event.target.value,
     });
@@ -118,12 +125,25 @@ class PutDataByCSV extends React.Component {
     this.setState({files});
   }
 
+  handleRemoveCSV = () => {
+    this.setState({
+      files: []
+    })
+  }
+
   componentDidMount() {
     this.props.handleHeaderTitleChange("Row-based Table > Put Data By CSV")
     this.props.requestListDS()
   }
   
   handleCommit = () => {
+    // reset the ForkBase Status field:
+    this.props.requestListDS()
+    // first reset COMMIT disabled
+    this.setState({
+      FormIsValid: false
+    })
+    // create different inputs
     const dataEntryForCreateDS = Object.assign(
       {
         "dataset": this.state.newDataset,
@@ -198,7 +218,8 @@ class PutDataByCSV extends React.Component {
       if (this.state.checkedNewDataset) {
         this.setState({
           checkedNewBranch: false,
-          newBranch: ""
+          newBranch: "",
+          branch: ""
         })
       } else if (!this.state.checkedNewDataset) {
         this.setState({
@@ -215,6 +236,53 @@ class PutDataByCSV extends React.Component {
       } else if (!this.state.checkedNewBranch) {
         this.setState({
           newBranch: ""
+        })
+      }
+    }
+    if (
+      this.state.checkedNewDataset !== prevState.checkedNewDataset ||
+      this.state.checkedNewBranch !== prevState.checkedNewBranch ||
+      this.state.dataset !== prevState.dataset ||
+      this.state.newDataset !== prevState.newDataset ||
+      this.state.branch !== prevState.branch ||
+      this.state.newBranch !== prevState.newBranch ||
+      this.state.referBranch !== prevState.referBranch ||
+      this.state.files !== prevState.files
+    ) {
+      if (
+        this.state.checkedNewDataset &&
+        this.state.newDataset &&
+        this.state.branch &&
+        this.state.files.length !== 0 &&
+        this.state.validDsName
+      ) {
+        this.setState({
+          FormIsValid: true
+        })
+      } else if (
+        this.state.checkedNewBranch &&
+        this.state.dataset &&
+        this.state.newBranch &&
+        this.state.referBranch &&
+        this.state.files.length !== 0 &&
+        this.state.validBranchName
+      ) {
+        this.setState({
+          FormIsValid: true
+        })
+      } else if (
+        !this.state.checkedNewBranch &&
+        !this.state.checkedNewDataset &&
+        this.state.dataset &&
+        this.state.branch &&
+        this.state.files.length !== 0
+      ) {
+        this.setState({
+          FormIsValid: true
+        })
+      } else {
+        this.setState({
+          FormIsValid: false
         })
       }
     }
@@ -282,6 +350,7 @@ class PutDataByCSV extends React.Component {
                 <CsvDropzone
                   files={this.state.files}
                   onCsvDrop={this.onDrop}
+                  onRemoveCSV={this.handleRemoveCSV}
                 />
                 <br />
                 <Typography variant="h5" gutterBottom align="center">
@@ -318,6 +387,7 @@ class PutDataByCSV extends React.Component {
                     variant="contained"
                     color="primary"
                     onClick={this.handleCommit}
+                    disabled={!this.state.FormIsValid}
                   >
                     COMMIT
                   </Button>
