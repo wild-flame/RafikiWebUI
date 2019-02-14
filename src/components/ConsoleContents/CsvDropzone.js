@@ -17,6 +17,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import Typography from '@material-ui/core/Typography';
 
+import Tooltip from '@material-ui/core/Tooltip';
+
 import Dropzone from 'react-dropzone'
 
 
@@ -25,7 +27,8 @@ const styles = theme => ({
     width: '100%',
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
-  },
+    marginLeft: 15
+  }
 })
 
 // for file dropzone
@@ -55,14 +58,16 @@ class CsvDropzone extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     onCsvDrop: PropTypes.func,
-    files: PropTypes.array
+    files: PropTypes.array,
+    onRemoveCSV: PropTypes.func
   }
 
   render() {
     const {
       classes,
       files,
-      onCsvDrop
+      onCsvDrop,
+      onRemoveCSV
     } = this.props;
 
     return (
@@ -107,11 +112,22 @@ class CsvDropzone extends React.Component {
                 </Avatar>
               </ListItemAvatar>
               <ListItemText
-                primary={file.name}
+                primary={
+                  file.name.length > 25
+                    ? (
+                      <Tooltip title={file.name}>
+                        <span>{file.name.slice(0,20)+"..."}</span>
+                      </Tooltip>
+                    )
+                    : file.name
+                }
                 secondary={file.size + " bytes"}
               />
               <ListItemSecondaryAction>
-                <IconButton aria-label="Delete">
+                <IconButton
+                  aria-label="Delete"
+                  onClick={onRemoveCSV}  
+                >
                   <DeleteIcon />
                 </IconButton>
               </ListItemSecondaryAction>
