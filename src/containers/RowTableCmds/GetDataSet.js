@@ -30,6 +30,7 @@ class GetDataSet extends React.Component {
   state = {
     dataset:"",
     branch:"",
+    FormIsValid: false
   }
 
   static propTypes = {
@@ -51,12 +52,24 @@ class GetDataSet extends React.Component {
   }
 
   handleChange = name => event => {
+    if (name === "dataset") {
+      this.setState({
+        branch: ""
+      })
+    }
     this.setState({
       [name]: event.target.value,
     });
   };
 
   handleCommit = () => {
+    // reset the ForkBase Status field:
+    this.props.resetResponses()
+    // first reset COMMIT disabled
+    this.setState({
+      FormIsValid: false
+    })
+    // create inputs
     const dataEntryForGetDS = Object.assign(
       {
         "dataset": this.state.dataset,
@@ -65,6 +78,26 @@ class GetDataSet extends React.Component {
       {}
     )
     this.props.requestGetDataset(dataEntryForGetDS)
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.state.dataset !== prevState.dataset ||
+      this.state.branch !== prevState.branch
+    ) {
+      if (
+        this.state.dataset &&
+        this.state.branch
+      ) {
+        this.setState({
+          FormIsValid: true
+        })
+      } else {
+        this.setState({
+          FormIsValid: false
+        })
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -130,6 +163,7 @@ class GetDataSet extends React.Component {
                     variant="contained"
                     color="primary"
                     onClick={this.handleCommit}
+                    disabled={!this.state.FormIsValid}
                   >
                     COMMIT
                   </Button>

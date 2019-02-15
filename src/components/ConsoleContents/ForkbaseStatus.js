@@ -11,7 +11,8 @@ const styles = () => ({
     minHeight: 150
   },
   forkbaseStatus: {
-    padding: 20
+    padding: 20,
+    overflowWrap: "break-word"
   }
 })
 

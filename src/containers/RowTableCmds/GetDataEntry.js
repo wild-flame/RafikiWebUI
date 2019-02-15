@@ -38,7 +38,8 @@ class GetDataEntry extends React.Component {
     branch:"",
     entry: "",
     EntriesLoaded: false,
-    EntryArray: []
+    EntryArray: [],
+    FormIsValid: false
   }
 
   static propTypes = {
@@ -62,12 +63,34 @@ class GetDataEntry extends React.Component {
   }
 
   handleChange = name => event => {
+    if (name === "dataset") {
+      this.setState({
+        branch: "",
+        entry: "",
+        EntriesLoaded: false,
+        EntryArray: []
+      })
+    }
+    if (name === "branch") {
+      this.setState({
+        entry: "",
+        EntriesLoaded: false,
+        EntryArray: []
+      })
+    }
     this.setState({
       [name]: event.target.value,
     });
   };
 
   handleCommit = () => {
+    // reset the ForkBase Status field:
+    this.props.resetResponses()
+    // first reset COMMIT disabled
+    this.setState({
+      FormIsValid: false
+    })
+    // create inputs
     const dataEntryForGetDataEntry = Object.assign(
       {
         "dataset": this.state.dataset,
@@ -82,7 +105,8 @@ class GetDataEntry extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (
       (this.state.branch !== prevState.branch &&
-      this.state.dataset !== "") ||
+      this.state.dataset !== "" &&
+      this.state.branch !== "") ||
       (this.state.dataset !== prevState.dataset &&
       this.state.branch !== "")
     ) {
@@ -109,6 +133,25 @@ class GetDataEntry extends React.Component {
         this.setState({
           EntriesLoaded: true,
           EntryArray
+        })
+      }
+    }
+    if (
+      this.state.dataset !== prevState.dataset ||
+      this.state.branch !== prevState.branch ||
+      this.state.entry !== prevState.entry
+    ) {
+      if (
+        this.state.dataset &&
+        this.state.branch &&
+        this.state.entry
+      ) {
+        this.setState({
+          FormIsValid: true
+        })
+      } else {
+        this.setState({
+          FormIsValid: false
         })
       }
     }
@@ -190,6 +233,7 @@ class GetDataEntry extends React.Component {
                     variant="contained"
                     color="primary"
                     onClick={this.handleCommit}
+                    disabled={!this.state.FormIsValid}
                   >
                     COMMIT
                   </Button>

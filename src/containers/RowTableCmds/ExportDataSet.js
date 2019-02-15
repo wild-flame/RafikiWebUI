@@ -44,7 +44,8 @@ class ExportDataSet extends React.Component {
     branch:"",
     filename:"",
     filePath:"",
-    validFileName: true
+    validFileName: true,
+    FormIsValid: false
   }
 
   static propTypes = {
@@ -84,12 +85,24 @@ class ExportDataSet extends React.Component {
         });
       }
     }
+    if (name === "dataset") {
+      this.setState({
+        branch: "",
+        filename: ""
+      })
+    }
     this.setState({
       [name]: event.target.value,
     });
   };
 
   handleCommit = () => {
+    // reset the ForkBase Status field:
+    this.props.resetResponses()
+    // first reset COMMIT disabled
+    this.setState({
+      FormIsValid: false
+    })
     // append timestamp with UTC time
     const CommitTime = new Date()
     const formatTime = CommitTime
@@ -121,6 +134,29 @@ class ExportDataSet extends React.Component {
       {}
     )
     this.props.requestExportDS(dataEntryForExportDS)
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.state.dataset !== prevState.dataset ||
+      this.state.branch !== prevState.branch ||
+      this.state.filename !== prevState.filename
+    ) {
+      if (
+        this.state.dataset &&
+        this.state.branch &&
+        this.state.filename &&
+        this.state.validFileName
+      ) {
+        this.setState({
+          FormIsValid: true
+        })
+      } else {
+        this.setState({
+          FormIsValid: false
+        })
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -216,6 +252,7 @@ class ExportDataSet extends React.Component {
                     variant="contained"
                     color="primary"
                     onClick={this.handleCommit}
+                    disabled={!this.state.FormIsValid}
                   >
                     COMMIT
                   </Button>

@@ -34,7 +34,8 @@ class DiffDataSet extends React.Component {
     branch:"",
     dataset_2:"",
     branch_2:"",
-    checkedCompareDS: false
+    checkedCompareDS: false,
+    FormIsValid: false
   }
 
   static propTypes = {
@@ -57,6 +58,18 @@ class DiffDataSet extends React.Component {
   }
 
   handleChange = name => event => {
+    if (name === "dataset") {
+      this.setState({
+        branch: "",
+        branch_2: "",
+        checkedCompareDS: false
+      })
+    }
+    if (name === "dataset_2") {
+      this.setState({
+        branch_2: ""
+      })
+    }
     this.setState({
       [name]: event.target.value,
     });
@@ -69,6 +82,13 @@ class DiffDataSet extends React.Component {
   }
 
   handleCommit = () => {
+    // reset the ForkBase Status field:
+    this.props.resetResponses()
+    // first reset COMMIT disabled
+    this.setState({
+      FormIsValid: false
+    })
+    // create inputs
     const dataEntryForSameDS = Object.assign(
       {
         "dataset": this.state.dataset,
@@ -98,9 +118,41 @@ class DiffDataSet extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.checkedCompareDS !== prevState.checkedCompareDS) {
-      if (!this.state.checkedCompareDS) {
+      this.setState({
+        dataset_2: "",
+        branch_2: ""
+      })
+    }
+    if (
+      this.state.dataset !== prevState.dataset ||
+      this.state.branch !== prevState.branch ||
+      this.state.dataset_2 !== prevState.dataset_2 ||
+      this.state.branch_2 !== prevState.branch_2 ||
+      this.state.checkedCompareDS !== prevState.checkedCompareDS
+    ) {
+      if (
+        this.state.checkedCompareDS &&
+        this.state.dataset &&
+        this.state.dataset_2 &&
+        this.state.branch &&
+        this.state.branch_2
+      ) {
         this.setState({
-          dataset_2: ""
+          FormIsValid: true
+        })
+      } else if (
+        !this.state.checkedCompareDS &&
+        this.state.dataset &&
+        !this.state.dataset_2 &&
+        this.state.branch &&
+        this.state.branch_2
+      ) {
+        this.setState({
+          FormIsValid: true
+        })
+      } else {
+        this.setState({
+          FormIsValid: false
         })
       }
     }
@@ -199,7 +251,7 @@ class DiffDataSet extends React.Component {
                   dsList={DatasetList}
                   checkedNewDataset={false}
                   checkedNewBranch={false}
-                  dataset={this.state.dataset_2}
+                  dataset={this.state.dataset_2 || this.state.dataset}
                   branch={this.state.branch_2}
                   newBranch=""
                   referBranch=""
@@ -220,6 +272,7 @@ class DiffDataSet extends React.Component {
                     variant="contained"
                     color="primary"
                     onClick={this.handleCommit}
+                    disabled={!this.state.FormIsValid}
                   >
                     COMMIT
                   </Button>

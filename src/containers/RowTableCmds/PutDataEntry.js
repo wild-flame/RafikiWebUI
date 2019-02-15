@@ -49,7 +49,8 @@ class PutDataEntry extends React.Component {
     EntryArray: [],
     checkedNewEntry: false,
     validBranchName: true,
-    validEntryName: true
+    validEntryName: true,
+    FormIsValid: false
   }
 
   static propTypes = {
@@ -75,6 +76,23 @@ class PutDataEntry extends React.Component {
   }
 
   handleChange = name => event => {
+    if (name === "dataset") {
+      this.setState({
+        branch: "",
+        newBranch: "",
+        referBranch: "",
+        entry: "",
+        EntriesLoaded: false,
+        EntryArray: []
+      })
+    }
+    if (name === "branch" || name === "referBranch") {
+      this.setState({
+        entry: "",
+        EntriesLoaded: false,
+        EntryArray: []
+      })
+    }
     if (name === "newBranch") {
       if (
         validDsAndBranch.test(event.target.value) &&
@@ -123,6 +141,13 @@ class PutDataEntry extends React.Component {
   }
 
   handleCommit = () => {
+    // reset the ForkBase Status field:
+    this.props.resetResponses()
+    // first reset COMMIT disabled
+    this.setState({
+      FormIsValid: false
+    })
+    // create inputs
     const dataEntryForBranchDS = Object.assign(
       {
         "dataset": this.state.dataset,
@@ -164,33 +189,32 @@ class PutDataEntry extends React.Component {
     }
   }
   componentDidUpdate(prevProps, prevState) {
-    // when toggle back "Create new branch" option, reset newBranch/Branch state
+    // when toggle "Create new branch" option, reset state
     if (this.state.checkedNewBranch !== prevState.checkedNewBranch) {
-      if (!this.state.checkedNewBranch) {
-        this.setState({
-          newBranch: ""
-        })
-      } else {
-        this.setState({
-          branch: ""
-        })
-      }
+      this.setState({
+        branch: "",
+        newBranch: "",
+        referBranch: "",
+        entry: "",
+        EntriesLoaded: false,
+        EntryArray: []
+      })
     }
-    // when toggle back "Create new entry" option, reset entry state
+    // when toggle "Create new entry" option, reset entry state
     if (this.state.checkedNewEntry !== prevState.checkedNewEntry) {
-      if (!this.state.checkedNewEntry) {
-        this.setState({
-          entry: ""
-        })
-      }
+      this.setState({
+        entry: ""
+      })
     }
     // if referBranch and dataset both selected, call getDS
     if (
       this.state.checkedNewBranch &&
       ((this.state.referBranch !== prevState.referBranch &&
-      this.state.dataset !== "") ||
+      this.state.dataset !== "" &&
+      this.state.referBranch !=="") ||
       (this.state.dataset !== prevState.dataset &&
-      this.state.referBranch !== ""))
+      this.state.referBranch !== "" &&
+      this.state.branch !== ""))
     ) {
       this.setState({
         EntriesLoaded: false
@@ -207,7 +231,8 @@ class PutDataEntry extends React.Component {
     // if branch and dataset both selected, call getDS
     if (
       (this.state.branch !== prevState.branch &&
-      this.state.dataset !== "") ||
+      this.state.dataset !== "" &&
+      this.state.branch !== "") ||
       (this.state.dataset !== prevState.dataset &&
       this.state.branch !== "")
     ) {
@@ -235,6 +260,44 @@ class PutDataEntry extends React.Component {
         this.setState({
           EntriesLoaded: true,
           EntryArray
+        })
+      }
+    }
+    if (
+      this.state.dataset !== prevState.dataset ||
+      this.state.branch !== prevState.branch ||
+      this.state.newBranch !== prevState.newBranch ||
+      this.state.referBranch !== prevState.referBranch ||
+      this.state.entry !== prevState.entry ||
+      this.state.value !== prevState.value
+    ) {
+      if (
+        this.state.checkedNewBranch &&
+        this.state.dataset &&
+        this.state.newBranch &&
+        this.state.validBranchName &&
+        this.state.referBranch &&
+        this.state.entry &&
+        this.state.validEntryName &&
+        this.state.value
+      ) {
+        this.setState({
+          FormIsValid: true
+        })
+      } else if (
+        !this.state.checkedNewBranch &&
+        this.state.dataset &&
+        this.state.branch &&
+        this.state.entry &&
+        this.state.validEntryName &&
+        this.state.value
+      ) {
+        this.setState({
+          FormIsValid: true
+        })
+      } else {
+        this.setState({
+          FormIsValid: false
         })
       }
     }
@@ -337,6 +400,7 @@ class PutDataEntry extends React.Component {
                     variant="contained"
                     color="primary"
                     onClick={this.handleCommit}
+                    disabled={!this.state.FormIsValid}
                   >
                     COMMIT
                   </Button>
@@ -349,6 +413,7 @@ class PutDataEntry extends React.Component {
                     <br />
                     {Response_BranchDS[1]}
                   </Typography>
+                  <br />
                   <Typography component="p">
                     <b>{Response_PutDE[0]}</b>
                     <br />
