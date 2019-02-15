@@ -25,6 +25,7 @@ const styles = () => ({
   },
   contentWrapper: {
     margin: '10px 16px',
+    minHeight: 200
   }
 })
 
@@ -77,7 +78,10 @@ class DatabaseOverview extends React.Component {
           </ContentBar>
             <div className={classes.contentWrapper}>
               <Typography color="textPrimary" component="pre" align="center">
-                <pre>{DBInfo}</pre>
+                {DBInfo
+                  ? <pre>{DBInfo}</pre>
+                  : "loading..."
+                }
               </Typography>
             </div>
         </MainContent>
