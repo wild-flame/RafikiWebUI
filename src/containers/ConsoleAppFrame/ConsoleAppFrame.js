@@ -80,7 +80,13 @@ class ConsoleAppFrame extends React.Component {
 
     return (
       <MuiThemeProvider theme={ConsoleTheme}>
-        <LoadingBar style={{ backgroundColor: 'orange', zIndex: 2000 }} />
+        <LoadingBar
+          style={{
+            backgroundColor: '#009688',
+            height: 6,
+            zIndex: 2000
+          }}
+        />
         <div className={classes.root}>
           <nav className={classes.drawer}>
             <Hidden smUp implementation="js">

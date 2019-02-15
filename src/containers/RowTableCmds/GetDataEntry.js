@@ -9,7 +9,6 @@ import * as actions from "./actions"
 import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
@@ -18,6 +17,7 @@ import ContentBar from "../../components/ConsoleContents/ContentBar"
 import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
 import RowEntryName from "../../components/ConsoleContents/RowEntryName"
+import ForkbaseStatus from "../../components/ConsoleContents/ForkbaseStatus"
 
 
 const styles = theme => ({
@@ -196,17 +196,14 @@ class GetDataEntry extends React.Component {
                 </Grid>
               </Grid>
               <Grid item xs={6}>
-                <Paper>
-                  <Typography variant="h5" gutterBottom align="center">
-                    Forkbase Status:
-                  </Typography>
+                <ForkbaseStatus>
                   <Typography component="p">
                     <b>{Response_GetDataEntry[0]}</b>
                     <br />
                     {Response_GetDataEntry[1]}
                   </Typography>
                   <br />
-                </Paper>
+                </ForkbaseStatus>
               </Grid>
             </Grid>
           </div>
