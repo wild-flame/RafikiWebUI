@@ -11,10 +11,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-
-import FormHelperText from '@material-ui/core/FormHelperText';
 
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
@@ -363,17 +359,29 @@ class PutDataByCSV extends React.Component {
                   alignItems="center"
                 >
                   <Grid item>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.checkedNewDataset}
-                          value="checkedWithSchema"
-                        />
-                      }
-                      disabled={false}
-                      label="CSV First Row as Schema"
-                    />
-                    <FormHelperText>Auto-select for new dataset</FormHelperText>
+                    <br />
+                    {this.state.checkedNewDataset
+                      ? (
+                      <Typography
+                        variant="body1"
+                        color="secondary"
+                        gutterBottom
+                        align="center"
+                      >
+                        CSV First Row as Schema
+                      </Typography>
+                      )
+                      : (
+                        <Typography
+                          variant="body1"
+                          color="primary"
+                          gutterBottom
+                          align="center"
+                        >
+                          All rows will be treated as data entry
+                        </Typography>
+                      )
+                    }
                   </Grid>
                 </Grid>
                 <br />

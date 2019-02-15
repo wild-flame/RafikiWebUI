@@ -8,7 +8,6 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from '@material-ui/core/Switch';
-import Checkbox from "@material-ui/core/Checkbox";
 
 
 const styles = theme => ({
@@ -114,16 +113,29 @@ class RowEntryName extends React.Component {
               alignItems="center"
             >
               <Grid item>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={!disabled}
-                      value="checkedRowEntriesLoaded"
-                    />
-                  }
-                  disabled={false}
-                  label="Row Entries Loaded"
-                />
+                <br />
+                {!disabled
+                  ? (
+                  <Typography
+                    variant="body1"
+                    color="secondary"
+                    gutterBottom
+                    align="center"
+                  >
+                    Row Entries Loaded
+                  </Typography>
+                  )
+                  : (
+                    <Typography
+                      variant="body1"
+                      color="primary"
+                      gutterBottom
+                      align="center"
+                    >
+                      Preparing...
+                    </Typography>
+                  )
+                }
               </Grid>
             </Grid>
             <Grid
