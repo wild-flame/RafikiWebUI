@@ -116,7 +116,7 @@ class ExportDataSet extends React.Component {
   
     const nativeFilePath = "static/ExportDsBinary/" +
       "ForkBaseExport-" + formatTime +
-      "-ID" + generateRandommID + "-" +
+      "-ID" + generateRandommID + "/" +
       this.state.filename + ".csv"
 
     const filePath = "../../frontend/build/" + nativeFilePath
@@ -268,12 +268,13 @@ class ExportDataSet extends React.Component {
                     {Response_ExportDS[2]}
                   </Typography>
                   <br />
-                  {this.state.filePath &&
-                    <a href={this.state.filePath}>
-                      <Button>
-                        Download CSV
-                      </Button>
-                    </a>
+                  {this.state.filePath && Response_ExportDS[2] &&
+                    <Button
+                      variant="outlined"
+                      href={this.state.filePath}
+                    >
+                      Download CSV
+                    </Button>
                   }
                 </ForkbaseStatus>
               </Grid>
