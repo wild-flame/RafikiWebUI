@@ -53,6 +53,10 @@ class ListDataSet extends React.Component {
     requestListDS: PropTypes.func
   }
 
+  handleClickHistory = item => {
+    console.log(item)
+  }
+
   componentDidMount() {
     this.props.handleHeaderTitleChange("Row-based Table > List Dataset")
     this.props.requestListDS()
@@ -138,7 +142,12 @@ class ListDataSet extends React.Component {
                       )}
                     </TableCell>
                     <TableCell>
-                      <Button variant="contained" color="secondary">
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => this.handleClickHistory(item)}
+                        disabled={item["dataset"] === "..."}
+                      >
                         View History
                       </Button>
                     </TableCell>
