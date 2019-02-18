@@ -28,6 +28,7 @@ import Chip from '@material-ui/core/Chip';
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
 
+import SimpleDialogWrapped from "../../components/GitGraphComponents/dialogDemo"
 
 const styles = theme => ({
   block: {
@@ -53,8 +54,19 @@ class ListDataSet extends React.Component {
     requestListDS: PropTypes.func
   }
 
+  state = {
+    open: false
+  }
+
   handleClickHistory = item => {
     console.log(item)
+    this.setState({
+      open: true,
+    })
+  }
+
+  handleClose = value => {
+    this.setState({ open: false })
   }
 
   componentDidMount() {
@@ -156,6 +168,10 @@ class ListDataSet extends React.Component {
               </TableBody>
             </Table>
           </div>
+          <SimpleDialogWrapped
+            open={this.state.open}
+            onClose={this.handleClose}
+          />
         </MainContent>
       </React.Fragment>
     )
