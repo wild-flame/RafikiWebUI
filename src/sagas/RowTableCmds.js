@@ -13,8 +13,8 @@ function* getDatasetList() {
   try{
     yield put(showLoading())
     const DSList = yield call(api.requestListDataset)
-    yield put(hideLoading())
     yield put(actions.populateDSList(DSList.data.DSList))
+    yield put(hideLoading())
   } catch(e) {
     console.error(e)
     // TODO: implement notification for success and error of api actions

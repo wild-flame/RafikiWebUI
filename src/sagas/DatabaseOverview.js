@@ -13,8 +13,8 @@ function* getDBSize() {
   try{
     yield put(showLoading())
     const DBSize = yield call(api.requestDBSize)
-    yield put(hideLoading())
     yield put(actions.populateDBSize(DBSize.data.DBSize))
+    yield put(hideLoading())
   } catch(e) {
     console.error(e)
     // TODO: implement notification for success and error of api actions
@@ -37,11 +37,28 @@ function* watchGetDBInfoRequest() {
   yield takeLatest(actions.Types.REQUEST_DB_INFO, getDBInfo)
 }
 
+function* getResetStorageResponse() {
+  try{
+    yield put(showLoading())
+    yield call(api.requestResetStorage)
+    const DBSize = yield call(api.requestDBSize)
+    yield put(actions.populateDBSize(DBSize.data.DBSize))
+    const DBInfo = yield call(api.requestDBInfo)
+    yield put(actions.populateDBInfo(DBInfo.data.DBInfo))
+    yield put(hideLoading())
+  } catch(e) {
+    console.error(e)
+  }
+}
+function* watchResetStorage() {
+  yield takeLatest(actions.Types.REQUEST_RESET_STORAGE, getResetStorageResponse)
+}
 
 // fork is for process creation, run in separate processes
 const dbOverviewSagas = [
   fork(watchGetDBSizeRequest),
-  fork(watchGetDBInfoRequest)
+  fork(watchGetDBInfoRequest),
+  fork(watchResetStorage)
 ]
 
 export default dbOverviewSagas

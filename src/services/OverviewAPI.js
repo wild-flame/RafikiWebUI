@@ -15,3 +15,10 @@ export const requestDBSize = () => {
     url: `${HTTPconfig.gateway}api/size`,
   })
 }
+
+export const requestResetStorage = () => {
+  return axios({
+    method: 'get',
+    url: `${HTTPconfig.gateway}api/reset-storage`,
+  })
+}
