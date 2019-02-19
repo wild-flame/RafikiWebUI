@@ -34,6 +34,9 @@ const styles = theme => ({
   categoryHeaderPrimary: {
     color: theme.palette.common.white,
   },
+  categoryHeaderPrimaryActive: {
+    color: 'inherit'
+  },
   item: {
     paddingTop: 4,
     paddingBottom: 4,
@@ -61,7 +64,7 @@ const styles = theme => ({
   },
   overviewHover: {
     '&:hover': {
-      backgroundColor: 'rgba(216, 255, 255, 0.3)',
+      backgroundColor: 'rgba(216, 255, 255, 0.1)',
     },
   },
   itemActiveItem: {
@@ -77,7 +80,7 @@ const styles = theme => ({
   textDense: {},
   divider: {
     marginTop: theme.spacing.unit * 2,
-  },
+  }
 });
 
 
@@ -299,16 +302,23 @@ class Navigator extends React.Component {
               classes.overviewHover,
               classes.itemCategory,
               location.pathname === "/console" &&
-              classes.itemActiveItem
+              classes.itemActiveItem,
+              classes.categoryHeader
             )}
           >
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
             <ListItemText
-              classes={{
-                primary: classes.itemPrimary,
-              }}
+              classes={
+                location.pathname === "/console"
+                  ? {
+                    primary: classes.categoryHeaderPrimaryActive
+                  }
+                  : {
+                    primary: classes.categoryHeaderPrimary
+                  }
+                }
             >
               Database Overview
             </ListItemText>
