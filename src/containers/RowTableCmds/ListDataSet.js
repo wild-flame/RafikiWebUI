@@ -81,36 +81,22 @@ class ListDataSet extends React.Component {
         <MainContent>
           <ContentBar>
             <Toolbar>
-              <Grid
-                container
-                direction="row"
-                justify="space-between"
-                spacing={24}
-                alignItems="center"
-              >
-                <Grid item xs={8}>
+              <Grid container spacing={16} justify="space-between" alignItems="center">
+                <Grid item>
                   <Typography variant="h5" gutterBottom>
                     List Dataset
                   </Typography>
                 </Grid>
-                <Grid container item xs={4}
-                  direction="row"
-                  justify="space-between"
-                  spacing={24}
-                  alignItems="baseline"
-                >
-                  <Grid item xs={8}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className={classes.addDS}
-                      component={Link}
-                      to="/console/row-based-table/put-data-by-csv"
-                    >
-                      Add Dataset
-                    </Button>
-                  </Grid>
-                  <Grid item xs={4}>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.addDS}
+                    component={Link}
+                    to="/console/row-based-table/put-data-by-csv"
+                  >
+                    Add Dataset
+                  </Button>
                   <Tooltip title="Reload">
                     <IconButton
                       onClick={requestListDS}
@@ -118,7 +104,6 @@ class ListDataSet extends React.Component {
                       <RefreshIcon className={classes.block} color="inherit" />
                     </IconButton>
                   </Tooltip>
-                  </Grid>
                 </Grid>
               </Grid>
             </Toolbar>
