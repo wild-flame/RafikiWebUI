@@ -130,7 +130,7 @@ class Navigator extends React.Component {
   render() {
     const categories = [
       {
-        id: 'Row-based Table',
+        id: 'Dataset',
         collapseID: "Row",
         collapseIn: this.state.RowBasedTableOpen,
         children: [
@@ -247,7 +247,7 @@ class Navigator extends React.Component {
         ],
       },
       {
-        id: 'Key-Value Database',
+        id: 'Basic Key-Value',
         collapseID: "KeyValue",
         collapseIn: this.state.KeyValueDBOpen,
         children: [
@@ -320,7 +320,7 @@ class Navigator extends React.Component {
                   }
                 }
             >
-              Database Overview
+              Storage Overview
             </ListItemText>
           </ListItem>
           {categories.map(({id, collapseID, collapseIn, children }) => (

@@ -41,7 +41,7 @@ class DatabaseOverview extends React.Component {
   }
 
   componentDidMount() {
-    this.props.handleHeaderTitleChange("Database Overview")
+    this.props.handleHeaderTitleChange("Storage Overview")
     this.requestDBSizeInfo()
   }
 
@@ -61,7 +61,7 @@ class DatabaseOverview extends React.Component {
               <Grid container spacing={16} justify="space-between" alignItems="center">
                 <Grid item>
                   <Typography variant="h5" gutterBottom>
-                    Total Database Size: {DBSize}
+                    Total Storage Size: {DBSize}
                   </Typography>
                 </Grid>
                 <Grid item>

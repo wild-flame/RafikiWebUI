@@ -3,7 +3,7 @@ import { Types } from "./actions"
 
 const initialState = {
   mobileOpen: false,
-  headerTitle: "Database Overview"
+  headerTitle: "Storage Overview"
 };
 
 export const ConsoleAppFrame = (state = initialState, action) => {
