@@ -86,15 +86,15 @@ class BranchName extends React.Component {
             </Grid>
           </Grid>
         }
-        <Grid
-          container
-          direction="row"
-          justify="space-evenly"
-          alignItems="center"
-        >
-          {checkedNewBranch
-            ? (
-            <React.Fragment>
+        {checkedNewBranch
+          ? (
+          <React.Fragment>
+            <Grid
+              container
+              direction="row"
+              justify="space-evenly"
+              alignItems="center"
+            >
               <Grid item>
                 <TextField
                   id="new-branch-name"
@@ -112,6 +112,13 @@ class BranchName extends React.Component {
                   }
                 />              
               </Grid>
+            </Grid>
+            <Grid
+              container
+              direction="row"
+              justify="space-evenly"
+              alignItems="center"
+            >
               <Grid item>
                 <TextField
                   id="refer-branch-names"
@@ -145,9 +152,16 @@ class BranchName extends React.Component {
                   }
                 </TextField>
               </Grid>
-            </React.Fragment>
-            )
-            : (
+            </Grid>
+          </React.Fragment>
+          )
+          : (
+          <Grid
+            container
+            direction="row"
+            justify="space-evenly"
+            alignItems="center"
+          >
             <Grid item>
               <TextField
                 id="existing-branch-names"
@@ -186,9 +200,9 @@ class BranchName extends React.Component {
                 }
               </TextField>
             </Grid>
-            )
-          }
-        </Grid>
+          </Grid>
+          )
+        }
       </React.Fragment>
     )
   }
