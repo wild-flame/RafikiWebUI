@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import { withStyles } from '@material-ui/core/styles';
 
+import StorageBar from "./StorageBar"
+
 
 const styles = () => ({
   ContentBar: {
@@ -20,14 +22,18 @@ class ContentBar extends React.Component {
   render() {
     const { classes, children } = this.props;
     return (
-      <AppBar
-        className={classes.ContentBar}
-        position="static"
-        color="default"
-        elevation={0}
-      >
-        {children}
-      </AppBar>
+      <React.Fragment>
+        <StorageBar />
+        <AppBar
+          className={classes.ContentBar}
+          position="static"
+          color="default"
+          elevation={0}
+        >
+          {children}
+        </AppBar>
+      </React.Fragment>
+
     )
   }
 }
