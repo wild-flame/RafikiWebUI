@@ -10,6 +10,7 @@ import Hidden from '@material-ui/core/Hidden';
 import Header from '../../components/ConsoleHeader/Header';
 import Navigator from '../../components/ConsoleSideBar/Navigator';
 import ConsoleTheme from "./ConsoleTheme"
+import StorageBar from "../../components/ConsoleContents/StorageBar"
 
 import StorageOverview from "../StorageOverview/StorageOverview"
 
@@ -23,7 +24,6 @@ import DiffDataSet from "../RowTableCmds/DiffDataSet"
 import DeleteDataSet from "../RowTableCmds/DeleteDataSet"
 import ExportDataSet from "../RowTableCmds/ExportDataSet"
 
-
 import * as actions from "./actions"
 
 import LoadingBar from 'react-redux-loading-bar'
@@ -36,6 +36,7 @@ import LoadingBar from 'react-redux-loading-bar'
       return <Redirect to="/sign-in" />
     }
 */
+
 
 const drawerWidth = 256;
 
@@ -68,6 +69,8 @@ class ConsoleAppFrame extends React.Component {
     mobileOpen: PropTypes.bool,
     headerTitle: PropTypes.string,
     handleDrawerToggle: PropTypes.func,
+    // for StorageBar
+    DBSize: PropTypes.string
   }
 
   render() {
@@ -75,7 +78,8 @@ class ConsoleAppFrame extends React.Component {
       classes,
       handleDrawerToggle,
       headerTitle,
-      mobileOpen
+      mobileOpen,
+      DBSize
     } = this.props;
 
     return (
@@ -105,6 +109,9 @@ class ConsoleAppFrame extends React.Component {
             <Header
               onDrawerToggle={handleDrawerToggle}
               title={headerTitle}
+            />
+            <StorageBar
+              StorageSize={DBSize}
             />
             <Route
               exact
@@ -165,7 +172,8 @@ class ConsoleAppFrame extends React.Component {
 
 const mapStateToProps = state => ({
   mobileOpen: state.ConsoleAppFrame.mobileOpen,
-  headerTitle: state.ConsoleAppFrame.headerTitle
+  headerTitle: state.ConsoleAppFrame.headerTitle,
+  DBSize: state.StorageOverview.DBSize,
 })
 
 const mapDispatchToProps = {

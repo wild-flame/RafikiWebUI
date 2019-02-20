@@ -13,14 +13,22 @@ import "react-sweet-progress/lib/style.css";
 
 class StorageBar extends React.Component {
   static propTypes = {
-    
-  }
-
-  state = {
-    percent: 80
+    StorageSize: PropTypes.string
   }
 
   render() {
+    const { StorageSize } = this.props
+
+    const NumPart = Math.floor(parseFloat(StorageSize) / 10.24)
+
+    let PercentNum = 1
+    
+    if (isNaN(NumPart) || NumPart === 0) {
+      PercentNum = 1
+    } else {
+      PercentNum = NumPart
+    }
+
     return (
       <AppBar position="static" color="primary">
         <Toolbar>
@@ -52,13 +60,13 @@ class StorageBar extends React.Component {
                       }
                     }
                   }
-                  percent={this.state.percent}
-                  status="active"
+                  percent={PercentNum}
+                  status={isNaN(NumPart) ? "active" : "success"}
                 />
               </Grid>
               <Grid item xs={4}>
                 <Typography variant="h5" color="inherit">
-                  85 Bytes
+                  {StorageSize}
                 </Typography>
               </Grid>
             </Grid>
