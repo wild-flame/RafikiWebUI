@@ -6,7 +6,7 @@ const initialState = {
   DBInfo: "",
 };
 
-export const DatabaseOverview = (state = initialState, action) => {
+export const StorageOverview = (state = initialState, action) => {
   switch (action.type) {
     case Types.POPULATE_DB_SIZE :
       return {

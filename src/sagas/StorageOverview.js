@@ -5,7 +5,7 @@ import {
   put
 } from "redux-saga/effects"
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
-import * as actions from "../containers/DatabaseOverview/actions"
+import * as actions from "../containers/StorageOverview/actions"
 import * as api from "../services/OverviewAPI"
 
 
@@ -55,10 +55,10 @@ function* watchResetStorage() {
 }
 
 // fork is for process creation, run in separate processes
-const dbOverviewSagas = [
+const StorageOverviewSagas = [
   fork(watchGetDBSizeRequest),
   fork(watchGetDBInfoRequest),
   fork(watchResetStorage)
 ]
 
-export default dbOverviewSagas
+export default StorageOverviewSagas

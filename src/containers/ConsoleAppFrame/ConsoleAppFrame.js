@@ -11,7 +11,7 @@ import Header from '../../components/ConsoleHeader/Header';
 import Navigator from '../../components/ConsoleSideBar/Navigator';
 import ConsoleTheme from "./ConsoleTheme"
 
-import DatabaseOverview from "../DatabaseOverview/DatabaseOverview"
+import StorageOverview from "../StorageOverview/StorageOverview"
 
 import PutDataByCSV from "../RowTableCmds/PutDataByCSV"
 import ListDataSet from "../RowTableCmds/ListDataSet"
@@ -109,7 +109,7 @@ class ConsoleAppFrame extends React.Component {
             <Route
               exact
               path='/console'
-              component={DatabaseOverview}
+              component={StorageOverview}
             />
             <Route
               exact

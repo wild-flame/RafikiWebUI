@@ -1,9 +1,9 @@
 export const Types = {
-  REQUEST_DB_SIZE: "DatabaseOverview/request_db_size",
-  REQUEST_DB_INFO: "DatabaseOverview/request_db_info",
-  POPULATE_DB_SIZE: "DatabaseOverview/populate_db_size",
-  POPULATE_DB_INFO: "DatabaseOverview/populate_db_info",
-  REQUEST_RESET_STORAGE: "DatabaseOverview/reset_storage"
+  REQUEST_DB_SIZE: "StorageOverview/request_db_size",
+  REQUEST_DB_INFO: "StorageOverview/request_db_info",
+  POPULATE_DB_SIZE: "StorageOverview/populate_db_size",
+  POPULATE_DB_INFO: "StorageOverview/populate_db_info",
+  REQUEST_RESET_STORAGE: "StorageOverview/reset_storage"
 }
 
 export const requestDBSize = () => ({

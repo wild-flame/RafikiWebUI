@@ -15,7 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import Button from '@material-ui/core/Button'
 
-import DatabaseOverviewHeader from "../../components/ConsoleHeader/DatabaseOverviewHeader"
+import StorageOverviewHeader from "../../components/ConsoleHeader/StorageOverviewHeader"
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
 
@@ -34,7 +34,7 @@ const styles = theme => ({
 })
 
 
-class DatabaseOverview extends React.Component {
+class StorageOverview extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     handleHeaderTitleChange: PropTypes.func,
@@ -63,7 +63,7 @@ class DatabaseOverview extends React.Component {
     const { classes, DBInfo, DBSize } = this.props;
     return (
       <React.Fragment>
-        <DatabaseOverviewHeader />
+        <StorageOverviewHeader />
         <MainContent>
           <ContentBar>
             <Toolbar>
@@ -108,8 +108,8 @@ class DatabaseOverview extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  DBSize: state.DatabaseOverview.DBSize,
-  DBInfo: state.DatabaseOverview.DBInfo
+  DBSize: state.StorageOverview.DBSize,
+  DBInfo: state.StorageOverview.DBInfo
 })
 
 const mapDispatchToProps = {
@@ -122,4 +122,4 @@ const mapDispatchToProps = {
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles)
-)(DatabaseOverview)
+)(StorageOverview)
