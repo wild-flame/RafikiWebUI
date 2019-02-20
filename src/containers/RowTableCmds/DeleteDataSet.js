@@ -47,7 +47,7 @@ class DeleteDataSet extends React.Component {
   }
 
   componentDidMount() {
-    this.props.handleHeaderTitleChange("Row-based Table > Delete Dataset")
+    this.props.handleHeaderTitleChange("Dataset > Delete Dataset")
     this.props.requestListDS()
   }
 

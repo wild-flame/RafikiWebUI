@@ -70,7 +70,7 @@ class ListDataSet extends React.Component {
   }
 
   componentDidMount() {
-    this.props.handleHeaderTitleChange("Row-based Table > List Dataset")
+    this.props.handleHeaderTitleChange("Dataset > List Dataset")
     this.props.requestListDS()
   }
 

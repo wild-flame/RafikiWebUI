@@ -62,7 +62,7 @@ class ExportDataSet extends React.Component {
   }
 
   componentDidMount() {
-    this.props.handleHeaderTitleChange("Row-based Table > Export Dataset")
+    this.props.handleHeaderTitleChange("Dataset > Export Dataset")
     this.props.requestListDS()
   }
 

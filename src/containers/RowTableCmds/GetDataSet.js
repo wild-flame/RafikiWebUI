@@ -47,7 +47,7 @@ class GetDataSet extends React.Component {
   }
 
   componentDidMount() {
-    this.props.handleHeaderTitleChange("Row-based Table > Get Dataset")
+    this.props.handleHeaderTitleChange("Dataset > Get Dataset")
     this.props.requestListDS()
   }
 

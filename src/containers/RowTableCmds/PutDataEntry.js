@@ -71,7 +71,7 @@ class PutDataEntry extends React.Component {
   }
 
   componentDidMount() {
-    this.props.handleHeaderTitleChange("Row-based Table > Put Data Entry")
+    this.props.handleHeaderTitleChange("Dataset > Put Data Entry")
     this.props.requestListDS()
   }
 

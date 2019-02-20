@@ -53,7 +53,7 @@ class DiffDataSet extends React.Component {
   }
 
   componentDidMount() {
-    this.props.handleHeaderTitleChange("Row-based Table > Diff Dataset")
+    this.props.handleHeaderTitleChange("Dataset > Diff Dataset")
     this.props.requestListDS()
   }
 

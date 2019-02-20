@@ -128,7 +128,7 @@ class PutDataByCSV extends React.Component {
   }
 
   componentDidMount() {
-    this.props.handleHeaderTitleChange("Row-based Table > Put Data By CSV")
+    this.props.handleHeaderTitleChange("Dataset > Put Data By CSV")
     this.props.requestListDS()
   }
   

@@ -58,7 +58,7 @@ class GetDataEntry extends React.Component {
   }
 
   componentDidMount() {
-    this.props.handleHeaderTitleChange("Row-based Table > Get Data Entry")
+    this.props.handleHeaderTitleChange("Dataset > Get Data Entry")
     this.props.requestListDS()
   }
 
