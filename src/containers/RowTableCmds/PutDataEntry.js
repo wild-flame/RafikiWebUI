@@ -267,6 +267,7 @@ class PutDataEntry extends React.Component {
         })
       }
     }
+    // validate when to enable COMMIT button
     if (
       this.state.dataset !== prevState.dataset ||
       this.state.branch !== prevState.branch ||

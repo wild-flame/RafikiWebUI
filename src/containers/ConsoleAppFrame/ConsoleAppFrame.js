@@ -23,6 +23,7 @@ import GetDataEntry from "../RowTableCmds/GetDataEntry"
 import DiffDataSet from "../RowTableCmds/DiffDataSet"
 import DeleteDataSet from "../RowTableCmds/DeleteDataSet"
 import ExportDataSet from "../RowTableCmds/ExportDataSet"
+import BranchDataSet from "../RowTableCmds/BranchDataSet"
 
 import * as actions from "./actions"
 
@@ -135,6 +136,11 @@ class ConsoleAppFrame extends React.Component {
               exact
               path='/console/row-based-table/put-data-entry'
               component={PutDataEntry}
+            />
+            <Route
+              exact
+              path='/console/row-based-table/branch-dataset'
+              component={BranchDataSet}
             />
             <Route
               exact

@@ -69,6 +69,24 @@ function* watchBranchDSPutDECombo() {
   yield takeLatest(actions.Types.COMBO_BRANCH_DS_PUT_DE, getBranchDS_PutDEresponse)
 }
 
+/* for only Branch Dataset request */
+function* getBranchDSresponse(action) {
+  try {
+    yield put(showLoading())
+    yield put(actions.requestBranchDS(action.dataEntryForBranchDS))
+    const Response_BranchDS = yield call(api.requestBranchDS, action.dataEntryForBranchDS)
+    yield put(actions.populateBranchDSresponse(Response_BranchDS.data.result))
+    //yield put(OverviewActions.requestDBSize())
+    yield put(hideLoading())
+  } catch(e) {
+    console.error(e)
+  }
+}
+// not really a combo, just to prevent a separate watcher for BranchDS
+function* watchBranchDSCombo() {
+  yield takeLatest(actions.Types.COMBO_BRANCH_DS, getBranchDSresponse)
+}
+
 
 /* for Put Data Entry by CSV page, combining createDS, branchDS and uploadCSV */
 function* getCreateDS_PutCSVresponse(action) {
@@ -306,6 +324,7 @@ const RowTableCmdsSagas = [
   fork(watchGetDSListRequest),
   fork(watchGetPutDEresponse),
   fork(watchBranchDSPutDECombo),
+  fork(watchBranchDSCombo),
   fork(watchCreateDSPutCSVCombo),
   fork(watchBranchDSPutCSVCombo),
   fork(watchPutCSVCombo),

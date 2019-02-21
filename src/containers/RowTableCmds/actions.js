@@ -29,6 +29,7 @@ export const Types = {
   COMBO_BRANCH_DS_PUT_CSV: "RowTableCmds/call_combo_branch_ds_put_csv",
   COMBO_PUT_CSV: "RowTableCmds/call_combo_put_csv",
   COMBO_BRANCH_DS_PUT_DE: "RowTableCmds/call_combo_branch_ds_put_de",
+  COMBO_BRANCH_DS: "RowTableCmds/call_combo_branch_ds",
   // reset responses when route change
   RESET_RESPONSES: "RowTableCmds/reset_responses"
 }
@@ -139,6 +140,13 @@ export const triggerBranchDS_PutDE_Combo = (
   type: Types.COMBO_BRANCH_DS_PUT_DE,
   dataEntryForBranchDS,
   dataEntryForCombo_BranchDS
+})
+
+// trigger combo_BranchDS()
+// do not dispatch branchDS on its own due to saga watcher
+export const triggerBranchDS_Combo = dataEntryForBranchDS => ({
+  type: Types.COMBO_BRANCH_DS,
+  dataEntryForBranchDS
 })
 
 // GET_DATASET{_ALL}
