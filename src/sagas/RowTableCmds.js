@@ -7,6 +7,8 @@ import {
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import * as actions from "../containers/RowTableCmds/actions"
 import * as api from "../services/RowTableAPI"
+import * as OverviewActions from "../containers/StorageOverview/actions"
+
 
 /* for List Dataset command */
 function* getDatasetList() {
@@ -33,6 +35,7 @@ function* getPutDEresponse(action) {
     yield put(showLoading())
     const Response_PutDE = yield call(api.requestPutDataEntry, action.dataEntryPutDE)
     yield put(actions.populatePutDEresponse(Response_PutDE.data.result))
+    yield put(OverviewActions.requestDBSize())
     yield put(hideLoading())
   } catch(e) {
     console.error(e)
@@ -51,9 +54,11 @@ function* getBranchDS_PutDEresponse(action) {
     const Response_BranchDS = yield call(api.requestBranchDS, action.dataEntryForBranchDS)
     yield put(actions.populateBranchDSresponse(Response_BranchDS.data.result))
 
+    // skip the requestPutDE action as the watcher will pick up a sagas above
     // yield put(actions.requestPutDE(action.dataEntryForCombo_BranchDS))
     const Response_PutDE = yield call(api.requestPutDataEntry, action.dataEntryForCombo_BranchDS)
     yield put(actions.populatePutDEresponse(Response_PutDE.data.result))
+    yield put(OverviewActions.requestDBSize())
     yield put(hideLoading())
   } catch(e) {
     console.error(e)
@@ -75,9 +80,9 @@ function* getCreateDS_PutCSVresponse(action) {
 
     yield put(actions.requestUploadCSV())
     const Response_UploadCSV = yield call(api.requestUploadCSV, action.formData)
-    yield put(actions.populateUploadCSVresponse(Response_UploadCSV.data.result))
-
     const UploadCSVFilePath = Response_UploadCSV.data.result
+    yield put(actions.populateUploadCSVresponse(UploadCSVFilePath))
+
     yield put(actions.requestPutDataCSV(Object.assign(
       {
         "filepath": UploadCSVFilePath,
@@ -94,6 +99,7 @@ function* getCreateDS_PutCSVresponse(action) {
       )
     )
     yield put(actions.populatePutDataCSVresponse(Response_PutDataCSV.data.result))
+    yield put(OverviewActions.requestDBSize())
     yield put(hideLoading())
   } catch(e) {
     console.error(e)
@@ -114,9 +120,9 @@ function* getBranchDS_PutCSVresponse(action) {
 
     yield put(actions.requestUploadCSV())
     const Response_UploadCSV = yield call(api.requestUploadCSV, action.formData)
-    yield put(actions.populateUploadCSVresponse(Response_UploadCSV.data.result))
-
     const UploadCSVFilePath = Response_UploadCSV.data.result
+    yield put(actions.populateUploadCSVresponse(UploadCSVFilePath))
+
     yield put(actions.requestPutDataCSV(Object.assign(
       {
         "filepath": UploadCSVFilePath,
@@ -133,6 +139,7 @@ function* getBranchDS_PutCSVresponse(action) {
       )
     )
     yield put(actions.populatePutDataCSVresponse(Response_PutDataCSV.data.result))
+    yield put(OverviewActions.requestDBSize())
     yield put(hideLoading())
   } catch(e) {
     console.error(e)
@@ -149,9 +156,9 @@ function* getPutCSVComboResponse(action) {
     yield put(showLoading())
     yield put(actions.requestUploadCSV())
     const Response_UploadCSV = yield call(api.requestUploadCSV, action.formData)
-    yield put(actions.populateUploadCSVresponse(Response_UploadCSV.data.result))
-
     const UploadCSVFilePath = Response_UploadCSV.data.result
+    yield put(actions.populateUploadCSVresponse(UploadCSVFilePath))
+
     yield put(actions.requestPutDataCSV(Object.assign(
       {
         "filepath": UploadCSVFilePath,
@@ -168,6 +175,7 @@ function* getPutCSVComboResponse(action) {
       )
     )
     yield put(actions.populatePutDataCSVresponse(Response_PutDataCSV.data.result))
+    yield put(OverviewActions.requestDBSize())
     yield put(hideLoading())
   } catch(e) {
     console.error(e)
@@ -265,6 +273,7 @@ function* getDeleteDatasetResponse(action) {
     yield put(showLoading())
     const Response_DeleteDS = yield call(api.requestDeleteDataset, action.dataEntryForDeleteDS)
     yield put(actions.populateDeleteDatasetResponse(Response_DeleteDS.data.result))
+    yield put(OverviewActions.requestDBSize())
     yield put(hideLoading())
   } catch(e) {
     console.error(e)

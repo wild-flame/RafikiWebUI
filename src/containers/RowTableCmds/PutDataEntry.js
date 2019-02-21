@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { compose } from "redux"
 
 import * as ConsoleActions from "../ConsoleAppFrame/actions"
+import * as OverviewActions from "../StorageOverview/actions"
 import * as actions from "./actions"
 
 import { withStyles } from '@material-ui/core/styles';
@@ -58,9 +59,11 @@ class PutDataEntry extends React.Component {
 
     handleHeaderTitleChange: PropTypes.func,
     requestPutDE: PropTypes.func,
-    requestListDS: PropTypes.func,
     resetResponses: PropTypes.func,
     requestGetDataset: PropTypes.func,
+
+    requestListDS: PropTypes.func,
+    requestDBSize: PropTypes.func,
 
     DatasetList: PropTypes.array,
 
@@ -72,6 +75,7 @@ class PutDataEntry extends React.Component {
 
   componentDidMount() {
     this.props.handleHeaderTitleChange("Dataset > Put Data Entry")
+    this.props.requestDBSize()
     this.props.requestListDS()
   }
 
@@ -445,6 +449,7 @@ const mapDispatchToProps = {
   triggerBranchDS_PutDE_Combo: actions.triggerBranchDS_PutDE_Combo,
   resetResponses: actions.resetResponses,
   requestGetDataset: actions.requestGetDataset,
+  requestDBSize: OverviewActions.requestDBSize
 }
 
 export default compose(

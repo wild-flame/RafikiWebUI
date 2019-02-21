@@ -11,10 +11,11 @@ import * as api from "../services/OverviewAPI"
 
 function* getDBSize() {
   try{
-    yield put(showLoading())
+    // react-sweet-progress bar status from active to success
+    yield put(actions.activateStorageBarLoading())
     const DBSize = yield call(api.requestDBSize)
     yield put(actions.populateDBSize(DBSize.data.DBSize))
-    yield put(hideLoading())
+    yield put(actions.stopStorageBarLoading())
   } catch(e) {
     console.error(e)
     // TODO: implement notification for success and error of api actions
@@ -27,8 +28,11 @@ function* watchGetDBSizeRequest() {
 
 function* getDBInfo() {
   try{
+    // StorageOverview page load trigger getDBInfo
+    yield put(showLoading())
     const DBInfo = yield call(api.requestDBInfo)
     yield put(actions.populateDBInfo(DBInfo.data.DBInfo))
+    yield put(hideLoading())
   } catch(e) {
     console.error(e)
   }

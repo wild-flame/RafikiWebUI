@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { compose } from "redux"
 
 import * as ConsoleActions from "../ConsoleAppFrame/actions"
+import * as OverviewActions from "../StorageOverview/actions"
 import * as actions from "./actions"
 
 import { withStyles } from '@material-ui/core/styles';
@@ -38,8 +39,10 @@ class DeleteDataSet extends React.Component {
 
     handleHeaderTitleChange: PropTypes.func,
     requestDeleteDataset: PropTypes.func,
-    requestListDS: PropTypes.func,
     resetResponses: PropTypes.func,
+
+    requestListDS: PropTypes.func,
+    requestDBSize: PropTypes.func,
 
     DatasetList: PropTypes.array,
 
@@ -48,6 +51,7 @@ class DeleteDataSet extends React.Component {
 
   componentDidMount() {
     this.props.handleHeaderTitleChange("Dataset > Delete Dataset")
+    this.props.requestDBSize()
     this.props.requestListDS()
   }
 
@@ -197,7 +201,8 @@ const mapDispatchToProps = {
   handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
   requestListDS: actions.requestListDS,
   requestDeleteDataset: actions.requestDeleteDataset,
-  resetResponses: actions.resetResponses
+  resetResponses: actions.resetResponses,
+  requestDBSize: OverviewActions.requestDBSize
 }
 
 export default compose(

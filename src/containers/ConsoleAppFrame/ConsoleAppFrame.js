@@ -70,7 +70,8 @@ class ConsoleAppFrame extends React.Component {
     headerTitle: PropTypes.string,
     handleDrawerToggle: PropTypes.func,
     // for StorageBar
-    DBSize: PropTypes.string
+    DBSize: PropTypes.string,
+    StorageBarStatus: PropTypes.string
   }
 
   render() {
@@ -79,7 +80,8 @@ class ConsoleAppFrame extends React.Component {
       handleDrawerToggle,
       headerTitle,
       mobileOpen,
-      DBSize
+      DBSize,
+      StorageBarStatus
     } = this.props;
 
     return (
@@ -112,6 +114,7 @@ class ConsoleAppFrame extends React.Component {
             />
             <StorageBar
               StorageSize={DBSize}
+              StorageBarStatus={StorageBarStatus}
             />
             <Route
               exact
@@ -174,6 +177,7 @@ const mapStateToProps = state => ({
   mobileOpen: state.ConsoleAppFrame.mobileOpen,
   headerTitle: state.ConsoleAppFrame.headerTitle,
   DBSize: state.StorageOverview.DBSize,
+  StorageBarStatus: state.StorageOverview.StorageBarStatus
 })
 
 const mapDispatchToProps = {

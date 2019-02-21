@@ -2,8 +2,9 @@ import { Types } from "./actions"
 
 
 const initialState = {
-  DBSize: "...Bytes",
+  DBSize: "...loading",
   DBInfo: "",
+  StorageBarStatus: "success"
 };
 
 export const StorageOverview = (state = initialState, action) => {
@@ -17,6 +18,16 @@ export const StorageOverview = (state = initialState, action) => {
       return {
         ...state,
         DBInfo: action.DBInfo
+      }
+    case Types.ACTIVATE_STORAGEBAR_LOADING :
+      return {
+        ...state,
+        StorageBarStatus: "active"
+      }
+    case Types.STOP_STORAGEBAR_LOADING :
+      return {
+        ...state,
+        StorageBarStatus: "success"
       }
     default:
       return state

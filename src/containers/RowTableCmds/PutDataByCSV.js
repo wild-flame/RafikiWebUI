@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { compose } from "redux"
 
 import * as ConsoleActions from "../ConsoleAppFrame/actions"
+import * as OverviewActions from "../StorageOverview/actions"
 import * as actions from "./actions"
 
 import { withStyles } from '@material-ui/core/styles';
@@ -60,7 +61,10 @@ class PutDataByCSV extends React.Component {
     Response_PutDataCSV: PropTypes.array,
     Response_CreateDS: PropTypes.array,
     Response_BranchDS: PropTypes.array,
-    Response_UploadCSV: PropTypes.string
+    Response_UploadCSV: PropTypes.string,
+
+    requestListDS: PropTypes.func,
+    requestDBSize: PropTypes.func
   }
 
   handleChange = name => event => {
@@ -129,6 +133,7 @@ class PutDataByCSV extends React.Component {
 
   componentDidMount() {
     this.props.handleHeaderTitleChange("Dataset > Put Data By CSV")
+    this.props.requestDBSize()
     this.props.requestListDS()
   }
   
@@ -449,7 +454,8 @@ const mapDispatchToProps = {
   triggerCreateDS_PutCSV_Combo: actions.triggerCreateDS_PutCSV_Combo,
   triggerBranchDS_PutCSV_Combo: actions.triggerBranchDS_PutCSV_Combo,
   triggerPutCSV_Combo: actions.triggerPutCSV_Combo,
-  resetResponses: actions.resetResponses
+  resetResponses: actions.resetResponses,
+  requestDBSize: OverviewActions.requestDBSize
 }
 
 export default compose(
