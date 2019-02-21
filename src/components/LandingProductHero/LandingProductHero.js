@@ -42,7 +42,7 @@ function ProductHero(props) {
       {/* Increase the network loading priority of the background image. */}
       <img style={{ display: 'none' }} src={backgroundImage} alt="" />
       <Typography color="inherit" align="center" variant="h2" marked="center">
-        ForkBase
+        Store with ForkBase
       </Typography>
       <Typography color="inherit" align="center" variant="h5" className={classes.h5}>
         An Efficient Storage Engine for Blockchain and Forkable Applications

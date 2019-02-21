@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { compose } from "redux";
+import { Link, withRouter } from "react-router-dom";
+
 import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
@@ -9,11 +11,18 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+
+// for icons
 import HomeIcon from '@material-ui/icons/Home';
 import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
-import TimerIcon from '@material-ui/icons/Timer';
-import SettingsIcon from '@material-ui/icons/Settings';
-import PhonelinkSetupIcon from '@material-ui/icons/PhonelinkSetup';
+// row-based table (dataset)
+import ListDSIcon from '@material-ui/icons/FormatListBulleted'
+import PutDataCSVIcon from '@material-ui/icons/CloudUploadOutlined'
+import PutDeIcon from '@material-ui/icons/PlaylistAdd'
+import BranchDsIcon from '@material-ui/icons/CallSplit'
+import DiffDsIcon from '@material-ui/icons/Compare'
+import DeleteDsIcon from '@material-ui/icons/Delete'
+import ExportDsIcon from '@material-ui/icons/SaveAlt'
 
 // for nested list
 import Collapse from '@material-ui/core/Collapse';
@@ -21,7 +30,6 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import Logo from "../../assets/Logo-cleaned.png"
-import { Link, withRouter } from "react-router-dom";
 
 
 // Navigator basic color dark blue specified in
@@ -38,8 +46,8 @@ const styles = theme => ({
     color: 'inherit'
   },
   item: {
-    paddingTop: 4,
-    paddingBottom: 4,
+    paddingTop: 11,
+    paddingBottom: 11,
     color: 'rgba(255, 255, 255, 0.7)',
   },
   itemCategory: {
@@ -136,18 +144,23 @@ class Navigator extends React.Component {
         children: [
           {
             id: 'List Dataset',
-            icon: <DnsRoundedIcon />,
+            icon: <ListDSIcon />,
             pathname: "/console/row-based-table/list-dataset"
           },
           {
             id: 'Put Data by CSV',
-            icon: <DnsRoundedIcon />,
+            icon: <PutDataCSVIcon />,
             pathname: "/console/row-based-table/put-data-by-csv"
           },
           {
             id: 'Put Data Entry',
-            icon: <DnsRoundedIcon />,
+            icon: <PutDeIcon />,
             pathname: "/console/row-based-table/put-data-entry"
+          },
+          {
+            id: 'Branch Dataset',
+            icon: <BranchDsIcon />,
+            pathname: "/console/row-based-table/branch-dataset"
           },
           {
             id: 'Get Dataset',
@@ -166,17 +179,17 @@ class Navigator extends React.Component {
           },
           {
             id: 'Diff Dataset',
-            icon: <DnsRoundedIcon />,
+            icon: <DiffDsIcon />,
             pathname: "/console/row-based-table/diff-dataset"
           },
           {
             id: 'Delete Dataset',
-            icon: <DnsRoundedIcon />,
+            icon: <DeleteDsIcon />,
             pathname: "/console/row-based-table/delete-dataset"
           },
           {
             id: 'Export Dataset',
-            icon: <DnsRoundedIcon />,
+            icon: <ExportDsIcon />,
             pathname: "/console/row-based-table/export-dataset"
           },
         ],
@@ -187,41 +200,48 @@ class Navigator extends React.Component {
         collapseIn: this.state.ColBasedTableOpen,
         children: [
           {
+            id: 'Work in progress',
+            icon: <DnsRoundedIcon />,
+            pathname: ""
+          },
+          /*
+          {
             id: 'Create Table',
-            icon: <SettingsIcon />,
+            icon: <DnsRoundedIcon />,
             pathname: ""
           },
           {
             id: 'Load CSV',
-            icon: <TimerIcon />,
+            icon: <DnsRoundedIcon />,
             pathname: ""
           },
           {
             id: 'Get Table',
-            icon: <PhonelinkSetupIcon />,
+            icon: <DnsRoundedIcon />,
             pathname: ""
           },
           {
             id: 'Get Column',
-            icon: <PhonelinkSetupIcon />,
+            icon: <DnsRoundedIcon />,
             pathname: ""
           },
           {
             id: 'List Column Branch',
-            icon: <PhonelinkSetupIcon />,
+            icon: <DnsRoundedIcon />,
             pathname: ""
           },
           {
             id: 'Get Row',
-            icon: <PhonelinkSetupIcon />,
+            icon: <DnsRoundedIcon />,
             pathname: ""
           },
           {
             id: 'Update Row',
-            icon: <PhonelinkSetupIcon />,
+            icon: <DnsRoundedIcon />,
             pathname: ""
           },
           // and some more...
+          */
         ],
       },
       {
@@ -230,20 +250,10 @@ class Navigator extends React.Component {
         collapseIn: this.state.DataStorageOpen,
         children: [
           {
-            id: 'Create Table',
-            icon: <SettingsIcon />,
+            id: 'Work in progress',
+            icon: <DnsRoundedIcon />,
             pathname: ""
-          },
-          {
-            id: 'Load CSV',
-            icon: <TimerIcon />,
-            pathname: ""
-          },
-          {
-            id: 'Get Table',
-            icon: <PhonelinkSetupIcon />,
-            pathname: ""
-          },
+          }
         ],
       },
       {
@@ -252,16 +262,11 @@ class Navigator extends React.Component {
         collapseIn: this.state.KeyValueDBOpen,
         children: [
           {
-            id: 'Create Table',
-            icon: <SettingsIcon />,
+            id: 'Work in progress',
+            icon: <DnsRoundedIcon />,
             pathname: ""
-          },
-          {
-            id: 'Load CSV',
-            icon: <TimerIcon />,
-            pathname: ""
-          },
-        ]
+          }
+        ],
       },
     ];
 
