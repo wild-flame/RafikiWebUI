@@ -31,7 +31,7 @@ class StorageBar extends React.Component {
     }
 
     return (
-      <AppBar position="static" color="primary">
+      <AppBar position="static" color="primary" style={{ zIndex: 1 }}>
         <Toolbar>
           <Grid container direction="row" spacing={16} justify="space-between" alignItems="center">
             <Grid item xs={3}>
