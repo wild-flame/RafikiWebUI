@@ -4,8 +4,24 @@ import { withStyles } from '@material-ui/core/styles';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 
+import Button from '@material-ui/core/Button';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
+
 import GitGraphWidget from "./GitGraphWidget"
 
+
+const styles = {
+  appBar: {
+    position: 'relative',
+  },
+  flex: {
+    flex: 1,
+  },
+};
 
 class SimpleDialog extends React.Component {
   static propTypes = {
@@ -23,10 +39,23 @@ class SimpleDialog extends React.Component {
   };
 
   render() {
-    const { onClose, selectedValue, ...other } = this.props;
+    const { classes, onClose, selectedValue, ...other } = this.props;
 
     return (
-      <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
+      <Dialog fullScreen onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
+        <AppBar className={classes.appBar}>
+          <Toolbar>
+            <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
+              <CloseIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit" className={classes.flex}>
+              Version History
+            </Typography>
+            <Button color="inherit" onClick={this.handleClose}>
+              Work in progress...
+            </Button>
+          </Toolbar>
+        </AppBar>
         <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
         <div>
           <GitGraphWidget />
@@ -36,4 +65,4 @@ class SimpleDialog extends React.Component {
   }
 }
 
-export default SimpleDialog
+export default withStyles(styles)(SimpleDialog)
