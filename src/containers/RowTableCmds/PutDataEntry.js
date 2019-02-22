@@ -41,7 +41,7 @@ class PutDataEntry extends React.Component {
   state = {
     checkedNewBranch: false,
     dataset:"",
-    branch:"",
+    branch:"master",
     newBranch: "",
     referBranch:"",
     entry: "",
@@ -82,7 +82,7 @@ class PutDataEntry extends React.Component {
   handleChange = name => event => {
     if (name === "dataset") {
       this.setState({
-        branch: "",
+        branch: "master",
         newBranch: "",
         referBranch: "",
         entry: "",
@@ -196,7 +196,7 @@ class PutDataEntry extends React.Component {
     // when toggle "Create new branch" option, reset state
     if (this.state.checkedNewBranch !== prevState.checkedNewBranch) {
       this.setState({
-        branch: "",
+        branch: "master",
         newBranch: "",
         referBranch: "",
         entry: "",

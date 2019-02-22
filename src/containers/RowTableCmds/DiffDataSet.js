@@ -31,9 +31,9 @@ const styles = () => ({
 class DiffDataSet extends React.Component {
   state = {
     dataset:"",
-    branch:"",
+    branch:"master",
     dataset_2:"",
-    branch_2:"",
+    branch_2:"master",
     checkedCompareDS: false,
     FormIsValid: false
   }
@@ -60,14 +60,14 @@ class DiffDataSet extends React.Component {
   handleChange = name => event => {
     if (name === "dataset") {
       this.setState({
-        branch: "",
-        branch_2: "",
+        branch: "master",
+        branch_2: "master",
         checkedCompareDS: false
       })
     }
     if (name === "dataset_2") {
       this.setState({
-        branch_2: ""
+        branch_2: "master"
       })
     }
     this.setState({
@@ -119,8 +119,8 @@ class DiffDataSet extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.state.checkedCompareDS !== prevState.checkedCompareDS) {
       this.setState({
-        dataset_2: "",
-        branch_2: ""
+        dataset_2: "master",
+        branch_2: "master"
       })
     }
     if (

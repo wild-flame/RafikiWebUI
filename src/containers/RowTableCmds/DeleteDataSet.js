@@ -30,7 +30,7 @@ const styles = () => ({
 class DeleteDataSet extends React.Component {
   state = {
     dataset:"",
-    branch:"",
+    branch:"master",
     FormIsValid: false
   }
 
@@ -58,7 +58,7 @@ class DeleteDataSet extends React.Component {
   handleChange = name => event => {
     if (name === "dataset") {
       this.setState({
-        branch: ""
+        branch: "master"
       })
     }
     this.setState({

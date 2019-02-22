@@ -38,7 +38,7 @@ class PutDataByCSV extends React.Component {
     checkedNewBranch: false,
     dataset:"",
     newDataset:"",
-    branch:"",
+    branch:"master",
     newBranch:"",
     referBranch:"",
     files: [],
@@ -106,7 +106,7 @@ class PutDataByCSV extends React.Component {
     }
     if (name === "dataset") {
       this.setState({
-        branch: "",
+        branch: "master",
         checkedNewBranch: false
       })
     }
@@ -220,7 +220,7 @@ class PutDataByCSV extends React.Component {
         this.setState({
           checkedNewBranch: false,
           newBranch: "",
-          branch: ""
+          branch: "master"
         })
       } else if (!this.state.checkedNewDataset) {
         this.setState({

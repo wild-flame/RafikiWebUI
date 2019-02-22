@@ -166,7 +166,7 @@ class BranchName extends React.Component {
               <TextField
                 id="existing-branch-names"
                 select
-                label="Default is master"
+                label="Select from branches"
                 className={classes.textField}
                 value={!checkedNewBranch && branch}
                 onChange={onHandleChange(BranchState)}
