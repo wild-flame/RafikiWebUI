@@ -71,6 +71,11 @@ class ListDataSet extends React.Component {
     this.setState({ open: false })
   }
 
+  reloadSizeAndDS = () => {
+    this.props.requestDBSize()
+    this.props.requestListDS()
+  }
+
   componentDidMount() {
     this.props.handleHeaderTitleChange("Dataset > List Dataset")
     this.props.requestDBSize()
@@ -84,7 +89,7 @@ class ListDataSet extends React.Component {
   // }
 
   render() {
-    const { classes, DatasetList, requestListDS } = this.props;
+    const { classes, DatasetList } = this.props;
     return (
       <React.Fragment>
         <MainContent>
@@ -108,7 +113,7 @@ class ListDataSet extends React.Component {
                   </Button>
                   <Tooltip title="Reload">
                     <IconButton
-                      onClick={requestListDS}
+                      onClick={this.reloadSizeAndDS}
                     >
                       <RefreshIcon className={classes.block} color="inherit" />
                     </IconButton>
