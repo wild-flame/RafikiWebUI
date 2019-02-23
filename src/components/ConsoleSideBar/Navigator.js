@@ -31,6 +31,9 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import Logo from "../../assets/Logo-cleaned.png"
 
+// customize scrollbar for the fixed-div navigator
+import SimpleBar from 'simplebar-react';
+import 'simplebar/dist/simplebar.min.css';
 
 // Navigator basic color dark blue specified in
 // ConsoleTheme MuiDrawer's paper
@@ -286,106 +289,108 @@ class Navigator extends React.Component {
         onClose={onClose}
         {...other}
       >
-        <List disablePadding>
-          <ListItem
-            component={Link}
-            to="/"
-            className={classNames(
-              classes.firebase,
-              classes.item,
-              classes.itemCategory)}
-          >
-            <img alt="logo" src={Logo} className={classes.logo} />
-            ForkBase
-          </ListItem>
-          <ListItem 
-            component={Link}
-            to="/console"
-            onClick={onClose}
-            className={classNames(
-              classes.item,
-              classes.overviewHover,
-              classes.itemCategory,
-              location.pathname === "/console" &&
-              classes.itemActiveItem,
-              classes.categoryHeader
-            )}
-          >
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText
-              classes={
-                location.pathname === "/console"
-                  ? {
-                    primary: classes.categoryHeaderPrimaryActive
-                  }
-                  : {
-                    primary: classes.categoryHeaderPrimary
-                  }
-                }
+        <SimpleBar style={{width: 255}}>
+          <List disablePadding>
+            <ListItem
+              component={Link}
+              to="/"
+              className={classNames(
+                classes.firebase,
+                classes.item,
+                classes.itemCategory)}
             >
-              Storage Overview
-            </ListItemText>
-          </ListItem>
-          {categories.map(({id, collapseID, collapseIn, children }) => (
-            <React.Fragment key={id}>
-              <ListItem
-                button
-                onClick={() => this.handleClick(collapseID)}
-                className={classes.categoryHeader}
+              <img alt="logo" src={Logo} className={classes.logo} />
+              ForkBase
+            </ListItem>
+            <ListItem 
+              component={Link}
+              to="/console"
+              onClick={onClose}
+              className={classNames(
+                classes.item,
+                classes.overviewHover,
+                classes.itemCategory,
+                location.pathname === "/console" &&
+                classes.itemActiveItem,
+                classes.categoryHeader
+              )}
+            >
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={
+                  location.pathname === "/console"
+                    ? {
+                      primary: classes.categoryHeaderPrimaryActive
+                    }
+                    : {
+                      primary: classes.categoryHeaderPrimary
+                    }
+                  }
               >
-                <ListItemText
-                  classes={{
-                    primary: classes.categoryHeaderPrimary,
-                  }}
+                Storage Overview
+              </ListItemText>
+            </ListItem>
+            {categories.map(({id, collapseID, collapseIn, children }) => (
+              <React.Fragment key={id}>
+                <ListItem
+                  button
+                  onClick={() => this.handleClick(collapseID)}
+                  className={classes.categoryHeader}
                 >
-                  {id}
-                </ListItemText>
-                {collapseIn
-                  ? <ExpandLess 
-                      style={{
-                        color: "white"
-                      }}
-                    />
-                  : <ExpandMore
-                      style={{
-                        color: "white"
-                      }}
-                    />}
-              </ListItem>
-              <Collapse in={collapseIn} timeout="auto" unmountOnExit>
-                {children.map(({ id: childId, icon, pathname }) => (
-                  <ListItem
-                    key={childId}
-                    button
-                    onClick={onClose}
-                    component={Link}
-                    to={pathname}
-                    dense
-                    className={classNames(
-                      classes.item,
-                      classes.itemActionable,
-                      location.pathname === pathname &&
-                      classes.itemActiveItem,
-                    )}
+                  <ListItemText
+                    classes={{
+                      primary: classes.categoryHeaderPrimary,
+                    }}
                   >
-                    <ListItemIcon>{icon}</ListItemIcon>
-                    <ListItemText
-                      classes={{
-                        primary: classes.itemPrimary,
-                        textDense: classes.textDense,
-                      }}
+                    {id}
+                  </ListItemText>
+                  {collapseIn
+                    ? <ExpandLess 
+                        style={{
+                          color: "white"
+                        }}
+                      />
+                    : <ExpandMore
+                        style={{
+                          color: "white"
+                        }}
+                      />}
+                </ListItem>
+                <Collapse in={collapseIn} timeout="auto" unmountOnExit>
+                  {children.map(({ id: childId, icon, pathname }) => (
+                    <ListItem
+                      key={childId}
+                      button
+                      onClick={onClose}
+                      component={Link}
+                      to={pathname}
+                      dense
+                      className={classNames(
+                        classes.item,
+                        classes.itemActionable,
+                        location.pathname === pathname &&
+                        classes.itemActiveItem,
+                      )}
                     >
-                      {childId}
-                    </ListItemText>
-                  </ListItem>
-                ))}
-              </Collapse>
-              <Divider className={classes.divider} />
-            </React.Fragment>
-          ))}
-        </List>
+                      <ListItemIcon>{icon}</ListItemIcon>
+                      <ListItemText
+                        classes={{
+                          primary: classes.itemPrimary,
+                          textDense: classes.textDense,
+                        }}
+                      >
+                        {childId}
+                      </ListItemText>
+                    </ListItem>
+                  ))}
+                </Collapse>
+                <Divider className={classes.divider} />
+              </React.Fragment>
+            ))}
+          </List>
+        </SimpleBar>
       </Drawer>
     );
   }
