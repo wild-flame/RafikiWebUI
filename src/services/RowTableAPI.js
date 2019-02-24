@@ -36,12 +36,13 @@ export const requestBranchDS = dataEntryForBranchDS => {
   });
 }
 
-export const requestUploadCSV = formData => {
+export const requestUploadCSV = onUploadProgress => formData => {
   return axios({
     method: 'post',
     url: `${HTTPconfig.gateway}api/upload-csv`,
     headers: HTTPconfig.UPLOAD_FILE,
-    data: formData
+    data: formData,
+    onUploadProgress: onUploadProgress
   });
 }
 

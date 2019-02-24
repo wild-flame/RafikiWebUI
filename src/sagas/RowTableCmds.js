@@ -10,6 +10,48 @@ import * as api from "../services/RowTableAPI"
 import * as OverviewActions from "../containers/StorageOverview/actions"
 
 
+/* Shared Util commands */
+function * CreateDS(action) {
+  try {
+    yield put(actions.requestCreateDS(action.dataEntryForCreateDS))
+    const Response_CreateDS = yield call(api.requestCreateDS, action.dataEntryForCreateDS)
+    yield put(actions.populateCreateDSresponse(Response_CreateDS.data.result))
+    console.log("CreateDS called, the small one :D")
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+function* BranchDS(action) {
+  try {
+    yield put(actions.requestBranchDS(action.dataEntryForBranchDS))
+    const Response_BranchDS = yield call(api.requestBranchDS, action.dataEntryForBranchDS)
+    yield put(actions.populateBranchDSresponse(Response_BranchDS.data.result))
+    console.log("BranchDS called, the small one :D")
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+function* UploadCSV(action) {
+  // progress handler
+  const onUploadProgress =  progressEvent => {
+    let percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total )
+    console.log("Progress uploaded: ", percentCompleted)
+    //call any redux actions to render progress bar
+  }
+
+  try{
+    yield put(actions.requestUploadCSV())
+    const Response_UploadCSV = yield call(api.requestUploadCSV(onUploadProgress), action.formData)
+    const UploadCSVFilePath = Response_UploadCSV.data.result
+    return UploadCSVFilePath
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+
 /* for List Dataset command */
 function* getDatasetList() {
   try{
@@ -50,9 +92,7 @@ function* watchGetPutDEresponse() {
 function* getBranchDS_PutDEresponse(action) {
   try {
     yield put(showLoading())
-    yield put(actions.requestBranchDS(action.dataEntryForBranchDS))
-    const Response_BranchDS = yield call(api.requestBranchDS, action.dataEntryForBranchDS)
-    yield put(actions.populateBranchDSresponse(Response_BranchDS.data.result))
+    yield BranchDS(action)
 
     // skip the requestPutDE action as the watcher will pick up a sagas above
     // yield put(actions.requestPutDE(action.dataEntryForCombo_BranchDS))
@@ -73,10 +113,7 @@ function* watchBranchDSPutDECombo() {
 function* getBranchDSresponse(action) {
   try {
     yield put(showLoading())
-    yield put(actions.requestBranchDS(action.dataEntryForBranchDS))
-    const Response_BranchDS = yield call(api.requestBranchDS, action.dataEntryForBranchDS)
-    yield put(actions.populateBranchDSresponse(Response_BranchDS.data.result))
-    //yield put(OverviewActions.requestDBSize())
+    yield BranchDS(action)
     yield put(hideLoading())
   } catch(e) {
     console.error(e)
@@ -92,13 +129,10 @@ function* watchBranchDSCombo() {
 function* getCreateDS_PutCSVresponse(action) {
   try{
     yield put(showLoading())
-    yield put(actions.requestCreateDS(action.dataEntryForCreateDS))
-    const Response_CreateDS = yield call(api.requestCreateDS, action.dataEntryForCreateDS)
-    yield put(actions.populateCreateDSresponse(Response_CreateDS.data.result))
+    yield CreateDS(action)
 
-    yield put(actions.requestUploadCSV())
-    const Response_UploadCSV = yield call(api.requestUploadCSV, action.formData)
-    const UploadCSVFilePath = Response_UploadCSV.data.result
+    const UploadCSVFilePath = yield UploadCSV(action)
+
     yield put(actions.populateUploadCSVresponse(UploadCSVFilePath))
 
     yield put(actions.requestPutDataCSV(Object.assign(
@@ -132,13 +166,9 @@ function* watchCreateDSPutCSVCombo() {
 function* getBranchDS_PutCSVresponse(action) {
   try{
     yield put(showLoading())
-    yield put(actions.requestBranchDS(action.dataEntryForBranchDS))
-    const Response_BranchDS = yield call(api.requestBranchDS, action.dataEntryForBranchDS)
-    yield put(actions.populateBranchDSresponse(Response_BranchDS.data.result))
+    yield BranchDS(action)
 
-    yield put(actions.requestUploadCSV())
-    const Response_UploadCSV = yield call(api.requestUploadCSV, action.formData)
-    const UploadCSVFilePath = Response_UploadCSV.data.result
+    const UploadCSVFilePath = yield UploadCSV(action)
     yield put(actions.populateUploadCSVresponse(UploadCSVFilePath))
 
     yield put(actions.requestPutDataCSV(Object.assign(
@@ -172,9 +202,7 @@ function* watchBranchDSPutCSVCombo() {
 function* getPutCSVComboResponse(action) {
   try{
     yield put(showLoading())
-    yield put(actions.requestUploadCSV())
-    const Response_UploadCSV = yield call(api.requestUploadCSV, action.formData)
-    const UploadCSVFilePath = Response_UploadCSV.data.result
+    const UploadCSVFilePath = yield UploadCSV(action)
     yield put(actions.populateUploadCSVresponse(UploadCSVFilePath))
 
     yield put(actions.requestPutDataCSV(Object.assign(
