@@ -62,6 +62,15 @@ class CsvDropzone extends React.Component {
     onRemoveCSV: PropTypes.func
   }
 
+  reformatFileSize = fileSize => {
+    if (fileSize < 1024) {
+      return fileSize + " bytes"
+    } else if (fileSize >= 1024 && fileSize < 1048576) {
+      return (fileSize/1024).toFixed(2) + " kB"
+    } else if (fileSize >= 1048576 && fileSize < 1073741824)
+      return (fileSize/1048576).toFixed(2) + " MB"
+  }
+
   render() {
     const {
       classes,
@@ -121,7 +130,7 @@ class CsvDropzone extends React.Component {
                     )
                     : file.name
                 }
-                secondary={file.size + " bytes"}
+                secondary={this.reformatFileSize(file.size)}
               />
               <ListItemSecondaryAction>
                 <IconButton
