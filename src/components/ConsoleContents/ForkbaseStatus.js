@@ -5,6 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
+import LinearProgress from '@material-ui/core/LinearProgress';
+
 
 const styles = () => ({
   subPaper: {
@@ -20,17 +22,21 @@ class ForkbaseStatus extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     children: PropTypes.node,
+    formState: PropTypes.string
   }
 
   render() {
-    const { classes, children } = this.props;
+    const { classes, children, formState } = this.props;
     return (
       <Paper className={classes.subPaper}>
         <Typography variant="h5" gutterBottom align="center">
           Forkbase Status:
         </Typography>
         <div className={classes.forkbaseStatus}>
-          {children}
+          {formState === "init"
+            ? <LinearProgress color="secondary" variant="determinate" value={0} />
+            : children
+          }
         </div>
       </Paper>
     )

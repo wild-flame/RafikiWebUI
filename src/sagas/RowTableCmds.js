@@ -156,6 +156,7 @@ function* getCreateDS_PutCSVresponse(action) {
       )
     )
     yield put(actions.populatePutDataCSVresponse(Response_PutDataCSV.data.result))
+    yield put(actions.idleFormState())
     yield put(OverviewActions.requestDBSize())
     yield put(hideLoading())
   } catch(e) {
@@ -192,6 +193,7 @@ function* getBranchDS_PutCSVresponse(action) {
       )
     )
     yield put(actions.populatePutDataCSVresponse(Response_PutDataCSV.data.result))
+    yield put(actions.idleFormState())
     yield put(OverviewActions.requestDBSize())
     yield put(hideLoading())
   } catch(e) {
@@ -226,6 +228,7 @@ function* getPutCSVComboResponse(action) {
       )
     )
     yield put(actions.populatePutDataCSVresponse(Response_PutDataCSV.data.result))
+    yield put(actions.idleFormState())
     yield put(OverviewActions.requestDBSize())
     yield put(hideLoading())
   } catch(e) {

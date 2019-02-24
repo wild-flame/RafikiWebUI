@@ -1,14 +1,7 @@
 import { Types } from "./actions"
 
 
-const initialState = {
-  // Ls-ds
-  DatasetList: [
-    {
-      'dataset': '...',
-      'branches': ['']
-    }
-  ],
+const StatesToReset = {
   // put-de
   Response_PutDE: [],
   // put-csv
@@ -28,7 +21,20 @@ const initialState = {
   // delete-dataset
   Response_DeleteDS: [],
   // export-ds-bin
-  Response_ExportDS: []
+  Response_ExportDS: [],
+  // ForkBase Status
+  formState: "init"
+}
+
+const initialState = {
+  // Ls-ds
+  DatasetList: [
+    {
+      'dataset': '...',
+      'branches': ['']
+    }
+  ],
+  ...StatesToReset
 };
 
 export const RowTableCmds = (state = initialState, action) => {
@@ -103,26 +109,17 @@ export const RowTableCmds = (state = initialState, action) => {
     case Types.RESET_RESPONSES :
       return {
         ...state,
-        // put-de
-        Response_PutDE: [],
-        // put-csv
-        Response_PutDataCSV: [],
-        Response_CreateDS: [],
-        Response_BranchDS: [],
-        Response_UploadCSV: "",
-        percentCompleted: 0,
-        // get-ds
-        Response_GetDataset: [],
-        // get-ds-sch
-        Response_GetDSSchema: [],
-        // get-de
-        Response_GetDataEntry: [],
-        // diff-ds
-        Response_DiffDS: [],
-        // delete-dataset
-        Response_DeleteDS: [],
-        // export-ds-bin
-        Response_ExportDS: []
+        ...StatesToReset
+      }
+    case Types.LOADING_FORMSTATE :
+      return {
+        ...state,
+        formState: "loading"
+      }
+    case Types.IDLE_FORMSTATE :
+      return {
+        ...state,
+        formState: "idle"
       }
     default:
       return state

@@ -32,7 +32,10 @@ export const Types = {
   COMBO_BRANCH_DS_PUT_DE: "RowTableCmds/call_combo_branch_ds_put_de",
   COMBO_BRANCH_DS: "RowTableCmds/call_combo_branch_ds",
   // reset responses when route change
-  RESET_RESPONSES: "RowTableCmds/reset_responses"
+  RESET_RESPONSES: "RowTableCmds/reset_responses",
+  // formState
+  LOADING_FORMSTATE: "RowTableCmds/loading_formstate",
+  IDLE_FORMSTATE: "RowTableCmds/idle_responses"
 }
 
 // LIST_DATASET{_ALL}
@@ -229,4 +232,13 @@ export const populateExportDSresponse = Response_ExportDS => ({
 // clear the Response_* when route unmount
 export const resetResponses = () => ({
   type: Types.RESET_RESPONSES
+})
+
+// formState change
+export const loadingFormState = () => ({
+  type: Types.LOADING_FORMSTATE
+})
+
+export const idleFormState = () => ({
+  type: Types.IDLE_FORMSTATE
 })
