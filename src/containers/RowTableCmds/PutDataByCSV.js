@@ -12,6 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
@@ -68,7 +69,10 @@ class PutDataByCSV extends React.Component {
     requestListDS: PropTypes.func,
     requestDBSize: PropTypes.func,
 
-    percentCompleted: PropTypes.number
+    percentCompleted: PropTypes.number,
+
+    formState: PropTypes.string,
+    loadingFormState: PropTypes.func
   }
 
   handleChange = name => event => {
@@ -148,6 +152,8 @@ class PutDataByCSV extends React.Component {
     this.setState({
       FormIsValid: false
     })
+    // set formState to loading
+    this.props.loadingFormState()
     // create different inputs
     const dataEntryForCreateDS = Object.assign(
       {
@@ -305,7 +311,8 @@ class PutDataByCSV extends React.Component {
       Response_BranchDS,
       Response_UploadCSV,
       Response_PutDataCSV,
-      percentCompleted
+      percentCompleted,
+      formState
     } = this.props;
 
     return (
@@ -405,14 +412,22 @@ class PutDataByCSV extends React.Component {
                     variant="contained"
                     color="primary"
                     onClick={this.handleCommit}
-                    disabled={!this.state.FormIsValid}
+                    disabled={!this.state.FormIsValid && formState !== "loading"}
                   >
                     COMMIT
                   </Button>
                 </Grid>
               </Grid>
               <Grid item xs={6}>
-                <ForkbaseStatus>
+                <ForkbaseStatus
+                  formState={formState}
+                >
+                  {formState === "loading" &&
+                    <React.Fragment>
+                      <LinearProgress color="secondary" />
+                      <br />
+                    </React.Fragment>
+                  }
                   <Typography component="p">
                     <b>{Response_CreateDS[0]}</b>
                     <br />
@@ -429,6 +444,7 @@ class PutDataByCSV extends React.Component {
                       ? this.state.files[0]["name"]
                       : ""
                     }
+                    formState={formState}
                   />
                   <br />
                   <Typography component="p">
@@ -455,7 +471,8 @@ const mapStateToProps = state => ({
   Response_CreateDS: state.RowTableCmds.Response_CreateDS,
   Response_BranchDS: state.RowTableCmds.Response_BranchDS,
   Response_UploadCSV: state.RowTableCmds.Response_UploadCSV,
-  percentCompleted: state.RowTableCmds.percentCompleted
+  percentCompleted: state.RowTableCmds.percentCompleted,
+  formState: state.RowTableCmds.formState
 })
 
 const mapDispatchToProps = {
@@ -465,7 +482,8 @@ const mapDispatchToProps = {
   triggerBranchDS_PutCSV_Combo: actions.triggerBranchDS_PutCSV_Combo,
   triggerPutCSV_Combo: actions.triggerPutCSV_Combo,
   resetResponses: actions.resetResponses,
-  requestDBSize: OverviewActions.requestDBSize
+  requestDBSize: OverviewActions.requestDBSize,
+  loadingFormState: actions.loadingFormState
 }
 
 export default compose(
