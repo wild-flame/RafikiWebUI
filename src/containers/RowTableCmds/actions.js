@@ -10,6 +10,7 @@ export const Types = {
   REQUEST_BRANCH_DS: "RowTableCmds/request_branch_ds",
   POPULATE_BRANCH_DS_RESPONSE: "RowTableCmds/populate_branch_ds_response",
   REQUEST_UPLOAD_CSV: "RowTableCmds/request_upload_csv",
+  POPULATE_UPLOAD_PROGRESS: "RowTableCmds/populate_upload_progress",
   POPULATE_UPLOAD_CSV_RESPONSE: "RowTableCmds/populate_upload_csv_response",
   REQUEST_GET_DATASET: "RowTableCmds/request_get_dataset",
   POPULATE_GET_DATASET_RESPONSE: "RowTableCmds/populate_get_dataset_response",
@@ -91,6 +92,11 @@ export const populateBranchDSresponse = Response_BranchDS => ({
 // Upload single CSV
 export const requestUploadCSV = () => ({
   type: Types.REQUEST_UPLOAD_CSV
+})
+
+export const populateUploadProgress = percentCompleted => ({
+  type: Types.POPULATE_UPLOAD_PROGRESS,
+  percentCompleted
 })
 
 export const populateUploadCSVresponse = Response_UploadCSV => ({

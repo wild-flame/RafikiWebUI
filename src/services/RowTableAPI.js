@@ -36,15 +36,15 @@ export const requestBranchDS = dataEntryForBranchDS => {
   });
 }
 
-export const requestUploadCSV = onUploadProgress => formData => {
-  return axios({
-    method: 'post',
-    url: `${HTTPconfig.gateway}api/upload-csv`,
-    headers: HTTPconfig.UPLOAD_FILE,
-    data: formData,
-    onUploadProgress: onUploadProgress
-  });
-}
+// export const requestUploadCSV = onUploadProgress => formData => {
+//   return axios({
+//     method: 'post',
+//     url: `${HTTPconfig.gateway}api/upload-csv`,
+//     headers: HTTPconfig.UPLOAD_FILE,
+//     data: formData,
+//     onUploadProgress: onUploadProgress
+//   });
+// }
 
 export const requestPutCSV = dataEntryForPutCSV => {
   return axios({

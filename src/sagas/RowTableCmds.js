@@ -2,12 +2,14 @@ import {
   takeLatest,
   call,
   fork,
-  put
+  put,
+  take
 } from "redux-saga/effects"
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import * as actions from "../containers/RowTableCmds/actions"
 import * as api from "../services/RowTableAPI"
 import * as OverviewActions from "../containers/StorageOverview/actions"
+import { uploadAPI } from "./uploadAPI_saga"
 
 
 /* Shared Util commands */
@@ -34,18 +36,21 @@ function* BranchDS(action) {
 }
 
 function* UploadCSV(action) {
-  // progress handler
-  const onUploadProgress =  progressEvent => {
-    let percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total )
-    console.log("Progress uploaded: ", percentCompleted)
-    //call any redux actions to render progress bar
-  }
-
-  try{
+  try {
     yield put(actions.requestUploadCSV())
-    const Response_UploadCSV = yield call(api.requestUploadCSV(onUploadProgress), action.formData)
-    const UploadCSVFilePath = Response_UploadCSV.data.result
-    return UploadCSVFilePath
+    const channel = yield call(uploadAPI, action.formData);
+    // Process events until operation completes
+    while (true) {
+      const { percentCompleted, result } = yield take(channel);
+      console.log(percentCompleted, result)
+      // Handle the data...
+      if (result) {
+        const UploadCSVFilePath = result
+        console.log("channelEmit stopped")
+        return UploadCSVFilePath
+      }
+      yield put(actions.populateUploadProgress(percentCompleted))
+    }
   } catch(e) {
     console.error(e)
   }

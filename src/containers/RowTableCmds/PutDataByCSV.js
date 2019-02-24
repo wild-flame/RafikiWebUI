@@ -23,6 +23,8 @@ import ForkbaseStatus from "../../components/ConsoleContents/ForkbaseStatus"
 // RegExp rules
 import { validDsAndBranch } from "../../regexp-rules";
 
+// Forkbase Status
+import UploadProgressBar from "../../components/ConsoleContents/UploadProgressBar"
 
 
 const styles = () => ({
@@ -64,7 +66,9 @@ class PutDataByCSV extends React.Component {
     Response_UploadCSV: PropTypes.string,
 
     requestListDS: PropTypes.func,
-    requestDBSize: PropTypes.func
+    requestDBSize: PropTypes.func,
+
+    percentCompleted: PropTypes.number
   }
 
   handleChange = name => event => {
@@ -300,7 +304,8 @@ class PutDataByCSV extends React.Component {
       Response_CreateDS,
       Response_BranchDS,
       Response_UploadCSV,
-      Response_PutDataCSV
+      Response_PutDataCSV,
+      percentCompleted
     } = this.props;
 
     return (
@@ -418,9 +423,13 @@ class PutDataByCSV extends React.Component {
                     <br />
                     {Response_BranchDS[1]}
                   </Typography>
-                  {Response_UploadCSV &&
-                    <div>{this.state.files[0]["name"]} uploaded!</div>
-                  }
+                  <UploadProgressBar
+                    percentCompleted={percentCompleted}
+                    fileName={Response_UploadCSV
+                      ? this.state.files[0]["name"]
+                      : ""
+                    }
+                  />
                   <br />
                   <Typography component="p">
                     <b>{Response_PutDataCSV[0]}</b>
@@ -445,7 +454,8 @@ const mapStateToProps = state => ({
   Response_PutDataCSV: state.RowTableCmds.Response_PutDataCSV,
   Response_CreateDS: state.RowTableCmds.Response_CreateDS,
   Response_BranchDS: state.RowTableCmds.Response_BranchDS,
-  Response_UploadCSV: state.RowTableCmds.Response_UploadCSV
+  Response_UploadCSV: state.RowTableCmds.Response_UploadCSV,
+  percentCompleted: state.RowTableCmds.percentCompleted
 })
 
 const mapDispatchToProps = {

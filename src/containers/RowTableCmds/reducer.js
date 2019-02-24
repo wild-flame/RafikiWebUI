@@ -16,6 +16,7 @@ const initialState = {
   Response_CreateDS: [],
   Response_BranchDS: [],
   Response_UploadCSV: "",
+  percentCompleted: 0,
   // get-ds
   Response_GetDataset: [],
   // get-ds-sch
@@ -53,6 +54,11 @@ export const RowTableCmds = (state = initialState, action) => {
       return {
         ...state,
         Response_BranchDS: action.Response_BranchDS
+      }
+    case Types.POPULATE_UPLOAD_PROGRESS :
+      return {
+        ...state,
+        percentCompleted: action.percentCompleted
       }
     case Types.POPULATE_UPLOAD_CSV_RESPONSE :
       return {
@@ -104,6 +110,7 @@ export const RowTableCmds = (state = initialState, action) => {
         Response_CreateDS: [],
         Response_BranchDS: [],
         Response_UploadCSV: "",
+        percentCompleted: 0,
         // get-ds
         Response_GetDataset: [],
         // get-ds-sch
