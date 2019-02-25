@@ -196,7 +196,7 @@ class BranchDataSet extends React.Component {
                   onHandleChange={this.handleChange}
                   BranchState={"branch"}
                   onHandleSwitch={() => {}}
-                  AllowNewBranch={true}
+                  AllowNewBranch={false}
                   isCorrectInput={this.state.validBranchName}
                 />
                 <br />
