@@ -82,6 +82,7 @@ function* getPutDEresponse(action) {
     yield put(showLoading())
     const Response_PutDE = yield call(api.requestPutDataEntry, action.dataEntryPutDE)
     yield put(actions.populatePutDEresponse(Response_PutDE.data.result))
+    yield put(actions.idleFormState())
     yield put(OverviewActions.requestDBSize())
     yield put(hideLoading())
   } catch(e) {
@@ -103,6 +104,7 @@ function* getBranchDS_PutDEresponse(action) {
     // yield put(actions.requestPutDE(action.dataEntryForCombo_BranchDS))
     const Response_PutDE = yield call(api.requestPutDataEntry, action.dataEntryForCombo_BranchDS)
     yield put(actions.populatePutDEresponse(Response_PutDE.data.result))
+    yield put(actions.idleFormState())
     yield put(OverviewActions.requestDBSize())
     yield put(hideLoading())
   } catch(e) {
@@ -119,6 +121,7 @@ function* getBranchDSresponse(action) {
   try {
     yield put(showLoading())
     yield BranchDS(action)
+    yield put(actions.idleFormState())
     yield put(hideLoading())
   } catch(e) {
     console.error(e)
@@ -246,6 +249,7 @@ function* getGetDatasetResponse(action) {
     yield put(showLoading())
     const Response_GetDataset = yield call(api.requestGetDataset, action.dataEntryForGetDS)
     yield put(actions.populateGetDatasetResponse(Response_GetDataset.data.result))
+    yield put(actions.idleFormState())
     yield put(hideLoading())
   } catch(e) {
     console.error(e)
@@ -263,6 +267,7 @@ function* getGetDSSchemaResponse(action) {
     yield put(showLoading())
     const Response_GetDSSchema = yield call(api.requestGetDSSchema, action.dataEntryForGetDSSchema)
     yield put(actions.populateGetDSSchemaResponse(Response_GetDSSchema.data.result))
+    yield put(actions.idleFormState())
     yield put(hideLoading())
   } catch(e) {
     console.error(e)
@@ -280,6 +285,7 @@ function* getGetDataEntryResponse(action) {
     yield put(showLoading())
     const Response_GetDataEntry = yield call(api.requestGetDataEntry, action.dataEntryForGetDataEntry)
     yield put(actions.populateGetDataEntryResponse(Response_GetDataEntry.data.result))
+    yield put(actions.idleFormState())
     yield put(hideLoading())
   } catch(e) {
     console.error(e)
@@ -296,6 +302,7 @@ function* getDiffSameDSresponse(action) {
     yield put(showLoading())
     const Response_DiffDS = yield call(api.requestDiffSameDS, action.dataEntryForSameDS)
     yield put(actions.populateDiffDSresponse(Response_DiffDS.data.result))
+    yield put(actions.idleFormState())
     yield put(hideLoading())
   } catch(e) {
     console.error(e)
@@ -311,6 +318,7 @@ function* getDiffDifferentDSresponse(action) {
     yield put(showLoading())
     const Response_DiffDS = yield call(api.requestDiffDifferentDS, action.dataEntryForDifferentDS)
     yield put(actions.populateDiffDSresponse(Response_DiffDS.data.result))
+    yield put(actions.idleFormState())
     yield put(hideLoading())
   } catch(e) {
     console.error(e)
@@ -327,6 +335,7 @@ function* getDeleteDatasetResponse(action) {
     yield put(showLoading())
     const Response_DeleteDS = yield call(api.requestDeleteDataset, action.dataEntryForDeleteDS)
     yield put(actions.populateDeleteDatasetResponse(Response_DeleteDS.data.result))
+    yield put(actions.idleFormState())
     yield put(OverviewActions.requestDBSize())
     yield put(hideLoading())
   } catch(e) {
@@ -344,6 +353,7 @@ function* getExportDSresponse(action) {
     yield put(showLoading())
     const Response_ExportDS = yield call(api.requestExportDS, action.dataEntryForExportDS)
     yield put(actions.populateExportDSresponse(Response_ExportDS.data.result))
+    yield put(actions.idleFormState())
     yield put(hideLoading())
   } catch(e) {
     console.error(e)
