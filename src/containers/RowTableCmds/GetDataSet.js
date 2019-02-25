@@ -30,7 +30,7 @@ const styles = () => ({
 class GetDataSet extends React.Component {
   state = {
     dataset:"",
-    branch:"master",
+    branch:"",
     FormIsValid: false
   }
 
@@ -59,7 +59,7 @@ class GetDataSet extends React.Component {
   handleChange = name => event => {
     if (name === "dataset") {
       this.setState({
-        branch: "master"
+        branch: ""
       })
     }
     this.setState({

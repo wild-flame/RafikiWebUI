@@ -42,7 +42,7 @@ const styles = theme => ({
 class ExportDataSet extends React.Component {
   state = {
     dataset:"",
-    branch:"master",
+    branch:"",
     filename:"",
     filePath:"",
     validFileName: true,
@@ -92,7 +92,7 @@ class ExportDataSet extends React.Component {
     }
     if (name === "dataset") {
       this.setState({
-        branch: "master",
+        branch: "",
         filename: ""
       })
     }
