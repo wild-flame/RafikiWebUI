@@ -18,16 +18,34 @@ class StorageBar extends React.Component {
   }
 
   render() {
+    // StorageSize comes from DBSize, initial value = "...loading"
     const { StorageSize, StorageBarStatus } = this.props
 
-    const NumPart = Math.floor(parseFloat(StorageSize) / 10.24)
+    // parse the StorgaeSize string (eg 1.45MB, or 763.9KB) into number and unit
+    // const NumPart = Math.floor(parseFloat(StorageSize) / 10.24)
+    const NumPart = parseFloat(StorageSize)
+    const UnitPart = StorageSize.replace(/[0-9]./g, '')
+    console.log(NumPart, UnitPart) // MB KB
 
     let PercentNum = 1
     
     if (isNaN(NumPart) || NumPart === 0) {
       PercentNum = 1
     } else {
-      PercentNum = NumPart
+      switch(UnitPart) {
+        case "B" :
+        case "KB" :
+          // concert to 100% scale from 1-1024
+          PercentNum = Math.floor(NumPart / 10.24)
+          break
+        case "MB" :
+          // re-scale for a total size of 10MB
+          PercentNum = NumPart * 10
+          break
+        default :
+          PercentNum = Math.floor(NumPart / 10.24)
+          break
+      }
     }
 
     return (
@@ -67,7 +85,10 @@ class StorageBar extends React.Component {
               </Grid>
               <Grid item xs={4}>
                 <Typography variant="h5" color="inherit">
-                  {StorageSize}
+                  {isNaN(NumPart)
+                    ? StorageSize
+                    : `${NumPart} ${UnitPart}`
+                  }
                 </Typography>
               </Grid>
             </Grid>
