@@ -125,7 +125,7 @@ class DiffDataSet extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.state.checkedCompareDS !== prevState.checkedCompareDS) {
       this.setState({
-        dataset_2: "master",
+        dataset_2: "",
         branch_2: "master"
       })
     }
