@@ -88,10 +88,17 @@ class ConsoleAppFrame extends React.Component {
     return (
       <MuiThemeProvider theme={ConsoleTheme}>
         <LoadingBar
+          // only display if the action took longer than updateTime to finish
+          // default updateTime = 200ms
+          updateTime={300}
+          maxProgress={75}
+          progressIncrease={10}
           style={{
             backgroundColor: '#009688',
-            height: 6,
-            zIndex: 2000
+            height: 8,
+            zIndex: 2000,
+            position: "fixed",
+            top: 0
           }}
         />
         <div className={classes.root}>
