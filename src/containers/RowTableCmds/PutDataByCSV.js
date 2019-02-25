@@ -438,6 +438,7 @@ class PutDataByCSV extends React.Component {
                     <br />
                     {Response_BranchDS[1]}
                   </Typography>
+                  <br />
                   <UploadProgressBar
                     percentCompleted={percentCompleted}
                     fileName={Response_UploadCSV

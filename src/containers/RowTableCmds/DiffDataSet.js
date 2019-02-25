@@ -13,6 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from '@material-ui/core/Switch';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
@@ -49,7 +50,10 @@ class DiffDataSet extends React.Component {
 
     DatasetList: PropTypes.array,
 
-    Response_DiffDS: PropTypes.array
+    Response_DiffDS: PropTypes.array,
+
+    formState: PropTypes.string,
+    loadingFormState: PropTypes.func
   }
 
   componentDidMount() {
@@ -88,6 +92,8 @@ class DiffDataSet extends React.Component {
     this.setState({
       FormIsValid: false
     })
+    // set formState to loading
+    this.props.loadingFormState()
     // create inputs
     const dataEntryForSameDS = Object.assign(
       {
@@ -167,6 +173,7 @@ class DiffDataSet extends React.Component {
       classes,
       DatasetList,
       Response_DiffDS,
+      formState
     } = this.props;
 
     return (
@@ -272,14 +279,22 @@ class DiffDataSet extends React.Component {
                     variant="contained"
                     color="primary"
                     onClick={this.handleCommit}
-                    disabled={!this.state.FormIsValid}
+                    disabled={!this.state.FormIsValid && formState !== "loading"}
                   >
                     COMMIT
                   </Button>
                 </Grid>
               </Grid>
               <Grid item xs={6}>
-                <ForkbaseStatus>
+                <ForkbaseStatus
+                  formState={formState}
+                >
+                  {formState === "loading" &&
+                    <React.Fragment>
+                      <LinearProgress color="secondary" />
+                      <br />
+                    </React.Fragment>
+                  }
                   <Typography component="p">
                     <b>{Response_DiffDS[0]}</b>
                     <br />
@@ -299,7 +314,8 @@ class DiffDataSet extends React.Component {
 
 const mapStateToProps = state => ({
   DatasetList: state.RowTableCmds.DatasetList,
-  Response_DiffDS: state.RowTableCmds.Response_DiffDS
+  Response_DiffDS: state.RowTableCmds.Response_DiffDS,
+  formState: state.RowTableCmds.formState
 })
 
 const mapDispatchToProps = {
@@ -307,7 +323,8 @@ const mapDispatchToProps = {
   requestListDS: actions.requestListDS,
   requestDiffSameDS: actions.requestDiffSameDS,
   requestDiffDifferentDS: actions.requestDiffDifferentDS,
-  resetResponses: actions.resetResponses
+  resetResponses: actions.resetResponses,
+  loadingFormState: actions.loadingFormState
 }
 
 export default compose(

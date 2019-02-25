@@ -11,6 +11,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
@@ -43,7 +44,10 @@ class GetDataSet extends React.Component {
 
     DatasetList: PropTypes.array,
 
-    Response_GetDataset: PropTypes.array
+    Response_GetDataset: PropTypes.array,
+
+    formState: PropTypes.string,
+    loadingFormState: PropTypes.func
   }
 
   componentDidMount() {
@@ -69,6 +73,8 @@ class GetDataSet extends React.Component {
     this.setState({
       FormIsValid: false
     })
+    // set formState to loading
+    this.props.loadingFormState()
     // create inputs
     const dataEntryForGetDS = Object.assign(
       {
@@ -109,6 +115,7 @@ class GetDataSet extends React.Component {
       classes,
       DatasetList,
       Response_GetDataset,
+      formState
     } = this.props;
 
     return (
@@ -163,14 +170,22 @@ class GetDataSet extends React.Component {
                     variant="contained"
                     color="primary"
                     onClick={this.handleCommit}
-                    disabled={!this.state.FormIsValid}
+                    disabled={!this.state.FormIsValid && formState !== "loading"}
                   >
                     COMMIT
                   </Button>
                 </Grid>
               </Grid>
               <Grid item xs={6}>
-                <ForkbaseStatus>
+                <ForkbaseStatus
+                  formState={formState}
+                >
+                  {formState === "loading" &&
+                    <React.Fragment>
+                      <LinearProgress color="secondary" />
+                      <br />
+                    </React.Fragment>
+                  }
                   <Typography component="p">
                     <b>{Response_GetDataset[0]}</b>
                     <br />
@@ -190,14 +205,16 @@ class GetDataSet extends React.Component {
 
 const mapStateToProps = state => ({
   DatasetList: state.RowTableCmds.DatasetList,
-  Response_GetDataset: state.RowTableCmds.Response_GetDataset
+  Response_GetDataset: state.RowTableCmds.Response_GetDataset,
+  formState: state.RowTableCmds.formState
 })
 
 const mapDispatchToProps = {
   handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
   requestListDS: actions.requestListDS,
   requestGetDataset: actions.requestGetDataset,
-  resetResponses: actions.resetResponses
+  resetResponses: actions.resetResponses,
+  loadingFormState: actions.loadingFormState
 }
 
 export default compose(

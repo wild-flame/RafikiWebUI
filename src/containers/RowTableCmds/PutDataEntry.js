@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
@@ -70,7 +71,10 @@ class PutDataEntry extends React.Component {
     Response_PutDE: PropTypes.array,
     Response_BranchDS: PropTypes.array,
     Response_GetDataset: PropTypes.array,
-    triggerBranchDS_PutDE_Combo: PropTypes.func
+    triggerBranchDS_PutDE_Combo: PropTypes.func,
+
+    formState: PropTypes.string,
+    loadingFormState: PropTypes.func
   }
 
   componentDidMount() {
@@ -151,6 +155,8 @@ class PutDataEntry extends React.Component {
     this.setState({
       FormIsValid: false
     })
+    // set formState to loading
+    this.props.loadingFormState()
     // create inputs
     const dataEntryForBranchDS = Object.assign(
       {
@@ -317,7 +323,8 @@ class PutDataEntry extends React.Component {
       classes,
       DatasetList,
       Response_PutDE,
-      Response_BranchDS
+      Response_BranchDS,
+      formState
     } = this.props;
 
     return (
@@ -405,14 +412,22 @@ class PutDataEntry extends React.Component {
                     variant="contained"
                     color="primary"
                     onClick={this.handleCommit}
-                    disabled={!this.state.FormIsValid}
+                    disabled={!this.state.FormIsValid && formState !== "loading"}
                   >
                     COMMIT
                   </Button>
                 </Grid>
               </Grid>
               <Grid item xs={6}>
-                <ForkbaseStatus>
+                <ForkbaseStatus
+                  formState={formState}
+                >
+                  {formState === "loading" &&
+                    <React.Fragment>
+                      <LinearProgress color="secondary" />
+                      <br />
+                    </React.Fragment>
+                  }
                   <Typography component="p">
                     <b>{Response_BranchDS[0]}</b>
                     <br />
@@ -440,7 +455,8 @@ const mapStateToProps = state => ({
   DatasetList: state.RowTableCmds.DatasetList,
   Response_PutDE: state.RowTableCmds.Response_PutDE,
   Response_BranchDS: state.RowTableCmds.Response_BranchDS,
-  Response_GetDataset: state.RowTableCmds.Response_GetDataset
+  Response_GetDataset: state.RowTableCmds.Response_GetDataset,
+  formState: state.RowTableCmds.formState
 })
 
 const mapDispatchToProps = {
@@ -450,7 +466,8 @@ const mapDispatchToProps = {
   triggerBranchDS_PutDE_Combo: actions.triggerBranchDS_PutDE_Combo,
   resetResponses: actions.resetResponses,
   requestGetDataset: actions.requestGetDataset,
-  requestDBSize: OverviewActions.requestDBSize
+  requestDBSize: OverviewActions.requestDBSize,
+  loadingFormState: actions.loadingFormState
 }
 
 export default compose(

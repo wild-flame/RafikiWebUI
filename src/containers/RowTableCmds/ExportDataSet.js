@@ -15,6 +15,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
@@ -58,7 +59,10 @@ class ExportDataSet extends React.Component {
     DatasetList: PropTypes.array,
 
     requestExportDS: PropTypes.func,
-    Response_ExportDS: PropTypes.array
+    Response_ExportDS: PropTypes.array,
+
+    formState: PropTypes.string,
+    loadingFormState: PropTypes.func
   }
 
   componentDidMount() {
@@ -103,6 +107,8 @@ class ExportDataSet extends React.Component {
     this.setState({
       FormIsValid: false
     })
+    // set formState to loading
+    this.props.loadingFormState()
     // append timestamp with UTC time
     const CommitTime = new Date()
     const formatTime = CommitTime
@@ -167,7 +173,8 @@ class ExportDataSet extends React.Component {
     const {
       classes,
       DatasetList,
-      Response_ExportDS
+      Response_ExportDS,
+      formState
     } = this.props;
 
     return (
@@ -252,14 +259,22 @@ class ExportDataSet extends React.Component {
                     variant="contained"
                     color="primary"
                     onClick={this.handleCommit}
-                    disabled={!this.state.FormIsValid}
+                    disabled={!this.state.FormIsValid && formState !== "loading"}
                   >
                     COMMIT
                   </Button>
                 </Grid>
               </Grid>
               <Grid item xs={6}>
-                <ForkbaseStatus>
+                <ForkbaseStatus
+                  formState={formState}
+                >
+                  {formState === "loading" &&
+                    <React.Fragment>
+                      <LinearProgress color="secondary" />
+                      <br />
+                    </React.Fragment>
+                  }
                   <Typography component="p">
                     <b>{Response_ExportDS[0]}</b>
                     <br />
@@ -289,14 +304,16 @@ class ExportDataSet extends React.Component {
 
 const mapStateToProps = state => ({
   DatasetList: state.RowTableCmds.DatasetList,
-  Response_ExportDS: state.RowTableCmds.Response_ExportDS
+  Response_ExportDS: state.RowTableCmds.Response_ExportDS,
+  formState: state.RowTableCmds.formState
 })
 
 const mapDispatchToProps = {
   handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
   requestExportDS: actions.requestExportDS,
   requestListDS: actions.requestListDS,
-  resetResponses: actions.resetResponses
+  resetResponses: actions.resetResponses,
+  loadingFormState: actions.loadingFormState
 }
 
 export default compose(

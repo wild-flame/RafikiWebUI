@@ -12,6 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
@@ -46,7 +47,10 @@ class DeleteDataSet extends React.Component {
 
     DatasetList: PropTypes.array,
 
-    Response_DeleteDS: PropTypes.array
+    Response_DeleteDS: PropTypes.array,
+
+    formState: PropTypes.string,
+    loadingFormState: PropTypes.func
   }
 
   componentDidMount() {
@@ -73,6 +77,8 @@ class DeleteDataSet extends React.Component {
     this.setState({
       FormIsValid: false
     })
+    // set formState to loading
+    this.props.loadingFormState()
     // create inputs
     const dataEntryForDeleteDS = Object.assign(
       {
@@ -113,6 +119,7 @@ class DeleteDataSet extends React.Component {
       classes,
       DatasetList,
       Response_DeleteDS,
+      formState
     } = this.props;
 
     return (
@@ -167,14 +174,22 @@ class DeleteDataSet extends React.Component {
                     variant="contained"
                     color="primary"
                     onClick={this.handleCommit}
-                    disabled={!this.state.FormIsValid}
+                    disabled={!this.state.FormIsValid && formState !== "loading"}
                   >
                     COMMIT
                   </Button>
                 </Grid>
               </Grid>
               <Grid item xs={6}>
-                <ForkbaseStatus>
+                <ForkbaseStatus
+                  formState={formState}
+                >
+                  {formState === "loading" &&
+                    <React.Fragment>
+                      <LinearProgress color="secondary" />
+                      <br />
+                    </React.Fragment>
+                  }
                   <Typography component="p">
                     <b>{Response_DeleteDS[0]}</b>
                     <br />
@@ -194,7 +209,8 @@ class DeleteDataSet extends React.Component {
 
 const mapStateToProps = state => ({
   DatasetList: state.RowTableCmds.DatasetList,
-  Response_DeleteDS: state.RowTableCmds.Response_DeleteDS
+  Response_DeleteDS: state.RowTableCmds.Response_DeleteDS,
+  formState: state.RowTableCmds.formState
 })
 
 const mapDispatchToProps = {
@@ -202,7 +218,8 @@ const mapDispatchToProps = {
   requestListDS: actions.requestListDS,
   requestDeleteDataset: actions.requestDeleteDataset,
   resetResponses: actions.resetResponses,
-  requestDBSize: OverviewActions.requestDBSize
+  requestDBSize: OverviewActions.requestDBSize,
+  loadingFormState: actions.loadingFormState
 }
 
 export default compose(

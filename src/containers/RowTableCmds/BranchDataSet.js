@@ -11,6 +11,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
@@ -50,7 +51,10 @@ class BranchDataSet extends React.Component {
     DatasetList: PropTypes.array,
 
     triggerBranchDS_Combo: PropTypes.func,
-    Response_BranchDS: PropTypes.array
+    Response_BranchDS: PropTypes.array,
+
+    formState: PropTypes.string,
+    loadingFormState: PropTypes.func
   }
 
   componentDidMount() {
@@ -95,6 +99,8 @@ class BranchDataSet extends React.Component {
     this.setState({
       FormIsValid: false
     })
+    // set formState to loading
+    this.props.loadingFormState()
     // create inputs
     const dataEntryForBranchDS = Object.assign(
       {
@@ -140,6 +146,7 @@ class BranchDataSet extends React.Component {
       classes,
       DatasetList,
       Response_BranchDS,
+      formState
     } = this.props;
 
     return (
@@ -194,14 +201,22 @@ class BranchDataSet extends React.Component {
                     variant="contained"
                     color="primary"
                     onClick={this.handleCommit}
-                    disabled={!this.state.FormIsValid}
+                    disabled={!this.state.FormIsValid && formState !== "loading"}
                   >
                     COMMIT
                   </Button>
                 </Grid>
               </Grid>
               <Grid item xs={6}>
-                <ForkbaseStatus>
+                <ForkbaseStatus
+                  formState={formState}
+                >
+                  {formState === "loading" &&
+                    <React.Fragment>
+                      <LinearProgress color="secondary" />
+                      <br />
+                    </React.Fragment>
+                  }
                   <Typography component="p">
                     <b>{Response_BranchDS[0]}</b>
                     <br />
@@ -221,14 +236,16 @@ class BranchDataSet extends React.Component {
 
 const mapStateToProps = state => ({
   DatasetList: state.RowTableCmds.DatasetList,
-  Response_BranchDS: state.RowTableCmds.Response_BranchDS
+  Response_BranchDS: state.RowTableCmds.Response_BranchDS,
+  formState: state.RowTableCmds.formState
 })
 
 const mapDispatchToProps = {
   handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
   requestListDS: actions.requestListDS,
   resetResponses: actions.resetResponses,
-  triggerBranchDS_Combo: actions.triggerBranchDS_Combo
+  triggerBranchDS_Combo: actions.triggerBranchDS_Combo,
+  loadingFormState: actions.loadingFormState
 }
 
 export default compose(
