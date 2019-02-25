@@ -205,7 +205,7 @@ class Navigator extends React.Component {
           {
             id: 'Work in progress',
             icon: <DnsRoundedIcon />,
-            pathname: "/console"
+            pathname: "#"
           },
           /*
           {
@@ -255,7 +255,7 @@ class Navigator extends React.Component {
           {
             id: 'Work in progress',
             icon: <DnsRoundedIcon />,
-            pathname: "/console"
+            pathname: "#"
           }
         ],
       },
@@ -267,7 +267,7 @@ class Navigator extends React.Component {
           {
             id: 'Work in progress',
             icon: <DnsRoundedIcon />,
-            pathname: "/console"
+            pathname: "#"
           }
         ],
       },
