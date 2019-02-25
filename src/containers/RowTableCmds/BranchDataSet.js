@@ -136,6 +136,13 @@ class BranchDataSet extends React.Component {
         })
       }
     }
+    // for DS commands with updates,
+    // call ls-ds again after result from ustore has returned
+    if (prevProps.formState !== this.props.formState) {
+      if (this.props.formState === "idle") {
+        this.props.requestListDS()
+      }
+    }
   }
 
   componentWillUnmount() {
