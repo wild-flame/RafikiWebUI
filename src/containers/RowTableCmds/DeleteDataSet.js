@@ -88,6 +88,11 @@ class DeleteDataSet extends React.Component {
       },
       {}
     )
+    // reset dataset ro prevent BranchName from crashing
+    this.setState({
+      dataset: ""
+    })
+    // dispatch DeleteSD
     this.props.requestDeleteDataset(dataEntryForDeleteDS)
   }
 
