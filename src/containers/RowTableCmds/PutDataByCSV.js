@@ -29,6 +29,9 @@ import { validDsAndBranch } from "../../regexp-rules";
 // Forkbase Status
 import UploadProgressBar from "../../components/ConsoleContents/UploadProgressBar"
 
+// read query-string
+import queryString from 'query-string'
+
 
 const styles = () => ({
   contentWrapper: {
@@ -146,6 +149,13 @@ class PutDataByCSV extends React.Component {
   componentDidMount() {
     this.props.handleHeaderTitleChange("Dataset > Put Data By CSV")
     this.props.requestDBSize()
+    // read the query string from URL
+    const values = queryString.parse(this.props.location.search)
+    if (values.addNewDS === "TRUE") {
+      this.setState({
+        checkedNewDataset: true
+      })
+    }
     this.props.requestListDS()
   }
   

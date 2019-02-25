@@ -112,7 +112,7 @@ class ListDataSet extends React.Component {
                     color="primary"
                     className={classes.addDS}
                     component={Link}
-                    to="/console/row-based-table/put-data-by-csv"
+                    to="/console/row-based-table/put-data-by-csv?addNewDS=TRUE"
                   >
                     Add Dataset
                   </Button>
