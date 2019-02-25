@@ -45,6 +45,7 @@ class DiffDataSet extends React.Component {
     handleHeaderTitleChange: PropTypes.func,
     requestListDS: PropTypes.func,
     resetResponses: PropTypes.func,
+    resetLoadingBar: PropTypes.func,
     requestDiffSameDS: PropTypes.func,
     requestDiffDifferentDS: PropTypes.func,
 
@@ -166,6 +167,7 @@ class DiffDataSet extends React.Component {
 
   componentWillUnmount() {
     this.props.resetResponses()
+    this.props.resetLoadingBar()
   }
 
   render() {
@@ -324,6 +326,7 @@ const mapDispatchToProps = {
   requestDiffSameDS: actions.requestDiffSameDS,
   requestDiffDifferentDS: actions.requestDiffDifferentDS,
   resetResponses: actions.resetResponses,
+  resetLoadingBar: ConsoleActions.resetLoadingBar,
   loadingFormState: actions.loadingFormState
 }
 

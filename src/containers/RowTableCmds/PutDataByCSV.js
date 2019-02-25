@@ -61,6 +61,7 @@ class PutDataByCSV extends React.Component {
     triggerBranchDS_PutCSV_Combo: PropTypes.func,
     triggerPutCSV_Combo: PropTypes.func,
     resetResponses: PropTypes.func,
+    resetLoadingBar: PropTypes.func,
 
     DatasetList: PropTypes.array,
 
@@ -305,6 +306,7 @@ class PutDataByCSV extends React.Component {
 
   componentWillUnmount() {
     this.props.resetResponses()
+    this.props.resetLoadingBar()
   }
 
   render() {
@@ -506,6 +508,7 @@ const mapDispatchToProps = {
   triggerBranchDS_PutCSV_Combo: actions.triggerBranchDS_PutCSV_Combo,
   triggerPutCSV_Combo: actions.triggerPutCSV_Combo,
   resetResponses: actions.resetResponses,
+  resetLoadingBar: ConsoleActions.resetLoadingBar,
   requestDBSize: OverviewActions.requestDBSize,
   loadingFormState: actions.loadingFormState
 }

@@ -55,6 +55,7 @@ class ExportDataSet extends React.Component {
     handleHeaderTitleChange: PropTypes.func,
     requestListDS: PropTypes.func,
     resetResponses: PropTypes.func,
+    resetLoadingBar: PropTypes.func,
 
     DatasetList: PropTypes.array,
 
@@ -167,6 +168,7 @@ class ExportDataSet extends React.Component {
 
   componentWillUnmount() {
     this.props.resetResponses()
+    this.props.resetLoadingBar()
   }
 
   render() {
@@ -313,6 +315,7 @@ const mapDispatchToProps = {
   requestExportDS: actions.requestExportDS,
   requestListDS: actions.requestListDS,
   resetResponses: actions.resetResponses,
+  resetLoadingBar: ConsoleActions.resetLoadingBar,
   loadingFormState: actions.loadingFormState
 }
 

@@ -42,7 +42,8 @@ class StorageOverview extends React.Component {
     requestDBInfo: PropTypes.func,
     requestResetStorage: PropTypes.func,
     DBInfo: PropTypes.string,
-    DBSize: PropTypes.string
+    DBSize: PropTypes.string,
+    resetLoadingBar: PropTypes.func,
   }
 
   componentDidMount() {
@@ -57,6 +58,10 @@ class StorageOverview extends React.Component {
 
   handleResetStorage = () => {
     this.props.requestResetStorage()
+  }
+
+  componentWillUnmount() {
+    this.props.resetLoadingBar()
   }
 
   render() {
@@ -116,7 +121,8 @@ const mapDispatchToProps = {
   handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
   requestDBSize: actions.requestDBSize,
   requestDBInfo: actions.requestDBInfo,
-  requestResetStorage: actions.requestResetStorage
+  requestResetStorage: actions.requestResetStorage,
+  resetLoadingBar: ConsoleActions.resetLoadingBar,
 }
 
 export default compose(

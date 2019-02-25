@@ -44,6 +44,7 @@ class DeleteDataSet extends React.Component {
 
     requestListDS: PropTypes.func,
     requestDBSize: PropTypes.func,
+    resetLoadingBar: PropTypes.func,
 
     DatasetList: PropTypes.array,
 
@@ -112,6 +113,7 @@ class DeleteDataSet extends React.Component {
 
   componentWillUnmount() {
     this.props.resetResponses()
+    this.props.resetLoadingBar()
   }
 
   render() {
@@ -218,6 +220,7 @@ const mapDispatchToProps = {
   requestListDS: actions.requestListDS,
   requestDeleteDataset: actions.requestDeleteDataset,
   resetResponses: actions.resetResponses,
+  resetLoadingBar: ConsoleActions.resetLoadingBar,
   requestDBSize: OverviewActions.requestDBSize,
   loadingFormState: actions.loadingFormState
 }

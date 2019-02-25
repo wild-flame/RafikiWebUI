@@ -41,6 +41,7 @@ class GetDatasetSchema extends React.Component {
     requestGetDSSchema: PropTypes.func,
     requestListDS: PropTypes.func,
     resetResponses: PropTypes.func,
+    resetLoadingBar: PropTypes.func,
 
     DatasetList: PropTypes.array,
 
@@ -108,6 +109,7 @@ class GetDatasetSchema extends React.Component {
 
   componentWillUnmount() {
     this.props.resetResponses()
+    this.props.resetLoadingBar()
   }
 
   render() {
@@ -214,6 +216,7 @@ const mapDispatchToProps = {
   requestListDS: actions.requestListDS,
   requestGetDSSchema: actions.requestGetDSSchema,
   resetResponses: actions.resetResponses,
+  resetLoadingBar: ConsoleActions.resetLoadingBar,
   loadingFormState: actions.loadingFormState
 }
 

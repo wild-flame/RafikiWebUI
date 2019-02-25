@@ -5,10 +5,11 @@ import {
   put,
   take
 } from "redux-saga/effects"
-import { showLoading, hideLoading } from 'react-redux-loading-bar'
+import { showLoading, hideLoading, resetLoading } from 'react-redux-loading-bar'
 import * as actions from "../containers/RowTableCmds/actions"
 import * as api from "../services/RowTableAPI"
 import * as OverviewActions from "../containers/StorageOverview/actions"
+import * as ConsoleActions from "../containers/ConsoleAppFrame/actions"
 import { uploadAPI } from "./uploadAPI_saga"
 
 
@@ -75,16 +76,27 @@ function* watchGetDSListRequest() {
   yield takeLatest(actions.Types.REQUEST_LS_DS, getDatasetList)
 }
 
+/* reset loadingBar caused by List Dataset command */
+function* callResetLoadingBar() {
+  try{
+    yield put(resetLoading())
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+function* watchResetLoadingBar() {
+  yield takeLatest(ConsoleActions.Types.RESET_LOADING_BAR, callResetLoadingBar)
+}
+
 
 /* for Put Data Entry page */
 function* getPutDEresponse(action) {
   try{
-    yield put(showLoading())
     const Response_PutDE = yield call(api.requestPutDataEntry, action.dataEntryPutDE)
     yield put(actions.populatePutDEresponse(Response_PutDE.data.result))
     yield put(actions.idleFormState())
     yield put(OverviewActions.requestDBSize())
-    yield put(hideLoading())
   } catch(e) {
     console.error(e)
   }
@@ -97,7 +109,6 @@ function* watchGetPutDEresponse() {
 
 function* getBranchDS_PutDEresponse(action) {
   try {
-    yield put(showLoading())
     yield BranchDS(action)
 
     // skip the requestPutDE action as the watcher will pick up a sagas above
@@ -106,7 +117,6 @@ function* getBranchDS_PutDEresponse(action) {
     yield put(actions.populatePutDEresponse(Response_PutDE.data.result))
     yield put(actions.idleFormState())
     yield put(OverviewActions.requestDBSize())
-    yield put(hideLoading())
   } catch(e) {
     console.error(e)
   }
@@ -119,10 +129,8 @@ function* watchBranchDSPutDECombo() {
 /* for only Branch Dataset request */
 function* getBranchDSresponse(action) {
   try {
-    yield put(showLoading())
     yield BranchDS(action)
     yield put(actions.idleFormState())
-    yield put(hideLoading())
   } catch(e) {
     console.error(e)
   }
@@ -136,7 +144,6 @@ function* watchBranchDSCombo() {
 /* for Put Data Entry by CSV page, combining createDS, branchDS and uploadCSV */
 function* getCreateDS_PutCSVresponse(action) {
   try{
-    yield put(showLoading())
     yield CreateDS(action)
 
     const UploadCSVFilePath = yield UploadCSV(action)
@@ -161,7 +168,6 @@ function* getCreateDS_PutCSVresponse(action) {
     yield put(actions.populatePutDataCSVresponse(Response_PutDataCSV.data.result))
     yield put(actions.idleFormState())
     yield put(OverviewActions.requestDBSize())
-    yield put(hideLoading())
   } catch(e) {
     console.error(e)
   }
@@ -174,7 +180,6 @@ function* watchCreateDSPutCSVCombo() {
 
 function* getBranchDS_PutCSVresponse(action) {
   try{
-    yield put(showLoading())
     yield BranchDS(action)
 
     const UploadCSVFilePath = yield UploadCSV(action)
@@ -198,7 +203,6 @@ function* getBranchDS_PutCSVresponse(action) {
     yield put(actions.populatePutDataCSVresponse(Response_PutDataCSV.data.result))
     yield put(actions.idleFormState())
     yield put(OverviewActions.requestDBSize())
-    yield put(hideLoading())
   } catch(e) {
     console.error(e)
   }
@@ -211,7 +215,6 @@ function* watchBranchDSPutCSVCombo() {
 
 function* getPutCSVComboResponse(action) {
   try{
-    yield put(showLoading())
     const UploadCSVFilePath = yield UploadCSV(action)
     yield put(actions.populateUploadCSVresponse(UploadCSVFilePath))
 
@@ -233,7 +236,6 @@ function* getPutCSVComboResponse(action) {
     yield put(actions.populatePutDataCSVresponse(Response_PutDataCSV.data.result))
     yield put(actions.idleFormState())
     yield put(OverviewActions.requestDBSize())
-    yield put(hideLoading())
   } catch(e) {
     console.error(e)
   }
@@ -246,11 +248,9 @@ function* watchPutCSVCombo() {
 /* for Get Dataset */
 function* getGetDatasetResponse(action) {
   try{
-    yield put(showLoading())
     const Response_GetDataset = yield call(api.requestGetDataset, action.dataEntryForGetDS)
     yield put(actions.populateGetDatasetResponse(Response_GetDataset.data.result))
     yield put(actions.idleFormState())
-    yield put(hideLoading())
   } catch(e) {
     console.error(e)
   }
@@ -264,11 +264,9 @@ function* watchGetDataset() {
 /* for Get Dataset Schema */
 function* getGetDSSchemaResponse(action) {
   try{
-    yield put(showLoading())
     const Response_GetDSSchema = yield call(api.requestGetDSSchema, action.dataEntryForGetDSSchema)
     yield put(actions.populateGetDSSchemaResponse(Response_GetDSSchema.data.result))
     yield put(actions.idleFormState())
-    yield put(hideLoading())
   } catch(e) {
     console.error(e)
   }
@@ -282,11 +280,9 @@ function* watchGetDSSchema() {
 /* for Get Data Entry */
 function* getGetDataEntryResponse(action) {
   try{
-    yield put(showLoading())
     const Response_GetDataEntry = yield call(api.requestGetDataEntry, action.dataEntryForGetDataEntry)
     yield put(actions.populateGetDataEntryResponse(Response_GetDataEntry.data.result))
     yield put(actions.idleFormState())
-    yield put(hideLoading())
   } catch(e) {
     console.error(e)
   }
@@ -299,11 +295,9 @@ function* watchGetDataEntry() {
 /* for Diff Dataset */
 function* getDiffSameDSresponse(action) {
   try{
-    yield put(showLoading())
     const Response_DiffDS = yield call(api.requestDiffSameDS, action.dataEntryForSameDS)
     yield put(actions.populateDiffDSresponse(Response_DiffDS.data.result))
     yield put(actions.idleFormState())
-    yield put(hideLoading())
   } catch(e) {
     console.error(e)
   }
@@ -315,11 +309,9 @@ function* watchDiffSameDS() {
 
 function* getDiffDifferentDSresponse(action) {
   try{
-    yield put(showLoading())
     const Response_DiffDS = yield call(api.requestDiffDifferentDS, action.dataEntryForDifferentDS)
     yield put(actions.populateDiffDSresponse(Response_DiffDS.data.result))
     yield put(actions.idleFormState())
-    yield put(hideLoading())
   } catch(e) {
     console.error(e)
   }
@@ -332,12 +324,10 @@ function* watchDiffDifferentDS() {
 /* for Delete Dataset */
 function* getDeleteDatasetResponse(action) {
   try{
-    yield put(showLoading())
     const Response_DeleteDS = yield call(api.requestDeleteDataset, action.dataEntryForDeleteDS)
     yield put(actions.populateDeleteDatasetResponse(Response_DeleteDS.data.result))
     yield put(actions.idleFormState())
     yield put(OverviewActions.requestDBSize())
-    yield put(hideLoading())
   } catch(e) {
     console.error(e)
   }
@@ -350,11 +340,9 @@ function* watchDeleteDS() {
 /* for Export Dataset Binary */
 function* getExportDSresponse(action) {
   try{
-    yield put(showLoading())
     const Response_ExportDS = yield call(api.requestExportDS, action.dataEntryForExportDS)
     yield put(actions.populateExportDSresponse(Response_ExportDS.data.result))
     yield put(actions.idleFormState())
-    yield put(hideLoading())
   } catch(e) {
     console.error(e)
   }
@@ -368,6 +356,7 @@ function* watchExportDS() {
 // fork is for process creation, run in separate processes
 const RowTableCmdsSagas = [
   fork(watchGetDSListRequest),
+  fork(watchResetLoadingBar),
   fork(watchGetPutDEresponse),
   fork(watchBranchDSPutDECombo),
   fork(watchBranchDSCombo),

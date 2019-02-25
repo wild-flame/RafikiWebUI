@@ -53,7 +53,8 @@ class ListDataSet extends React.Component {
     handleHeaderTitleChange: PropTypes.func,
     DatasetList: PropTypes.array,
     requestListDS: PropTypes.func,
-    requestDBSize: PropTypes.func
+    requestDBSize: PropTypes.func,
+    resetLoadingBar: PropTypes.func,
   }
 
   state = {
@@ -87,6 +88,10 @@ class ListDataSet extends React.Component {
   //     this.props.requestDBSize()
   //   }
   // }
+
+  componentWillUnmount() {
+    this.props.resetLoadingBar()
+  }
 
   render() {
     const { classes, DatasetList } = this.props;
@@ -185,7 +190,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
   requestListDS: actions.requestListDS,
-  requestDBSize: OverviewActions.requestDBSize
+  requestDBSize: OverviewActions.requestDBSize,
+  resetLoadingBar: ConsoleActions.resetLoadingBar,
 }
 
 export default compose(

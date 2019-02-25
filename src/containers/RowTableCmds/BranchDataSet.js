@@ -47,6 +47,7 @@ class BranchDataSet extends React.Component {
 
     requestListDS: PropTypes.func,
     resetResponses: PropTypes.func,
+    resetLoadingBar: PropTypes.func,
 
     DatasetList: PropTypes.array,
 
@@ -139,6 +140,7 @@ class BranchDataSet extends React.Component {
 
   componentWillUnmount() {
     this.props.resetResponses()
+    this.props.resetLoadingBar()
   }
 
   render() {
@@ -244,6 +246,7 @@ const mapDispatchToProps = {
   handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
   requestListDS: actions.requestListDS,
   resetResponses: actions.resetResponses,
+  resetLoadingBar: ConsoleActions.resetLoadingBar,
   triggerBranchDS_Combo: actions.triggerBranchDS_Combo,
   loadingFormState: actions.loadingFormState
 }

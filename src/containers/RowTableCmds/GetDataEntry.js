@@ -51,6 +51,7 @@ class GetDataEntry extends React.Component {
     requestGetDataset: PropTypes.func,
     requestListDS: PropTypes.func,
     resetResponses: PropTypes.func,
+    resetLoadingBar: PropTypes.func,
 
     DatasetList: PropTypes.array,
 
@@ -165,6 +166,7 @@ class GetDataEntry extends React.Component {
 
   componentWillUnmount() {
     this.props.resetResponses()
+    this.props.resetLoadingBar()
   }
 
   render() {
@@ -285,6 +287,7 @@ const mapDispatchToProps = {
   requestListDS: actions.requestListDS,
   requestGetDataEntry: actions.requestGetDataEntry,
   resetResponses: actions.resetResponses,
+  resetLoadingBar: ConsoleActions.resetLoadingBar,
   requestGetDataset: actions.requestGetDataset,
   loadingFormState: actions.loadingFormState
 }

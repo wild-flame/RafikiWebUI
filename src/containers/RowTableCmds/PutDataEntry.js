@@ -61,6 +61,7 @@ class PutDataEntry extends React.Component {
     handleHeaderTitleChange: PropTypes.func,
     requestPutDE: PropTypes.func,
     resetResponses: PropTypes.func,
+    resetLoadingBar: PropTypes.func,
     requestGetDataset: PropTypes.func,
 
     requestListDS: PropTypes.func,
@@ -316,6 +317,7 @@ class PutDataEntry extends React.Component {
 
   componentWillUnmount() {
     this.props.resetResponses()
+    this.props.resetLoadingBar()
   }
 
   render() {
@@ -465,6 +467,7 @@ const mapDispatchToProps = {
   requestListDS: actions.requestListDS,
   triggerBranchDS_PutDE_Combo: actions.triggerBranchDS_PutDE_Combo,
   resetResponses: actions.resetResponses,
+  resetLoadingBar: ConsoleActions.resetLoadingBar,
   requestGetDataset: actions.requestGetDataset,
   requestDBSize: OverviewActions.requestDBSize,
   loadingFormState: actions.loadingFormState
