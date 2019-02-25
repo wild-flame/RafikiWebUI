@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from '@material-ui/core/Switch';
 
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
@@ -39,6 +41,7 @@ class PutDataByCSV extends React.Component {
   state = {
     checkedNewDataset: false,
     checkedNewBranch: false,
+    checkedWithSchema: true,
     dataset:"",
     newDataset:"",
     branch:"master",
@@ -174,7 +177,7 @@ class PutDataByCSV extends React.Component {
       {
         "dataset": this.state.newDataset,
         "branch": "master",
-        "withSchema": "--with-schema"
+        "withSchema": this.state.checkedWithSchema ? "--with-schema" : ""
       },
       {}
     )
@@ -182,7 +185,7 @@ class PutDataByCSV extends React.Component {
       {
         "dataset": this.state.dataset,
         "branch": this.state.newBranch,
-        "withSchema": ""
+        "withSchema": this.state.checkedWithSchema ? "--with-schema" : ""
       },
       {}
     )
@@ -190,7 +193,7 @@ class PutDataByCSV extends React.Component {
       {
         "dataset": this.state.dataset,
         "branch": this.state.branch,
-        "withSchema": ""
+        "withSchema": this.state.checkedWithSchema ? "--with-schema" : ""
       },
       {}
     )
@@ -258,7 +261,8 @@ class PutDataByCSV extends React.Component {
       this.state.branch !== prevState.branch ||
       this.state.newBranch !== prevState.newBranch ||
       this.state.referBranch !== prevState.referBranch ||
-      this.state.files !== prevState.files
+      this.state.files !== prevState.files ||
+      this.state.checkedWithSchema !== prevState.checkedWithSchema
     ) {
       if (
         this.state.checkedNewDataset &&
@@ -376,8 +380,27 @@ class PutDataByCSV extends React.Component {
                   alignItems="center"
                 >
                   <Grid item>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={this.state.checkedWithSchema}
+                          onChange={this.handleSwitch("checkedWithSchema")}
+                          value="checkedWithSchema"
+                        />
+                      }
+                      label="CSV 1st Row as Schema"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-evenly"
+                  alignItems="center"
+                >
+                  <Grid item>
                     <br />
-                    {this.state.checkedNewDataset
+                    {this.state.checkedWithSchema
                       ? (
                       <Typography
                         variant="body1"
