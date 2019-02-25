@@ -64,7 +64,7 @@ class BranchName extends React.Component {
         <Typography variant="h5" gutterBottom align="center">
           {title}
         </Typography>
-        {AllowNewBranch &&
+        {AllowNewBranch && !checkedNewDataset &&
           <Grid
             container
             direction="row"
