@@ -36,14 +36,18 @@ class StorageBar extends React.Component {
         case "B" :
         case "KB" :
           // concert to 100% scale from 1-1024
-          PercentNum = Math.floor(NumPart / 10.24)
+          PercentNum = NumPart < 10.24
+            ? 1
+            : Math.floor(NumPart / 10.24)
           break
         case "MB" :
           // re-scale for a total size of 10MB
           PercentNum = NumPart * 10
           break
         default :
-          PercentNum = Math.floor(NumPart / 10.24)
+          PercentNum = NumPart < 10.24
+            ? 1
+            : Math.floor(NumPart / 10.24)
           break
       }
     }
