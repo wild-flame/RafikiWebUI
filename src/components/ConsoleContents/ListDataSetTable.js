@@ -28,6 +28,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import PutDataCSVIcon from '@material-ui/icons/CloudUploadOutlined'
 import PutDeIcon from '@material-ui/icons/PlaylistAdd'
 import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
+import BranchDsIcon from '@material-ui/icons/CallSplit'
 
 import Chip from '@material-ui/core/Chip';
 
@@ -56,9 +57,26 @@ class ListDataSetTable extends React.Component {
 
   state = {
     menuAnchor: null,
-    currentDataset: null,
+    currentDataset: "",
+    currentBranch: ""
   }
 
+  onShowChipMenu = (datasetName, branchName, e) => {
+    this.setState({
+      menuAnchor: e.target,
+      currentDataset: datasetName,
+      currentBranch: branchName
+    })
+  }
+
+  onCloseChipMenu = () => {
+    this.setState({
+      menuAnchor: false,
+      currentDataset: "",
+      currentBranch: ""
+    })
+  }
+  
   onShowEditMenu = (datasetName, e) => {
     this.setState({
       menuAnchor: e.target,
@@ -72,8 +90,6 @@ class ListDataSetTable extends React.Component {
       currentDataset: ""
     })
   }
-
-
 
   render() {
     const {
@@ -99,11 +115,17 @@ class ListDataSetTable extends React.Component {
                   {item["dataset"]}
                 </TableCell>
                 <TableCell>
-                  {item["branches"].map((item, index) =>
+                  {item["branches"].map((branch, index) =>
                     <Chip
                       key={index}
-                      label={item}
+                      variant="outlined"
+                      label={branch}
                       className={classes.chip}
+                      onClick={e => this.onShowChipMenu(
+                        item["dataset"],
+                        branch,
+                        e
+                      )}
                     />
                   )}
                 </TableCell>
@@ -149,8 +171,57 @@ class ListDataSetTable extends React.Component {
             ))}
           </TableBody>
         </Table>
-
-        {this.state.currentDataset && (
+        {this.state.currentDataset && this.state.currentBranch && (
+          <Popper
+            anchorEl={this.state.menuAnchor}
+            open
+            placement="bottom"
+            transition
+          >
+            <Paper>
+              <ClickAwayListener onClickAway={this.onCloseChipMenu}>
+                <MenuList>
+                  <MenuItem
+                    onClick={() => {}}
+                  >
+                    <ListItemIcon>
+                      <DnsRoundedIcon />
+                    </ListItemIcon>
+                    <ListItemText>Get Dataset</ListItemText>
+                  </MenuItem>
+                  <MenuItem
+                    component={Link}
+                    to={`/profile`}
+                  >
+                    <ListItemIcon>
+                      <DnsRoundedIcon />
+                    </ListItemIcon>
+                    <ListItemText>Get Dataset Schema</ListItemText>
+                  </MenuItem>
+                  <MenuItem
+                    component={Link}
+                    to={`/profile`}
+                  >
+                    <ListItemIcon>
+                      <DnsRoundedIcon />
+                    </ListItemIcon>
+                    <ListItemText>Get Data Entry</ListItemText>
+                  </MenuItem>
+                  <MenuItem
+                    component={Link}
+                    to={`/profile`}
+                  >
+                    <ListItemIcon>
+                      <BranchDsIcon />
+                    </ListItemIcon>
+                    <ListItemText>Branch Dataset</ListItemText>
+                  </MenuItem>
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Popper>
+        )}
+        {this.state.currentDataset && !this.state.currentBranch && (
           <Popper
             anchorEl={this.state.menuAnchor}
             open
