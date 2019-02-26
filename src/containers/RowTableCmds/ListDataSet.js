@@ -17,6 +17,11 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh';
 
+// zoom addicon
+import Fab from "@material-ui/core/Fab";
+import Zoom from "@material-ui/core/Zoom";
+import AddIcon from "@material-ui/icons/Add";
+
 // table
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -31,6 +36,7 @@ import ContentBar from "../../components/ConsoleContents/ContentBar"
 
 import SimpleDialogWrapped from "../../components/GitGraphComponents/dialogDemo"
 
+
 const styles = theme => ({
   block: {
     display: 'block',
@@ -40,9 +46,17 @@ const styles = theme => ({
   },
   contentWrapper: {
     margin: '40px 16px',
+    position: "relative",
+    minHeight: 200,
   },
   chip: {
     margin: theme.spacing.unit,
+  },
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
+    zIndex: 10
   },
 })
 
@@ -128,6 +142,16 @@ class ListDataSet extends React.Component {
             </Toolbar>
           </ContentBar>
           <div className={classes.contentWrapper}>
+            <Zoom in={true} unmountOnExit>
+              <Fab
+                className={classes.fab}
+                color="primary"
+                component={Link}
+                to="/console/row-based-table/put-data-by-csv?addNewDS=TRUE"
+              >
+                <AddIcon />
+              </Fab>
+            </Zoom>
             <Typography color="textSecondary" align="center">
               {DatasetList.length === 0
                   ? "You do not have any dataset"
