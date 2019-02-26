@@ -24,7 +24,7 @@ class StorageBar extends React.Component {
     // parse the StorgaeSize string (eg 1.45MB, or 763.9KB) into number and unit
     // const NumPart = Math.floor(parseFloat(StorageSize) / 10.24)
     const NumPart = parseFloat(StorageSize)
-    const UnitPart = StorageSize.replace(/[0-9]./g, '')
+    const UnitPart = StorageSize.replace(/[0-9.]/g, '')
     console.log(NumPart, UnitPart) // MB KB
 
     let PercentNum = 1
