@@ -22,6 +22,9 @@ import ForkbaseStatus from "../../components/ConsoleContents/ForkbaseStatus"
 // RegExp rules
 import { validDsAndBranch } from "../../regexp-rules";
 
+// read query-string
+import queryString from 'query-string'
+
 
 const styles = () => ({
   contentWrapper: {
@@ -60,6 +63,14 @@ class BranchDataSet extends React.Component {
 
   componentDidMount() {
     this.props.handleHeaderTitleChange("Dataset > Branch Dataset")
+    // read the query string from URL
+    const values = queryString.parse(this.props.location.search)
+    if (values.dataset && values.branch) {
+      this.setState({
+        dataset: values.dataset,
+        referBranch: values.branch
+      })
+    }
     this.props.requestListDS()
   }
 

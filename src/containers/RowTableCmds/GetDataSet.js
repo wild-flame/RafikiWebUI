@@ -19,6 +19,9 @@ import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
 import ForkbaseStatus from "../../components/ConsoleContents/ForkbaseStatus"
 
+// read query-string
+import queryString from 'query-string'
+
 
 const styles = () => ({
   contentWrapper: {
@@ -53,6 +56,14 @@ class GetDataSet extends React.Component {
 
   componentDidMount() {
     this.props.handleHeaderTitleChange("Dataset > Get Dataset")
+    // read the query string from URL
+    const values = queryString.parse(this.props.location.search)
+    if (values.dataset && values.branch) {
+      this.setState({
+        dataset: values.dataset,
+        branch: values.branch
+      })
+    }
     this.props.requestListDS()
   }
 

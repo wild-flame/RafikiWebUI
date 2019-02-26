@@ -25,6 +25,9 @@ import ForkbaseStatus from "../../components/ConsoleContents/ForkbaseStatus"
 // RegExp rules
 import { validDsAndBranch } from "../../regexp-rules";
 
+// read query-string
+import queryString from 'query-string'
+
 
 const styles = theme => ({
   textField: {
@@ -81,6 +84,13 @@ class PutDataEntry extends React.Component {
   componentDidMount() {
     this.props.handleHeaderTitleChange("Dataset > Put Data Entry")
     this.props.requestDBSize()
+    // read the query string from URL
+    const values = queryString.parse(this.props.location.search)
+    if (values.dataset) {
+      this.setState({
+        dataset: values.dataset
+      })
+    }
     this.props.requestListDS()
   }
 
@@ -316,7 +326,7 @@ class PutDataEntry extends React.Component {
     // for DS commands with updates,
     // call ls-ds again after result from ustore has returned
     if (prevProps.formState !== this.props.formState) {
-      if (this.props.formState === "idle") {
+      if (this.props.formState === "idle" && prevProps.Response_PutDE.length !== 0) {
         this.props.requestListDS()
       }
     }

@@ -20,6 +20,9 @@ import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
 import ForkbaseStatus from "../../components/ConsoleContents/ForkbaseStatus"
 
+// read query-string
+import queryString from 'query-string'
+
 
 const styles = () => ({
   contentWrapper: {
@@ -57,6 +60,13 @@ class DeleteDataSet extends React.Component {
   componentDidMount() {
     this.props.handleHeaderTitleChange("Dataset > Delete Dataset")
     this.props.requestDBSize()
+    // read the query string from URL
+    const values = queryString.parse(this.props.location.search)
+    if (values.dataset) {
+      this.setState({
+        dataset: values.dataset
+      })
+    }
     this.props.requestListDS()
   }
 

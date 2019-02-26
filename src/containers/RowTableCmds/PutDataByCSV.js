@@ -155,6 +155,10 @@ class PutDataByCSV extends React.Component {
       this.setState({
         checkedNewDataset: true
       })
+    } else if (values.dataset) {
+      this.setState({
+        dataset: values.dataset
+      })
     }
     this.props.requestListDS()
   }
