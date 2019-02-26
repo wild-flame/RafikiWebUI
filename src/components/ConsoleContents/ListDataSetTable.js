@@ -96,7 +96,12 @@ class ListDataSetTable extends React.Component {
       classes,
       DatasetList,
       handleClickHistory
-    } = this.props;
+    } = this.props
+
+    const {
+      currentDataset,
+      currentBranch
+    } = this.state
 
     return (
       <Fragment>
@@ -152,14 +157,14 @@ class ListDataSetTable extends React.Component {
                         <IconButton
                           className={classes.tableButtons}
                           component={Link}
-                          to="/console/row-based-table/delete-dataset?addNewDS=TRUE"
+                          to={`/console/row-based-table/delete-dataset?dataset=${item["dataset"]}`}
                         >
                           <DeleteIcon />
                         </IconButton>
                         <IconButton
                           className={classes.tableButtons}
                           component={Link}
-                          to="/console/row-based-table/export-dataset?addNewDS=TRUE"
+                          to={`/console/row-based-table/export-dataset?dataset=${item["dataset"]}`}
                         >
                           <ExportDsIcon />
                         </IconButton>
@@ -171,7 +176,7 @@ class ListDataSetTable extends React.Component {
             ))}
           </TableBody>
         </Table>
-        {this.state.currentDataset && this.state.currentBranch && (
+        {currentDataset && currentBranch && (
           <Popper
             anchorEl={this.state.menuAnchor}
             open
@@ -182,7 +187,8 @@ class ListDataSetTable extends React.Component {
               <ClickAwayListener onClickAway={this.onCloseChipMenu}>
                 <MenuList>
                   <MenuItem
-                    onClick={() => {}}
+                    component={Link}
+                    to={`/console/row-based-table/get-dataset?dataset=${currentDataset}&branch=${currentBranch}`}
                   >
                     <ListItemIcon>
                       <DnsRoundedIcon />
@@ -191,7 +197,7 @@ class ListDataSetTable extends React.Component {
                   </MenuItem>
                   <MenuItem
                     component={Link}
-                    to={`/profile`}
+                    to={`/console/row-based-table/get-dataset-schema?dataset=${currentDataset}&branch=${currentBranch}`}
                   >
                     <ListItemIcon>
                       <DnsRoundedIcon />
@@ -200,7 +206,7 @@ class ListDataSetTable extends React.Component {
                   </MenuItem>
                   <MenuItem
                     component={Link}
-                    to={`/profile`}
+                    to={`/console/row-based-table/get-data-entry?dataset=${currentDataset}&branch=${currentBranch}`}
                   >
                     <ListItemIcon>
                       <DnsRoundedIcon />
@@ -209,7 +215,7 @@ class ListDataSetTable extends React.Component {
                   </MenuItem>
                   <MenuItem
                     component={Link}
-                    to={`/profile`}
+                    to={`/console/row-based-table/branch-dataset?dataset=${currentDataset}&branch=${currentBranch}`}
                   >
                     <ListItemIcon>
                       <BranchDsIcon />
@@ -221,7 +227,7 @@ class ListDataSetTable extends React.Component {
             </Paper>
           </Popper>
         )}
-        {this.state.currentDataset && !this.state.currentBranch && (
+        {currentDataset && !currentBranch && (
           <Popper
             anchorEl={this.state.menuAnchor}
             open
@@ -232,7 +238,8 @@ class ListDataSetTable extends React.Component {
               <ClickAwayListener onClickAway={this.onCloseEditMenu}>
                 <MenuList>
                   <MenuItem
-                    onClick={() => {}}
+                    component={Link}
+                    to={`/console/row-based-table/put-data-by-csv?dataset=${currentDataset}`}
                   >
                     <ListItemIcon>
                       <PutDataCSVIcon />
@@ -241,7 +248,7 @@ class ListDataSetTable extends React.Component {
                   </MenuItem>
                   <MenuItem
                     component={Link}
-                    to={`/profile`}
+                    to={`/console/row-based-table/put-data-entry?dataset=${currentDataset}`}
                   >
                     <ListItemIcon>
                       <PutDeIcon />
