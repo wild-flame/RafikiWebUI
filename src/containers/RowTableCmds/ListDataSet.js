@@ -28,6 +28,10 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+// table icons
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
+import ExportDsIcon from '@material-ui/icons/SaveAlt'
 
 import Chip from '@material-ui/core/Chip';
 
@@ -54,10 +58,13 @@ const styles = theme => ({
   },
   fab: {
     position: 'absolute',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
+    bottom: theme.spacing.unit,
+    right: theme.spacing.unit * 0.5,
     zIndex: 10
   },
+  tableButtons : {
+    margin: 3,
+  }
 })
 
 
@@ -163,7 +170,7 @@ class ListDataSet extends React.Component {
                 <TableRow>
                   <TableCell>Dataset Name</TableCell>
                   <TableCell>Branches</TableCell>
-                  <TableCell>Actions</TableCell>
+                  <TableCell style={{ width: "39%" }}>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -183,6 +190,7 @@ class ListDataSet extends React.Component {
                     </TableCell>
                     <TableCell>
                       <Button
+                        className={classes.tableButtons}
                         variant="contained"
                         color="secondary"
                         onClick={() => this.handleClickHistory(item)}
@@ -190,6 +198,32 @@ class ListDataSet extends React.Component {
                       >
                         View History
                       </Button>
+                      {item["dataset"] === "..."
+                        ? ""
+                        : (
+                          <React.Fragment>
+                            <IconButton
+                              className={classes.tableButtons}
+                            >
+                              <EditIcon />
+                            </IconButton>
+                            <IconButton
+                              className={classes.tableButtons}
+                              component={Link}
+                              to="/console/row-based-table/delete-dataset?addNewDS=TRUE"
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                            <IconButton
+                              className={classes.tableButtons}
+                              component={Link}
+                              to="/console/row-based-table/export-dataset?addNewDS=TRUE"
+                            >
+                              <ExportDsIcon />
+                            </IconButton>
+                          </React.Fragment>
+                        )
+                      }
                     </TableCell>
                   </TableRow>
                 ))}
