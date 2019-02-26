@@ -185,7 +185,7 @@ class BranchName extends React.Component {
                       {"master"}
                     </MenuItem>
                   )
-                  : dataset
+                  : dataset && dsList[0]["dataset"] !== "..."
                     ? dsList.filter(item => item.dataset === dataset)[0]
                         .branches.map(item => (
                           <MenuItem key={item} value={item}>
