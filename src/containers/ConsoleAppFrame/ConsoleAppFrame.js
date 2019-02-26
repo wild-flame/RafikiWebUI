@@ -91,7 +91,6 @@ class ConsoleAppFrame extends React.Component {
           // only display if the action took longer than updateTime to finish
           // default updateTime = 200ms
           updateTime={300}
-          maxProgress={75}
           progressIncrease={10}
           style={{
             backgroundColor: '#009688',

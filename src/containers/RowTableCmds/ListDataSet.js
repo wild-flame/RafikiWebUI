@@ -22,23 +22,11 @@ import Fab from "@material-ui/core/Fab";
 import Zoom from "@material-ui/core/Zoom";
 import AddIcon from "@material-ui/icons/Add";
 
-// table
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-// table icons
-import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from "@material-ui/icons/Delete";
-import ExportDsIcon from '@material-ui/icons/SaveAlt'
-
-import Chip from '@material-ui/core/Chip';
-
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
 
 import SimpleDialogWrapped from "../../components/GitGraphComponents/dialogDemo"
+import ListDataSetTable from '../../components/ConsoleContents/ListDataSetTable'
 
 
 const styles = theme => ({
@@ -53,17 +41,11 @@ const styles = theme => ({
     position: "relative",
     minHeight: 200,
   },
-  chip: {
-    margin: theme.spacing.unit,
-  },
   fab: {
     position: 'absolute',
     bottom: theme.spacing.unit,
     right: theme.spacing.unit * 0.5,
     zIndex: 10
-  },
-  tableButtons : {
-    margin: 3,
   }
 })
 
@@ -165,70 +147,10 @@ class ListDataSet extends React.Component {
                   : "Datasets and Branches"
               }
             </Typography>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Dataset Name</TableCell>
-                  <TableCell>Branches</TableCell>
-                  <TableCell style={{ width: "39%" }}>Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {DatasetList.map((item, index) => (
-                  <TableRow key={index}>
-                    <TableCell component="th" scope="row">
-                      {item["dataset"]}
-                    </TableCell>
-                    <TableCell>
-                      {item["branches"].map((item, index) =>
-                        <Chip
-                          key={index}
-                          label={item}
-                          className={classes.chip}
-                        />
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        className={classes.tableButtons}
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => this.handleClickHistory(item)}
-                        disabled={item["dataset"] === "..."}
-                      >
-                        View History
-                      </Button>
-                      {item["dataset"] === "..."
-                        ? ""
-                        : (
-                          <React.Fragment>
-                            <IconButton
-                              className={classes.tableButtons}
-                            >
-                              <EditIcon />
-                            </IconButton>
-                            <IconButton
-                              className={classes.tableButtons}
-                              component={Link}
-                              to="/console/row-based-table/delete-dataset?addNewDS=TRUE"
-                            >
-                              <DeleteIcon />
-                            </IconButton>
-                            <IconButton
-                              className={classes.tableButtons}
-                              component={Link}
-                              to="/console/row-based-table/export-dataset?addNewDS=TRUE"
-                            >
-                              <ExportDsIcon />
-                            </IconButton>
-                          </React.Fragment>
-                        )
-                      }
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <ListDataSetTable
+              DatasetList={DatasetList}
+              handleClickHistory={this.handleClickHistory}
+            />
           </div>
           <SimpleDialogWrapped
             open={this.state.open}
