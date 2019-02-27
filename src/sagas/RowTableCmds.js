@@ -19,7 +19,6 @@ function * CreateDS(action) {
     yield put(actions.requestCreateDS(action.dataEntryForCreateDS))
     const Response_CreateDS = yield call(api.requestCreateDS, action.dataEntryForCreateDS)
     yield put(actions.populateCreateDSresponse(Response_CreateDS.data.result))
-    console.log("CreateDS called, the small one :D")
   } catch(e) {
     console.error(e)
   }
@@ -30,7 +29,6 @@ function* BranchDS(action) {
     yield put(actions.requestBranchDS(action.dataEntryForBranchDS))
     const Response_BranchDS = yield call(api.requestBranchDS, action.dataEntryForBranchDS)
     yield put(actions.populateBranchDSresponse(Response_BranchDS.data.result))
-    console.log("BranchDS called, the small one :D")
   } catch(e) {
     console.error(e)
   }

@@ -27,7 +27,7 @@ export const uploadAPI = (formData) => {
         onUploadProgress
       }
     ).then(response => {
-      console.log("axios response: ", response)
+      console.log("axios responded")
       // Send the event to our saga
       emitter({ result: response.data.result })
       emitter(END) // Special construct to end the channel
