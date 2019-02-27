@@ -1,3 +1,7 @@
+/*
+from https://github.com/j-barata/react-gitgraph-demo/blob/master/src/GitGraphWidget.js
+and https://gist.github.com/YMA-MDL/b1d7284a8cebc3ecf36829984859656b
+*/
 import React from 'react'
 import GitGraph from 'react-gitgraph'
 import _ from 'lodash'

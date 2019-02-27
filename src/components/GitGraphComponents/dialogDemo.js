@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 
-import GitGraphWidget from "./GitGraphWidget"
+import OlafGitgraph from "./OlafGitgraph"
 
 
 const styles = {
@@ -58,7 +58,7 @@ class SimpleDialog extends React.Component {
         </AppBar>
         <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
         <div>
-          <GitGraphWidget />
+          <OlafGitgraph />
         </div>
       </Dialog>
     );
