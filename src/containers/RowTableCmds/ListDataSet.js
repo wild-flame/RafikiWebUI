@@ -61,18 +61,26 @@ class ListDataSet extends React.Component {
   }
 
   state = {
-    open: false
+    open: false,
+    datasetSelected: "",
+    branchesSelected: [],
   }
 
   handleClickHistory = item => {
     console.log("View history of: ", item)
     this.setState({
       open: true,
+      datasetSelected: item.dataset,
+      branchesSelected: item.branches,
     })
   }
 
   handleClose = () => {
-    this.setState({ open: false })
+    this.setState({
+      open: false,
+      datasetSelected: "",
+      branchesSelected: [],
+    })
   }
 
   reloadSizeAndDS = () => {
@@ -155,6 +163,8 @@ class ListDataSet extends React.Component {
           <GitGraphDialog
             open={this.state.open}
             onClose={this.handleClose}
+            datasetSelected={this.state.datasetSelected}
+            branchesSelected={this.state.branchesSelected}
           />
         </MainContent>
       </React.Fragment>

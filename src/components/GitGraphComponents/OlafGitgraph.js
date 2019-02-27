@@ -111,8 +111,13 @@ export default class OlafGitgraph extends React.Component {
     }
   }
 
+  static propTypes = {
+    datasetSelected: PropTypes.string,
+    branchesSelected: PropTypes.array
+  }
+
   onCommitSelection = (commit) => {
-    alert("You clicked on commit " + commit.sha1)
+    console.log("You clicked on commit ", commit)
   }
 
   componentDidMount() {

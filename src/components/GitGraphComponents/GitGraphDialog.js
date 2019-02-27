@@ -21,6 +21,11 @@ const styles = {
   flex: {
     flex: 1,
   },
+  dialogContent: {
+    // prevent horizontal scroll
+    overflowX: "hidden",
+    maxWidth: "100%"
+  }
 };
 
 class GitGraphDialog extends React.Component {
@@ -28,7 +33,8 @@ class GitGraphDialog extends React.Component {
     classes: PropTypes.object,
     open: PropTypes.bool,
     onClose: PropTypes.func,
-    selectedValue: PropTypes.string,
+    datasetSelected: PropTypes.string,
+    branchesSelected: PropTypes.array
   }
 
   handleClose = () => {
@@ -39,15 +45,16 @@ class GitGraphDialog extends React.Component {
     const {
       classes,
       open,
-      selectedValue,
-      ...other
+      datasetSelected,
+      branchesSelected
     } = this.props;
 
     return (
       <Dialog
         open={open}
         onClose={this.handleClose}
-        {...other}
+        fullWidth
+        maxWidth={"lg"}
       >
         <AppBar className={classes.appBar}>
           <Toolbar>
@@ -59,9 +66,18 @@ class GitGraphDialog extends React.Component {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <DialogTitle id="gitgraph-dialog-title">Dataset: xxx</DialogTitle>
-        <DialogContent>
-          <OlafGitgraph />
+        <DialogTitle disableTypography id="gitgraph-dialog-title">
+          <Typography variant="subtitle1" color="primary">
+            Dataset: {datasetSelected}
+          </Typography>
+        </DialogTitle>
+        <DialogContent
+          className={classes.dialogContent}
+        >
+          <OlafGitgraph
+            datasetSelected={datasetSelected}
+            branchesSelected={branchesSelected}
+          />
         </DialogContent>
       </Dialog>
     );
