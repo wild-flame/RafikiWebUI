@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
+import Tooltip from '@material-ui/core/Tooltip';
 
 // table
 import Table from '@material-ui/core/Table';
@@ -29,6 +30,7 @@ import PutDataCSVIcon from '@material-ui/icons/CloudUploadOutlined'
 import PutDeIcon from '@material-ui/icons/PlaylistAdd'
 import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
 import BranchDsIcon from '@material-ui/icons/CallSplit'
+import DiffDsIcon from '@material-ui/icons/Compare'
 
 import Chip from '@material-ui/core/Chip';
 
@@ -148,26 +150,32 @@ class ListDataSetTable extends React.Component {
                     ? ""
                     : (
                       <React.Fragment>
-                        <IconButton
-                          className={classes.tableButtons}
-                          onClick={e => this.onShowEditMenu(item["dataset"], e)}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton
-                          className={classes.tableButtons}
-                          component={Link}
-                          to={`/console/row-based-table/delete-dataset?dataset=${item["dataset"]}`}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                        <IconButton
-                          className={classes.tableButtons}
-                          component={Link}
-                          to={`/console/row-based-table/export-dataset?dataset=${item["dataset"]}`}
-                        >
-                          <ExportDsIcon />
-                        </IconButton>
+                        <Tooltip title="Put Data">
+                          <IconButton
+                            className={classes.tableButtons}
+                            onClick={e => this.onShowEditMenu(item["dataset"], e)}
+                          >
+                            <EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete Dataset">
+                          <IconButton
+                            className={classes.tableButtons}
+                            component={Link}
+                            to={`/console/row-based-table/delete-dataset?dataset=${item["dataset"]}`}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Export Dataset">
+                          <IconButton
+                            className={classes.tableButtons}
+                            component={Link}
+                            to={`/console/row-based-table/export-dataset?dataset=${item["dataset"]}`}
+                          >
+                            <ExportDsIcon />
+                          </IconButton>
+                        </Tooltip>
                       </React.Fragment>
                     )
                   }
@@ -221,6 +229,15 @@ class ListDataSetTable extends React.Component {
                       <BranchDsIcon />
                     </ListItemIcon>
                     <ListItemText>Branch Dataset</ListItemText>
+                  </MenuItem>
+                  <MenuItem
+                    component={Link}
+                    to={`/console/row-based-table/diff-dataset?dataset=${currentDataset}&branch=${currentBranch}`}
+                  >
+                    <ListItemIcon>
+                      <DiffDsIcon />
+                    </ListItemIcon>
+                    <ListItemText>Diff Dataset</ListItemText>
                   </MenuItem>
                 </MenuList>
               </ClickAwayListener>
