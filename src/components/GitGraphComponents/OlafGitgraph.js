@@ -96,7 +96,7 @@ export default class OlafGitgraph extends React.Component {
         },
         message: {
           display: true,
-          displayAuthor: false, // later implement user control
+          displayAuthor: true, // later implement user control
           displayBranch: true,
           displayHash: false,
           font: "normal 10pt Arial"

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import DialogTitle from '@material-ui/core/DialogTitle';
+// for Dialog
 import Dialog from '@material-ui/core/Dialog';
-
-import Button from '@material-ui/core/Button';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -23,46 +23,49 @@ const styles = {
   },
 };
 
-class SimpleDialog extends React.Component {
+class GitGraphDialog extends React.Component {
   static propTypes = {
     classes: PropTypes.object,
+    open: PropTypes.bool,
     onClose: PropTypes.func,
     selectedValue: PropTypes.string,
   }
 
   handleClose = () => {
-    this.props.onClose(this.props.selectedValue);
-  };
-
-  handleListItemClick = value => {
-    this.props.onClose(value);
+    this.props.onClose();
   };
 
   render() {
-    const { classes, onClose, selectedValue, ...other } = this.props;
+    const {
+      classes,
+      open,
+      selectedValue,
+      ...other
+    } = this.props;
 
     return (
-      <Dialog fullScreen onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
+      <Dialog
+        open={open}
+        onClose={this.handleClose}
+        {...other}
+      >
         <AppBar className={classes.appBar}>
           <Toolbar>
-            <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
-              <CloseIcon />
-            </IconButton>
             <Typography variant="h6" color="inherit" className={classes.flex}>
               Version History
             </Typography>
-            <Button color="inherit" onClick={this.handleClose}>
-              Work in progress...
-            </Button>
+            <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
+              <CloseIcon />
+            </IconButton>
           </Toolbar>
         </AppBar>
-        <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
-        <div>
+        <DialogTitle id="gitgraph-dialog-title">Dataset: xxx</DialogTitle>
+        <DialogContent>
           <OlafGitgraph />
-        </div>
+        </DialogContent>
       </Dialog>
     );
   }
 }
 
-export default withStyles(styles)(SimpleDialog)
+export default withStyles(styles)(GitGraphDialog)

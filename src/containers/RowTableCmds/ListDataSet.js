@@ -25,7 +25,7 @@ import AddIcon from "@material-ui/icons/Add";
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
 
-import SimpleDialogWrapped from "../../components/GitGraphComponents/dialogDemo"
+import GitGraphDialog from "../../components/GitGraphComponents/GitGraphDialog"
 import ListDataSetTable from '../../components/ConsoleContents/ListDataSetTable'
 
 
@@ -65,13 +65,13 @@ class ListDataSet extends React.Component {
   }
 
   handleClickHistory = item => {
-    console.log(item)
+    console.log("View history of: ", item)
     this.setState({
       open: true,
     })
   }
 
-  handleClose = value => {
+  handleClose = () => {
     this.setState({ open: false })
   }
 
@@ -152,7 +152,7 @@ class ListDataSet extends React.Component {
               handleClickHistory={this.handleClickHistory}
             />
           </div>
-          <SimpleDialogWrapped
+          <GitGraphDialog
             open={this.state.open}
             onClose={this.handleClose}
           />
