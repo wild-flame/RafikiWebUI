@@ -58,6 +58,11 @@ class ListDataSet extends React.Component {
     requestListDS: PropTypes.func,
     requestDBSize: PropTypes.func,
     resetLoadingBar: PropTypes.func,
+
+    requestVersionHistory: PropTypes.func,
+    Response_Version_History: PropTypes.object,
+
+    loadingFormState: PropTypes.func
   }
 
   state = {
@@ -73,6 +78,10 @@ class ListDataSet extends React.Component {
       datasetSelected: item.dataset,
       branchesSelected: item.branches,
     })
+    // set formState to loading
+    this.props.loadingFormState()
+    // sagas for version history
+    this.props.requestVersionHistory(item)
   }
 
   handleClose = () => {
@@ -105,7 +114,12 @@ class ListDataSet extends React.Component {
   }
 
   render() {
-    const { classes, DatasetList } = this.props;
+    const {
+      classes,
+      DatasetList,
+      Response_Version_History
+    } = this.props;
+
     return (
       <React.Fragment>
         <MainContent>
@@ -165,6 +179,7 @@ class ListDataSet extends React.Component {
             onClose={this.handleClose}
             datasetSelected={this.state.datasetSelected}
             branchesSelected={this.state.branchesSelected}
+            Response_Version_History={Response_Version_History}
           />
         </MainContent>
       </React.Fragment>
@@ -174,7 +189,8 @@ class ListDataSet extends React.Component {
 
 
 const mapStateToProps = state => ({
-  DatasetList: state.RowTableCmds.DatasetList
+  DatasetList: state.RowTableCmds.DatasetList,
+  Response_Version_History: state.RowTableCmds.Response_Version_History
 })
 
 const mapDispatchToProps = {
@@ -182,6 +198,8 @@ const mapDispatchToProps = {
   requestListDS: actions.requestListDS,
   requestDBSize: OverviewActions.requestDBSize,
   resetLoadingBar: ConsoleActions.resetLoadingBar,
+  loadingFormState: actions.loadingFormState,
+  requestVersionHistory: actions.requestVersionHistory,
 }
 
 export default compose(

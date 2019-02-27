@@ -34,7 +34,12 @@ class GitGraphDialog extends React.Component {
     open: PropTypes.bool,
     onClose: PropTypes.func,
     datasetSelected: PropTypes.string,
-    branchesSelected: PropTypes.array
+    branchesSelected: PropTypes.array,
+    Response_Version_History: PropTypes.object
+  }
+
+  componentDidMount() {
+    console.log("i am mounted, and i am the dialog")
   }
 
   handleClose = () => {
@@ -46,7 +51,8 @@ class GitGraphDialog extends React.Component {
       classes,
       open,
       datasetSelected,
-      branchesSelected
+      branchesSelected,
+      Response_Version_History
     } = this.props;
 
     return (
@@ -77,6 +83,7 @@ class GitGraphDialog extends React.Component {
           <OlafGitgraph
             datasetSelected={datasetSelected}
             branchesSelected={branchesSelected}
+            Response_Version_History={Response_Version_History}
           />
         </DialogContent>
       </Dialog>

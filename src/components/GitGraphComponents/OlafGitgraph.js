@@ -7,67 +7,12 @@ import PropTypes from 'prop-types';
 import "gitgraph.js";
 import "gitgraph.js/build/gitgraph.css";
 
-import data from './data/metaData'
+//import data from './data/metaData'
+
+const author = "Kaiyuan <yangkaiyuan@u.nus.edu>"
 
 // plot gitgraph
 var gitGraph = window.GitGraph;
-
-// later read from props of the app
-const datasetName = "ds-csv1"
-const author = "Kaiyuan <yangkaiyuan@u.nus.edu>"
-
-let nodes = []
-
-for (let branch in data[datasetName]) {
-  for (let node of data[datasetName][branch]) {
-    nodes.push({ ...node, Branch: branch });
-  }
-}
-
-var plottedVersions = [];
-
-const plotBranch = (branchingFrom, node) => {
-  if (plottedVersions.includes(node["Version"]))
-    return "";
-  plottedVersions.push(node["Version"]);
-
-  const branch = node["Branch"];
-
-  //dedupe
-  nodes = nodes.filter(n => n["Version"] !== node["Version"]);
-
-  let code = "";
-
-  if (branchingFrom) {
-    code += `const ${branch} = ${branchingFrom}.branch("${branch}");\n`;
-  }
-
-  code += `${branch}.commit({
-    dotColor: "white",
-    dotSize: 4,
-    dotStrokeWidth: 8,
-    message: '${node["Version"]}',
-    onClick: (commit) => this.onCommitSelection(commit)
-  });\n`;
-
-  let children = nodes.filter(n => n["Parents"].includes(node["Version"]));
-
-  let codeMiddle = "", codeEnd = "";
-  for (const child of children) {
-    const isDifferentBranch = child["Branch"] !== node["Branch"];
-    if (isDifferentBranch)
-      codeMiddle += plotBranch(branch, child);
-    else
-      codeEnd += plotBranch(false, child);
-  }
-  code += (codeMiddle + codeEnd);
-
-  return code;
-}
-
-const masterRoot = nodes.find(n => n.Branch === "master" && n.Parents[0] === "<null>");
-const finalCode = plotBranch("gitgraph", masterRoot);
-
 
 export default class OlafGitgraph extends React.Component {
   constructor(props) {
@@ -113,7 +58,8 @@ export default class OlafGitgraph extends React.Component {
 
   static propTypes = {
     datasetSelected: PropTypes.string,
-    branchesSelected: PropTypes.array
+    branchesSelected: PropTypes.array,
+    Response_Version_History: PropTypes.object
   }
 
   onCommitSelection = (commit) => {
@@ -121,6 +67,7 @@ export default class OlafGitgraph extends React.Component {
   }
 
   componentDidMount() {
+    console.log("i am mounted, and i am olaf git graph")
     const gitgraph = new gitGraph({
       template: this.myTemplateConfig,
       reverseArrow: false,
@@ -137,11 +84,74 @@ export default class OlafGitgraph extends React.Component {
     gitgraph.canvas.addEventListener("commit:mouseout", function (event) {
       this.style.cursor = "auto"
     })
-    // eslint-disable-next-line
-    eval(finalCode);
+
   }
 
   render() {
+    console.log("OlafGitgraph received props: ", this.props)
+    const datasetName = this.props.datasetSelected
+
+    const data = this.props.Response_Version_History
+
+    if (Object.keys(data).length === 0) {
+      return <canvas ref={this.$gitgraph} />;
+    }
+
+    let nodes = []
+
+    for (let branch in data[datasetName]) {
+      for (let node of data[datasetName][branch]) {
+        nodes.push({ ...node, Branch: branch });
+      }
+    }
+
+    console.log("nodes are now: ", nodes)
+    var plottedVersions = [];
+
+    const plotBranch = (branchingFrom, node) => {
+      if (plottedVersions.includes(node["Version"]))
+        return "";
+      plottedVersions.push(node["Version"]);
+
+      const branch = node["Branch"];
+
+      //dedupe
+      nodes = nodes.filter(n => n["Version"] !== node["Version"]);
+
+      let code = "";
+
+      if (branchingFrom) {
+        code += `const ${branch} = ${branchingFrom}.branch("${branch}");\n`;
+      }
+
+      code += `${branch}.commit({
+        dotColor: "white",
+        dotSize: 4,
+        dotStrokeWidth: 8,
+        message: '${node["Version"]}',
+        onClick: (commit) => this.onCommitSelection(commit)
+      });\n`;
+
+      let children = nodes.filter(n => n["Parents"].includes(node["Version"]));
+
+      let codeMiddle = "", codeEnd = "";
+      for (const child of children) {
+        const isDifferentBranch = child["Branch"] !== node["Branch"];
+        if (isDifferentBranch)
+          codeMiddle += plotBranch(branch, child);
+        else
+          codeEnd += plotBranch(false, child);
+      }
+      code += (codeMiddle + codeEnd);
+
+      return code;
+    }
+
+    const masterRoot = nodes.find(n => n.Branch === "master" && n.Parents[0] === "<null>");
+    const finalCode = plotBranch("gitgraph", masterRoot);
+    // eslint-disable-next-line
+    eval(finalCode);
+
     return <canvas ref={this.$gitgraph} />;
   }
 }
