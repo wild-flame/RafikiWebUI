@@ -35,7 +35,10 @@ export const Types = {
   RESET_RESPONSES: "RowTableCmds/reset_responses",
   // formState
   LOADING_FORMSTATE: "RowTableCmds/loading_formstate",
-  IDLE_FORMSTATE: "RowTableCmds/idle_responses"
+  IDLE_FORMSTATE: "RowTableCmds/idle_responses",
+  // gitgraph and meta cmds
+  REQUEST_VERSION_HISTORY: "RowTableCmds/request_version_history",
+  POPULATE_VERSION_HISTORY: "RowTableCmds/populate_version_history",
 }
 
 // LIST_DATASET{_ALL}
@@ -241,4 +244,15 @@ export const loadingFormState = () => ({
 
 export const idleFormState = () => ({
   type: Types.IDLE_FORMSTATE
+})
+
+// gitgraph and meta cmds
+export const requestVersionHistory = item => ({
+  type: Types.REQUEST_VERSION_HISTORY,
+  item
+})
+
+export const populateVersionHistory = Response_Version_History => ({
+  type: Types.POPULATE_VERSION_HISTORY,
+  Response_Version_History
 })

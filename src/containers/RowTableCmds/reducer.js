@@ -23,7 +23,9 @@ const StatesToReset = {
   // export-ds-bin
   Response_ExportDS: [],
   // ForkBase Status
-  formState: "init"
+  formState: "init",
+  // Version History
+  Response_Version_History: {}
 }
 
 const initialState = {
@@ -120,6 +122,11 @@ export const RowTableCmds = (state = initialState, action) => {
       return {
         ...state,
         formState: "idle"
+      }
+    case Types.POPULATE_VERSION_HISTORY :
+      return {
+        ...state,
+        Response_Version_History: action.Response_Version_History
       }
     default:
       return state

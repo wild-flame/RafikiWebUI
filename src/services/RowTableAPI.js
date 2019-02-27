@@ -117,3 +117,12 @@ export const requestExportDS = dataEntryForExportDS => {
     data: dataEntryForExportDS
   });
 }
+
+export const requestVersionHistory = item => {
+  return axios({
+    method: 'post',
+    url: `${HTTPconfig.gateway}api/meta-version-history`,
+    headers: HTTPconfig.HTTP_HEADER,
+    data: item
+  });
+}

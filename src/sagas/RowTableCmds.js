@@ -351,6 +351,22 @@ function* watchExportDS() {
 }
 
 
+/* for getting Version History of a dataset */
+function* getVersionHistoryResponse(action) {
+  try{
+    const Response_Version_History = yield call(api.requestVersionHistory, action.item)
+    yield put(actions.populateVersionHistory(Response_Version_History.data.result))
+    yield put(actions.idleFormState())
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+function* watchReqVerionHistory() {
+  yield takeLatest(actions.Types.REQUEST_VERSION_HISTORY, getVersionHistoryResponse)
+}
+
+
 // fork is for process creation, run in separate processes
 const RowTableCmdsSagas = [
   fork(watchGetDSListRequest),
@@ -367,7 +383,8 @@ const RowTableCmdsSagas = [
   fork(watchDiffSameDS),
   fork(watchDiffDifferentDS),
   fork(watchDeleteDS),
-  fork(watchExportDS)
+  fork(watchExportDS),
+  fork(watchReqVerionHistory)
 ]
 
 export default RowTableCmdsSagas
