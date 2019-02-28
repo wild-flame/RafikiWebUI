@@ -37,7 +37,6 @@ class GetDatasetResponse extends React.Component {
     // eslint-disable-next-line
     const entryArray = eval(entries.slice(9))
 
-    
     return (
       <List
         component="nav"

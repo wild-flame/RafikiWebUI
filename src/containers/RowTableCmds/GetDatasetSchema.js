@@ -18,6 +18,7 @@ import ContentBar from "../../components/ConsoleContents/ContentBar"
 import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
 import ForkbaseStatus from "../../components/ConsoleContents/ForkbaseStatus"
+import GetSchemaResponse from '../../components/ConsoleContents/GetSchemaResponse';
 
 // read query-string
 import queryString from 'query-string'
@@ -202,8 +203,10 @@ class GetDatasetSchema extends React.Component {
                   <Typography component="p">
                     <b>{Response_GetDSSchema[0]}</b>
                     <br />
-                    {Response_GetDSSchema[1]}
                   </Typography>
+                  <GetSchemaResponse
+                    schemaResponse={Response_GetDSSchema[1]}
+                  />
                   <br />
                 </ForkbaseStatus>
               </Grid>
