@@ -18,6 +18,7 @@ import ContentBar from "../../components/ConsoleContents/ContentBar"
 import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
 import ForkbaseStatus from "../../components/ConsoleContents/ForkbaseStatus"
+import GetDatasetResponse from "../../components/ConsoleContents/GetDatasetResponse"
 
 // read query-string
 import queryString from 'query-string'
@@ -33,7 +34,7 @@ const styles = () => ({
 class GetDataSet extends React.Component {
   state = {
     dataset:"",
-    branch:"",
+    branch:"master",
     FormIsValid: false
   }
 
@@ -70,7 +71,7 @@ class GetDataSet extends React.Component {
   handleChange = name => event => {
     if (name === "dataset") {
       this.setState({
-        branch: ""
+        branch: "master"
       })
     }
     this.setState({
@@ -202,8 +203,10 @@ class GetDataSet extends React.Component {
                   <Typography component="p">
                     <b>{Response_GetDataset[0]}</b>
                     <br />
-                    {Response_GetDataset[1]}
                   </Typography>
+                  <GetDatasetResponse
+                    entries={Response_GetDataset[1]}
+                  />
                   <br />
                 </ForkbaseStatus>
               </Grid>

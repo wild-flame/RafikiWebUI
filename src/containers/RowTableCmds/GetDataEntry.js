@@ -39,7 +39,7 @@ const styles = theme => ({
 class GetDataEntry extends React.Component {
   state = {
     dataset:"",
-    branch:"",
+    branch:"master",
     entry: "",
     EntriesLoaded: false,
     EntryArray: [],
@@ -81,7 +81,7 @@ class GetDataEntry extends React.Component {
   handleChange = name => event => {
     if (name === "dataset") {
       this.setState({
-        branch: "",
+        branch: "master",
         entry: "",
         EntriesLoaded: false,
         EntryArray: []
