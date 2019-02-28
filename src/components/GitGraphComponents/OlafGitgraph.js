@@ -58,6 +58,10 @@ export default class OlafGitgraph extends React.Component {
     }
   }
 
+  state = {
+    finalCode: null,
+  }
+
   static propTypes = {
     datasetSelected: PropTypes.string,
     branchesSelected: PropTypes.array,
@@ -90,27 +94,29 @@ export default class OlafGitgraph extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.Response_Version_History) {
+    if(nextProps.datasetSelected) {
       const data = nextProps.Response_Version_History
       const datasetName = this.props.datasetSelected
-      this.finalCode = this.generatePlottingCode(data[datasetName]);
+      this.setState({finalCode: this.generatePlottingCode(data[datasetName])});
     }
   }
 
   render() {
-    console.log("OlafGitgraph received props: ", this.props)
-
-    this.plotGraph()
-
+    if(Object.keys(this.props.Response_Version_History).length > 0
+      && this.props.datasetSelected)
+    {
+      console.log("OlafGitgraph received props: ", this.props)
+      this.plotGraph()
+    }
     return <canvas ref={this.$gitgraph} />;
   }
 
   plotGraph = () => {
-    if(this.finalCode) {
+    if(this.state.finalCode) {
       // eslint-disable-next-line
       const gitgraph = this.gitgraph;
       // eslint-disable-next-line
-      eval(this.finalCode);
+      eval(this.state.finalCode);
     }
   }
 
@@ -123,16 +129,16 @@ export default class OlafGitgraph extends React.Component {
       }
     }
 
+    this.plottedVersions = [];
     const masterRoot = nodes.find(n => n.Branch === "master" && n.Parents[0] === "<null>")
     const finalCode = this.plotBranch("gitgraph", masterRoot, nodes)
     return finalCode
   }
 
   plotBranch = (branchingFrom, node, nodes) => {
-    var plottedVersions = [];
-    if (plottedVersions.includes(node["Version"]))
+    if (this.plottedVersions.includes(node["Version"]))
       return "";
-    plottedVersions.push(node["Version"]);
+    this.plottedVersions.push(node["Version"]);
 
     const branch = node["Branch"];
 
@@ -142,10 +148,10 @@ export default class OlafGitgraph extends React.Component {
     let code = "";
 
     if (branchingFrom) {
-      code += `const ${branch} = ${branchingFrom}.branch("${branch}");\n`;
+      code += `const _${branch} = ${branchingFrom}.branch("${branch}");\n`;
     }
 
-    code += `${branch}.commit({
+    code += `_${branch}.commit({
       dotColor: "white",
       dotSize: 4,
       dotStrokeWidth: 8,
@@ -159,7 +165,7 @@ export default class OlafGitgraph extends React.Component {
     for (const child of children) {
       const isDifferentBranch = child["Branch"] !== node["Branch"];
       if (isDifferentBranch)
-        codeMiddle += this.plotBranch(branch, child, nodes);
+        codeMiddle += this.plotBranch("_" + branch, child, nodes);
       else
         codeEnd += this.plotBranch(false, child, nodes);
     }
