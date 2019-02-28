@@ -132,7 +132,7 @@ class PutDataEntry extends React.Component {
     }
     if (name === "entry") {
       if (
-        validDsAndBranch.test(event.target.value) &&
+        //validDsAndBranch.test(event.target.value) &&
         event.target.value.length <= 50
       ) {
         this.setState({
