@@ -19,6 +19,7 @@ import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
 import RowEntryName from "../../components/ConsoleContents/RowEntryName"
 import ForkbaseStatus from "../../components/ConsoleContents/ForkbaseStatus"
+import GetDataEntryResponse from "../../components/ConsoleContents/GetDataEntryResponse"
 
 // read query-string
 import queryString from 'query-string'
@@ -273,8 +274,10 @@ class GetDataEntry extends React.Component {
                   <Typography component="p">
                     <b>{Response_GetDataEntry[0]}</b>
                     <br />
-                    {Response_GetDataEntry[1]}
                   </Typography>
+                  <GetDataEntryResponse
+                    entryValue={Response_GetDataEntry[1]}
+                  />
                   <br />
                 </ForkbaseStatus>
               </Grid>

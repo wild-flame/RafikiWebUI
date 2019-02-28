@@ -49,7 +49,6 @@ class GetDatasetResponse extends React.Component {
             key={entry}
             component={Link}
             to={`/console/row-based-table/get-data-entry?dataset=${dataset}&branch=${branch}&entry=${entry}`}
-            dense
           >
             <ListItemIcon>
               <DnsRoundedIcon />
