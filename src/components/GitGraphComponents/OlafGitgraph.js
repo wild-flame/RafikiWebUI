@@ -68,7 +68,7 @@ export default class OlafGitgraph extends React.Component {
 
   componentDidMount() {
     console.log("i am mounted, and i am olaf git graph")
-    const gitgraph = new gitGraph({
+    this.gitgraph = new gitGraph({
       template: this.myTemplateConfig,
       reverseArrow: false,
       canvas: this.$gitgraph.current,
@@ -77,11 +77,11 @@ export default class OlafGitgraph extends React.Component {
       author: author
     })
 
-    gitgraph.canvas.addEventListener( "commit:mouseover", function ( event ) {
+    this.gitgraph.canvas.addEventListener( "commit:mouseover", function ( event ) {
       this.style.cursor = "pointer"
     })
 
-    gitgraph.canvas.addEventListener("commit:mouseout", function (event) {
+    this.gitgraph.canvas.addEventListener("commit:mouseout", function (event) {
       this.style.cursor = "auto"
     })
 
@@ -150,6 +150,7 @@ export default class OlafGitgraph extends React.Component {
     const masterRoot = nodes.find(n => n.Branch === "master" && n.Parents[0] === "<null>");
     const finalCode = plotBranch("gitgraph", masterRoot);
     // eslint-disable-next-line
+    const gitgraph = this.gitgraph;
     eval(finalCode);
 
     return <canvas ref={this.$gitgraph} />;
