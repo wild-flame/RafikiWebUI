@@ -14,6 +14,8 @@ const author = "Kaiyuan <yangkaiyuan@u.nus.edu>"
 // plot gitgraph
 var gitGraph = window.GitGraph;
 
+
+
 export default class OlafGitgraph extends React.Component {
   constructor(props) {
     super(props);
@@ -87,72 +89,82 @@ export default class OlafGitgraph extends React.Component {
 
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.Response_Version_History) {
+      const data = nextProps.Response_Version_History
+      const datasetName = this.props.datasetSelected
+      this.finalCode = this.generatePlottingCode(data[datasetName]);
+    }
+  }
+
   render() {
     console.log("OlafGitgraph received props: ", this.props)
-    const datasetName = this.props.datasetSelected
 
-    const data = this.props.Response_Version_History
+    this.plotGraph()
 
-    if (Object.keys(data).length === 0) {
-      return <canvas ref={this.$gitgraph} />;
+    return <canvas ref={this.$gitgraph} />;
+  }
+
+  plotGraph = () => {
+    if(this.finalCode) {
+      // eslint-disable-next-line
+      const gitgraph = this.gitgraph;
+      // eslint-disable-next-line
+      eval(this.finalCode);
     }
+  }
 
+  generatePlottingCode = (dataset) => {
     let nodes = []
 
-    for (let branch in data[datasetName]) {
-      for (let node of data[datasetName][branch]) {
+    for (let branch in dataset) {
+      for (let node of dataset[branch]) {
         nodes.push({ ...node, Branch: branch });
       }
     }
 
-    console.log("nodes are now: ", nodes)
+    const masterRoot = nodes.find(n => n.Branch === "master" && n.Parents[0] === "<null>")
+    const finalCode = this.plotBranch("gitgraph", masterRoot, nodes)
+    return finalCode
+  }
+
+  plotBranch = (branchingFrom, node, nodes) => {
     var plottedVersions = [];
+    if (plottedVersions.includes(node["Version"]))
+      return "";
+    plottedVersions.push(node["Version"]);
 
-    const plotBranch = (branchingFrom, node) => {
-      if (plottedVersions.includes(node["Version"]))
-        return "";
-      plottedVersions.push(node["Version"]);
+    const branch = node["Branch"];
 
-      const branch = node["Branch"];
+    //dedupe
+    nodes = nodes.filter(n => n["Version"] !== node["Version"]);
 
-      //dedupe
-      nodes = nodes.filter(n => n["Version"] !== node["Version"]);
+    let code = "";
 
-      let code = "";
-
-      if (branchingFrom) {
-        code += `const ${branch} = ${branchingFrom}.branch("${branch}");\n`;
-      }
-
-      code += `${branch}.commit({
-        dotColor: "white",
-        dotSize: 4,
-        dotStrokeWidth: 8,
-        message: '${node["Version"]}',
-        onClick: (commit) => this.onCommitSelection(commit)
-      });\n`;
-
-      let children = nodes.filter(n => n["Parents"].includes(node["Version"]));
-
-      let codeMiddle = "", codeEnd = "";
-      for (const child of children) {
-        const isDifferentBranch = child["Branch"] !== node["Branch"];
-        if (isDifferentBranch)
-          codeMiddle += plotBranch(branch, child);
-        else
-          codeEnd += plotBranch(false, child);
-      }
-      code += (codeMiddle + codeEnd);
-
-      return code;
+    if (branchingFrom) {
+      code += `const ${branch} = ${branchingFrom}.branch("${branch}");\n`;
     }
 
-    const masterRoot = nodes.find(n => n.Branch === "master" && n.Parents[0] === "<null>");
-    const finalCode = plotBranch("gitgraph", masterRoot);
-    // eslint-disable-next-line
-    const gitgraph = this.gitgraph;
-    eval(finalCode);
+    code += `${branch}.commit({
+      dotColor: "white",
+      dotSize: 4,
+      dotStrokeWidth: 8,
+      message: '${node["Version"]}',
+      onClick: (commit) => this.onCommitSelection(commit)
+    });\n`;
 
-    return <canvas ref={this.$gitgraph} />;
+    let children = nodes.filter(n => n["Parents"].includes(node["Version"]));
+
+    let codeMiddle = "", codeEnd = "";
+    for (const child of children) {
+      const isDifferentBranch = child["Branch"] !== node["Branch"];
+      if (isDifferentBranch)
+        codeMiddle += this.plotBranch(branch, child, nodes);
+      else
+        codeEnd += this.plotBranch(false, child, nodes);
+    }
+    code += (codeMiddle + codeEnd);
+
+    return code;
   }
 }
