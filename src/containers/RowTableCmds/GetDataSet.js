@@ -206,6 +206,8 @@ class GetDataSet extends React.Component {
                   </Typography>
                   <GetDatasetResponse
                     entries={Response_GetDataset[1]}
+                    dataset={this.state.dataset}
+                    branch={this.state.branch}
                   />
                   <br />
                 </ForkbaseStatus>

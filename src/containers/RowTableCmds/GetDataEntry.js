@@ -72,7 +72,8 @@ class GetDataEntry extends React.Component {
     if (values.dataset && values.branch) {
       this.setState({
         dataset: values.dataset,
-        branch: values.branch
+        branch: values.branch,
+        entry: values.entry
       })
     }
     this.props.requestListDS()
