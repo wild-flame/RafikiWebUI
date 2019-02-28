@@ -14,6 +14,8 @@ const author = "Kaiyuan <yangkaiyuan@u.nus.edu>"
 // plot gitgraph
 var gitGraph = window.GitGraph;
 
+
+
 export default class OlafGitgraph extends React.Component {
   constructor(props) {
     super(props);
@@ -56,6 +58,10 @@ export default class OlafGitgraph extends React.Component {
     }
   }
 
+  state = {
+    finalCode: null,
+  }
+
   static propTypes = {
     datasetSelected: PropTypes.string,
     branchesSelected: PropTypes.array,
@@ -68,7 +74,7 @@ export default class OlafGitgraph extends React.Component {
 
   componentDidMount() {
     console.log("i am mounted, and i am olaf git graph")
-    const gitgraph = new gitGraph({
+    this.gitgraph = new gitGraph({
       template: this.myTemplateConfig,
       reverseArrow: false,
       canvas: this.$gitgraph.current,
@@ -77,81 +83,94 @@ export default class OlafGitgraph extends React.Component {
       author: author
     })
 
-    gitgraph.canvas.addEventListener( "commit:mouseover", function ( event ) {
+    this.gitgraph.canvas.addEventListener( "commit:mouseover", function ( event ) {
       this.style.cursor = "pointer"
     })
 
-    gitgraph.canvas.addEventListener("commit:mouseout", function (event) {
+    this.gitgraph.canvas.addEventListener("commit:mouseout", function (event) {
       this.style.cursor = "auto"
     })
 
   }
 
-  render() {
-    console.log("OlafGitgraph received props: ", this.props)
-    const datasetName = this.props.datasetSelected
-
-    const data = this.props.Response_Version_History
-
-    if (Object.keys(data).length === 0) {
-      return <canvas ref={this.$gitgraph} />;
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.datasetSelected) {
+      const data = nextProps.Response_Version_History
+      const datasetName = this.props.datasetSelected
+      this.setState({finalCode: this.generatePlottingCode(data[datasetName])});
     }
+  }
 
+  render() {
+    if(Object.keys(this.props.Response_Version_History).length > 0
+      && this.props.datasetSelected)
+    {
+      console.log("OlafGitgraph received props: ", this.props)
+      this.plotGraph()
+    }
+    return <canvas ref={this.$gitgraph} />;
+  }
+
+  plotGraph = () => {
+    if(this.state.finalCode) {
+      // eslint-disable-next-line
+      const gitgraph = this.gitgraph;
+      // eslint-disable-next-line
+      eval(this.state.finalCode);
+    }
+  }
+
+  generatePlottingCode = (dataset) => {
     let nodes = []
 
-    for (let branch in data[datasetName]) {
-      for (let node of data[datasetName][branch]) {
+    for (let branch in dataset) {
+      for (let node of dataset[branch]) {
         nodes.push({ ...node, Branch: branch });
       }
     }
 
-    console.log("nodes are now: ", nodes)
-    var plottedVersions = [];
+    this.plottedVersions = [];
+    const masterRoot = nodes.find(n => n.Branch === "master" && n.Parents[0] === "<null>")
+    const finalCode = this.plotBranch("gitgraph", masterRoot, nodes)
+    return finalCode
+  }
 
-    const plotBranch = (branchingFrom, node) => {
-      if (plottedVersions.includes(node["Version"]))
-        return "";
-      plottedVersions.push(node["Version"]);
+  plotBranch = (branchingFrom, node, nodes) => {
+    if (this.plottedVersions.includes(node["Version"]))
+      return "";
+    this.plottedVersions.push(node["Version"]);
 
-      const branch = node["Branch"];
+    const branch = node["Branch"];
 
-      //dedupe
-      nodes = nodes.filter(n => n["Version"] !== node["Version"]);
+    //dedupe
+    nodes = nodes.filter(n => n["Version"] !== node["Version"]);
 
-      let code = "";
+    let code = "";
 
-      if (branchingFrom) {
-        code += `const ${branch} = ${branchingFrom}.branch("${branch}");\n`;
-      }
-
-      code += `${branch}.commit({
-        dotColor: "white",
-        dotSize: 4,
-        dotStrokeWidth: 8,
-        message: '${node["Version"]}',
-        onClick: (commit) => this.onCommitSelection(commit)
-      });\n`;
-
-      let children = nodes.filter(n => n["Parents"].includes(node["Version"]));
-
-      let codeMiddle = "", codeEnd = "";
-      for (const child of children) {
-        const isDifferentBranch = child["Branch"] !== node["Branch"];
-        if (isDifferentBranch)
-          codeMiddle += plotBranch(branch, child);
-        else
-          codeEnd += plotBranch(false, child);
-      }
-      code += (codeMiddle + codeEnd);
-
-      return code;
+    if (branchingFrom) {
+      code += `const _${branch} = ${branchingFrom}.branch("${branch}");\n`;
     }
 
-    const masterRoot = nodes.find(n => n.Branch === "master" && n.Parents[0] === "<null>");
-    const finalCode = plotBranch("gitgraph", masterRoot);
-    // eslint-disable-next-line
-    eval(finalCode);
+    code += `_${branch}.commit({
+      dotColor: "white",
+      dotSize: 4,
+      dotStrokeWidth: 8,
+      message: '${node["Version"]}',
+      onClick: (commit) => this.onCommitSelection(commit)
+    });\n`;
 
-    return <canvas ref={this.$gitgraph} />;
+    let children = nodes.filter(n => n["Parents"].includes(node["Version"]));
+
+    let codeMiddle = "", codeEnd = "";
+    for (const child of children) {
+      const isDifferentBranch = child["Branch"] !== node["Branch"];
+      if (isDifferentBranch)
+        codeMiddle += this.plotBranch("_" + branch, child, nodes);
+      else
+        codeEnd += this.plotBranch(false, child, nodes);
+    }
+    code += (codeMiddle + codeEnd);
+
+    return code;
   }
 }
