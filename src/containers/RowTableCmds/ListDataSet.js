@@ -17,11 +17,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh';
 
-// zoom addicon
-import Fab from "@material-ui/core/Fab";
-import Zoom from "@material-ui/core/Zoom";
-import AddIcon from "@material-ui/icons/Add";
-
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
 
@@ -38,15 +33,9 @@ const styles = theme => ({
   },
   contentWrapper: {
     margin: '40px 16px',
-    position: "relative",
+    //position: "relative",
     minHeight: 200,
   },
-  fab: {
-    position: 'absolute',
-    bottom: theme.spacing.unit,
-    right: theme.spacing.unit * 0.5,
-    zIndex: 10
-  }
 })
 
 
@@ -153,16 +142,6 @@ class ListDataSet extends React.Component {
             </Toolbar>
           </ContentBar>
           <div className={classes.contentWrapper}>
-            <Zoom in={true} unmountOnExit>
-              <Fab
-                className={classes.fab}
-                color="primary"
-                component={Link}
-                to="/console/row-based-table/put-data-by-csv?addNewDS=TRUE"
-              >
-                <AddIcon />
-              </Fab>
-            </Zoom>
             <Typography color="textSecondary" align="center">
               {DatasetList.length === 0
                   ? "You do not have any dataset"

@@ -10,6 +10,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Fab from "@material-ui/core/Fab";
 import Zoom from "@material-ui/core/Zoom";
 import ListDSIcon from '@material-ui/icons/FormatListBulleted'
+import AddIcon from "@material-ui/icons/Add";
 
 
 const styles = theme => ({
@@ -24,6 +25,7 @@ const styles = theme => ({
     overflow: 'hidden',
     marginBottom: 20,
     position: "relative",
+    paddingBottom: 80
   },
   fab: {
     position: 'absolute',
@@ -49,20 +51,34 @@ class MainContent extends React.Component {
       <main className={classes.mainContent}>
         <Paper className={classes.paper}>
           {children}
-          {location.pathname !== "/console/row-based-table/list-dataset" && (
-            <Zoom in={true} unmountOnExit>
-              <Fab
-                variant="extended"
-                className={classes.fab}
-                color="primary"
-                component={Link}
-                to="/console/row-based-table/list-dataset"
-              >
-                <ListDSIcon className={classes.extendedIcon} />
-                List Dataset
-              </Fab>
-            </Zoom>
-          )}
+          {location.pathname === "/console/row-based-table/list-dataset"
+            ? (
+              <Zoom in={true} unmountOnExit>
+                <Fab
+                  className={classes.fab}
+                  color="primary"
+                  component={Link}
+                  to="/console/row-based-table/put-data-by-csv?addNewDS=TRUE"
+                >
+                  <AddIcon />
+                </Fab>
+              </Zoom>
+            )
+            : (
+              <Zoom in={true} unmountOnExit>
+                <Fab
+                  variant="extended"
+                  className={classes.fab}
+                  color="primary"
+                  component={Link}
+                  to="/console/row-based-table/list-dataset"
+                >
+                  <ListDSIcon className={classes.extendedIcon} />
+                  List Dataset
+                </Fab>
+              </Zoom>
+            )
+          }
         </Paper>
       </main>
     )
