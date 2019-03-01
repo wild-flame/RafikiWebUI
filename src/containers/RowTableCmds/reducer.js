@@ -25,7 +25,10 @@ const StatesToReset = {
   // ForkBase Status
   formState: "init",
   // Version History
-  Response_Version_History: {}
+  Response_Version_History: {},
+  // getDE for diff-DS
+  GetDEforDiff_1_Response: "",
+  GetDEforDiff_2_Response: "",
 }
 
 const initialState = {
@@ -132,6 +135,16 @@ export const RowTableCmds = (state = initialState, action) => {
       return {
         ...state,
         Response_Version_History: {}
+      }
+    case Types.POPULATE_GETDE_FORDIFF_1 :
+      return {
+        ...state,
+        GetDEforDiff_1_Response: action.GetDEforDiff_1_Response
+      }
+    case Types.POPULATE_GETDE_FORDIFF_2 :
+      return {
+        ...state,
+        GetDEforDiff_2_Response: action.GetDEforDiff_2_Response
       }
     default:
       return state

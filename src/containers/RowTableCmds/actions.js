@@ -39,7 +39,12 @@ export const Types = {
   // gitgraph and meta cmds
   REQUEST_VERSION_HISTORY: "RowTableCmds/request_version_history",
   POPULATE_VERSION_HISTORY: "RowTableCmds/populate_version_history",
-  CLEAR_VERSION_HISTORY: "RowTableCmds/clear_version_history"
+  CLEAR_VERSION_HISTORY: "RowTableCmds/clear_version_history",
+  // diff DS view difference
+  REQUEST_GETDE_FORDIFF_1: "RowTableCmds/request_getde_fordiff_1",
+  POPULATE_GETDE_FORDIFF_1: "RowTableCmds/populate_getde_fordiff_1",
+  REQUEST_GETDE_FORDIFF_2: "RowTableCmds/request_getde_fordiff_2",
+  POPULATE_GETDE_FORDIFF_2: "RowTableCmds/populate_getde_fordiff_2",
 }
 
 // LIST_DATASET{_ALL}
@@ -260,4 +265,25 @@ export const populateVersionHistory = Response_Version_History => ({
 
 export const clearVersionHistory = () => ({
   type: Types.CLEAR_VERSION_HISTORY
+})
+
+// diff DS view difference
+export const requestGetDataEntry_forDiff_1 = dataEntryForGetDataEntry_1 => ({
+  type: Types.REQUEST_GETDE_FORDIFF_1,
+  dataEntryForGetDataEntry_1
+})
+
+export const populateGetDataEntry_forDiff_1 = GetDEforDiff_1_Response => ({
+  type: Types.POPULATE_GETDE_FORDIFF_1,
+  GetDEforDiff_1_Response
+})
+
+export const requestGetDataEntry_forDiff_2 = dataEntryForGetDataEntry_2 => ({
+  type: Types.REQUEST_GETDE_FORDIFF_2,
+  dataEntryForGetDataEntry_2
+})
+
+export const populateGetDataEntry_forDiff_2 = GetDEforDiff_2_Response => ({
+  type: Types.POPULATE_GETDE_FORDIFF_2,
+  GetDEforDiff_2_Response
 })

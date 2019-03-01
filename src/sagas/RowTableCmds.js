@@ -319,6 +319,34 @@ function* watchDiffDifferentDS() {
   yield takeLatest(actions.Types.REQUEST_DIFF_DIFFERENT_DS, getDiffDifferentDSresponse)
 }
 
+/* get Data Entry for Diff DS */
+function* getDEforDiff_1(action) {
+  try{
+    const GetDEforDiff_1_Response = yield call(api.requestGetDataEntry, action.dataEntryForGetDataEntry_1)
+    yield put(actions.populateGetDataEntry_forDiff_1(GetDEforDiff_1_Response.data.result[1]))
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+function* watchGetDEforDiff_1() {
+  yield takeLatest(actions.Types.REQUEST_GETDE_FORDIFF_1, getDEforDiff_1)
+}
+
+function* getDEforDiff_2(action) {
+  try{
+    const GetDEforDiff_2_Response = yield call(api.requestGetDataEntry, action.dataEntryForGetDataEntry_2)
+    yield put(actions.populateGetDataEntry_forDiff_2(GetDEforDiff_2_Response.data.result[1]))
+  } catch(e) {
+    console.error(e)
+  }
+}
+
+function* watchGetDEforDiff_2() {
+  yield takeLatest(actions.Types.REQUEST_GETDE_FORDIFF_2, getDEforDiff_2)
+}
+
+
 /* for Delete Dataset */
 function* getDeleteDatasetResponse(action) {
   try{
@@ -382,6 +410,8 @@ const RowTableCmdsSagas = [
   fork(watchGetDataEntry),
   fork(watchDiffSameDS),
   fork(watchDiffDifferentDS),
+  fork(watchGetDEforDiff_1),
+  fork(watchGetDEforDiff_2),
   fork(watchDeleteDS),
   fork(watchExportDS),
   fork(watchReqVerionHistory)
