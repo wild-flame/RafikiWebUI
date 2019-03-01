@@ -151,7 +151,10 @@ export default class OlafGitgraph extends React.Component {
       onClick: (commit) => this.onCommitSelection(commit)
     });\n`;
 
-    let children = nodes.filter(n => n["Parents"].includes(node["Version"]));
+    let children = nodes.filter(n => n["Parents"].includes(node["Version"]))
+    let masterChild = children.find(ch => ch["Branch"] === branch);
+    if(masterChild)
+      children = children.filter(ch => (ch === masterChild) || ch["Version"] !== masterChild["Version"])
 
     let codeMiddle = "", codeEnd = "";
     for (const child of children) {
