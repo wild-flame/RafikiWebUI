@@ -20,6 +20,7 @@ import ContentBar from "../../components/ConsoleContents/ContentBar"
 import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
 import ForkbaseStatus from "../../components/ConsoleContents/ForkbaseStatus"
+import DiffDatasetResponse from "../../components/ConsoleContents/DiffDatasetResponse"
 
 // read query-string
 import queryString from 'query-string'
@@ -57,7 +58,12 @@ class DiffDataSet extends React.Component {
     Response_DiffDS: PropTypes.array,
 
     formState: PropTypes.string,
-    loadingFormState: PropTypes.func
+    loadingFormState: PropTypes.func,
+
+    requestGetDataEntry_forDiff_1: PropTypes.func,
+    requestGetDataEntry_forDiff_2: PropTypes.func,
+    GetDEforDiff_1_Response: PropTypes.string,
+    GetDEforDiff_2_Response: PropTypes.string,
   }
 
   componentDidMount() {
@@ -186,7 +192,11 @@ class DiffDataSet extends React.Component {
       classes,
       DatasetList,
       Response_DiffDS,
-      formState
+      formState,
+      requestGetDataEntry_forDiff_1,
+      requestGetDataEntry_forDiff_2,
+      GetDEforDiff_1_Response,
+      GetDEforDiff_2_Response
     } = this.props;
 
     return (
@@ -311,9 +321,18 @@ class DiffDataSet extends React.Component {
                   <Typography component="p">
                     <b>{Response_DiffDS[0]}</b>
                     <br />
-                    {Response_DiffDS[1]}
                   </Typography>
-                  <br />
+                  <DiffDatasetResponse
+                    DiffDsResponse={Response_DiffDS[1]}
+                    dataset={this.state.dataset}
+                    branch={this.state.branch}
+                    dataset_2={this.state.dataset_2}
+                    branch_2={this.state.branch_2}
+                    requestGetDataEntry_forDiff_1={requestGetDataEntry_forDiff_1}
+                    requestGetDataEntry_forDiff_2={requestGetDataEntry_forDiff_2}
+                    GetDEforDiff_1_Response={GetDEforDiff_1_Response}
+                    GetDEforDiff_2_Response={GetDEforDiff_2_Response}
+                  />
                 </ForkbaseStatus>
               </Grid>
             </Grid>
@@ -328,7 +347,9 @@ class DiffDataSet extends React.Component {
 const mapStateToProps = state => ({
   DatasetList: state.RowTableCmds.DatasetList,
   Response_DiffDS: state.RowTableCmds.Response_DiffDS,
-  formState: state.RowTableCmds.formState
+  formState: state.RowTableCmds.formState,
+  GetDEforDiff_1_Response: state.RowTableCmds.GetDEforDiff_1_Response,
+  GetDEforDiff_2_Response: state.RowTableCmds.GetDEforDiff_2_Response
 })
 
 const mapDispatchToProps = {
@@ -338,7 +359,9 @@ const mapDispatchToProps = {
   requestDiffDifferentDS: actions.requestDiffDifferentDS,
   resetResponses: actions.resetResponses,
   resetLoadingBar: ConsoleActions.resetLoadingBar,
-  loadingFormState: actions.loadingFormState
+  loadingFormState: actions.loadingFormState,
+  requestGetDataEntry_forDiff_1: actions.requestGetDataEntry_forDiff_1,
+  requestGetDataEntry_forDiff_2: actions.requestGetDataEntry_forDiff_2,
 }
 
 export default compose(

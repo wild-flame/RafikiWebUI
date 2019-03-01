@@ -40,7 +40,7 @@ class GetDatasetResponse extends React.Component {
     return (
       <List
         component="nav"
-        subheader={<ListSubheader component="div">Entries:</ListSubheader>}
+        subheader={<ListSubheader component="div">Entries: (click to Get Data Entry)</ListSubheader>}
       >
         {entryArray.map(entry =>
           <ListItem
