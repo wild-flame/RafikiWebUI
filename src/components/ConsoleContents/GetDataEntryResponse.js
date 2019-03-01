@@ -30,7 +30,7 @@ class GetDataEntryResponse extends React.Component {
 
     if (!entryValue) {
       return (
-        "..."
+        ""
       )
     }
 

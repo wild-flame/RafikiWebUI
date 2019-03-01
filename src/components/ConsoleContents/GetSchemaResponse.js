@@ -30,7 +30,7 @@ class GetSchemaResponse extends React.Component {
 
     if (!schemaResponse) {
       return (
-        "..."
+        ""
       )
     }
 

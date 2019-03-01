@@ -27,10 +27,10 @@ class GetDatasetResponse extends React.Component {
           component="nav"
           subheader={<ListSubheader component="div">Entries:</ListSubheader>}
         >
-        <ListItem button>
-          <ListItemText primary="..." />
-        </ListItem>
-      </List>
+          <ListItem button>
+            <ListItemText primary="" />
+          </ListItem>
+        </List>
       )
     }
 
@@ -55,7 +55,7 @@ class GetDatasetResponse extends React.Component {
             <ListItemText primary={entry} />
           </ListItem>
         )}
-    </List>
+      </List>
     )
   }
 }
