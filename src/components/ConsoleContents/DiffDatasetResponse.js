@@ -107,7 +107,10 @@ class DiffDatasetResponse extends React.Component {
     }
 
     // extract the array part
-    const DiffArray = DiffDsResponse.slice(20,-2).replace (/(")/g, '').split(",")
+    // const DiffArray = DiffDsResponse.slice(20,-3).replace (/(")/g, '').split(",")
+    // the above method will introduce an empty space like " a02"
+    // eslint-disable-next-line
+    const DiffArray = eval(DiffDsResponse.slice(19,-1))
 
     if (DiffDsResponse.includes("Different Entries: []")) {
       return (
