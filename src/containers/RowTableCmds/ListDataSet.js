@@ -51,7 +51,9 @@ class ListDataSet extends React.Component {
     requestVersionHistory: PropTypes.func,
     Response_Version_History: PropTypes.object,
 
-    loadingFormState: PropTypes.func
+    // loadingFormState: PropTypes.func,
+
+    clearVersionHistory: PropTypes.func
   }
 
   state = {
@@ -68,7 +70,7 @@ class ListDataSet extends React.Component {
       branchesSelected: item.branches,
     })
     // set formState to loading
-    this.props.loadingFormState()
+    // this.props.loadingFormState()
     // sagas for version history
     this.props.requestVersionHistory(item)
   }
@@ -106,7 +108,8 @@ class ListDataSet extends React.Component {
     const {
       classes,
       DatasetList,
-      Response_Version_History
+      Response_Version_History,
+      clearVersionHistory
     } = this.props;
 
     return (
@@ -153,13 +156,16 @@ class ListDataSet extends React.Component {
               handleClickHistory={this.handleClickHistory}
             />
           </div>
-          <GitGraphDialog
+          {this.state.open &&
+            <GitGraphDialog
             open={this.state.open}
             onClose={this.handleClose}
             datasetSelected={this.state.datasetSelected}
             branchesSelected={this.state.branchesSelected}
             Response_Version_History={Response_Version_History}
+            clearVersionHistory={clearVersionHistory}
           />
+          }
         </MainContent>
       </React.Fragment>
     )
@@ -177,8 +183,9 @@ const mapDispatchToProps = {
   requestListDS: actions.requestListDS,
   requestDBSize: OverviewActions.requestDBSize,
   resetLoadingBar: ConsoleActions.resetLoadingBar,
-  loadingFormState: actions.loadingFormState,
+  //loadingFormState: actions.loadingFormState,
   requestVersionHistory: actions.requestVersionHistory,
+  clearVersionHistory: actions.clearVersionHistory
 }
 
 export default compose(

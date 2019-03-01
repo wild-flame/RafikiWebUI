@@ -128,6 +128,11 @@ export const RowTableCmds = (state = initialState, action) => {
         ...state,
         Response_Version_History: action.Response_Version_History
       }
+    case Types.CLEAR_VERSION_HISTORY :
+      return {
+        ...state,
+        Response_Version_History: {}
+      }
     default:
       return state
   }

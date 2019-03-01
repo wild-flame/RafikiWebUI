@@ -39,6 +39,7 @@ export const Types = {
   // gitgraph and meta cmds
   REQUEST_VERSION_HISTORY: "RowTableCmds/request_version_history",
   POPULATE_VERSION_HISTORY: "RowTableCmds/populate_version_history",
+  CLEAR_VERSION_HISTORY: "RowTableCmds/clear_version_history"
 }
 
 // LIST_DATASET{_ALL}
@@ -255,4 +256,8 @@ export const requestVersionHistory = item => ({
 export const populateVersionHistory = Response_Version_History => ({
   type: Types.POPULATE_VERSION_HISTORY,
   Response_Version_History
+})
+
+export const clearVersionHistory = () => ({
+  type: Types.CLEAR_VERSION_HISTORY
 })

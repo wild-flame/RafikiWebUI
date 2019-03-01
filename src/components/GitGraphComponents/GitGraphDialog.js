@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 
 import OlafGitgraph from "./OlafGitgraph"
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 
 const styles = {
@@ -35,7 +36,8 @@ class GitGraphDialog extends React.Component {
     onClose: PropTypes.func,
     datasetSelected: PropTypes.string,
     branchesSelected: PropTypes.array,
-    Response_Version_History: PropTypes.object
+    Response_Version_History: PropTypes.object,
+    clearVersionHistory: PropTypes.func
   }
 
   componentDidMount() {
@@ -52,14 +54,14 @@ class GitGraphDialog extends React.Component {
       open,
       datasetSelected,
       branchesSelected,
-      Response_Version_History
+      Response_Version_History,
+      clearVersionHistory,
     } = this.props;
 
     return (
       <Dialog
         open={open}
         onClose={this.handleClose}
-        fullWidth
         maxWidth={"lg"}
       >
         <AppBar className={classes.appBar}>
@@ -80,11 +82,21 @@ class GitGraphDialog extends React.Component {
         <DialogContent
           className={classes.dialogContent}
         >
-          <OlafGitgraph
-            datasetSelected={datasetSelected}
-            branchesSelected={branchesSelected}
-            Response_Version_History={Response_Version_History}
-          />
+          {Object.keys(Response_Version_History).length > 0
+            ? (
+              <OlafGitgraph
+                datasetSelected={datasetSelected}
+                branchesSelected={branchesSelected}
+                Response_Version_History={Response_Version_History}
+                clearVersionHistory={clearVersionHistory}
+              />
+            )
+            : (
+              <div>
+                <LinearProgress color="secondary" />
+              </div>
+            )
+          }
         </DialogContent>
       </Dialog>
     );

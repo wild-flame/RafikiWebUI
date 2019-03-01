@@ -65,7 +65,8 @@ export default class OlafGitgraph extends React.Component {
   static propTypes = {
     datasetSelected: PropTypes.string,
     branchesSelected: PropTypes.array,
-    Response_Version_History: PropTypes.object
+    Response_Version_History: PropTypes.object,
+    clearVersionHistory: PropTypes.func
   }
 
   onCommitSelection = (commit) => {
@@ -101,14 +102,9 @@ export default class OlafGitgraph extends React.Component {
     }
   }
 
-  render() {
-    if(Object.keys(this.props.Response_Version_History).length > 0
-      && this.props.datasetSelected)
-    {
-      console.log("OlafGitgraph received props: ", this.props)
-      this.plotGraph()
-    }
-    return <canvas ref={this.$gitgraph} />;
+  componentWillUnmount() {
+    console.log("olaf gitgraph unmount")
+    this.props.clearVersionHistory()
   }
 
   plotGraph = () => {
@@ -172,5 +168,15 @@ export default class OlafGitgraph extends React.Component {
     code += (codeMiddle + codeEnd);
 
     return code;
+  }
+
+  render() {
+    if(Object.keys(this.props.Response_Version_History).length > 0
+      && this.props.datasetSelected)
+    {
+      console.log("OlafGitgraph received props: ", this.props)
+      this.plotGraph()
+    }
+    return <canvas ref={this.$gitgraph} />;
   }
 }
