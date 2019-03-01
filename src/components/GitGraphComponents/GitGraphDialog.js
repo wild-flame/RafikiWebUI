@@ -62,7 +62,8 @@ class GitGraphDialog extends React.Component {
       <Dialog
         open={open}
         onClose={this.handleClose}
-        maxWidth={"lg"}
+        fullWidth
+        maxWidth={"md"}
       >
         <AppBar className={classes.appBar}>
           <Toolbar>
