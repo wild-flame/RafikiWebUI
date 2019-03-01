@@ -158,13 +158,13 @@ class ListDataSet extends React.Component {
           </div>
           {this.state.open &&
             <GitGraphDialog
-            open={this.state.open}
-            onClose={this.handleClose}
-            datasetSelected={this.state.datasetSelected}
-            branchesSelected={this.state.branchesSelected}
-            Response_Version_History={Response_Version_History}
-            clearVersionHistory={clearVersionHistory}
-          />
+              open={this.state.open}
+              onClose={this.handleClose}
+              datasetSelected={this.state.datasetSelected}
+              branchesSelected={this.state.branchesSelected}
+              Response_Version_History={Response_Version_History}
+              clearVersionHistory={clearVersionHistory}
+            />
           }
         </MainContent>
       </React.Fragment>
