@@ -92,14 +92,10 @@ export default class OlafGitgraph extends React.Component {
       this.style.cursor = "auto"
     })
 
-  }
+    const data = this.props.Response_Version_History
+    const datasetName = this.props.datasetSelected
+    this.setState({finalCode: this.generatePlottingCode(data[datasetName])});
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.datasetSelected) {
-      const data = nextProps.Response_Version_History
-      const datasetName = this.props.datasetSelected
-      this.setState({finalCode: this.generatePlottingCode(data[datasetName])});
-    }
   }
 
   componentWillUnmount() {
