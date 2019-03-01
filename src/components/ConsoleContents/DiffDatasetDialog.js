@@ -37,6 +37,7 @@ class DiffDatasetDialog extends React.Component {
     branch: PropTypes.string,
     dataset_2: PropTypes.string,
     branch_2: PropTypes.string,
+    entrySelected: PropTypes.string
   }
 
   componentDidMount() {
@@ -61,6 +62,7 @@ class DiffDatasetDialog extends React.Component {
       branch,
       dataset_2,
       branch_2,
+      entrySelected
     } = this.props;
 
     return (
@@ -73,7 +75,7 @@ class DiffDatasetDialog extends React.Component {
         <AppBar className={classes.appBar}>
           <Toolbar>
             <Typography variant="h6" color="inherit" className={classes.flex}>
-              View Difference
+              View Difference @ {entrySelected}
             </Typography>
             <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
               <CloseIcon />
@@ -87,14 +89,14 @@ class DiffDatasetDialog extends React.Component {
             ? (
               <React.Fragment>
                 <Typography variant="subtitle1" color="primary">
-                  Dataset: {dataset}, Branch: {branch}
+                  Dataset: {dataset}, Branch: {branch}, Entry: {entrySelected}
                 </Typography>
                 <Typography component="p">
                   {GetDEforDiff_1_Response}
                 </Typography>
                 <br />
                 <Typography variant="subtitle1" color="primary">
-                  Dataset: {dataset_2 || dataset}, Branch: {branch_2}
+                  Dataset: {dataset_2 || dataset}, Branch: {branch_2}, Entry: {entrySelected}
                 </Typography>
                 <Typography component="p">
                   {GetDEforDiff_2_Response}

@@ -26,6 +26,7 @@ class DiffDatasetResponse extends React.Component {
 
   state = {
     open: false,
+    entrySelected: ""
   }
 
   handleClickOpen = entry => {
@@ -40,6 +41,7 @@ class DiffDatasetResponse extends React.Component {
 
     this.setState({
       open: true,
+      entrySelected: entry
     })
     // create inputs
     const dataEntryForGetDataEntry_1 = Object.assign(
@@ -154,6 +156,7 @@ class DiffDatasetResponse extends React.Component {
             dataset_2={dataset_2}
             branch={branch}
             branch_2={branch_2}
+            entrySelected={this.state.entrySelected}
           />
         }
       </React.Fragment>
