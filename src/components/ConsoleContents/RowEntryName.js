@@ -163,6 +163,7 @@ class RowEntryName extends React.Component {
                   margin="normal"
                   disabled={disabled}
                 >
+                  <option defaultValue={""} hidden></option>
                   {EntryArray.map((entry, index) => (
                     <option key={index} value={entry}>
                       {entry}
