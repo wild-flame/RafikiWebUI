@@ -189,7 +189,7 @@ class GetDataEntry extends React.Component {
       Response_GetDataEntry,
       formState
     } = this.props;
-    console.log("STATE GetDE", this.state)
+
     return (
       <React.Fragment>
         <MainContent>

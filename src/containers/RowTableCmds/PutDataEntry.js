@@ -78,7 +78,10 @@ class PutDataEntry extends React.Component {
     triggerBranchDS_PutDE_Combo: PropTypes.func,
 
     formState: PropTypes.string,
-    loadingFormState: PropTypes.func
+    loadingFormState: PropTypes.func,
+
+    requestGetDataEntry: PropTypes.func,
+    Response_GetDataEntry: PropTypes.array,
   }
 
   componentDidMount() {
@@ -97,7 +100,7 @@ class PutDataEntry extends React.Component {
   handleChange = name => event => {
     if (name === "dataset") {
       this.setState({
-        branch: "master",
+        branch: "",
         newBranch: "",
         referBranch: "",
         entry: "",
@@ -213,7 +216,7 @@ class PutDataEntry extends React.Component {
     // when toggle "Create new branch" option, reset state
     if (this.state.checkedNewBranch !== prevState.checkedNewBranch) {
       this.setState({
-        branch: "master",
+        branch: "",
         newBranch: "",
         referBranch: "",
         entry: "",
@@ -284,6 +287,40 @@ class PutDataEntry extends React.Component {
         })
       }
     }
+    if (this.state.entry !== prevState.entry) {
+      // when referBranch, dataset, and getDS all ready, call getDE
+      if (
+        this.state.checkedNewBranch &&
+        this.state.dataset !== "" &&
+        this.state.referBranch !==""
+      ) {
+        // create inputs
+        let dataEntryForGetDataEntry = Object.assign(
+          {
+            "dataset": this.state.dataset,
+            "branch": this.state.referBranch,
+            "entry": this.state.entry,
+          },
+          {}
+        )
+        this.props.requestGetDataEntry(dataEntryForGetDataEntry)
+      }
+      // when branch, dataset, and getDS all ready, call getDE
+      if (this.state.dataset !== "" &&
+        this.state.branch !== ""
+      ) {
+        // create inputs
+        let dataEntryForGetDataEntry = Object.assign(
+          {
+            "dataset": this.state.dataset,
+            "branch": this.state.branch,
+            "entry": this.state.entry,
+          },
+          {}
+        )
+        this.props.requestGetDataEntry(dataEntryForGetDataEntry)
+      }
+    }
     // validate when to enable COMMIT button
     if (
       this.state.dataset !== prevState.dataset ||
@@ -343,7 +380,8 @@ class PutDataEntry extends React.Component {
       DatasetList,
       Response_PutDE,
       Response_BranchDS,
-      formState
+      formState,
+      Response_GetDataEntry
     } = this.props;
 
     return (
@@ -412,8 +450,35 @@ class PutDataEntry extends React.Component {
                 >
                   <Grid item>
                     <TextField
+                      id="current-value"
+                      label="Current-Value"
+                      className={classes.textField}
+                      value={
+                        Response_GetDataEntry[1]
+                        ? (
+                          Response_GetDataEntry[1].replace('Value: "', "").slice(0,-2)
+                        )
+                        : (
+                          "Preparing..."
+                        )
+                      }
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                      margin="normal"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-evenly"
+                  alignItems="center"
+                >
+                  <Grid item>
+                    <TextField
                       id="put-value"
-                      label="Value"
+                      label="Put-Value"
                       className={classes.textField}
                       value={this.state.value}
                       onChange={this.handleChange("value")}
@@ -475,7 +540,8 @@ const mapStateToProps = state => ({
   Response_PutDE: state.RowTableCmds.Response_PutDE,
   Response_BranchDS: state.RowTableCmds.Response_BranchDS,
   Response_GetDataset: state.RowTableCmds.Response_GetDataset,
-  formState: state.RowTableCmds.formState
+  formState: state.RowTableCmds.formState,
+  Response_GetDataEntry: state.RowTableCmds.Response_GetDataEntry,
 })
 
 const mapDispatchToProps = {
@@ -487,7 +553,8 @@ const mapDispatchToProps = {
   resetLoadingBar: ConsoleActions.resetLoadingBar,
   requestGetDataset: actions.requestGetDataset,
   requestDBSize: OverviewActions.requestDBSize,
-  loadingFormState: actions.loadingFormState
+  loadingFormState: actions.loadingFormState,
+  requestGetDataEntry: actions.requestGetDataEntry,
 }
 
 export default compose(
