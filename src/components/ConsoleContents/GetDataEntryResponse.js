@@ -15,6 +15,10 @@ const styles = theme => ({
     padding: theme.spacing.unit,
     textAlign: 'center',
     color: theme.palette.text.secondary,
+    whiteSpace: "normal",
+    wordBreak: "break-word",
+    overflowWrap: "break-word",
+    maxWidth: "100%"
   },
 })
 
@@ -47,7 +51,7 @@ class GetDataEntryResponse extends React.Component {
         </Typography>
         <hr />
         <div className={classes.root}>
-          <Grid container spacing={8}>
+          <Grid container spacing={0} zeroMinWidth>
             {entryValueArray.map((eachValue, index) => (
               <Paper
                 className={classes.paper}
