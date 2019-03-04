@@ -146,6 +146,13 @@ export const RowTableCmds = (state = initialState, action) => {
         ...state,
         GetDEforDiff_2_Response: action.GetDEforDiff_2_Response
       }
+    case Types.RESET_GETDE_FORDIFF :
+      return {
+        ...state,
+        // getDE for diff-DS
+        GetDEforDiff_1_Response: "",
+        GetDEforDiff_2_Response: "",
+      }
     default:
       return state
   }

@@ -22,6 +22,7 @@ class DiffDatasetResponse extends React.Component {
     requestGetDataEntry_forDiff_2: PropTypes.func,
     GetDEforDiff_1_Response: PropTypes.string,
     GetDEforDiff_2_Response: PropTypes.string,
+    resetGetDEforDiff: PropTypes.func
   }
 
   state = {
@@ -92,7 +93,8 @@ class DiffDatasetResponse extends React.Component {
       dataset_2,
       branch_2,
       GetDEforDiff_1_Response,
-      GetDEforDiff_2_Response
+      GetDEforDiff_2_Response,
+      resetGetDEforDiff
     } = this.props
 
     if (!DiffDsResponse) {
@@ -157,6 +159,7 @@ class DiffDatasetResponse extends React.Component {
             branch={branch}
             branch_2={branch_2}
             entrySelected={this.state.entrySelected}
+            resetGetDEforDiff={resetGetDEforDiff}
           />
         }
       </React.Fragment>

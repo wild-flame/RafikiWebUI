@@ -45,6 +45,7 @@ export const Types = {
   POPULATE_GETDE_FORDIFF_1: "RowTableCmds/populate_getde_fordiff_1",
   REQUEST_GETDE_FORDIFF_2: "RowTableCmds/request_getde_fordiff_2",
   POPULATE_GETDE_FORDIFF_2: "RowTableCmds/populate_getde_fordiff_2",
+  RESET_GETDE_FORDIFF: "RowTableCmds/reset_getde_fordiff",
 }
 
 // LIST_DATASET{_ALL}
@@ -286,4 +287,8 @@ export const requestGetDataEntry_forDiff_2 = dataEntryForGetDataEntry_2 => ({
 export const populateGetDataEntry_forDiff_2 = GetDEforDiff_2_Response => ({
   type: Types.POPULATE_GETDE_FORDIFF_2,
   GetDEforDiff_2_Response
+})
+
+export const resetGetDEforDiff = () => ({
+  type: Types.RESET_GETDE_FORDIFF
 })

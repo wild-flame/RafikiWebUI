@@ -64,6 +64,7 @@ class DiffDataSet extends React.Component {
     requestGetDataEntry_forDiff_2: PropTypes.func,
     GetDEforDiff_1_Response: PropTypes.string,
     GetDEforDiff_2_Response: PropTypes.string,
+    resetGetDEforDiff: PropTypes.func
   }
 
   componentDidMount() {
@@ -196,7 +197,8 @@ class DiffDataSet extends React.Component {
       requestGetDataEntry_forDiff_1,
       requestGetDataEntry_forDiff_2,
       GetDEforDiff_1_Response,
-      GetDEforDiff_2_Response
+      GetDEforDiff_2_Response,
+      resetGetDEforDiff
     } = this.props;
 
     return (
@@ -332,6 +334,7 @@ class DiffDataSet extends React.Component {
                     requestGetDataEntry_forDiff_2={requestGetDataEntry_forDiff_2}
                     GetDEforDiff_1_Response={GetDEforDiff_1_Response}
                     GetDEforDiff_2_Response={GetDEforDiff_2_Response}
+                    resetGetDEforDiff={resetGetDEforDiff}
                   />
                 </ForkbaseStatus>
               </Grid>
@@ -362,6 +365,7 @@ const mapDispatchToProps = {
   loadingFormState: actions.loadingFormState,
   requestGetDataEntry_forDiff_1: actions.requestGetDataEntry_forDiff_1,
   requestGetDataEntry_forDiff_2: actions.requestGetDataEntry_forDiff_2,
+  resetGetDEforDiff: actions.resetGetDEforDiff
 }
 
 export default compose(

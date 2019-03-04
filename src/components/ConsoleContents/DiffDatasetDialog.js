@@ -12,6 +12,8 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
 
+import GetDataEntryResponse from "./GetDataEntryResponse"
+
 
 const styles = {
   appBar: {
@@ -37,7 +39,8 @@ class DiffDatasetDialog extends React.Component {
     branch: PropTypes.string,
     dataset_2: PropTypes.string,
     branch_2: PropTypes.string,
-    entrySelected: PropTypes.string
+    entrySelected: PropTypes.string,
+    resetGetDEforDiff: PropTypes.func
   }
 
   componentDidMount() {
@@ -50,6 +53,7 @@ class DiffDatasetDialog extends React.Component {
 
   handleClose = () => {
     this.props.onClose();
+    this.props.resetGetDEforDiff();
   };
 
   render() {
@@ -91,16 +95,16 @@ class DiffDatasetDialog extends React.Component {
                 <Typography variant="subtitle1" color="primary">
                   Dataset: {dataset}, Branch: {branch}, Entry: {entrySelected}
                 </Typography>
-                <Typography component="p">
-                  {GetDEforDiff_1_Response}
-                </Typography>
+                <GetDataEntryResponse
+                  entryValue={GetDEforDiff_1_Response}
+                />
                 <br />
                 <Typography variant="subtitle1" color="primary">
                   Dataset: {dataset_2 || dataset}, Branch: {branch_2}, Entry: {entrySelected}
                 </Typography>
-                <Typography component="p">
-                  {GetDEforDiff_2_Response}
-                </Typography>
+                <GetDataEntryResponse
+                  entryValue={GetDEforDiff_2_Response}
+                />
                 <br />
               </React.Fragment>
             )
