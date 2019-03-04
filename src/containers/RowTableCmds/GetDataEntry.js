@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux"
 import { compose } from "redux"
+import { Link } from "react-router-dom";
 
 import * as ConsoleActions from "../ConsoleAppFrame/actions"
 import * as actions from "./actions"
@@ -12,6 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
+
+// icon to re-direct to put-de
+import PutDeIcon from '@material-ui/icons/PlaylistAdd'
 
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
@@ -33,7 +37,13 @@ const styles = theme => ({
   },
   contentWrapper: {
     margin: '10px 16px',
-  }
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit,
+  },
 })
 
 
@@ -279,6 +289,18 @@ class GetDataEntry extends React.Component {
                     entryValue={Response_GetDataEntry[1]}
                   />
                   <br />
+                  {Response_GetDataEntry[1] &&
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                      component={Link}
+                      to={`/console/row-based-table/put-data-entry?dataset=${this.state.dataset}&branch=${this.state.branch}&entry=${this.state.entry}`}
+                    >
+                      <PutDeIcon className={classes.leftIcon} />
+                      Put Data Entry
+                    </Button>
+                  }
                 </ForkbaseStatus>
               </Grid>
             </Grid>

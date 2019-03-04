@@ -94,6 +94,17 @@ class PutDataEntry extends React.Component {
         dataset: values.dataset
       })
     }
+    if (
+      values.dataset &&
+      values.branch &&
+      values.entry
+    ) {
+      this.setState({
+        dataset: values.dataset,
+        branch: values.branch,
+        entry: values.entry
+      })
+    }
     this.props.requestListDS()
   }
 
