@@ -189,7 +189,7 @@ class GetDataEntry extends React.Component {
       Response_GetDataEntry,
       formState
     } = this.props;
-
+    console.log("STATE GetDE", this.state)
     return (
       <React.Fragment>
         <MainContent>
@@ -255,7 +255,7 @@ class GetDataEntry extends React.Component {
                     variant="contained"
                     color="primary"
                     onClick={this.handleCommit}
-                    disabled={!this.state.FormIsValid && formState === "loading"}
+                    disabled={!this.state.FormIsValid || formState === "loading"}
                   >
                     COMMIT
                   </Button>

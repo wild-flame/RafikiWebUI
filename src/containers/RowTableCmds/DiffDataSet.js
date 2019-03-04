@@ -304,7 +304,7 @@ class DiffDataSet extends React.Component {
                     variant="contained"
                     color="primary"
                     onClick={this.handleCommit}
-                    disabled={!this.state.FormIsValid && formState === "loading"}
+                    disabled={!this.state.FormIsValid || formState === "loading"}
                   >
                     COMMIT
                   </Button>
