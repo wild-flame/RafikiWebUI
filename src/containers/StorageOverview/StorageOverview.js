@@ -75,7 +75,7 @@ class StorageOverview extends React.Component {
               <Grid container spacing={16} justify="space-between" alignItems="center">
                 <Grid item>
                   <Typography variant="h5" gutterBottom>
-                    Total Storage Size: {DBSize}
+                    Total Storage (Blob) Size: {DBSize}
                   </Typography>
                 </Grid>
                 <Grid item>

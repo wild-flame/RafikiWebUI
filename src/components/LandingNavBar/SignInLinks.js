@@ -42,7 +42,7 @@ const SignedInLinks = (props) => {
       <Typography
         variant="h6"
       >
-        <Link to="/console" className={classes.rightLink}>
+        <Link to="/console/row-based-table/list-dataset" className={classes.rightLink}>
           {'Go To Console'}
         </Link>
       </Typography>
