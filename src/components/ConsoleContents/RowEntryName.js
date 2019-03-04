@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
+// import MenuItem from '@material-ui/core/MenuItem';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from '@material-ui/core/Switch';
 
@@ -146,6 +146,7 @@ class RowEntryName extends React.Component {
             >
               <Grid item>
                 <TextField
+                  InputLabelProps={{ shrink: true }}
                   id="existing-entry-names"
                   select
                   label="Select row entry"
@@ -153,6 +154,7 @@ class RowEntryName extends React.Component {
                   value={!checkedNewEntry && entry}
                   onChange={onHandleChange(RowEntryState)}
                   SelectProps={{
+                    native: true,
                     MenuProps: {
                       className: classes.menu,
                     },
@@ -162,9 +164,9 @@ class RowEntryName extends React.Component {
                   disabled={disabled}
                 >
                   {EntryArray.map((entry, index) => (
-                    <MenuItem key={index} value={entry}>
+                    <option key={index} value={entry}>
                       {entry}
-                    </MenuItem>
+                    </option>
                   ))}
                 </TextField>
               </Grid>
