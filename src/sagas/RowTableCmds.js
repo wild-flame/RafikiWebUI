@@ -3,7 +3,8 @@ import {
   call,
   fork,
   put,
-  take
+  take,
+  takeEvery
 } from "redux-saga/effects"
 import { showLoading, hideLoading, resetLoading } from 'react-redux-loading-bar'
 import * as actions from "../containers/RowTableCmds/actions"
@@ -383,15 +384,16 @@ function* watchExportDS() {
 function* getVersionHistoryResponse(action) {
   try{
     const Response_Version_History = yield call(api.requestVersionHistory, action.item)
-    yield put(actions.populateVersionHistory(Response_Version_History.data.result))
-    yield put(actions.idleFormState())
+    // yield put(actions.populateVersionHistory(Response_Version_History.data.result))
+    yield put(actions.cacheVersionHistory(Response_Version_History.data.result))
   } catch(e) {
     console.error(e)
   }
 }
 
 function* watchReqVerionHistory() {
-  yield takeLatest(actions.Types.REQUEST_VERSION_HISTORY, getVersionHistoryResponse)
+  //takeEvery allows multiple fetchData instances to be started concurrently
+  yield takeEvery(actions.Types.REQUEST_VERSION_HISTORY, getVersionHistoryResponse)
 }
 
 
