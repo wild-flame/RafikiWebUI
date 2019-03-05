@@ -38,7 +38,9 @@ export const Types = {
   IDLE_FORMSTATE: "RowTableCmds/idle_responses",
   // gitgraph and meta cmds
   REQUEST_VERSION_HISTORY: "RowTableCmds/request_version_history",
-  POPULATE_VERSION_HISTORY: "RowTableCmds/populate_version_history",
+  //POPULATE_VERSION_HISTORY: "RowTableCmds/populate_version_history",
+  CACHE_VERSION_HISTORY: "RowTableCmds/cache_version_history",
+  TRANSFER_CACHED_HISTORY: "RowTableCmds/transfer_cached_history",
   CLEAR_VERSION_HISTORY: "RowTableCmds/clear_version_history",
   // diff DS view difference
   REQUEST_GETDE_FORDIFF_1: "RowTableCmds/request_getde_fordiff_1",
@@ -259,9 +261,20 @@ export const requestVersionHistory = item => ({
   item
 })
 
+/* temporarily use Cache Version History to populate Ver_His
 export const populateVersionHistory = Response_Version_History => ({
   type: Types.POPULATE_VERSION_HISTORY,
   Response_Version_History
+}) */
+
+export const cacheVersionHistory = Response_Version_History => ({
+  type: Types.CACHE_VERSION_HISTORY,
+  Response_Version_History
+})
+
+export const transferCachedHistory = item => ({
+  type: Types.TRANSFER_CACHED_HISTORY,
+  item
 })
 
 export const clearVersionHistory = () => ({

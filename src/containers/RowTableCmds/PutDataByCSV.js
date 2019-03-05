@@ -79,7 +79,9 @@ class PutDataByCSV extends React.Component {
     percentCompleted: PropTypes.number,
 
     formState: PropTypes.string,
-    loadingFormState: PropTypes.func
+    loadingFormState: PropTypes.func,
+
+    requestVersionHistory: PropTypes.func,
   }
 
   handleChange = name => event => {
@@ -326,6 +328,10 @@ class PutDataByCSV extends React.Component {
   }
 
   componentWillUnmount() {
+    for (let item of this.props.DatasetList) {
+      // sagas for version history
+      this.props.requestVersionHistory(item)
+    }
     this.props.resetResponses()
     this.props.resetLoadingBar()
   }
@@ -531,7 +537,8 @@ const mapDispatchToProps = {
   resetResponses: actions.resetResponses,
   resetLoadingBar: ConsoleActions.resetLoadingBar,
   requestDBSize: OverviewActions.requestDBSize,
-  loadingFormState: actions.loadingFormState
+  loadingFormState: actions.loadingFormState,
+  requestVersionHistory: actions.requestVersionHistory,
 }
 
 export default compose(

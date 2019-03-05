@@ -82,6 +82,8 @@ class PutDataEntry extends React.Component {
 
     requestGetDataEntry: PropTypes.func,
     Response_GetDataEntry: PropTypes.array,
+
+    requestVersionHistory: PropTypes.func,
   }
 
   componentDidMount() {
@@ -381,6 +383,10 @@ class PutDataEntry extends React.Component {
   }
 
   componentWillUnmount() {
+    for (let item of this.props.DatasetList) {
+      // sagas for version history
+      this.props.requestVersionHistory(item)
+    }
     this.props.resetResponses()
     this.props.resetLoadingBar()
   }
@@ -566,6 +572,7 @@ const mapDispatchToProps = {
   requestDBSize: OverviewActions.requestDBSize,
   loadingFormState: actions.loadingFormState,
   requestGetDataEntry: actions.requestGetDataEntry,
+  requestVersionHistory: actions.requestVersionHistory,
 }
 
 export default compose(

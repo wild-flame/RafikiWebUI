@@ -97,7 +97,8 @@ class ListDataSetTable extends React.Component {
     const {
       classes,
       DatasetList,
-      handleClickHistory
+      handleClickHistory,
+      Cache_Version_History
     } = this.props
 
     const {
@@ -142,7 +143,10 @@ class ListDataSetTable extends React.Component {
                     variant="contained"
                     color="secondary"
                     onClick={() => handleClickHistory(item)}
-                    disabled={item["dataset"] === "..."}
+                    disabled={
+                      (item["dataset"] === "...") ||
+                      (Object.keys(Cache_Version_History).length === 0)
+                    }
                   >
                     View History
                   </Button>

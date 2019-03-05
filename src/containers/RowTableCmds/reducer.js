@@ -24,8 +24,6 @@ const StatesToReset = {
   Response_ExportDS: [],
   // ForkBase Status
   formState: "init",
-  // Version History
-  Response_Version_History: {},
   // getDE for diff-DS
   GetDEforDiff_1_Response: "",
   GetDEforDiff_2_Response: "",
@@ -39,6 +37,9 @@ const initialState = {
       'branches': ['']
     }
   ],
+  // Version History
+  Response_Version_History: {},
+  Cache_Version_History: {},
   ...StatesToReset
 };
 
@@ -126,10 +127,25 @@ export const RowTableCmds = (state = initialState, action) => {
         ...state,
         formState: "idle"
       }
-    case Types.POPULATE_VERSION_HISTORY :
+    // case Types.POPULATE_VERSION_HISTORY :
+    //   return {
+    //     ...state,
+    //     Response_Version_History: action.Response_Version_History
+    //   }
+    case Types.CACHE_VERSION_HISTORY :
       return {
         ...state,
-        Response_Version_History: action.Response_Version_History
+        Cache_Version_History: {
+          ...state.Cache_Version_History,
+          ...action.Response_Version_History
+        }
+      }
+    case Types.TRANSFER_CACHED_HISTORY :
+      return {
+        ...state,
+        Response_Version_History: {
+          [action.item.dataset]: state.Cache_Version_History[action.item.dataset]
+        }
       }
     case Types.CLEAR_VERSION_HISTORY :
       return {

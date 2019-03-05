@@ -51,8 +51,7 @@ class ListDataSet extends React.Component {
     requestVersionHistory: PropTypes.func,
     Response_Version_History: PropTypes.object,
 
-    // loadingFormState: PropTypes.func,
-
+    Cache_Version_History: PropTypes.object,
     clearVersionHistory: PropTypes.func
   }
 
@@ -69,10 +68,9 @@ class ListDataSet extends React.Component {
       datasetSelected: item.dataset,
       branchesSelected: item.branches,
     })
-    // set formState to loading
-    // this.props.loadingFormState()
-    // sagas for version history
-    this.props.requestVersionHistory(item)
+    // transfer cached part of cache_version_history to
+    // Response_Version_History
+    this.props.transferCachedHistory(item)
   }
 
   handleClose = () => {
@@ -94,11 +92,16 @@ class ListDataSet extends React.Component {
     this.props.requestListDS()
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevProps.DatasetList !== this.props.DatasetList) {
-  //     this.props.requestDBSize()
-  //   }
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.DatasetList !== this.props.DatasetList) {
+      if (this.props.DatasetList) {
+          for (let item of this.props.DatasetList) {
+            // sagas for version history
+            this.props.requestVersionHistory(item)
+          }
+      }
+    }
+  }
 
   componentWillUnmount() {
     this.props.resetLoadingBar()
@@ -109,7 +112,8 @@ class ListDataSet extends React.Component {
       classes,
       DatasetList,
       Response_Version_History,
-      clearVersionHistory
+      clearVersionHistory,
+      Cache_Version_History
     } = this.props;
 
     return (
@@ -154,6 +158,7 @@ class ListDataSet extends React.Component {
             <ListDataSetTable
               DatasetList={DatasetList}
               handleClickHistory={this.handleClickHistory}
+              Cache_Version_History={Cache_Version_History}
             />
           </div>
           {this.state.open &&
@@ -175,7 +180,8 @@ class ListDataSet extends React.Component {
 
 const mapStateToProps = state => ({
   DatasetList: state.RowTableCmds.DatasetList,
-  Response_Version_History: state.RowTableCmds.Response_Version_History
+  Response_Version_History: state.RowTableCmds.Response_Version_History,
+  Cache_Version_History: state.RowTableCmds.Cache_Version_History
 })
 
 const mapDispatchToProps = {
@@ -183,9 +189,9 @@ const mapDispatchToProps = {
   requestListDS: actions.requestListDS,
   requestDBSize: OverviewActions.requestDBSize,
   resetLoadingBar: ConsoleActions.resetLoadingBar,
-  //loadingFormState: actions.loadingFormState,
   requestVersionHistory: actions.requestVersionHistory,
-  clearVersionHistory: actions.clearVersionHistory
+  clearVersionHistory: actions.clearVersionHistory,
+  transferCachedHistory: actions.transferCachedHistory,
 }
 
 export default compose(
