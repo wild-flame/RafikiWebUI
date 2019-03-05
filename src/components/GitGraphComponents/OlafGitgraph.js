@@ -16,7 +16,7 @@ var gitGraph = window.GitGraph;
 
 
 
-export default class OlafGitgraph extends React.Component {
+export default class OlafGitgraph extends React.PureComponent {
   constructor(props) {
     super(props);
     this.$gitgraph = React.createRef();
