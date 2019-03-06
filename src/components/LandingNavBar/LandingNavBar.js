@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
+import { compose } from "redux";
+import { connect } from "react-redux";
+
 import { withStyles } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography"
 import AppBar from '../LandingComponents/AppBar';
@@ -117,4 +120,13 @@ class LandingNavBar extends React.Component {
   }
 }
 
-export default withStyles(styles)(LandingNavBar);
+
+const mapStateToProps = state => ({
+  auth: state.firebaseReducer.auth,
+});
+
+
+export default compose(
+  connect(mapStateToProps),
+  withStyles(styles)
+)(LandingNavBar);

@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from "react-redux"
+import { compose } from "redux"
+
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
@@ -39,7 +42,12 @@ const styles = theme => ({
 });
 
 function Header(props) {
-  const { classes, onDrawerToggle } = props;
+  const {
+    classes,
+    onDrawerToggle,
+    initials,
+    bgColor
+  } = props;
 
   return (
     <React.Fragment>
@@ -77,7 +85,14 @@ function Header(props) {
             </Grid>
             <Grid item>
               <IconButton color="inherit" className={classes.iconButtonAvatar}>
-                <Avatar className={classes.avatar}>KY</Avatar>
+              <Avatar
+                className={classes.avatar}
+                style={{
+                  backgroundColor: bgColor
+                }}
+              >
+                {initials}
+              </Avatar>
               </IconButton>
             </Grid>
           </Grid>
@@ -92,4 +107,14 @@ Header.propTypes = {
   onDrawerToggle: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(Header);
+const mapStateToProps = state => ({
+  initials: state.firebaseReducer.profile.initials,
+  bgColor: state.firebaseReducer.profile.color
+})
+
+export default compose(
+  connect(
+    mapStateToProps
+  ),
+  withStyles(styles)
+)(Header)

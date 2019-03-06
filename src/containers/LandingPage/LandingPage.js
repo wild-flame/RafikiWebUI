@@ -32,7 +32,7 @@ class LandingPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth.auth
+  auth: state.auth
 })
 
 export default connect(mapStateToProps)(LandingPage)

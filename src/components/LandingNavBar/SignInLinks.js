@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
+import { connect } from "react-redux"
+import { compose } from "redux"
+
 import { withStyles } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography"
 import IconButton from '@material-ui/core/IconButton';
@@ -36,7 +39,7 @@ const styles = theme => ({
 })
 
 const SignedInLinks = (props) => {
-  const { classes } = props;
+  const { classes, initials, bgColor } = props;
   return (
     <div className={classes.right}>
       <Typography
@@ -50,7 +53,14 @@ const SignedInLinks = (props) => {
         variant="h6"
       >
         <IconButton color="inherit" className={classes.iconButtonAvatar}>
-          <Avatar className={classes.avatar}>KY</Avatar>
+          <Avatar
+            className={classes.avatar}
+            style={{
+              backgroundColor: bgColor
+            }}
+          >
+            {initials}
+          </Avatar>
         </IconButton>
       </Typography>
     </div>
@@ -61,4 +71,14 @@ SignedInLinks.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SignedInLinks)
+const mapStateToProps = state => ({
+  initials: state.firebaseReducer.profile.initials,
+  bgColor: state.firebaseReducer.profile.color
+})
+
+export default compose(
+  connect(
+    mapStateToProps
+  ),
+  withStyles(styles)
+)(SignedInLinks)

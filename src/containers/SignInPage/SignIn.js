@@ -11,14 +11,11 @@ import { email, required } from '../../components/LandingAppForm/validation';
 import RFTextField from '../../components/LandingAppForm/RFTextField';
 import FormButton from '../../components/LandingAppForm/FormButton';
 import FormFeedback from '../../components/LandingAppForm/FormFeedback';
-// import { Redirect } from "react-router-dom"
 
-/*
-    const { authError, authStatus } = this.props
-    if (authStatus) {
-      return <Redirect to="/console" />
-    }
-*/
+import { compose } from "redux"
+import { connect } from "react-redux"
+import { signIn } from "../../store/authActions"
+import { Redirect } from "react-router-dom"
 
 
 const styles = theme => ({
@@ -39,6 +36,10 @@ class SignIn extends React.Component {
     sent: false,
   };
 
+  static propTypes = {
+    classes: PropTypes.object,
+  };
+
   validate = values => {
     const errors = required(['email', 'password'], values, this.props);
 
@@ -52,11 +53,19 @@ class SignIn extends React.Component {
     return errors;
   };
 
-  handleSubmit = () => {};
+  handleSubmit = (e) => {
+    console.log(e)
+    this.props.signIn(e)
+  };
 
   render() {
     const { classes } = this.props;
     const { sent } = this.state;
+
+    const { authError, authStatus } = this.props
+    if (authStatus) {
+      return <Redirect to="/console/row-based-table/list-dataset" />
+    }
 
     return (
       <React.Fragment>
@@ -73,6 +82,7 @@ class SignIn extends React.Component {
               </Link>
             </Typography>
           </React.Fragment>
+          {authError}
           <Form
             onSubmit={this.handleSubmit}
             subscription={{ submitting: true }}
@@ -137,8 +147,23 @@ class SignIn extends React.Component {
   }
 }
 
-SignIn.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
-export default withStyles(styles)(SignIn);
+const mapStateToProps = state => ({
+  authError: state.authReducer.authError,
+  authStatus: state.firebaseReducer.auth.uid
+})
+
+const mapDispatchToProps = dispatch => {
+  return {
+    signIn: (credentials) => dispatch(signIn(credentials))
+  }
+}
+
+
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
+  withStyles(styles)
+)(SignIn);
