@@ -14,6 +14,9 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 import GetDataEntryResponse from "./GetDataEntryResponse"
 
+import Diff from 'react-stylable-diff';
+import "./DiffStyle.css"
+
 
 const styles = {
   appBar: {
@@ -106,6 +109,11 @@ class DiffDatasetDialog extends React.Component {
                   entryValue={GetDEforDiff_2_Response}
                 />
                 <br />
+                {/* Valid values are 'chars', 'words', 'sentences' and 'json' */}
+                <Diff type="words"
+                  inputA={GetDEforDiff_1_Response}
+                  inputB={GetDEforDiff_2_Response}
+                />
               </React.Fragment>
             )
             : (

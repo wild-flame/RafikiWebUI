@@ -20,6 +20,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.5",
     "react-scroll": "^1.7.10",
+    "react-stylable-diff": "^2.0.0",
     "react-sweet-progress": "^1.1.2",
     "redux": "^4.0.1",
     "redux-saga": "^1.0.1",
