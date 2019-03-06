@@ -7,6 +7,12 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import createSagaMiddleware from 'redux-saga'
 
+// for firebase-login
+import thunk from "redux-thunk"
+import { reduxFirestore, getFirestore } from "redux-firestore"
+import { reactReduxFirebase, getFirebase } from "react-redux-firebase"
+import firebaseConfig from "./FirebaseConfig"
+
 //Google Analytics
 import ReactGA from 'react-ga';
 
@@ -35,8 +41,21 @@ const store = createStore(
   composeEnhancers(
     applyMiddleware(
       // mount Saga on the Store
-      sagaMiddleware
-    )
+      sagaMiddleware,
+      // thunk for firebase login
+      thunk.withExtraArgument({
+        getFirebase,
+        getFirestore
+      })
+    ),
+    reactReduxFirebase(
+      firebaseConfig,
+      {
+        userProfile: 'users',
+        useFirestoreForProfile: true,
+      }
+    ),
+    reduxFirestore(firebaseConfig) // redux bindings for firestore
   )
 );
 
