@@ -17,8 +17,11 @@ import GetDataEntryResponse from "./GetDataEntryResponse"
 import Diff from 'react-stylable-diff';
 import "./DiffStyle.css"
 
+import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
 
-const styles = {
+
+const styles = theme => ({
   appBar: {
     position: 'relative',
   },
@@ -28,8 +31,13 @@ const styles = {
   dialogContent: {
     padding: 20,
     minHeight: 200
+  },
+  message: {
+    flexGrow: 1,
+    overflow: 'hidden',
+    padding: `0 ${theme.spacing.unit * 3}px`,
   }
-};
+})
 
 class DiffDatasetDialog extends React.Component {
   static propTypes = {
@@ -94,27 +102,61 @@ class DiffDatasetDialog extends React.Component {
         >
           {GetDEforDiff_1_Response && GetDEforDiff_2_Response
             ? (
-              <React.Fragment>
-                <Typography variant="subtitle1" color="primary">
-                  Dataset: {dataset}, Branch: {branch}, Entry: {entrySelected}
-                </Typography>
+              <div className={classes.message}>               
+                <Grid container wrap="nowrap" spacing={16}>
+                  <Grid item>
+                    <Avatar
+                      style={{ backgroundColor: "rgb(255, 224, 224)" }}
+                    ></Avatar>
+                  </Grid>
+                  <Grid item xs>
+                    <Typography variant="subtitle1" color="primary">
+                      Dataset: {dataset}, Branch: {branch}, Entry: {entrySelected}
+                    </Typography>
+                  </Grid>
+                </Grid>
                 <GetDataEntryResponse
-                  entryValue={GetDEforDiff_1_Response}
+                  entryValue={
+                    GetDEforDiff_1_Response.includes("Dataset: ")
+                      ? "Value: ''"
+                      : GetDEforDiff_1_Response
+                  }
                 />
                 <br />
-                <Typography variant="subtitle1" color="primary">
-                  Dataset: {dataset_2 || dataset}, Branch: {branch_2}, Entry: {entrySelected}
-                </Typography>
+                <Grid container wrap="nowrap" spacing={16}>
+                  <Grid item>
+                    <Avatar
+                      style={{ backgroundColor: "rgb(201, 238, 211)" }}
+                    ></Avatar>
+                  </Grid>
+                  <Grid item xs>
+                  <Typography variant="subtitle1" color="primary">
+                    Dataset: {dataset_2 || dataset}, Branch: {branch_2}, Entry: {entrySelected}
+                  </Typography>
+                  </Grid>
+                </Grid>
                 <GetDataEntryResponse
-                  entryValue={GetDEforDiff_2_Response}
+                  entryValue={
+                    GetDEforDiff_2_Response.includes("Dataset: ")
+                      ? "Value: ''"
+                      : GetDEforDiff_2_Response
+                  }
                 />
                 <br />
                 {/* Valid values are 'chars', 'words', 'sentences' and 'json' */}
                 <Diff type="words"
-                  inputA={GetDEforDiff_1_Response}
-                  inputB={GetDEforDiff_2_Response}
+                  inputA={
+                    GetDEforDiff_1_Response.includes("Dataset: ")
+                    ? "Value: ''"
+                    : GetDEforDiff_1_Response
+                  }
+                  inputB={
+                    GetDEforDiff_2_Response.includes("Dataset: ")
+                    ? "Value: ''"
+                    : GetDEforDiff_2_Response
+                  }
                 />
-              </React.Fragment>
+              </div>
             )
             : (
               <div>
