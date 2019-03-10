@@ -470,6 +470,7 @@ class PutDataEntry extends React.Component {
                       id="current-value"
                       label="Current-Value"
                       multiline
+                      rowsMax={"10"}
                       className={classes.textField}
                       value={
                         Response_GetDataEntry[1]
@@ -498,6 +499,7 @@ class PutDataEntry extends React.Component {
                       id="put-value"
                       label="Put-Value"
                       multiline
+                      rowsMax={"10"}
                       className={classes.textField}
                       value={this.state.value}
                       onChange={this.handleChange("value")}
