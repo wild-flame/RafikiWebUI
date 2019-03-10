@@ -12,7 +12,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-import GetDataEntryResponse from "./GetDataEntryResponse"
+import GetDataEntryResponse from "./DiffDatasetDialogEachDE"
 
 import Diff from 'react-stylable-diff';
 import "./DiffStyle.css"

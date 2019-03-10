@@ -1,13 +1,16 @@
 .Difference {
   font-family: monospace;
+  font-size: 15px;
 }
 
 .Difference > del {
   background-color: rgb(255, 224, 224);
   text-decoration: none;
+  border: 2px red solid;
 }
 
 .Difference > ins {
   background-color: rgb(201, 238, 211);
   text-decoration: none;
+  border: 2px green solid;
 }
