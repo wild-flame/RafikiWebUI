@@ -33,7 +33,7 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 200,
+    width: "100%",
   },
   contentWrapper: {
     margin: '10px 16px',
@@ -469,6 +469,7 @@ class PutDataEntry extends React.Component {
                     <TextField
                       id="current-value"
                       label="Current-Value"
+                      multiline
                       className={classes.textField}
                       value={
                         Response_GetDataEntry[1]
@@ -496,6 +497,7 @@ class PutDataEntry extends React.Component {
                     <TextField
                       id="put-value"
                       label="Put-Value"
+                      multiline
                       className={classes.textField}
                       value={this.state.value}
                       onChange={this.handleChange("value")}
