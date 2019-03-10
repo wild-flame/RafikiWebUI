@@ -9,7 +9,7 @@ import "gitgraph.js/build/gitgraph.css";
 
 //import data from './data/metaData'
 
-const author = "Kaiyuan <yangkaiyuan@u.nus.edu>"
+const author = ""
 
 // plot gitgraph
 var gitGraph = window.GitGraph;
