@@ -24,8 +24,8 @@ export default class OlafGitgraph extends React.PureComponent {
     this.myTemplateConfig = {
       // branches colors, 1 per column
       colors: [
-        "#979797", // grey
-        "#F85BB5", // pink
+        "#2F4F4F", // darkslategray
+        "#FF8000", // orange
         "#008fb5", // cyan
         "#f1c109", // yellow
         "#8fb500" // green
@@ -46,7 +46,7 @@ export default class OlafGitgraph extends React.PureComponent {
           displayAuthor: true, // later implement user control
           displayBranch: true,
           displayHash: false,
-          font: "normal 10pt Arial"
+          font: "bold 12pt Courier"
         },
         /*
         shouldDisplayTooltipsInCompactMode: false, // default = true
