@@ -33,8 +33,10 @@ const styles = theme => ({
     minHeight: 200
   },
   message: {
-    flexGrow: 1,
-    overflow: 'hidden',
+    whiteSpace: "normal",
+    wordBreak: "break-word",
+    overflowWrap: "break-word",
+    maxWidth: "100%",
     padding: `0 ${theme.spacing.unit * 3}px`,
   }
 })
@@ -144,7 +146,7 @@ class DiffDatasetDialog extends React.Component {
                 />
                 <br />
                 {/* Valid values are 'chars', 'words', 'sentences' and 'json' */}
-                <Diff type="words"
+                <Diff type="chars"
                   inputA={
                     GetDEforDiff_1_Response.includes("Dataset: ")
                     ? "Value: ''"

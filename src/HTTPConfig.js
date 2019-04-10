@@ -11,8 +11,8 @@ const HTTPconfig = {
     'Content-Type':'multipart/form-data',
   },
   // need a working server for axios uploadprogress to work
-  // gateway: "http://localhost:5000/",
-  gateway: "http://3.0.229.71/",
+  gateway: "http://localhost:5000/",
+  // gateway: "http://3.0.229.71/",
 }
 
 if (process.env.NODE_ENV === "production") {
