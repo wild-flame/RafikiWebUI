@@ -60,9 +60,9 @@ class LandingNavBar extends React.Component {
   }
 
   render() {
-    const { auth, classes } = this.props;
+    const { isAuthenticated, classes } = this.props;
 
-    const links = auth.uid
+    const links = isAuthenticated
       ? <SignedInLinks />
       : <SignedOutLinks />
 
@@ -122,7 +122,7 @@ class LandingNavBar extends React.Component {
 
 
 const mapStateToProps = state => ({
-  auth: state.firebaseReducer.auth,
+  isAuthenticated: state.Root.token !== null
 });
 
 

@@ -20,6 +20,7 @@ import App from './App';
 import rootReducer from "./store/rootReducer"
 import rootSaga from "./sagas"
 import ErrorBoundary from "./containers/ErrorBoundary/ErrorBoundary"
+import Root from "./containers/Root/Root"
 
 
 // Load Roboto typeface
@@ -36,6 +37,7 @@ const store = createStore(
     applyMiddleware(
       // mount Saga on the Store
       sagaMiddleware,
+    )
   )
 );
 
@@ -56,7 +58,9 @@ ReactDOM.render(
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <Provider store={store}>
-        <App />
+        <Root>
+          <App />
+        </Root>
       </Provider>
     </MuiThemeProvider>
   </ErrorBoundary>,
