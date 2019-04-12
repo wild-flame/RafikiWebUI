@@ -5,51 +5,36 @@ import { Link } from "react-router-dom";
 // import MenuList from '@material-ui/core/MenuList';
 import MenuItem from "@material-ui/core/MenuItem";
 
-import Button from "@material-ui/core/Button";
 
 const linkStyle = {
   textDecoration: "none"
 };
 
-const AppBarMenuItems = ({ onClick, logout, login, isAuth }) => (
+const AppBarMenuItems = ({ onClick, logout, isAuth }) => (
   <Fragment>
-    {isAuth ? (
-      <Fragment>
-        <Link style={linkStyle} to={`/profile/${isAuth}`}>
-          <MenuItem
-            onClick={() => {
-              onClick();
-            }}
-          >
-            My account
-          </MenuItem>
-        </Link>
-        <MenuItem
-          onClick={() => {
-            onClick();
-            logout();
-          }}
-        >
-          Logout
-        </MenuItem>
-      </Fragment>
-    ) : (
-      <Button
+    <Link style={linkStyle} to={`/profile/${isAuth}`}>
+      <MenuItem
         onClick={() => {
           onClick();
-          login();
         }}
       >
-        Login
-      </Button>
-    )}
+        My account
+      </MenuItem>
+    </Link>
+    <MenuItem
+      onClick={() => {
+        onClick();
+        logout();
+      }}
+    >
+      Logout
+    </MenuItem>
   </Fragment>
 );
 
 AppBarMenuItems.propTypes = {
   onClick: PropTypes.func,
   logout: PropTypes.func,
-  login: PropTypes.func,
   isAuth: PropTypes.any
 };
 

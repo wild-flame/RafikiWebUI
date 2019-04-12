@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { compose } from "redux";
 import { connect } from "react-redux";
 
@@ -79,7 +79,11 @@ class LandingNavBar extends React.Component {
   };
 
   handleLogout = () => {
-    this.props.signOutRequest();
+    console.log("logging out, clearing token")
+    localStorage.removeItem('token');
+    localStorage.removeItem('expirationDate');
+    this.props.history.push(`/`);
+    window.location.reload();
   };
 
   render() {
@@ -215,7 +219,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   loginMenuOpen: actions.loginMenuOpen,
   loginMenuClose: actions.loginMenuClose,
-  handleLogout: actions.signOutRequest,
 }
 
 
@@ -224,5 +227,6 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps
   ),
+  withRouter,
   withStyles(styles)
 )(LandingNavBar);

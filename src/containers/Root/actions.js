@@ -49,7 +49,7 @@ export const authFail = error => ({
 })
 
 export const logout = () => ({
-  type: Types.AUTH_LOGOUT
+    type: Types.AUTH_LOGOUT
 })
 
 // for sagas
@@ -61,19 +61,3 @@ export const signInRequest = (authData) => ({
 export const authCheckState = () => ({
   type: Types.AUTH_CHECK_STATE
 })
-
-
-export const SIGN_IN_SUCCESS = "SIGN_IN_SUCCESS";
-export const signInSuccess = () => ({
-  type: SIGN_IN_SUCCESS
-});
-
-export const SIGN_OUT_REQUEST = "SIGN_OUT_REQUEST";
-export const signOutRequest = () => ({
-  type: SIGN_OUT_REQUEST
-});
-
-export const SIGN_OUT_SUCCESS = "SIGN_OUT_SUCCESS";
-export const signOutSuccess = () => ({
-  type: SIGN_OUT_SUCCESS
-});

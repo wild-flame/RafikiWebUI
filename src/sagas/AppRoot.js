@@ -5,7 +5,6 @@ import {
   put,
   delay
 } from "redux-saga/effects"
-import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import * as actions from "../containers/Root/actions"
 import * as api from "../services/AuthAPI"
 
@@ -70,7 +69,7 @@ function* watchAuthStateRequest() {
 }
 
 function* autoHideNotification() {
-  yield delay(2000);
+  yield delay(3000);
   yield put(actions.notificationHide());
 }
 
