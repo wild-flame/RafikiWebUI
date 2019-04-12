@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment } from "react";
 import { Link } from 'react-router-dom'
 import { compose } from "redux";
 import { connect } from "react-redux";
@@ -7,10 +6,17 @@ import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography"
 import AppBar from '../LandingComponents/AppBar';
+// for login menu
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import Avatar from '@material-ui/core/Avatar';
+import AppBarMenuItems from "./AppBarMenuItems"
+
 import Toolbar, { styles as toolbarStyles } from '../LandingComponents/Toolbar';
 import Logo from "../../assets/Logo-cleaned.png"
-import SignedInLinks from "./SignInLinks"
-import SignedOutLinks from "./SignOutLinks"
+
+import * as actions from "../../containers/Root/actions"
 
 
 const styles = theme => ({
@@ -51,20 +57,98 @@ const styles = theme => ({
   linkSecondary: {
     color: theme.palette.secondary.main,
   },
+  avatar: {
+    margin: 10,
+    color: '#fff',
+    backgroundColor: theme.palette.secondary.main,
+  },
+  iconButtonAvatar: {
+    padding: 4,
+    marginLeft: theme.spacing.unit * 3,
+    textDecoration: "none"
+  }
 });
 
 class LandingNavBar extends React.Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    auth: PropTypes.object
-  }
+  handleMenuOpen = event => {
+    this.props.loginMenuOpen(event.currentTarget.id);
+  };
+
+  handleMenuClose = () => {
+    this.props.loginMenuClose();
+  };
+
+  handleLogout = () => {
+    this.props.signOutRequest();
+  };
 
   render() {
-    const { isAuthenticated, classes } = this.props;
+    const {
+      anchorElId,
+      isAuthenticated,
+      classes
+    } = this.props;
 
     const links = isAuthenticated
-      ? <SignedInLinks />
-      : <SignedOutLinks />
+      ? (
+        <Fragment>
+          <Typography
+            variant="h6"
+          >
+            <Link to="/console/row-based-table/list-dataset" className={classes.rightLink}>
+              {'Go To Console'}
+            </Link>
+          </Typography>
+          <IconButton
+            aria-haspopup="true"
+            aria-label="More"
+            aria-owns="Open right Menu"
+            color="inherit"
+            id="loginMenuButton"
+            onClick={this.handleMenuOpen}
+            className={classes.iconButtonAvatar}
+          >
+            <Avatar
+              className={classes.avatar}
+              style={{
+                backgroundColor: "orange" //bgColor
+              }}
+            >
+              {"KY" /*initials*/}
+            </Avatar>
+          </IconButton>
+          <Menu
+            anchorEl={
+              (anchorElId && document.getElementById(anchorElId)) ||
+              document.body
+            }
+            id="menuRight"
+            onClose={this.handleMenuClose}
+            open={!!anchorElId}
+          >
+            <AppBarMenuItems
+              isAuth={isAuthenticated}
+              logout={this.handleLogout}
+              onClick={this.handleMenuClose}
+            />
+          </Menu>
+        </Fragment>
+      )
+      : (
+        <Fragment>
+          <Button
+            color="inherit"
+            style={{
+              textDecoration: "none",
+              fontSize: 16,
+            }}
+            component={Link}
+            to={"/sign-in"}
+          >
+            Sign in
+          </Button>
+        </Fragment>
+      )
 
     // use complex button from MUI for hover effects
     return (
@@ -122,11 +206,23 @@ class LandingNavBar extends React.Component {
 
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.Root.token !== null
+  anchorElId: state.Root.dropdownAnchorElId,
+  isAuthenticated: state.Root.token !== null,
+  // initials: state.firebaseReducer.profile.initials,
+  // bgColor: state.firebaseReducer.profile.color
 });
+
+const mapDispatchToProps = {
+  loginMenuOpen: actions.loginMenuOpen,
+  loginMenuClose: actions.loginMenuClose,
+  handleLogout: actions.signOutRequest,
+}
 
 
 export default compose(
-  connect(mapStateToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
   withStyles(styles)
 )(LandingNavBar);

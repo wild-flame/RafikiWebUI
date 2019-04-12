@@ -8,9 +8,22 @@ export const Types = {
   // for sagas
   SIGN_IN_REQUEST: "SIGN_IN_REQUEST",
   AUTH_CHECK_STATE: "AUTH_CHECK_STATE",
+  // for appbar menuitem
+  LOGIN_MENU_OPEN: "LOGIN_MENU_OPEN",
+  LOGIN_MENU_CLOSE: "LOGIN_MENU_CLOSE",
 }
 
 
+export const loginMenuOpen = anchorElId => ({
+  type: Types.LOGIN_MENU_OPEN,
+  anchorElId
+});
+
+export const loginMenuClose = () => ({
+  type: Types.LOGIN_MENU_CLOSE
+});
+
+// for notification area
 export const notificationShow = message => ({
   type: Types.NOTIFICATION_SHOW,
   message

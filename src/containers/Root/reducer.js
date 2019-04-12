@@ -8,12 +8,25 @@ const initialState = {
     notification: {
       show: false,
       message: ""
-    }
+    },
+    dropdownAnchorElId: false,
 }
 
 
 export const Root = (state = initialState, action) => {
   switch (action.type) {
+    // login menu on appbar
+    case Types.LOGIN_MENU_OPEN:
+      return {
+        ...state,
+        dropdownAnchorElId: action.anchorElId
+      };
+    case Types.LOGIN_MENU_CLOSE:
+      return {
+        ...state,
+        dropdownAnchorElId: false
+      };
+    // for authentications
     case Types.AUTH_START:
       return {
         ...state,
