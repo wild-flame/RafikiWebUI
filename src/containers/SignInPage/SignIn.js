@@ -14,7 +14,7 @@ import FormFeedback from '../../components/LandingAppForm/FormFeedback';
 
 import { compose } from "redux"
 import { connect } from "react-redux"
-import { signIn } from "../../store/authActions"
+import * as actions from "../Root/actions"
 import { Redirect } from "react-router-dom"
 
 
@@ -39,7 +39,7 @@ class SignIn extends React.Component {
   static propTypes = {
     classes: PropTypes.object,
   };
-
+  /*
   validate = values => {
     const errors = required(['email', 'password'], values, this.props);
 
@@ -51,11 +51,11 @@ class SignIn extends React.Component {
     }
 
     return errors;
-  };
+  };*/
 
   handleSubmit = (e) => {
     console.log(e)
-    this.props.signIn(e)
+    this.props.signInRequest(e)
   };
 
   render() {
@@ -103,6 +103,16 @@ class SignIn extends React.Component {
                   size="large"
                 />
                 <Field
+                  component={RFTextField}
+                  disabled={submitting || sent}
+                  fullWidth
+                  label="Username"
+                  margin="normal"
+                  name="username"
+                  required
+                  size="large"
+                />
+                <Field
                   fullWidth
                   size="large"
                   component={RFTextField}
@@ -135,11 +145,6 @@ class SignIn extends React.Component {
               </form>
             )}
           </Form>
-          <Typography align="center">
-            <Link underline="always" href="/forgot-password">
-              Forgot password?
-            </Link>
-          </Typography>
         </AppForm>
         <AppFooter />
       </React.Fragment>
@@ -149,14 +154,12 @@ class SignIn extends React.Component {
 
 
 const mapStateToProps = state => ({
-  authError: state.authReducer.authError,
-  authStatus: state.firebaseReducer.auth.uid
+  authError: state.Root.error,
+  authStatus: !!state.Root.token,
 })
 
-const mapDispatchToProps = dispatch => {
-  return {
-    signIn: (credentials) => dispatch(signIn(credentials))
-  }
+const mapDispatchToProps = {
+  signInRequest: actions.signInRequest
 }
 
 
