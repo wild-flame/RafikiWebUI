@@ -9,9 +9,10 @@ import {
  import LinearProgress from "@material-ui/core/LinearProgress";
 
 import LandingPage from "./containers/LandingPage/LandingPage"
-// import SignIn from "./containers/SignInPage/SignIn"
-// import SignUp from "./containers/SignUpPage/SignUp"
-// import ConsoleAppFrame from "./containers/ConsoleAppFrame/ConsoleAppFrame"
+import DemoFeaturesPage from "./containers/DemoFeaturesPage/DemoFeaturesPage"
+import PublicationsPage from "./containers/PublicationsPage/PublicationsPage"
+import DocsPage from './containers/DocsPage/DocsPage'
+import ContactPage from "./containers/ContactPage/ContactPage"
 
 function Loading(props) {
   if (props.error) {
@@ -50,6 +51,26 @@ class App extends Component {
             exact
             path='/'
             component={LandingPage}
+          />
+          <Route
+            exact
+            path='/demo-features'
+            component={DemoFeaturesPage}
+          />
+          <Route
+            exact
+            path='/publications'
+            component={PublicationsPage}
+          />
+          <Route
+            exact
+            path='/documentations'
+            component={DocsPage}
+          />
+          <Route
+            exact
+            path='/contact'
+            component={ContactPage}
           />
           <Route
             exact

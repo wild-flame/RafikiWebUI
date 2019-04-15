@@ -173,29 +173,29 @@ class LandingNavBar extends React.Component {
               <Typography
                 variant="h5"
               >
-                <Link to="/" className={classes.rightLink}>
-                  {'Features'}
+                <Link to="/demo-features" className={classes.rightLink}>
+                  {'Demo'}
                 </Link>
               </Typography>
               <Typography
                 variant="h5"
               >
-                <Link to="/" className={classes.rightLink}>
-                  {'Use Cases'}
+                <Link to="/publications" className={classes.rightLink}>
+                  {'Publications'}
                 </Link>
               </Typography>
               <Typography
                 variant="h5"
               >
-                <Link to="/" className={classes.rightLink}>
+                <Link to="/documentations" className={classes.rightLink}>
                   {'Docs'}
                 </Link>
               </Typography>
               <Typography
                 variant="h5"
               >
-                <Link to="/" className={classes.rightLink}>
-                  {'About Us'}
+                <Link to="/contact" className={classes.rightLink}>
+                  {'Contact'}
                 </Link>
               </Typography>
             </div>

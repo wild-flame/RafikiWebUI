@@ -7,7 +7,7 @@ import Typography from '../../components/LandingComponents/Typography';
 import AppFooter from '../../components/LandingFooter/LandingFooter';
 import AppAppBar from '../../components/LandingNavBar/LandingNavBar';
 import AppForm from '../../components/LandingAppForm/LandingAppForm';
-import { email, required } from '../../components/LandingAppForm/validation';
+// import { email, required } from '../../components/LandingAppForm/validation';
 import RFTextField from '../../components/LandingAppForm/RFTextField';
 import FormButton from '../../components/LandingAppForm/FormButton';
 import FormFeedback from '../../components/LandingAppForm/FormFeedback';
