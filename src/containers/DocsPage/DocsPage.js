@@ -1,19 +1,23 @@
-import React, { Fragment } from 'react';
-import { connect } from "react-redux"
-import { compose } from "redux"
+/* eslint import/no-webpack-loader-syntax: off */
+
+import React from 'react';
 import { Route } from "react-router-dom"
+import { withStyles } from '@material-ui/core/styles';
 
 import LandingNavBar from "../../components/LandingNavBar/LandingNavBar"
 //import LandingFooter from '../../components/LandingFooter/LandingFooter'
 
-// temp sidebar
-import { withStyles } from '@material-ui/core/styles';
+// Docs Page sidebar
 import Navigator from './Navigator';
 
-import Typography from '@material-ui/core/Typography';
+// for content section
+import Markdown from '../../components/LandingComponents/Markdown';
+import LayoutBody from '../../components/LandingComponents/LayoutBody'
+import Typography from '../../components/LandingComponents/Typography'
 
-import LandingProductCTA from "../../components/LandingProductCTA/LandingProductCTA"
-
+// docs markdown files
+import ListDS from "!raw-loader!../../components/DocsPageComponents/Dataset/ListDS.md"
+import SampleCard from "./SampleCard"
 
 
 const drawerWidth = 256;
@@ -37,8 +41,23 @@ const styles = theme => ({
     padding: '48px 36px 0',
     background: '#eaeff1',
   },
+  layoutBody: { 
+    marginBottom: theme.spacing.unit * 14,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'left',
+    marginLeft: 24
+  },
   toolbar: theme.mixins.toolbar,
 })
+
+
+const routes = [
+  { path: '/documentations/dataset/list-dataset',
+    docsMD: SampleCard
+  },
+]
+
 
 class DocsPage extends React.Component {
   render() {
@@ -54,11 +73,20 @@ class DocsPage extends React.Component {
         <div className={classes.appContent}>
           <main className={classes.mainContent}>
             <div className={classes.toolbar} />
-            <Route
-              exact
-              path='/documentations/dataset/list-dataset'
-              component={LandingProductCTA}
-            />
+            <LayoutBody className={classes.layoutBody}>
+              <Typography variant="h3" gutterBottom marked="center" align="center">
+                documentations
+              </Typography>
+              <br />
+              {routes.map((route) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  exact
+                  component={route.docsMD}
+                />
+              ))}
+            </LayoutBody>
           </main>
         </div>
       </div>
