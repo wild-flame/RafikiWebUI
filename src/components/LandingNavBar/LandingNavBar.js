@@ -20,6 +20,9 @@ import * as actions from "../../containers/Root/actions"
 
 
 const styles = theme => ({
+  LandingAppBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
   title: {
     fontSize: 24,
     cursor: "pointer",
@@ -157,7 +160,7 @@ class LandingNavBar extends React.Component {
     // use complex button from MUI for hover effects
     return (
       <div>
-        <AppBar position="fixed">
+        <AppBar position="fixed" className={classes.LandingAppBar}>
           <Toolbar className={classes.toolbar}>
             <div className={classes.left}>
               <Link to="/">

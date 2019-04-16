@@ -57,11 +57,6 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  mainContent: {
-    flex: 1,
-    padding: '48px 36px 0',
-    background: '#eaeff1', // light grey
-  },
 })
 
 class ConsoleAppFrame extends React.Component {
