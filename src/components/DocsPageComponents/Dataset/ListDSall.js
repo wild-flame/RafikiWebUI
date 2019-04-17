@@ -20,10 +20,10 @@ function DocsCard(props) {
     <Card className={classes.card}>
       <CardContent>
         <Typography gutterBottom variant="h3" component="h1">
-          List Dataset
+          List Dataset All
         </Typography>
         <Typography component="p">
-          Displays the datasets in list form
+          Displays all the datasets in list form
         </Typography>
         <br />
 
@@ -31,7 +31,7 @@ function DocsCard(props) {
           Syntax
         </Typography>
         <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {'LIST_DATASET'}
+          {'LIST_DATASET_ALL'}
         </SyntaxHighlighter>
         <Typography component="p">
           Parameters:
@@ -51,22 +51,7 @@ function DocsCard(props) {
           Examples
         </Typography>
         <SyntaxHighlighter language='javascript' style={gruvboxDark}>
-          {`
-ustore> list_dataset
-[SUCCESS: LIST_DATASET] Datasets: []
-
-ustore> list_dataset
-[SUCCESS: LIST_DATASET] Datasets: ["DS2", "sampleDS1"]
-
-ustore> list_dataset -1
-DS2  ["master"]
-sampleDS1  ["master", "newFeature"]
-
-// -1 is equal to --vert-list
-ustore> list_dataset --vert-list
-DS2  ["master"]
-sampleDS1  ["master", "newFeature"]
-          `}
+          {'ustore> list_dataset_all\n[SUCCESS: LIST_DATASET] Datasets: []'}
         </SyntaxHighlighter>
       </CardContent>
     </Card>

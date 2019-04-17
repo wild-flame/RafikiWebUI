@@ -20,10 +20,10 @@ function DocsCard(props) {
     <Card className={classes.card}>
       <CardContent>
         <Typography gutterBottom variant="h3" component="h1">
-          List Dataset
+          Create Dataset
         </Typography>
         <Typography component="p">
-          Displays the datasets in list form
+          Creates a new empty dataset
         </Typography>
         <br />
 
@@ -31,19 +31,22 @@ function DocsCard(props) {
           Syntax
         </Typography>
         <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {'LIST_DATASET'}
+          {'CREATE_DATASET -t <dataset> -b <branch>'}
         </SyntaxHighlighter>
         <Typography component="p">
           Parameters:
         </Typography>
         <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {'// none'}
+          {`// the operating table or dataset:\n-t [ --table] arg`}
+        </SyntaxHighlighter>
+        <SyntaxHighlighter language='javascript' style={solarizedLight}>
+          {`// the operating branch:\n-b [ --branch ] arg`}
         </SyntaxHighlighter>
         <Typography component="p">
           Utility Options:
         </Typography>
         <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {'// (it is one, not "l") list one entry per line \n-1 [ --vert-list ]'}
+          {'// none'}
         </SyntaxHighlighter>
         <br />
 
@@ -52,20 +55,17 @@ function DocsCard(props) {
         </Typography>
         <SyntaxHighlighter language='javascript' style={gruvboxDark}>
           {`
-ustore> list_dataset
-[SUCCESS: LIST_DATASET] Datasets: []
+ustore> create_dataset -t sampleDS1 -b master
+[SUCCESS: CREATE_DATASET] Dataset "sampleDS1" has been created for Branch "master"
 
-ustore> list_dataset
-[SUCCESS: LIST_DATASET] Datasets: ["DS2", "sampleDS1"]
+ustore> create_dataset -t DS2 -b master
+[SUCCESS: CREATE_DATASET] Dataset "DS2" has been created for Branch "master"
 
-ustore> list_dataset -1
-DS2  ["master"]
-sampleDS1  ["master", "newFeature"]
+ustore> create_dataset -t sampleDS1 -b newFeature
+[SUCCESS: CREATE_DATASET] Dataset "sampleDS1" has been created for Branch "newFeature"
 
-// -1 is equal to --vert-list
-ustore> list_dataset --vert-list
-DS2  ["master"]
-sampleDS1  ["master", "newFeature"]
+ustore> create_dataset -t DS2 -b master
+[FAILED: CREATE_DATASET] Dataset: "DS2", Branch: "master" --> Error(13): branch already exists
           `}
         </SyntaxHighlighter>
       </CardContent>
