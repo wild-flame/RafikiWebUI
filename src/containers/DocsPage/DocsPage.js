@@ -11,13 +11,31 @@ import LandingNavBar from "../../components/LandingNavBar/LandingNavBar"
 import Navigator from './Navigator';
 
 // for content section
-import Markdown from '../../components/LandingComponents/Markdown';
 import LayoutBody from '../../components/LandingComponents/LayoutBody'
 import Typography from '../../components/LandingComponents/Typography'
 
-// docs markdown files
-import ListDS from "!raw-loader!../../components/DocsPageComponents/Dataset/ListDS.md"
-import SampleCard from "./SampleCard"
+// Dataset Routes
+import ListDS from "../../components/DocsPageComponents/Dataset/ListDS"
+import ListDSall from "../../components/DocsPageComponents/Dataset/ListDSall"
+import CreateDS from "../../components/DocsPageComponents/Dataset/CreateDS"
+import PutDEbyCSV from "../../components/DocsPageComponents/Dataset/PutDEbyCSV"
+import PutDE from "../../components/DocsPageComponents/Dataset/PutDE"
+import PutDEbatch from "../../components/DocsPageComponents/Dataset/PutDEbatch"
+import BranchDS from "../../components/DocsPageComponents/Dataset/BranchDS"
+import ListDSbranch from "../../components/DocsPageComponents/Dataset/ListDSbranch"
+import ListDEbranch from "../../components/DocsPageComponents/Dataset/ListDEbranch"
+import GetDS from "../../components/DocsPageComponents/Dataset/GetDS"
+import GetDSall from "../../components/DocsPageComponents/Dataset/GetDSall"
+import GetDSschema from "../../components/DocsPageComponents/Dataset/GetDSschema"
+import GetDE from "../../components/DocsPageComponents/Dataset/GetDE"
+import GetDEbatch from "../../components/DocsPageComponents/Dataset/GetDEbatch"
+import ExistsDS from "../../components/DocsPageComponents/Dataset/ExistsDS"
+import ExistsDE from "../../components/DocsPageComponents/Dataset/ExistsDE"
+import SelectDE from "../../components/DocsPageComponents/Dataset/SelectDE"
+import DiffDS from "../../components/DocsPageComponents/Dataset/DiffDS"
+import DeleteDS from "../../components/DocsPageComponents/Dataset/DeleteDS"
+import DeleteDE from "../../components/DocsPageComponents/Dataset/DeleteDE"
+import ExportDSbinary from "../../components/DocsPageComponents/Dataset/ExportDSbinary"
 
 
 const drawerWidth = 256;
@@ -54,7 +72,67 @@ const styles = theme => ({
 
 const routes = [
   { path: '/documentations/dataset/list-dataset',
-    docsMD: SampleCard
+    main: ListDS
+  },
+  { path: '/documentations/dataset/list-dataset-all',
+    main: ListDSall
+  },
+  { path: '/documentations/dataset/create-dataset',
+    main: CreateDS
+  },
+  { path: '/documentations/dataset/put-data-entry-by-csv',
+    main: PutDEbyCSV
+  },
+  { path: '/documentations/dataset/put-data-entry',
+    main: PutDE
+  },
+  { path: '/documentations/dataset/put-data-entry-batch',
+    main: PutDEbatch
+  },
+  { path: '/documentations/dataset/branch-dataset',
+    main: BranchDS
+  },
+  { path: '/documentations/dataset/list-dataset-branch',
+    main: ListDSbranch
+  },
+  { path: '/documentations/dataset/list-data-entry-branch',
+    main: ListDEbranch
+  },
+  { path: '/documentations/dataset/get-dataset',
+    main: GetDS
+  },
+  { path: '/documentations/dataset/get-dataset-all',
+    main: GetDSall
+  },
+  { path: '/documentations/dataset/get-dataset-schema',
+    main: GetDSschema
+  },
+  { path: '/documentations/dataset/get-data-entry',
+    main: GetDE
+  },
+  { path: '/documentations/dataset/get-data-entry-batch',
+    main: GetDEbatch
+  },
+  { path: '/documentations/dataset/exists-dataset',
+    main: ExistsDS
+  },
+  { path: '/documentations/dataset/exists-data-entry',
+    main: ExistsDE
+  },
+  { path: '/documentations/dataset/select-data-entry',
+    main: SelectDE
+  },
+  { path: '/documentations/dataset/diff-dataset',
+    main: DiffDS
+  },
+  { path: '/documentations/dataset/delete-dataset',
+    main: DeleteDS
+  },
+  { path: '/documentations/dataset/delete-data-entry',
+    main: DeleteDE
+  },
+  { path: '/documentations/dataset/export-dataset-binary',
+    main: ExportDSbinary
   },
 ]
 
@@ -83,7 +161,7 @@ class DocsPage extends React.Component {
                   key={route.path}
                   path={route.path}
                   exact
-                  component={route.docsMD}
+                  component={route.main}
                 />
               ))}
             </LayoutBody>
