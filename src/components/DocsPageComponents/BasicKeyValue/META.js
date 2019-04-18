@@ -21,10 +21,10 @@ function DocsCard(props) {
     <Card className={classes.card}>
       <CardContent>
         <Typography gutterBottom variant="h3" component="h1">
-          Merge
+          Meta
         </Typography>
         <Typography component="p">
-          Merge two versions of a key into one by creating a new value. "merge -b target_branch -c refer_branch" will create new node after target_branch
+          Meta gives the Type, Value, Version, and parents
         </Typography>
         <br />
 
@@ -32,21 +32,18 @@ function DocsCard(props) {
           Syntax
         </Typography>
         <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {'MERGE -k <key> -x <value> [-b <target_branch> -c <refer_branch> | -b <target_branch> -u <refer_version> | -u <refer_version> -v <refer_version_2>]'}
+          {'META -k <key> [-b <branch> | -v <version>]'}
         </SyntaxHighlighter>
         <Typography component="p">
           Parameters:
         </Typography>
         {GeneralOptions._k}
-        {GeneralOptions._x}
         {GeneralOptions._b}
-        {GeneralOptions._c}
-        {GeneralOptions._u}
         {GeneralOptions._v}
         <Typography component="p">
           Utility Options:
         </Typography>
-        {UtilityOptions._none}
+        {UtilityOptions._1}
         <br />
 
         <Typography variant="h5" gutterBottom>
@@ -54,11 +51,23 @@ function DocsCard(props) {
         </Typography>
         <SyntaxHighlighter language='javascript' style={gruvboxDark}>
           {`
-ustore> merge -k myfirstKey -x "this is not a COMMIT message! this is the actual value! merge named-merge-no-edit with master" -b master -c named-merge-no-edit
-[SUCCESS: MERGE] Version: F5RZHEHBVWO5IFM5NUAPY75LEPH7INMR
+ustore> meta -k noBranchSpecified -v RNCK2CFCL3KGVUZ6RVKJHL3B7QUTTIC7
+[SUCCESS: META] Type: Blob, Value: "if you do not specifiy the branch or version, its parent will be Null", Version: RNCK2CFCL3KGVUZ6RVKJHL3B7QUTTIC7, Parents: [<null>]
 
-ustore> merge -k myfirstKey -x "merge -x will write new value. (merge named-merge-with-edit with master)" -b master -c named-merge-with-edit
-[SUCCESS: MERGE] Version: IDAJSCWZSU2RW63WMSH3T4FCEC4ZJL3K
+ustore> meta -k File1 -b master
+[SUCCESS: META] Type: Blob, Value: "KEY,AGE,GENDER,GPA,SCHOOL
+a01,20,Male,4.9,NUS
+a02,22,Male,2.9,NTU
+a03,28,Female,4.2,NUS
+a04,39,Female,3.9,SMU
+a05,16,Male,5.0,NUS", Version: K6BVFFAYM3Z4JGCKYSAABPO4DBVLO4T3, Parents: [<null>]
+
+// -1 in list view
+ustore> meta -k myfirstKey -b master -1
+Type   : String
+Value  : "merge -x will write new value. (merge named-merge-with-edit with master)"
+Version: IDAJSCWZSU2RW63WMSH3T4FCEC4ZJL3K
+Parents: [F5RZHEHBVWO5IFM5NUAPY75LEPH7INMR, GV4MY4NVTIXI662AQKDNNUTDGHBTSCIX]
           `}
         </SyntaxHighlighter>
       </CardContent>

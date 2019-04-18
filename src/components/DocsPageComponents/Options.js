@@ -59,6 +59,11 @@ export const GeneralOptions = {
       {'// the referring branch\n-c [ --ref-branch ] arg'}
     </SyntaxHighlighter>
   ),
+  _none: (
+    <SyntaxHighlighter language='javascript' style={solarizedLight}>
+      {'// none'}
+    </SyntaxHighlighter>
+  ),
 }
 
 

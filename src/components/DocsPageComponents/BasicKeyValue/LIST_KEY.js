@@ -21,10 +21,10 @@ function DocsCard(props) {
     <Card className={classes.card}>
       <CardContent>
         <Typography gutterBottom variant="h3" component="h1">
-          Merge
+          List Key
         </Typography>
         <Typography component="p">
-          Merge two versions of a key into one by creating a new value. "merge -b target_branch -c refer_branch" will create new node after target_branch
+          List all the current keys, including the meta-data from datasets and tables, like $xyz
         </Typography>
         <br />
 
@@ -32,21 +32,16 @@ function DocsCard(props) {
           Syntax
         </Typography>
         <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {'MERGE -k <key> -x <value> [-b <target_branch> -c <refer_branch> | -b <target_branch> -u <refer_version> | -u <refer_version> -v <refer_version_2>]'}
+          {'LIST_KEY{_ALL}'}
         </SyntaxHighlighter>
         <Typography component="p">
           Parameters:
         </Typography>
-        {GeneralOptions._k}
-        {GeneralOptions._x}
-        {GeneralOptions._b}
-        {GeneralOptions._c}
-        {GeneralOptions._u}
-        {GeneralOptions._v}
+        {GeneralOptions._none}
         <Typography component="p">
           Utility Options:
         </Typography>
-        {UtilityOptions._none}
+        {UtilityOptions._1}
         <br />
 
         <Typography variant="h5" gutterBottom>
@@ -54,11 +49,14 @@ function DocsCard(props) {
         </Typography>
         <SyntaxHighlighter language='javascript' style={gruvboxDark}>
           {`
-ustore> merge -k myfirstKey -x "this is not a COMMIT message! this is the actual value! merge named-merge-no-edit with master" -b master -c named-merge-no-edit
-[SUCCESS: MERGE] Version: F5RZHEHBVWO5IFM5NUAPY75LEPH7INMR
+ustore> list_key
+[SUCCESS: LIST_KEY] Keys: ["File1", "myfirstKey", "noBranchSpecified"]
 
-ustore> merge -k myfirstKey -x "merge -x will write new value. (merge named-merge-with-edit with master)" -b master -c named-merge-with-edit
-[SUCCESS: MERGE] Version: IDAJSCWZSU2RW63WMSH3T4FCEC4ZJL3K
+// -1 flag list in vertial list view
+ustore> list_key_all -1
+File1
+myfirstKey
+noBranchSpecified
           `}
         </SyntaxHighlighter>
       </CardContent>

@@ -24,7 +24,7 @@ function DocsCard(props) {
           Latest
         </Typography>
         <Typography component="p">
-          Returns all the latest (head) versions of a key in a list. If the list of latest versions is too long, "LATEST" will only display the first 20 versions. To see all the versions in the list, use "LATEST_ALL".
+          Returns in a list form all the latest (head) versions of a key, ie the leaf-nodes. If the list of latest versions is too long, "LATEST" will only display the first 20 versions. To see all the versions in the list, use "LATEST_ALL".
         </Typography>
         <br />
 
