@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { gruvboxDark, solarizedLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
+import { GeneralOptions, UtilityOptions } from "../Options"
 
 const styles = {
   card: {
@@ -20,10 +21,10 @@ function DocsCard(props) {
     <Card className={classes.card}>
       <CardContent>
         <Typography gutterBottom variant="h3" component="h1">
-          Create Dataset
+          Put
         </Typography>
         <Typography component="p">
-          Create a new empty dataset
+          Put the value to a key
         </Typography>
         <br />
 
@@ -31,23 +32,21 @@ function DocsCard(props) {
           Syntax
         </Typography>
         <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {'CREATE_DATASET -t <dataset> -b <branch>'}
+          {'PUT -k <key> [-x <value> | <file>] {-p <type>} {-b <branch> | -u <refer_version>}'}
         </SyntaxHighlighter>
         <Typography component="p">
           Parameters:
         </Typography>
-        <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {`// the operating table or dataset:\n-t [ --table ] arg`}
-        </SyntaxHighlighter>
-        <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {`// the operating branch:\n-b [ --branch ] arg`}
-        </SyntaxHighlighter>
+        {GeneralOptions._k}
+        {GeneralOptions._x}
+        {GeneralOptions._file}
+        {GeneralOptions._p}
+        {GeneralOptions._b}
+        {GeneralOptions._u}
         <Typography component="p">
           Utility Options:
         </Typography>
-        <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {'// none'}
-        </SyntaxHighlighter>
+        {UtilityOptions._none}
         <br />
 
         <Typography variant="h5" gutterBottom>
@@ -55,17 +54,16 @@ function DocsCard(props) {
         </Typography>
         <SyntaxHighlighter language='javascript' style={gruvboxDark}>
           {`
-ustore> create_dataset -t sampleDS1 -b master
-[SUCCESS: CREATE_DATASET] Dataset "sampleDS1" has been created for Branch "master"
+// Put simple string to master
+ustore> put -k myfirstKey -b master -x "this is the first key i put into the forkbase"
+[SUCCESS: PUT] Type: Blob, Version: QOPJBWT4ITXVOSFWY4RNYPIXIPRVHCAZ
 
-ustore> create_dataset -t DS2 -b master
-[SUCCESS: CREATE_DATASET] Dataset "DS2" has been created for Branch "master"
+// Put a file to master
+ustore> put -k File1 -b master ../mock-data/sample.csv
+[SUCCESS: PUT] Type: Blob, Version: K6BVFFAYM3Z4JGCKYSAABPO4DBVLO4T3
 
-ustore> create_dataset -t sampleDS1 -b newFeature
-[SUCCESS: CREATE_DATASET] Dataset "sampleDS1" has been created for Branch "newFeature"
-
-ustore> create_dataset -t DS2 -b master
-[FAILED: CREATE_DATASET] Dataset: "DS2", Branch: "master" --> Error(13): branch already exists
+ustore> put -k noBranchSpecified -x "if you do not specifiy the branch or version, it will be identified by the version"
+[SUCCESS: PUT] Type: Blob, Version: 25J43M533ZI4GGWUUEAF6P3XZOS7KFJR
           `}
         </SyntaxHighlighter>
       </CardContent>

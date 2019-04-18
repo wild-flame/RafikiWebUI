@@ -14,6 +14,27 @@ import Navigator from './Navigator';
 import LayoutBody from '../../components/LandingComponents/LayoutBody'
 import Typography from '../../components/LandingComponents/Typography'
 
+// Basic Key-value routes
+import GET from "../../components/DocsPageComponents/BasicKeyValue/GET"
+import PUT from "../../components/DocsPageComponents/BasicKeyValue/PUT"
+import APPEND from "../../components/DocsPageComponents/BasicKeyValue/APPEND"
+import UPDATE from "../../components/DocsPageComponents/BasicKeyValue/UPDATE"
+import INSERT from "../../components/DocsPageComponents/BasicKeyValue/INSERT"
+import DELETE from "../../components/DocsPageComponents/BasicKeyValue/DELETE"
+import BRANCH from "../../components/DocsPageComponents/BasicKeyValue/BRANCH"
+import MERGE from "../../components/DocsPageComponents/BasicKeyValue/MERGE"
+import RENAME_BRANCH from "../../components/DocsPageComponents/BasicKeyValue/RENAME_BRANCH"
+import DELETE_BRANCH from "../../components/DocsPageComponents/BasicKeyValue/DELETE_BRANCH"
+import HEAD from "../../components/DocsPageComponents/BasicKeyValue/HEAD"
+import IS_HEAD from "../../components/DocsPageComponents/BasicKeyValue/IS_HEAD"
+import LATEST from "../../components/DocsPageComponents/BasicKeyValue/LATEST"
+import IS_LATEST from "../../components/DocsPageComponents/BasicKeyValue/IS_LATEST"
+import EXISTS from "../../components/DocsPageComponents/BasicKeyValue/EXISTS"
+import LIST_BRANCH from "../../components/DocsPageComponents/BasicKeyValue/LIST_BRANCH"
+import LIST_KEY from "../../components/DocsPageComponents/BasicKeyValue/LIST_KEY"
+import META from "../../components/DocsPageComponents/BasicKeyValue/META"
+
+
 // Dataset Routes
 import ListDS from "../../components/DocsPageComponents/Dataset/ListDS"
 import CreateDS from "../../components/DocsPageComponents/Dataset/CreateDS"
@@ -69,61 +90,117 @@ const styles = theme => ({
 
 
 const routes = [
-  { path: '/documentations/dataset/list-dataset',
+  // Basic Key-values
+  { path: '/docs/basic/get',
+    main: GET
+  },
+  { path: '/docs/basic/put',
+    main: PUT
+  },
+  { path: '/docs/basic/append',
+    main: APPEND
+  },
+  { path: '/docs/basic/update',
+    main: UPDATE
+  },
+  { path: '/docs/basic/insert',
+    main: INSERT
+  },
+  { path: '/docs/basic/delete',
+    main: DELETE
+  },
+  { path: '/docs/basic/branch',
+    main: BRANCH
+  },
+  { path: '/docs/basic/merge',
+    main: MERGE
+  },
+  { path: '/docs/basic/rename-branch',
+    main: RENAME_BRANCH
+  },
+  { path: '/docs/basic/delete-branch',
+    main: DELETE_BRANCH
+  },
+  { path: '/docs/basic/head',
+    main: HEAD
+  },
+  { path: '/docs/basic/is-head',
+    main: IS_HEAD
+  },
+  { path: '/docs/basic/latest',
+    main: LATEST
+  },
+  { path: '/docs/basic/is-latest',
+    main: IS_LATEST
+  },
+  { path: '/docs/basic/exists',
+    main: EXISTS
+  },
+  { path: '/docs/basic/list-branch',
+    main: LIST_BRANCH
+  },
+  { path: '/docs/basic/list-key',
+    main: LIST_KEY
+  },
+  { path: '/docs/basic/meta',
+    main: META
+  },
+  // Dataset Commands
+  { path: '/docs/dataset/list-dataset',
     main: ListDS
   },
-  { path: '/documentations/dataset/create-dataset',
+  { path: '/docs/dataset/create-dataset',
     main: CreateDS
   },
-  { path: '/documentations/dataset/put-data-entry-by-csv',
+  { path: '/docs/dataset/put-data-entry-by-csv',
     main: PutDEbyCSV
   },
-  { path: '/documentations/dataset/put-data-entry',
+  { path: '/docs/dataset/put-data-entry',
     main: PutDE
   },
-  { path: '/documentations/dataset/put-data-entry-batch',
+  { path: '/docs/dataset/put-data-entry-batch',
     main: PutDEbatch
   },
-  { path: '/documentations/dataset/branch-dataset',
+  { path: '/docs/dataset/branch-dataset',
     main: BranchDS
   },
-  { path: '/documentations/dataset/list-dataset-branch',
+  { path: '/docs/dataset/list-dataset-branch',
     main: ListDSbranch
   },
-  { path: '/documentations/dataset/list-data-entry-branch',
+  { path: '/docs/dataset/list-data-entry-branch',
     main: ListDEbranch
   },
-  { path: '/documentations/dataset/get-dataset',
+  { path: '/docs/dataset/get-dataset',
     main: GetDS
   },
-  { path: '/documentations/dataset/get-dataset-schema',
+  { path: '/docs/dataset/get-dataset-schema',
     main: GetDSschema
   },
-  { path: '/documentations/dataset/get-data-entry',
+  { path: '/docs/dataset/get-data-entry',
     main: GetDE
   },
-  { path: '/documentations/dataset/get-data-entry-batch',
+  { path: '/docs/dataset/get-data-entry-batch',
     main: GetDEbatch
   },
-  { path: '/documentations/dataset/exists-dataset',
+  { path: '/docs/dataset/exists-dataset',
     main: ExistsDS
   },
-  { path: '/documentations/dataset/exists-data-entry',
+  { path: '/docs/dataset/exists-data-entry',
     main: ExistsDE
   },
-  { path: '/documentations/dataset/select-data-entry',
+  { path: '/docs/dataset/select-data-entry',
     main: SelectDE
   },
-  { path: '/documentations/dataset/diff-dataset',
+  { path: '/docs/dataset/diff-dataset',
     main: DiffDS
   },
-  { path: '/documentations/dataset/delete-dataset',
+  { path: '/docs/dataset/delete-dataset',
     main: DeleteDS
   },
-  { path: '/documentations/dataset/delete-data-entry',
+  { path: '/docs/dataset/delete-data-entry',
     main: DeleteDE
   },
-  { path: '/documentations/dataset/export-dataset-binary',
+  { path: '/docs/dataset/export-dataset-binary',
     main: ExportDSbinary
   },
 ]
@@ -145,7 +222,7 @@ class DocsPage extends React.Component {
             <div className={classes.toolbar} />
             <LayoutBody className={classes.layoutBody}>
               <Typography variant="h3" gutterBottom marked="center" align="center">
-                documentations
+                documentation
               </Typography>
               <br />
               {routes.map((route) => (

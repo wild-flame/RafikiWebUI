@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { gruvboxDark, solarizedLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
+import { GeneralOptions, UtilityOptions } from "../Options"
 
 const styles = {
   card: {
@@ -20,10 +21,10 @@ function DocsCard(props) {
     <Card className={classes.card}>
       <CardContent>
         <Typography gutterBottom variant="h3" component="h1">
-          Create Dataset
+          Is Latest
         </Typography>
         <Typography component="p">
-          Create a new empty dataset
+          Check if a verion is one of the latest versions for that key
         </Typography>
         <br />
 
@@ -31,23 +32,17 @@ function DocsCard(props) {
           Syntax
         </Typography>
         <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {'CREATE_DATASET -t <dataset> -b <branch>'}
+          {'IS_LATEST -k <key> -v <version>'}
         </SyntaxHighlighter>
         <Typography component="p">
           Parameters:
         </Typography>
-        <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {`// the operating table or dataset:\n-t [ --table ] arg`}
-        </SyntaxHighlighter>
-        <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {`// the operating branch:\n-b [ --branch ] arg`}
-        </SyntaxHighlighter>
+        {GeneralOptions._k}
+        {GeneralOptions._v}
         <Typography component="p">
           Utility Options:
         </Typography>
-        <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {'// none'}
-        </SyntaxHighlighter>
+        {UtilityOptions._none}
         <br />
 
         <Typography variant="h5" gutterBottom>
@@ -55,17 +50,8 @@ function DocsCard(props) {
         </Typography>
         <SyntaxHighlighter language='javascript' style={gruvboxDark}>
           {`
-ustore> create_dataset -t sampleDS1 -b master
-[SUCCESS: CREATE_DATASET] Dataset "sampleDS1" has been created for Branch "master"
-
-ustore> create_dataset -t DS2 -b master
-[SUCCESS: CREATE_DATASET] Dataset "DS2" has been created for Branch "master"
-
-ustore> create_dataset -t sampleDS1 -b newFeature
-[SUCCESS: CREATE_DATASET] Dataset "sampleDS1" has been created for Branch "newFeature"
-
-ustore> create_dataset -t DS2 -b master
-[FAILED: CREATE_DATASET] Dataset: "DS2", Branch: "master" --> Error(13): branch already exists
+ustore> is_latest -k myfirstKey -v 3HUSTXKDYJPIRA3ICO35B7D3RPD4KRYQ
+[SUCCESS: IS_LATEST] False
           `}
         </SyntaxHighlighter>
       </CardContent>

@@ -14,6 +14,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 // for icons
 import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
+// basic key-value
+import AppendIcon from '@material-ui/icons/LibraryAdd'
+import UpdateIcon from '@material-ui/icons/Update'
+import InsertIcon from '@material-ui/icons/InsertLink'
+import MergeIcon from '@material-ui/icons/CallMerge'
+import RenameBranchIcon from '@material-ui/icons/Style'
+import HeadIcon from '@material-ui/icons/Navigation'
+import LatestIcon from '@material-ui/icons/Layers'
 // row-based table (dataset)
 import ListDSIcon from '@material-ui/icons/FormatListBulleted'
 import CreateDSIcon from '@material-ui/icons/NoteAdd'
@@ -37,6 +45,7 @@ import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 
 import ListSubheader from '@material-ui/core/ListSubheader';
+
 
 // Navigator basic color dark blue specified in
 // ConsoleTheme MuiDrawer's paper
@@ -84,10 +93,10 @@ class Navigator extends React.Component {
   }
 
   state = {
-    RowBasedTableOpen: true,
+    RowBasedTableOpen: false,
     ColBasedTableOpen: false,
-    DataStorageOpen: false,
-    KeyValueDBOpen: false
+    UtilityOpen: false,
+    KeyValueDBOpen: true
   };
 
   handleClick = (categoryHeader) => {
@@ -102,9 +111,9 @@ class Navigator extends React.Component {
           { ColBasedTableOpen: !state.ColBasedTableOpen }
         ));
         break
-      case "Storage":
+      case "Utility":
         this.setState(state => (
-          { DataStorageOpen: !state.DataStorageOpen }
+          { UtilityOpen: !state.UtilityOpen }
         ));
         break
       case "KeyValue":
@@ -114,7 +123,7 @@ class Navigator extends React.Component {
         break
       default:
         this.setState(state => (
-          { RowBasedTableOpen: !state.RowBasedTableOpen }
+          { KeyValueDBOpen: !state.KeyValueDBOpen }
         ));
         return
     }
@@ -123,6 +132,103 @@ class Navigator extends React.Component {
   render() {
     const categories = [
       {
+        id: 'Basic Key-Value',
+        collapseID: "KeyValue",
+        collapseIn: this.state.KeyValueDBOpen,
+        children: [
+          { // 1
+            id: 'Get',
+            icon: <DnsRoundedIcon />,
+            pathname: "/docs/basic/get"
+          },
+          { // 2
+            id: 'Put',
+            icon: <PutDeIcon />,
+            pathname: "/docs/basic/put"
+          },
+          { // 3
+            id: 'Append',
+            icon: <AppendIcon />,
+            pathname: "/docs/basic/append"
+          },
+          { // 4
+            id: 'Update',
+            icon: <UpdateIcon />,
+            pathname: "/docs/basic/update"
+          },
+          { // 5
+            id: 'Insert',
+            icon: <InsertIcon />,
+            pathname: "/docs/basic/insert"
+          },
+          { // 6
+            id: 'Delete',
+            icon: <DeleteDsIcon />,
+            pathname: "/docs/basic/delete"
+          },
+          { // 7
+            id: 'Branch',
+            icon: <BranchDsIcon />,
+            pathname: "/docs/basic/branch"
+          },
+          { // 8
+            id: 'Merge',
+            icon: <MergeIcon />,
+            pathname: "/docs/basic/merge"
+          },
+          { // 9
+            id: 'Rename Branch',
+            icon: <RenameBranchIcon />,
+            pathname: "/docs/basic/rename-branch"
+          },
+          { // 10
+            id: 'Delete Branch',
+            icon: <DeleteDsIcon />,
+            pathname: "/docs/basic/delete-branch"
+          },
+          { // 11
+            id: 'Head',
+            icon: <HeadIcon />,
+            pathname: "/docs/basic/head"
+          },
+          { // 12
+            id: 'Is head',
+            icon: <HeadIcon />,
+            pathname: "/docs/basic/is-head"
+          },
+          { // 13
+            id: 'Latest',
+            icon: <LatestIcon />,
+            pathname: "/docs/basic/latest"
+          },
+          { // 14
+            id: 'Is Latest',
+            icon: <LatestIcon />,
+            pathname: "/docs/basic/is-latest"
+          },
+          { // 15
+            id: 'Exists',
+            icon: <ExistsDSIcon />,
+            pathname: "/docs/basic/exists"
+          },
+          { // 16
+            id: 'List branch',
+            icon: <ListDSIcon />,
+            pathname: "/docs/basic/list-branch"
+          },
+          { // 17
+            id: 'List key',
+            icon: <ListDSIcon />,
+            pathname: "/docs/basic/list-key"
+          },
+          { // 18
+            id: 'Meta',
+            icon: <DnsRoundedIcon />,
+            pathname: "/docs/basic/meta"
+          },
+        ],
+      },
+      {
         id: 'Dataset',
         collapseID: "Row",
         collapseIn: this.state.RowBasedTableOpen,
@@ -130,97 +236,97 @@ class Navigator extends React.Component {
           {
             id: 'List Dataset',
             icon: <ListDSIcon />,
-            pathname: "/documentations/dataset/list-dataset"
+            pathname: "/docs/dataset/list-dataset"
           },
           {
             id: 'Create Dataset',
             icon: <CreateDSIcon />,
-            pathname: "/documentations/dataset/create-dataset"
+            pathname: "/docs/dataset/create-dataset"
           },
           {
             id: 'Put Data Entry by CSV',
             icon: <PutDataCSVIcon />,
-            pathname: "/documentations/dataset/put-data-entry-by-csv"
+            pathname: "/docs/dataset/put-data-entry-by-csv"
           },
           {
             id: 'Put Data Entry',
             icon: <PutDeIcon />,
-            pathname: "/documentations/dataset/put-data-entry"
+            pathname: "/docs/dataset/put-data-entry"
           },
           {
             id: 'Put Data Entry Batch',
             icon: <PutDeIcon />,
-            pathname: "/documentations/dataset/put-data-entry-batch"
+            pathname: "/docs/dataset/put-data-entry-batch"
           },
           {
             id: 'Branch Dataset',
             icon: <BranchDsIcon />,
-            pathname: "/documentations/dataset/branch-dataset"
+            pathname: "/docs/dataset/branch-dataset"
           },
           {
             id: 'List Dataset Branch',
             icon: <ListDSIcon />,
-            pathname: "/documentations/dataset/list-dataset-branch"
+            pathname: "/docs/dataset/list-dataset-branch"
           },
           {
             id: 'List Data Entry Branch',
             icon: <ListDSIcon />,
-            pathname: "/documentations/dataset/list-data-entry-branch"
+            pathname: "/docs/dataset/list-data-entry-branch"
           },
           {
             id: 'Get Dataset',
             icon: <DnsRoundedIcon />,
-            pathname: "/documentations/dataset/get-dataset"
+            pathname: "/docs/dataset/get-dataset"
           },
           {
             id: 'Get Dataset Schema',
             icon: <DnsRoundedIcon />,
-            pathname: "/documentations/dataset/get-dataset-schema"
+            pathname: "/docs/dataset/get-dataset-schema"
           },
           {
             id: 'Get Data Entry',
             icon: <DnsRoundedIcon />,
-            pathname: "/documentations/dataset/get-data-entry"
+            pathname: "/docs/dataset/get-data-entry"
           },
           {
             id: 'Get Data Entry Batch',
             icon: <DnsRoundedIcon />,
-            pathname: "/documentations/dataset/get-data-entry-batch"
+            pathname: "/docs/dataset/get-data-entry-batch"
           },
           {
             id: 'Exists Dataset',
             icon: <ExistsDSIcon />,
-            pathname: "/documentations/dataset/exists-dataset"
+            pathname: "/docs/dataset/exists-dataset"
           },
           {
             id: 'Exists Data Entry',
             icon: <ExistsDSIcon />,
-            pathname: "/documentations/dataset/exists-data-entry"
+            pathname: "/docs/dataset/exists-data-entry"
           },
           {
             id: 'Select Data Entry',
             icon: <SelectDSIcon />,
-            pathname: "/documentations/dataset/select-data-entry"
+            pathname: "/docs/dataset/select-data-entry"
           },
           {
             id: 'Diff Dataset',
             icon: <DiffDsIcon />,
-            pathname: "/documentations/dataset/diff-dataset"
+            pathname: "/docs/dataset/diff-dataset"
           },
           {
             id: 'Delete Dataset',
             icon: <DeleteDsIcon />,
-            pathname: "/documentations/dataset/delete-dataset"
+            pathname: "/docs/dataset/delete-dataset"
           },
           {
             id: 'Delete Data Entry',
             icon: <DeleteDsIcon />,
-            pathname: "/documentations/dataset/delete-data-entry"
+            pathname: "/docs/dataset/delete-data-entry"
           },
           {
             id: 'Export Dataset Binary',
             icon: <ExportDsIcon />,
-            pathname: "/documentations/dataset/export-dataset-binary"
+            pathname: "/docs/dataset/export-dataset-binary"
           },
         ],
       },
@@ -234,62 +340,12 @@ class Navigator extends React.Component {
             icon: <DnsRoundedIcon />,
             pathname: "#"
           },
-          /*
-          {
-            id: 'Create Table',
-            icon: <DnsRoundedIcon />,
-            pathname: ""
-          },
-          {
-            id: 'Load CSV',
-            icon: <DnsRoundedIcon />,
-            pathname: ""
-          },
-          {
-            id: 'Get Table',
-            icon: <DnsRoundedIcon />,
-            pathname: ""
-          },
-          {
-            id: 'Get Column',
-            icon: <DnsRoundedIcon />,
-            pathname: ""
-          },
-          {
-            id: 'List Column Branch',
-            icon: <DnsRoundedIcon />,
-            pathname: ""
-          },
-          {
-            id: 'Get Row',
-            icon: <DnsRoundedIcon />,
-            pathname: ""
-          },
-          {
-            id: 'Update Row',
-            icon: <DnsRoundedIcon />,
-            pathname: ""
-          },
-          // and some more...
-          */
         ],
       },
       {
-        id: 'Data Storage',
-        collapseID: "Storage",
-        collapseIn: this.state.DataStorageOpen,
-        children: [
-          {
-            id: 'Work in progress',
-            icon: <DnsRoundedIcon />,
-            pathname: "#"
-          }
-        ],
-      },
-      {
-        id: 'Basic Key-Value',
-        collapseID: "KeyValue",
-        collapseIn: this.state.KeyValueDBOpen,
+        id: 'Utility',
+        collapseID: "Utility",
+        collapseIn: this.state.UtilityOpen,
         children: [
           {
             id: 'Work in progress',
@@ -316,7 +372,7 @@ class Navigator extends React.Component {
           <div className={classes.toolbar} />
           <List
             disablePadding
-            subheader={<ListSubheader component="div">Documentations</ListSubheader>}
+            subheader={<ListSubheader component="div">CLI Reference</ListSubheader>}
           >
             {categories.map(({id, collapseID, collapseIn, children }) => (
               <React.Fragment key={id}>
@@ -333,7 +389,7 @@ class Navigator extends React.Component {
                     {id}
                   </ListItemText>
                   {collapseIn
-                    ? <ExpandLess 
+                    ? <ExpandLess
                         style={{
                           color: "gray"
                         }}

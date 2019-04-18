@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { gruvboxDark, solarizedLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
+import { GeneralOptions, UtilityOptions } from "../Options"
 
 const styles = {
   card: {
@@ -20,10 +21,10 @@ function DocsCard(props) {
     <Card className={classes.card}>
       <CardContent>
         <Typography gutterBottom variant="h3" component="h1">
-          Create Dataset
+          Merge
         </Typography>
         <Typography component="p">
-          Create a new empty dataset
+          Merge two versions of a key into one by creating a new value
         </Typography>
         <br />
 
@@ -31,23 +32,21 @@ function DocsCard(props) {
           Syntax
         </Typography>
         <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {'CREATE_DATASET -t <dataset> -b <branch>'}
+          {'MERGE -k <key> -x <value> [-b <target_branch> -c <refer_branch> | -b <target_branch> -u <refer_version> | -u <refer_version> -v <refer_version_2>]'}
         </SyntaxHighlighter>
         <Typography component="p">
           Parameters:
         </Typography>
-        <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {`// the operating table or dataset:\n-t [ --table ] arg`}
-        </SyntaxHighlighter>
-        <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {`// the operating branch:\n-b [ --branch ] arg`}
-        </SyntaxHighlighter>
+        {GeneralOptions._k}
+        {GeneralOptions._x}
+        {GeneralOptions._b}
+        {GeneralOptions._c}
+        {GeneralOptions._u}
+        {GeneralOptions._v}
         <Typography component="p">
           Utility Options:
         </Typography>
-        <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {'// none'}
-        </SyntaxHighlighter>
+        {UtilityOptions._none}
         <br />
 
         <Typography variant="h5" gutterBottom>
@@ -55,17 +54,11 @@ function DocsCard(props) {
         </Typography>
         <SyntaxHighlighter language='javascript' style={gruvboxDark}>
           {`
-ustore> create_dataset -t sampleDS1 -b master
-[SUCCESS: CREATE_DATASET] Dataset "sampleDS1" has been created for Branch "master"
+ustore> merge -k myfirstKey -x "this is not a COMMIT message! this is the actual value! merge named-merge-no-edit with master" -b master -c named-merge-no-edit
+[SUCCESS: MERGE] Version: F5RZHEHBVWO5IFM5NUAPY75LEPH7INMR
 
-ustore> create_dataset -t DS2 -b master
-[SUCCESS: CREATE_DATASET] Dataset "DS2" has been created for Branch "master"
-
-ustore> create_dataset -t sampleDS1 -b newFeature
-[SUCCESS: CREATE_DATASET] Dataset "sampleDS1" has been created for Branch "newFeature"
-
-ustore> create_dataset -t DS2 -b master
-[FAILED: CREATE_DATASET] Dataset: "DS2", Branch: "master" --> Error(13): branch already exists
+ustore> merge -k myfirstKey -x "merge -x will write new value. (merge named-merge-with-edit with master)" -b master -c named-merge-with-edit
+[SUCCESS: MERGE] Version: IDAJSCWZSU2RW63WMSH3T4FCEC4ZJL3K
           `}
         </SyntaxHighlighter>
       </CardContent>

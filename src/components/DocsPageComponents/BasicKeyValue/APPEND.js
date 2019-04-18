@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { gruvboxDark, solarizedLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
+import { GeneralOptions, UtilityOptions } from "../Options"
 
 const styles = {
   card: {
@@ -20,10 +21,10 @@ function DocsCard(props) {
     <Card className={classes.card}>
       <CardContent>
         <Typography gutterBottom variant="h3" component="h1">
-          Create Dataset
+          Append
         </Typography>
         <Typography component="p">
-          Create a new empty dataset
+          Append value at the end of the value for a key. The operation is not supported for data type "String".
         </Typography>
         <br />
 
@@ -31,23 +32,19 @@ function DocsCard(props) {
           Syntax
         </Typography>
         <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {'CREATE_DATASET -t <dataset> -b <branch>'}
+          {'APPEND -k <key> -x <value> [-b <branch> | -u <refer_version>]'}
         </SyntaxHighlighter>
         <Typography component="p">
           Parameters:
         </Typography>
-        <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {`// the operating table or dataset:\n-t [ --table ] arg`}
-        </SyntaxHighlighter>
-        <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {`// the operating branch:\n-b [ --branch ] arg`}
-        </SyntaxHighlighter>
+        {GeneralOptions._k}
+        {GeneralOptions._x}
+        {GeneralOptions._b}
+        {GeneralOptions._u}
         <Typography component="p">
           Utility Options:
         </Typography>
-        <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {'// none'}
-        </SyntaxHighlighter>
+        {UtilityOptions._none}
         <br />
 
         <Typography variant="h5" gutterBottom>
@@ -55,17 +52,27 @@ function DocsCard(props) {
         </Typography>
         <SyntaxHighlighter language='javascript' style={gruvboxDark}>
           {`
-ustore> create_dataset -t sampleDS1 -b master
-[SUCCESS: CREATE_DATASET] Dataset "sampleDS1" has been created for Branch "master"
+// Before APPEND
+ustore> get -k File1 -b master
+[SUCCESS: GET] Value<Blob>: "KEY,AGE,GENDER,GPA,SCHOOL
+a01,20,Male,4.9,NUS
+a02,22,Male,2.9,NTU
+a03,28,Female,4.2,NUS
+a04,39,Female,3.9,SMU
+a05,16,Male,5.0,NUS"
 
-ustore> create_dataset -t DS2 -b master
-[SUCCESS: CREATE_DATASET] Dataset "DS2" has been created for Branch "master"
+// APPEND some value
+ustore> append -k File1 -x " ...more...more...more" -b master
+[SUCCESS: APPEND] Type: Blob, Version: TOAYEEWWILIDHXKF3CWURTGJIHQ2PTPR
 
-ustore> create_dataset -t sampleDS1 -b newFeature
-[SUCCESS: CREATE_DATASET] Dataset "sampleDS1" has been created for Branch "newFeature"
-
-ustore> create_dataset -t DS2 -b master
-[FAILED: CREATE_DATASET] Dataset: "DS2", Branch: "master" --> Error(13): branch already exists
+// After APPEND
+ustore> get -k File1 -b master
+[SUCCESS: GET] Value<Blob>: "KEY,AGE,GENDER,GPA,SCHOOL
+a01,20,Male,4.9,NUS
+a02,22,Male,2.9,NTU
+a03,28,Female,4.2,NUS
+a04,39,Female,3.9,SMU
+a05,16,Male,5.0,NUS ...more...more...more"
           `}
         </SyntaxHighlighter>
       </CardContent>

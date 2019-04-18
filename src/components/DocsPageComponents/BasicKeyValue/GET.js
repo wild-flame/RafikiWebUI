@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { gruvboxDark, solarizedLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
+import { GeneralOptions, UtilityOptions } from "../Options"
 
 const styles = {
   card: {
@@ -20,10 +21,10 @@ function DocsCard(props) {
     <Card className={classes.card}>
       <CardContent>
         <Typography gutterBottom variant="h3" component="h1">
-          Create Dataset
+          Get
         </Typography>
         <Typography component="p">
-          Create a new empty dataset
+          Get the value based on the key
         </Typography>
         <br />
 
@@ -31,23 +32,19 @@ function DocsCard(props) {
           Syntax
         </Typography>
         <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {'CREATE_DATASET -t <dataset> -b <branch>'}
+          {'GET{_ALL} -k <key> [-b <branch> | -v <version>] {<file>}'}
         </SyntaxHighlighter>
         <Typography component="p">
           Parameters:
         </Typography>
-        <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {`// the operating table or dataset:\n-t [ --table ] arg`}
-        </SyntaxHighlighter>
-        <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {`// the operating branch:\n-b [ --branch ] arg`}
-        </SyntaxHighlighter>
+        {GeneralOptions._k}
+        {GeneralOptions._b}
+        {GeneralOptions._v}
+        {GeneralOptions._file}
         <Typography component="p">
           Utility Options:
         </Typography>
-        <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {'// none'}
-        </SyntaxHighlighter>
+        {UtilityOptions._1}
         <br />
 
         <Typography variant="h5" gutterBottom>
@@ -55,17 +52,19 @@ function DocsCard(props) {
         </Typography>
         <SyntaxHighlighter language='javascript' style={gruvboxDark}>
           {`
-ustore> create_dataset -t sampleDS1 -b master
-[SUCCESS: CREATE_DATASET] Dataset "sampleDS1" has been created for Branch "master"
+ustore> get -k myfirstKey -b master
+[SUCCESS: GET] Value<Blob>: "this is the first key i put into the forkbase"
 
-ustore> create_dataset -t DS2 -b master
-[SUCCESS: CREATE_DATASET] Dataset "DS2" has been created for Branch "master"
+ustore> get -k myfirstKey -v A62JUGB6ORFDMN3LKMFDM6MRLAKMFIXE
+[SUCCESS: GET] Value<Blob>: "i want to know the version generated"
 
-ustore> create_dataset -t sampleDS1 -b newFeature
-[SUCCESS: CREATE_DATASET] Dataset "sampleDS1" has been created for Branch "newFeature"
+// providing the <file> parameter
+// will save the value as specified in the <file>
+ustore> get -k File1 -b master ./download.dat
+[SUCCESS: GET] Value<Blob>: --> ./download.dat  [129B]
 
-ustore> create_dataset -t DS2 -b master
-[FAILED: CREATE_DATASET] Dataset: "DS2", Branch: "master" --> Error(13): branch already exists
+// Get_ALL is to display full value from map, list, set
+// e.g. get_all -k someMap -b master
           `}
         </SyntaxHighlighter>
       </CardContent>

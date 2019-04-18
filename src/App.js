@@ -63,7 +63,7 @@ class App extends Component {
             component={PublicationsPage}
           />
           <Route
-            path='/documentations'
+            path='/docs'
             component={DocsPage}
           />
           <Route
