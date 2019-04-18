@@ -23,7 +23,7 @@ function DocsCard(props) {
           List Dataset
         </Typography>
         <Typography component="p">
-          Displays the datasets in list form
+          Display the datasets in list form, maximum number of datasets displayed is 20. To list out all the datasets in the storage, use "LIST_DATASET_ALL"
         </Typography>
         <br />
 
@@ -31,7 +31,7 @@ function DocsCard(props) {
           Syntax
         </Typography>
         <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {'LIST_DATASET'}
+          {'LIST_DATASET{_ALL}'}
         </SyntaxHighlighter>
         <Typography component="p">
           Parameters:

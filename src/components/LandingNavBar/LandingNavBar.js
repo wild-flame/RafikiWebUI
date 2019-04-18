@@ -190,7 +190,7 @@ class LandingNavBar extends React.Component {
               <Typography
                 variant="h5"
               >
-                <Link to="/documentations" className={classes.rightLink}>
+                <Link to="/documentations/dataset/list-dataset" className={classes.rightLink}>
                   {'Docs'}
                 </Link>
               </Typography>

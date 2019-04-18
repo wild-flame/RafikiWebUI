@@ -133,11 +133,6 @@ class Navigator extends React.Component {
             pathname: "/documentations/dataset/list-dataset"
           },
           {
-            id: 'List Dataset All',
-            icon: <ListDSIcon />,
-            pathname: "/documentations/dataset/list-dataset-all"
-          },
-          {
             id: 'Create Dataset',
             icon: <CreateDSIcon />,
             pathname: "/documentations/dataset/create-dataset"
@@ -176,11 +171,6 @@ class Navigator extends React.Component {
             id: 'Get Dataset',
             icon: <DnsRoundedIcon />,
             pathname: "/documentations/dataset/get-dataset"
-          },
-          {
-            id: 'Get Dataset All',
-            icon: <DnsRoundedIcon />,
-            pathname: "/documentations/dataset/get-dataset-all"
           },
           {
             id: 'Get Dataset Schema',

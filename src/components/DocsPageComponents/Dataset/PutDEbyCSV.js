@@ -40,7 +40,7 @@ function DocsCard(props) {
           {`// path to the file on system:\nfile-path`}
         </SyntaxHighlighter>
         <SyntaxHighlighter language='javascript' style={solarizedLight}>
-          {`// the operating table or dataset:\n-t [ --table] arg`}
+          {`// the operating table or dataset:\n-t [ --table ] arg`}
         </SyntaxHighlighter>
         <SyntaxHighlighter language='javascript' style={solarizedLight}>
           {`// the operating branch:\n-b [ --branch ] arg`}
@@ -71,14 +71,6 @@ ustore> put_data_entry_by_csv ../../../mock-data/sample.csv -t sampleDS1 -b mast
 // Note same file uploaded, --with-schema will treat the first row as schema
 ustore> put_data_entry_by_csv ../../../mock-data/sample.csv -t DS2 -b master -m 0
 [SUCCESS: PUT_DATA_ENTRY_BY_CSV] 6 entries are updated (no schema)  [143B]
-
-ustore> put_data_entry_by_csv ../../../mock-data/sample.csv -t sampleDS1 -b newFeature
-[FAILED: PUT_DATA_ENTRY_BY_CSV] Dataset: "sampleDS1", Branch: "newFeature", Indices of Entry Name Attributes: {}, File: "../../../mock-data/sample.csv", With Schema: false 
---> Error(75): indices of data entry name attributes are missing
-
-ustore> put_data_entry_by_csv ../../../mock-data/sample.csv -t sampleDS1 -b NonExistingBranch -m 0
-[FAILED: PUT_DATA_ENTRY_BY_CSV] Dataset: "sampleDS1", Branch: "NonExistingBranch", Indices of Entry Name Attributes: {0}, File: "../../../mock-data/sample.csv", With Schema: false 
---> Error(14): branch does not exist
           `}
         </SyntaxHighlighter>
       </CardContent>

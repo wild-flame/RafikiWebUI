@@ -16,7 +16,6 @@ import Typography from '../../components/LandingComponents/Typography'
 
 // Dataset Routes
 import ListDS from "../../components/DocsPageComponents/Dataset/ListDS"
-import ListDSall from "../../components/DocsPageComponents/Dataset/ListDSall"
 import CreateDS from "../../components/DocsPageComponents/Dataset/CreateDS"
 import PutDEbyCSV from "../../components/DocsPageComponents/Dataset/PutDEbyCSV"
 import PutDE from "../../components/DocsPageComponents/Dataset/PutDE"
@@ -25,7 +24,6 @@ import BranchDS from "../../components/DocsPageComponents/Dataset/BranchDS"
 import ListDSbranch from "../../components/DocsPageComponents/Dataset/ListDSbranch"
 import ListDEbranch from "../../components/DocsPageComponents/Dataset/ListDEbranch"
 import GetDS from "../../components/DocsPageComponents/Dataset/GetDS"
-import GetDSall from "../../components/DocsPageComponents/Dataset/GetDSall"
 import GetDSschema from "../../components/DocsPageComponents/Dataset/GetDSschema"
 import GetDE from "../../components/DocsPageComponents/Dataset/GetDE"
 import GetDEbatch from "../../components/DocsPageComponents/Dataset/GetDEbatch"
@@ -74,9 +72,6 @@ const routes = [
   { path: '/documentations/dataset/list-dataset',
     main: ListDS
   },
-  { path: '/documentations/dataset/list-dataset-all',
-    main: ListDSall
-  },
   { path: '/documentations/dataset/create-dataset',
     main: CreateDS
   },
@@ -100,9 +95,6 @@ const routes = [
   },
   { path: '/documentations/dataset/get-dataset',
     main: GetDS
-  },
-  { path: '/documentations/dataset/get-dataset-all',
-    main: GetDSall
   },
   { path: '/documentations/dataset/get-dataset-schema',
     main: GetDSschema
