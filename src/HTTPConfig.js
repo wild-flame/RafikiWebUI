@@ -12,11 +12,11 @@ const HTTPconfig = {
   },
   // need a working server for axios uploadprogress to work
   gateway: "http://localhost:5000/",
-  // gateway: "http://3.0.229.71/",
+  // gateway: "http://13.229.126.135/",
 }
 
 if (process.env.NODE_ENV === "production") {
-  HTTPconfig.gateway = "http://3.0.229.71/";
+  HTTPconfig.gateway = "http://13.229.126.135/";
 }
 
 export default HTTPconfig;

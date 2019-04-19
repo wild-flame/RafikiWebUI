@@ -152,7 +152,7 @@ class LandingNavBar extends React.Component {
             component={Link}
             to={"/sign-in"}
           >
-            Sign in
+            {""/*Sign in*/}
           </Button>
         </Fragment>
       )
@@ -176,14 +176,14 @@ class LandingNavBar extends React.Component {
               <Typography
                 variant="h5"
               >
-                <Link to="/demo-features" className={classes.rightLink}>
+                <Link to="/#/demo-features" className={classes.rightLink}>
                   {'Demo'}
                 </Link>
               </Typography>
               <Typography
                 variant="h5"
               >
-                <Link to="/publications" className={classes.rightLink}>
+                <Link to="/#/publications" className={classes.rightLink}>
                   {'Publications'}
                 </Link>
               </Typography>
@@ -197,7 +197,7 @@ class LandingNavBar extends React.Component {
               <Typography
                 variant="h5"
               >
-                <Link to="/contact" className={classes.rightLink}>
+                <Link to="/#/contact" className={classes.rightLink}>
                   {'Contact'}
                 </Link>
               </Typography>
