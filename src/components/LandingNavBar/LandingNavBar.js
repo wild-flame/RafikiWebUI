@@ -11,7 +11,6 @@ import Hidden from '@material-ui/core/Hidden';
 import MenuIcon from '@material-ui/icons/Menu';
 import LandingNavigator from "./LandingNavigator"
 
-
 // for login menu
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -176,7 +175,7 @@ class LandingNavBar extends React.Component {
     return (
       <div>
         <LandingNavigator
-          PaperProps={{ style: { width: 200 } }}
+          PaperProps={{ style: { width: 250, backgroundColor: "rgb(35, 47, 62)" } }}
           variant="temporary"
           open={RootMobileOpen}
           onClose={handleDrawerToggle}

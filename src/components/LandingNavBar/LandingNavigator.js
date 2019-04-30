@@ -9,21 +9,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-
-// for icons
-import HomeIcon from '@material-ui/icons/Home';
-import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
-// row-based table (dataset)
-import ListDSIcon from '@material-ui/icons/FormatListBulleted'
-import PutDataCSVIcon from '@material-ui/icons/CloudUploadOutlined'
-import PutDeIcon from '@material-ui/icons/PlaylistAdd'
-import BranchDsIcon from '@material-ui/icons/CallSplit'
-import DiffDsIcon from '@material-ui/icons/Compare'
-import DeleteDsIcon from '@material-ui/icons/Delete'
-import ExportDsIcon from '@material-ui/icons/SaveAlt'
-
 
 import Logo from "../../assets/Logo-cleaned.png"
 
@@ -61,30 +47,14 @@ const styles = theme => ({
     height: 28,
     marginRight: 10
   },
-  itemActionable: {
-    '&:hover': {
-      backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    },
-  },
   overviewHover: {
     '&:hover': {
-      backgroundColor: 'rgba(216, 255, 255, 0.1)',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
   },
   itemActiveItem: {
     color: theme.palette.secondary.main,
   },
-  itemPrimary: {
-    color: 'inherit',
-    fontSize: theme.typography.fontSize,
-    '&$textDense': {
-      fontSize: theme.typography.fontSize,
-    },
-  },
-  textDense: {},
-  divider: {
-    marginTop: theme.spacing.unit * 2,
-  }
 });
 
 
@@ -94,178 +64,7 @@ class Navigator extends React.Component {
     location: PropTypes.object,
   }
 
-  state = {
-    RowBasedTableOpen: true,
-    ColBasedTableOpen: false,
-    DataStorageOpen: false,
-    KeyValueDBOpen: false
-  };
-
-  handleClick = (categoryHeader) => {
-    switch(categoryHeader) {
-      case "Row":
-        this.setState(state => (
-          { RowBasedTableOpen: !state.RowBasedTableOpen }
-        ));
-        break
-      case "Col":
-        this.setState(state => (
-          { ColBasedTableOpen: !state.ColBasedTableOpen }
-        ));
-        break
-      case "Storage":
-        this.setState(state => (
-          { DataStorageOpen: !state.DataStorageOpen }
-        ));
-        break
-      case "KeyValue":
-        this.setState(state => (
-          { KeyValueDBOpen: !state.KeyValueDBOpen }
-        ));
-        break
-      default:
-        this.setState(state => (
-          { RowBasedTableOpen: !state.RowBasedTableOpen }
-        ));
-        return
-    }
-  };
-
   render() {
-    const categories = [
-      {
-        id: 'Dataset',
-        collapseID: "Row",
-        collapseIn: this.state.RowBasedTableOpen,
-        children: [
-          {
-            id: 'List Dataset',
-            icon: <ListDSIcon />,
-            pathname: "/console/row-based-table/list-dataset"
-          },
-          {
-            id: 'Put Data by CSV',
-            icon: <PutDataCSVIcon />,
-            pathname: "/console/row-based-table/put-data-by-csv"
-          },
-          {
-            id: 'Put Data Entry',
-            icon: <PutDeIcon />,
-            pathname: "/console/row-based-table/put-data-entry"
-          },
-          {
-            id: 'Branch Dataset',
-            icon: <BranchDsIcon />,
-            pathname: "/console/row-based-table/branch-dataset"
-          },
-          {
-            id: 'Get Dataset',
-            icon: <DnsRoundedIcon />,
-            pathname: "/console/row-based-table/get-dataset"
-          },
-          {
-            id: 'Get Dataset Schema',
-            icon: <DnsRoundedIcon />,
-            pathname: "/console/row-based-table/get-dataset-schema"
-          },
-          {
-            id: 'Get Data Entry',
-            icon: <DnsRoundedIcon />,
-            pathname: "/console/row-based-table/get-data-entry"
-          },
-          {
-            id: 'Diff Dataset',
-            icon: <DiffDsIcon />,
-            pathname: "/console/row-based-table/diff-dataset"
-          },
-          {
-            id: 'Delete Dataset',
-            icon: <DeleteDsIcon />,
-            pathname: "/console/row-based-table/delete-dataset"
-          },
-          {
-            id: 'Export Dataset',
-            icon: <ExportDsIcon />,
-            pathname: "/console/row-based-table/export-dataset"
-          },
-        ],
-      },
-      {
-        id: 'Column-based Table',
-        collapseID: "Col",
-        collapseIn: this.state.ColBasedTableOpen,
-        children: [
-          {
-            id: 'Work in progress',
-            icon: <DnsRoundedIcon />,
-            pathname: "#"
-          },
-          /*
-          {
-            id: 'Create Table',
-            icon: <DnsRoundedIcon />,
-            pathname: ""
-          },
-          {
-            id: 'Load CSV',
-            icon: <DnsRoundedIcon />,
-            pathname: ""
-          },
-          {
-            id: 'Get Table',
-            icon: <DnsRoundedIcon />,
-            pathname: ""
-          },
-          {
-            id: 'Get Column',
-            icon: <DnsRoundedIcon />,
-            pathname: ""
-          },
-          {
-            id: 'List Column Branch',
-            icon: <DnsRoundedIcon />,
-            pathname: ""
-          },
-          {
-            id: 'Get Row',
-            icon: <DnsRoundedIcon />,
-            pathname: ""
-          },
-          {
-            id: 'Update Row',
-            icon: <DnsRoundedIcon />,
-            pathname: ""
-          },
-          // and some more...
-          */
-        ],
-      },
-      {
-        id: 'Data Storage',
-        collapseID: "Storage",
-        collapseIn: this.state.DataStorageOpen,
-        children: [
-          {
-            id: 'Work in progress',
-            icon: <DnsRoundedIcon />,
-            pathname: "#"
-          }
-        ],
-      },
-      {
-        id: 'Basic Key-Value',
-        collapseID: "KeyValue",
-        collapseIn: this.state.KeyValueDBOpen,
-        children: [
-          {
-            id: 'Work in progress',
-            icon: <DnsRoundedIcon />,
-            pathname: "#"
-          }
-        ],
-      },
-    ];
-
     const {
       classes,
       location,
@@ -275,6 +74,25 @@ class Navigator extends React.Component {
       ...other
     } = this.props;
 
+    const navLinks = [
+      {
+        url: "/demo-features",
+        label: "Demo",
+      },
+      {
+        url: "/publications",
+        label: "Publicationcs",
+      },
+      {
+        url: "/docs/basic/get",
+        label: "Docs",
+      },
+      {
+        url: "/contact",
+        label: "Contact",
+      },
+    ]
+
     return (
       <Drawer
         variant="permanent"
@@ -282,37 +100,36 @@ class Navigator extends React.Component {
         onClose={onClose}
         {...other}
       >
-          <List disablePadding>
+        <List disablePadding>
+          <ListItem
+            component={Link}
+            to="/"
+            className={classNames(
+              classes.firebase,
+              classes.item,
+              classes.itemCategory)}
+          >
+            <img alt="logo" src={Logo} className={classes.logo} />
+            ForkBase
+          </ListItem>
+          {navLinks.map((link, index) => (
             <ListItem
+              key={index}
               component={Link}
-              to="/"
-              className={classNames(
-                classes.firebase,
-                classes.item,
-                classes.itemCategory)}
-            >
-              <img alt="logo" src={Logo} className={classes.logo} />
-              ForkBase
-            </ListItem>
-            <ListItem 
-              component={Link}
-              to="/console"
+              to={link.url}
               onClick={onClose}
               className={classNames(
                 classes.item,
                 classes.overviewHover,
                 classes.itemCategory,
-                location.pathname === "/console" &&
+                location.pathname === link.url &&
                 classes.itemActiveItem,
                 classes.categoryHeader
               )}
             >
-              <ListItemIcon>
-                <HomeIcon />
-              </ListItemIcon>
               <ListItemText
                 classes={
-                  location.pathname === "/console"
+                  location.pathname === link.url
                     ? {
                       primary: classes.categoryHeaderPrimaryActive
                     }
@@ -321,53 +138,11 @@ class Navigator extends React.Component {
                     }
                   }
               >
-                Storage Overview
+                {link.label}
               </ListItemText>
             </ListItem>
-            {categories.map(({id, collapseID, collapseIn, children }) => (
-              <React.Fragment key={id}>
-                <ListItem
-                  button
-                  onClick={() => this.handleClick(collapseID)}
-                  className={classes.categoryHeader}
-                >
-                  <ListItemText
-                    classes={{
-                      primary: classes.categoryHeaderPrimary,
-                    }}
-                  >
-                    {id}
-                  </ListItemText>
-                </ListItem>
-                  {children.map(({ id: childId, icon, pathname }) => (
-                    <ListItem
-                      key={childId}
-                      button
-                      onClick={onClose}
-                      component={Link}
-                      to={pathname}
-                      dense
-                      className={classNames(
-                        classes.item,
-                        classes.itemActionable,
-                        location.pathname === pathname &&
-                        classes.itemActiveItem,
-                      )}
-                    >
-                      <ListItemIcon>{icon}</ListItemIcon>
-                      <ListItemText
-                        classes={{
-                          primary: classes.itemPrimary,
-                          textDense: classes.textDense,
-                        }}
-                      >
-                        {childId}
-                      </ListItemText>
-                    </ListItem>
-                  ))}
-              </React.Fragment>
-            ))}
-          </List>
+          ))}
+        </List>
       </Drawer>
     );
   }
