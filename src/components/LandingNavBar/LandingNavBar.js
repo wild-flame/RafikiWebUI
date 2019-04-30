@@ -66,6 +66,12 @@ const styles = theme => ({
       color: theme.palette.secondary.main,
     },
   },
+  rightLinkActive: {
+    font: '300 18px Roboto,sans-serif',
+    color: theme.palette.secondary.main,
+    marginLeft: theme.spacing.unit * 5,
+    textDecoration: "none",
+  },
   linkSecondary: {
     color: theme.palette.secondary.main,
   },
@@ -109,6 +115,7 @@ class LandingNavBar extends React.Component {
       classes,
       handleDrawerToggle,
       RootMobileOpen,
+      location
     } = this.props;
 
     const links = isAuthenticated
@@ -172,6 +179,25 @@ class LandingNavBar extends React.Component {
         </Fragment>
       )
 
+    const navLinks = [
+      {
+        url: "/demo-features",
+        label: "Demo",
+      },
+      {
+        url: "/publications",
+        label: "Publicationcs",
+      },
+      {
+        url: "/docs/basic/get",
+        label: "Docs",
+      },
+      {
+        url: "/contact",
+        label: "Contact",
+      },
+    ]
+
     return (
       <div>
         <LandingNavigator
@@ -202,18 +228,23 @@ class LandingNavBar extends React.Component {
                 {'ForkBase'}
               </Link>
               <Hidden smDown>
-                <Link to="/#/demo-features" className={classes.rightLink}>
-                  {'Demo'}
-                </Link>
-                <Link to="/#/publications" className={classes.rightLink}>
-                  {'Publications'}
-                </Link>
-                <Link to="/docs/basic/get" className={classes.rightLink}>
-                  {'Docs'}
-                </Link>
-                <Link to="/#/contact" className={classes.rightLink}>
-                  {'Contact'}
-                </Link>
+                {navLinks.map((link, index) => (
+                  <Link
+                    key={index}
+                    to={link.url}
+                    className={
+                      location.pathname === link.url
+                        ? (
+                          classes.rightLinkActive
+                        )
+                        : (
+                          classes.rightLink
+                        )
+                      }
+                  >
+                    {link.label}
+                  </Link>
+                ))}
               </Hidden>
             </div>
             {links}
