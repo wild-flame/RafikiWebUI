@@ -11,8 +11,13 @@ export const Types = {
   // for appbar menuitem
   LOGIN_MENU_OPEN: "LOGIN_MENU_OPEN",
   LOGIN_MENU_CLOSE: "LOGIN_MENU_CLOSE",
+  // landing drawer toggle
+  DRAWER_TOGGLE: "root/drawer_toggle",
 }
 
+export const handleDrawerToggle = () => ({
+  type: Types.DRAWER_TOGGLE
+});
 
 export const loginMenuOpen = anchorElId => ({
   type: Types.LOGIN_MENU_OPEN,

@@ -10,6 +10,7 @@ const initialState = {
       message: ""
     },
     dropdownAnchorElId: false,
+    RootMobileOpen: false,
 }
 
 
@@ -67,6 +68,12 @@ export const Root = (state = initialState, action) => {
           show: false,
           message: ""
         }
+      };
+    // for landing page navbar drawer
+    case Types.DRAWER_TOGGLE :
+      return {
+        ...state,
+        RootMobileOpen: !state.RootMobileOpen
       };
     default:
       return state;

@@ -6,6 +6,12 @@ import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography"
 import AppBar from '../LandingComponents/AppBar';
+import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
+import MenuIcon from '@material-ui/icons/Menu';
+import LandingNavigator from "./LandingNavigator"
+
+
 // for login menu
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -24,10 +30,11 @@ const styles = theme => ({
     zIndex: theme.zIndex.drawer + 1,
   },
   title: {
-    fontSize: 24,
+    font: '500 25px Roboto,sans-serif',
     cursor: "pointer",
     color: "white",
-    textDecoration: "none"
+    textDecoration: "none",
+    marginRight: 20
   },
   placeholder: toolbarStyles(theme).root,
   toolbar: {
@@ -41,7 +48,7 @@ const styles = theme => ({
   },
   logo: {
     height: 36,
-    marginRight: 20
+    marginRight: 10
   },
   leftLinkActive: {
     color: theme.palette.common.white,
@@ -52,10 +59,13 @@ const styles = theme => ({
     justifyContent: 'flex-end',
   },
   rightLink: {
-    fontSize: 16,
+    font: '300 18px Roboto,sans-serif',
     color: theme.palette.common.white,
-    marginLeft: theme.spacing.unit * 3,
-    textDecoration: "none"
+    marginLeft: theme.spacing.unit * 5,
+    textDecoration: "none",
+    '&:hover': {
+      color: theme.palette.secondary.main,
+    },
   },
   linkSecondary: {
     color: theme.palette.secondary.main,
@@ -69,7 +79,11 @@ const styles = theme => ({
     padding: 4,
     marginLeft: theme.spacing.unit * 3,
     textDecoration: "none"
-  }
+  },
+  menuButton: {
+    marginLeft: -theme.spacing.unit,
+    marginRight: theme.spacing.unit *2,
+  },
 });
 
 class LandingNavBar extends React.Component {
@@ -93,7 +107,9 @@ class LandingNavBar extends React.Component {
     const {
       anchorElId,
       isAuthenticated,
-      classes
+      classes,
+      handleDrawerToggle,
+      RootMobileOpen,
     } = this.props;
 
     const links = isAuthenticated
@@ -152,55 +168,54 @@ class LandingNavBar extends React.Component {
             component={Link}
             to={"/sign-in"}
           >
-            {""/*Sign in*/}
+            {"Sign in"}
           </Button>
         </Fragment>
       )
 
-    // use complex button from MUI for hover effects
     return (
       <div>
+        <LandingNavigator
+          PaperProps={{ style: { width: 200 } }}
+          variant="temporary"
+          open={RootMobileOpen}
+          onClose={handleDrawerToggle}
+        />
         <AppBar position="fixed" className={classes.LandingAppBar}>
           <Toolbar className={classes.toolbar}>
+            <Hidden mdUp>
+              <Grid item>
+                <IconButton
+                  color="inherit"
+                  aria-label="Open drawer"
+                  onClick={handleDrawerToggle}
+                  className={classes.menuButton}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Grid>
+            </Hidden>
             <div className={classes.left}>
               <Link to="/">
                 <img alt="logo" src={Logo} className={classes.logo} />
               </Link>
-              <Typography
-                variant="h6"
-              >
-                <Link to="/" className={classes.title}>
-                  {'ForkBase'}
-                </Link>
-              </Typography>
-              <Typography
-                variant="h5"
-              >
+              <Link to="/" className={classes.title}>
+                {'ForkBase'}
+              </Link>
+              <Hidden smDown>
                 <Link to="/#/demo-features" className={classes.rightLink}>
                   {'Demo'}
                 </Link>
-              </Typography>
-              <Typography
-                variant="h5"
-              >
                 <Link to="/#/publications" className={classes.rightLink}>
                   {'Publications'}
                 </Link>
-              </Typography>
-              <Typography
-                variant="h5"
-              >
                 <Link to="/docs/basic/get" className={classes.rightLink}>
                   {'Docs'}
                 </Link>
-              </Typography>
-              <Typography
-                variant="h5"
-              >
                 <Link to="/#/contact" className={classes.rightLink}>
                   {'Contact'}
                 </Link>
-              </Typography>
+              </Hidden>
             </div>
             {links}
           </Toolbar>
@@ -217,11 +232,13 @@ const mapStateToProps = state => ({
   isAuthenticated: state.Root.token !== null,
   // initials: state.firebaseReducer.profile.initials,
   // bgColor: state.firebaseReducer.profile.color
+  RootMobileOpen: state.Root.RootMobileOpen,
 });
 
 const mapDispatchToProps = {
   loginMenuOpen: actions.loginMenuOpen,
   loginMenuClose: actions.loginMenuClose,
+  handleDrawerToggle: actions.handleDrawerToggle
 }
 
 
