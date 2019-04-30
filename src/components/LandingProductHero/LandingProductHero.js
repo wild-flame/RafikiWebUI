@@ -26,7 +26,7 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit * 4,
     marginTop: theme.spacing.unit * 4,
     [theme.breakpoints.up('sm')]: {
-      marginTop: theme.spacing.unit * 10,
+      marginTop: theme.spacing.unit * 8,
     },
   },
   more: {
@@ -42,10 +42,10 @@ function ProductHero(props) {
       {/* Increase the network loading priority of the background image. */}
       <img style={{ display: 'none' }} src={backgroundImage} alt="" />
       <Typography color="inherit" align="center" variant="h2" marked="center">
-        Store with ForkBase
+        Git For Data
       </Typography>
       <Typography color="inherit" align="center" variant="h5" className={classes.h5}>
-        An Efficient Storage Engine for Blockchain and Forkable Applications
+        Collaboration-oriented Data Management with Ease and Efficiency
       </Typography>
       <Button
         color="secondary"
