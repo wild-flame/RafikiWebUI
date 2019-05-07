@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
+
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '../LandingComponents/Typography';
-import TextField from '../LandingComponents/TextField';
-import Snackbar from '../LandingComponents/Snackbar';
 import LayoutBody from '../LandingComponents/LayoutBody';
 import Button from '../LandingComponents/Button';
-import FutureUIScreenShot from "../../assets/oX0t8.png"
+
+import tryForkBase from "../../assets/tryForkBase.png"
 
 const styles = theme => ({
   root: {
@@ -29,11 +30,6 @@ const styles = theme => ({
   cardContent: {
     maxWidth: 400,
   },
-  textField: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    marginBottom: theme.spacing.unit * 2,
-  },
   button: {
     width: '100%',
   },
@@ -52,23 +48,6 @@ const styles = theme => ({
 });
 
 class ProductCTA extends React.Component {
-  state = {
-    open: false,
-  };
-
-  handleSubmit = event => {
-    event.preventDefault();
-    this.setState({
-      open: true,
-    });
-  };
-
-  handleClose = () => {
-    this.setState({
-      open: false,
-    });
-  };
-
   render() {
     const { classes } = this.props;
 
@@ -77,40 +56,37 @@ class ProductCTA extends React.Component {
         <Grid container spacing={0}>
           <Grid item xs={12} md={6} className={classes.cardWrapper}>
             <div className={classes.card}>
-              <form onSubmit={this.handleSubmit} className={classes.cardContent}>
+              <div className={classes.cardContent}>
                 <Typography variant="h2" component="h2" gutterBottom>
                   Try Forkbase
                 </Typography>
                 <Typography variant="h5">
-                  A general distributed data storage system
+                  Collaboration-oriented data management with ease and efficiency
                 </Typography>
-                <TextField noBorder className={classes.textField} placeholder="Your email" />
+                <br />
                 <Button
                   type="submit"
                   color="primary"
                   variant="contained"
                   className={classes.button}
+                  component={Link}
+                  to={`/demo-features`}
                 >
                   Schedule a demo
                 </Button>
-              </form>
+              </div>
             </div>
           </Grid>
           <Grid item xs={12} md={6} className={classes.imagesWrapper}>
             <Hidden smDown>
               <img
-                src={FutureUIScreenShot}
-                alt="call to action"
+                src={tryForkBase}
+                alt="tryForkBase"
                 className={classes.image}
               />
             </Hidden>
           </Grid>
         </Grid>
-        <Snackbar
-          open={this.state.open}
-          onClose={this.handleClose}
-          message="We will send you our best offers, once a week."
-        />
       </LayoutBody>
     );
   }

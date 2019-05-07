@@ -1,102 +1,68 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import LayoutBody from '../LandingComponents/LayoutBody';
-import Typography from '../LandingComponents/Typography';
-import EnhancedEncryption from "@material-ui/icons/EnhancedEncryption"
-import GroupAdd from "@material-ui/icons/GroupAdd"
-import Security from "@material-ui/icons/Security"
+
+import './Overview.css';
+import dataColabOp from "../../assets/dataColabOp.png"
+import gitflowForData from "../../assets/gitflowForData.png"
+import dataProcessing from "../../assets/dataProcessing.png"
 
 
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.secondary.light,
-  },
-  layoutBody: {
-    marginTop: theme.spacing.unit * 15,
-    marginBottom: theme.spacing.unit * 20,
-    display: 'flex',
-    position: 'relative',
-  },
-  item: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: `0px ${theme.spacing.unit * 5}px`,
-  },
-  valueIcon: {
-    height: 55,
-  },
-  title: {
-    marginTop: theme.spacing.unit * 5,
-    marginBottom: theme.spacing.unit * 5,
-  }
-});
-
-function ProductValues(props) {
-  const { classes } = props;
-
+function LandingProductValues(props) {
   return (
-    <section className={classes.root}>
-      <LayoutBody className={classes.layoutBody} width="large">
-        <Grid container spacing={40}>
-          <Grid item xs={12} md={4}>
-            <div className={classes.item}>
-              <EnhancedEncryption
-                className={classes.valueIcon}
-                fontSize="large"
-              />
-              <Typography variant="h6" className={classes.title}>
-                Immutability
-              </Typography>
-              <Typography variant="h5">
-                {'ForkBase has a rich set of built-in data types (for both structured and unstructured data)'}
-                {', providing immutability and versioning for stored data.'}
-              </Typography>
-            </div>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <div className={classes.item}>
-              <GroupAdd
-                className={classes.valueIcon}
-                fontSize="large"
-              />
-              <Typography variant="h6" className={classes.title}>
-                Collaboration
-              </Typography>
-              <Typography variant="h5">
-                {'ForkBase supports both on-demand and on-conflict fork semantics to facilitate various types of collaboration workflows.'}
-                {' It natively provides many built-in conflict resolution strategies for merging branches in various scenarios.'}
-              </Typography>
-            </div>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <div className={classes.item}>
-              <Security
-                className={classes.valueIcon}
-                fontSize="large"
-              />
-              <Typography variant="h6" className={classes.title}>
-                Security
-              </Typography>
-              <Typography variant="h5">
-                {'All data objects in ForkBase are tamper-evident, '}
-                {'and hence can be leveraged to build better data models for blockchains. '}
-                {'The detailed and structured information captured in ForkBase makes the blockchain analytics-ready.'}
-              </Typography>
-            </div>
-          </Grid>
-        </Grid>
-      </LayoutBody>
-    </section>
+    <div>
+      <div className="section_copy">
+        <div className="conversation__description">
+          <div className="description__heading">
+            Data collaborative<br/>operation
+          </div>
+          <p className="description__text">
+ForkBase supports <b>collaboration-oriented</b> data management with systematic coordination for scaling.
+It facilitates data forking, data version management and access control to the
+end of multi-tenant analytics.
+          </p>
+        </div>
+        <div className="img-container">
+          <img src={dataColabOp} alt="dataColabOp" className="landing-img" />
+        </div>
+      </div>
+
+      <div className="section_copy">
+        <div className="conversation__description">
+          <div className="description__heading">
+            Gitflow for data
+          </div>
+          <p className="description__text">
+ForkBase provides <b>Git-like</b> operations, but focuses on data, its security, immutability
+and provenance. Data in ForkBase is multi-versioned, and
+each version uniquely identifies the data content and its history.
+          </p>
+        </div>
+        <div className="img-container">
+          <img src={gitflowForData} alt="gitflowForData" className="landing-img" />
+        </div>
+      </div>
+
+      <div className="section_copy">
+        <div className="conversation__description">
+          <div className="description__heading">
+            Collaborative data <br />processing
+          </div>
+          <p className="description__text">
+Collaborative data processing typically involves <b>multiple parties</b> to 
+deal with the <b>same data source</b>. With ForkBase, a job proposer can outsources 
+data processing to different vendors and eventually integrates the outcomes with ease.
+          </p>
+        </div>
+        <div className="img-container">
+          <img
+            src={dataProcessing}
+            alt="dataProcessing"
+            className="landing-img"
+          />
+        </div>
+      </div>
+
+    </div>
   );
 }
 
-ProductValues.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(ProductValues);
+export default LandingProductValues

@@ -222,7 +222,7 @@ class DocsPage extends React.Component {
             <div className={classes.toolbar} />
             <LayoutBody className={classes.layoutBody}>
               <Typography variant="h3" gutterBottom marked="center" align="center">
-                documentation
+                Documentation
               </Typography>
               <br />
               {routes.map((route) => (
