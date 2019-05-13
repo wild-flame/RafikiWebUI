@@ -23,13 +23,13 @@ function ProductCategories(props) {
     <React.Fragment>
       <LayoutBody className={classes.root} component="section" width="large">
         <Typography variant="h4" marked="center" align="center" component="h2">
-          ForkBase Architecture
+          Architecture
         </Typography>
         <div className="section_center">
           <div className="center__description">
             <p className="description__text">
-ForkBase internally implements Git-compatible data <b>version control
-and branch management</b> based on Merkle directed acyclic
+ForkBase internally implements Git-compatible <b>data version control </b>
+and <b>branch management</b> based on Merkle directed acyclic
 graph (DAG), which empowers tamper evidence and efficient
 tracking of data provenance. ForkBase also uses a novel content-based <b>data deduplication</b> technology
 that can remarkably reduce data redundancy between different data versions in the physical storage as well as efficiently

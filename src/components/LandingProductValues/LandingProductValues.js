@@ -1,4 +1,7 @@
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+
+import Typography from '../LandingComponents/Typography';
 
 import './Overview.css';
 import dataColabOp from "../../assets/dataColabOp.png"
@@ -6,9 +9,20 @@ import gitflowForData from "../../assets/gitflowForData.png"
 import dataProcessing from "../../assets/dataProcessing.png"
 
 
+const styles = theme => ({
+  root: {
+    marginTop: theme.spacing.unit * 8,
+  },
+})
+
+
 function LandingProductValues(props) {
+  const { classes } = props;
   return (
-    <div>
+    <div className={classes.root}>
+      <Typography variant="h4" marked="center" align="center" component="h2">
+        Features
+      </Typography>
       <div className="section_copy">
         <div className="conversation__description">
           <div className="description__heading">
@@ -65,4 +79,4 @@ data processing to different vendors and eventually integrates the outcomes with
   );
 }
 
-export default LandingProductValues
+export default withStyles(styles)(LandingProductValues)

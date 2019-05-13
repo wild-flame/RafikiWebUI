@@ -14,6 +14,11 @@ class LandingPage extends React.Component {
     auth: PropTypes.object
   }
 
+  componentDidMount() {
+    //  Scrolling to top of page when component loads
+    window.scrollTo(0,0);
+  }
+
   render() {
     const { auth } = this.props
     return (

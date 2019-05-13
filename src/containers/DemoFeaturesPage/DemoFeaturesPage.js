@@ -1,20 +1,37 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
 import LandingNavBar from "../../components/LandingNavBar/LandingNavBar"
+import DemoFeaturesComponents from "../../components/DemoFeaturesPageComponents/DemoFeaturesComponents"
+import LandingProductCTA from '../../components/LandingProductCTA/LandingProductCTA'
 import LandingFooter from '../../components/LandingFooter/LandingFooter'
 
 
-class DocsPage extends React.Component {
-  render() {
+class DemoFeaturesPage extends React.Component {
+  static propTypes = {
+    auth: PropTypes.object
+  }
 
+  componentDidMount() {
+    //  Scrolling to top of page when component loads
+    window.scrollTo(0,0);
+  }
+
+  render() {
+    const { auth } = this.props
     return (
       <Fragment>
-        <LandingNavBar />
-        <h1>...</h1>
+        <LandingNavBar auth={auth} />
+        <DemoFeaturesComponents />
+        <LandingProductCTA />
         <LandingFooter />
       </Fragment>
     )
   }
 }
 
+const mapStateToProps = state => ({
+  auth: state.auth
+})
 
-export default DocsPage
+export default connect(mapStateToProps)(DemoFeaturesPage)
