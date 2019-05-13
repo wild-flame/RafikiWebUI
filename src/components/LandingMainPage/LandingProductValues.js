@@ -21,7 +21,7 @@ function LandingProductValues(props) {
   return (
     <div className={classes.root}>
       <Typography variant="h4" marked="center" align="center" component="h2">
-        Features
+        Overview
       </Typography>
       <div className="section_copy">
         <div className="conversation__description">

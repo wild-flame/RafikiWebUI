@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 
 import { withStyles } from '@material-ui/core/styles';
@@ -47,7 +46,7 @@ const styles = theme => ({
   },
 });
 
-class ProductCTA extends React.Component {
+class LandingTryForkBase extends React.Component {
   render() {
     const { classes } = this.props;
 
@@ -92,8 +91,4 @@ class ProductCTA extends React.Component {
   }
 }
 
-ProductCTA.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(ProductCTA);
+export default withStyles(styles)(LandingTryForkBase);

@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Typography from '../LandingComponents/Typography';
 
-import '../LandingProductValues/Overview.css'
+import '../LandingMainPage/Overview.css'
 import VisualizeDataEvolution from "../../assets/VisualizeDataEvolution.png"
 import DiffQuery from "../../assets/DiffQuery.png"
 import DataDedup from "../../assets/DataDedup.png"

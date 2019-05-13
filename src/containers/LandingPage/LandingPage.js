@@ -5,7 +5,7 @@ import LandingNavBar from "../../components/LandingNavBar/LandingNavBar"
 import LandingProductHero from "../../components/LandingProductHero/LandingProductHero"
 import LandingProductValues from "../../components/LandingProductValues/LandingProductValues"
 import LandingProductCategories from "../../components/LandingProductValues/LandingProductCategories"
-import LandingProductCTA from '../../components/LandingProductCTA/LandingProductCTA'
+import LandingTryForkBase from '../../components/LandingTryForkBase/LandingTryForkBase'
 import LandingFooter from '../../components/LandingFooter/LandingFooter'
 
 
@@ -27,7 +27,7 @@ class LandingPage extends React.Component {
         <LandingProductHero />
         <LandingProductValues />
         <LandingProductCategories />
-        <LandingProductCTA />
+        <LandingTryForkBase />
         <LandingFooter />
       </Fragment>
     )
