@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import LandingNavBar from "../../components/LandingNavBar/LandingNavBar"
 import LandingProductHero from "../../components/LandingProductHero/LandingProductHero"
-import LandingProductValues from "../../components/LandingProductValues/LandingProductValues"
-import LandingProductCategories from "../../components/LandingProductValues/LandingProductCategories"
+import LandingProductValues from "../../components/LandingMainPage/LandingProductValues"
+import LandingProductCategories from "../../components/LandingMainPage/LandingProductCategories"
 import LandingTryForkBase from '../../components/LandingTryForkBase/LandingTryForkBase'
 import LandingFooter from '../../components/LandingFooter/LandingFooter'
 
