@@ -66,10 +66,10 @@ class SignUp extends React.Component {
           </React.Fragment>
           <Form
             onSubmit={this.handleSubmit}
-            subscription={{ submitting: true }}
+            subscription={{ submitting: true, valid: true }}
             validate={this.validate}
           >
-            {({ handleSubmit, submitting }) => (
+            {({ handleSubmit, submitting, valid }) => (
               <form onSubmit={handleSubmit} className={classes.form} noValidate>
                 <Grid container spacing={16}>
                   <Grid item xs={12} sm={6}>
@@ -126,11 +126,11 @@ class SignUp extends React.Component {
                 </FormSpy>
                 <FormButton
                   className={classes.button}
-                  disabled={submitting || sent}
+                  disabled={submitting || !valid}
                   color="secondary"
                   fullWidth
                 >
-                  {submitting || sent ? 'In progress…' : 'Sign Up'}
+                  {submitting ? 'In progress…' : 'Sign Up'}
                 </FormButton>
               </form>
             )}

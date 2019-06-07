@@ -7,7 +7,7 @@ import Typography from '../../components/LandingComponents/Typography';
 import AppFooter from '../../components/LandingFooter/LandingFooter';
 import AppAppBar from '../../components/LandingNavBar/LandingNavBar';
 import AppForm from '../../components/LandingAppForm/LandingAppForm';
-// import { email, required } from '../../components/LandingAppForm/validation';
+import { email, required } from '../../components/LandingAppForm/validation';
 import RFTextField from '../../components/LandingAppForm/RFTextField';
 import FormButton from '../../components/LandingAppForm/FormButton';
 import FormFeedback from '../../components/LandingAppForm/FormFeedback';
@@ -39,9 +39,9 @@ class SignIn extends React.Component {
   static propTypes = {
     classes: PropTypes.object,
   };
-  /*
+
   validate = values => {
-    const errors = required(['email', 'password'], values, this.props);
+    const errors = required(['email', 'username', 'password'], values, this.props);
 
     if (!errors.email) {
       const emailError = email(values.email, values, this.props);
@@ -51,18 +51,22 @@ class SignIn extends React.Component {
     }
 
     return errors;
-  };*/
+  };
 
-  handleSubmit = (e) => {
-    console.log(e)
-    this.props.signInRequest(e)
+  handleSubmit = (values) => {
+    console.log(values)
+    this.props.signInRequest(values)
   };
 
   render() {
-    const { classes } = this.props;
-    const { sent } = this.state;
+    const {
+      classes,
+      authError,
+      authStatus
+    } = this.props;
 
-    const { authError, authStatus } = this.props
+    //const { sent } = this.state;
+
     if (authStatus) {
       return <Redirect to="/console/row-based-table/list-dataset" />
     }
@@ -77,24 +81,27 @@ class SignIn extends React.Component {
             </Typography>
             <Typography variant="body2" align="center">
               {'Not a member yet? '}
-              <Link href="/sign-up" align="center" underline="always">
-                Sign Up here
+              <Link href="/contact" align="center" underline="always">
+                Contact Us
               </Link>
             </Typography>
           </React.Fragment>
           {authError}
           <Form
             onSubmit={this.handleSubmit}
-            subscription={{ submitting: true }}
+            subscription={{
+              submitting: true,
+              valid: true
+            }}
             validate={this.validate}
           >
-            {({ handleSubmit, submitting }) => (
+            {({ handleSubmit, submitting, valid }) => (
               <form onSubmit={handleSubmit} className={classes.form} noValidate>
                 <Field
                   autoComplete="email"
                   autoFocus
                   component={RFTextField}
-                  disabled={submitting || sent}
+                  disabled={submitting}
                   fullWidth
                   label="Email"
                   margin="normal"
@@ -104,7 +111,7 @@ class SignIn extends React.Component {
                 />
                 <Field
                   component={RFTextField}
-                  disabled={submitting || sent}
+                  disabled={submitting}
                   fullWidth
                   label="Username"
                   margin="normal"
@@ -116,7 +123,7 @@ class SignIn extends React.Component {
                   fullWidth
                   size="large"
                   component={RFTextField}
-                  disabled={submitting || sent}
+                  disabled={submitting}
                   required
                   name="password"
                   autoComplete="current-password"
@@ -135,12 +142,12 @@ class SignIn extends React.Component {
                 </FormSpy>
                 <FormButton
                   className={classes.button}
-                  disabled={submitting || sent}
+                  disabled={submitting || !valid}
                   size="large"
                   color="secondary"
                   fullWidth
                 >
-                  {submitting || sent ? 'In progress…' : 'Sign In'}
+                  {submitting ? 'In progress…' : 'Sign In'}
                 </FormButton>
               </form>
             )}
