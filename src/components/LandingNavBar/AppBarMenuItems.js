@@ -12,7 +12,7 @@ const linkStyle = {
 
 const AppBarMenuItems = ({ onClick, logout, isAuth }) => (
   <Fragment>
-    <Link style={linkStyle} to={`/profile/${isAuth}`}>
+    <Link style={linkStyle} to={`/#/profile/${isAuth}`}>
       <MenuItem
         onClick={() => {
           onClick();

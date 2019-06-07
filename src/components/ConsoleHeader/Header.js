@@ -7,9 +7,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -99,16 +97,9 @@ class Header extends React.Component {
                 </Typography>
               </Grid>
               <Grid item>
-                <Typography className={classes.link} component="a" href="#">
+                <Typography className={classes.link} component="a" href="/docs/basic/get">
                   Go to docs
                 </Typography>
-              </Grid>
-              <Grid item>
-                <Tooltip title="Alerts • No alters">
-                  <IconButton color="inherit">
-                    <NotificationsIcon />
-                  </IconButton>
-                </Tooltip>
               </Grid>
               <Grid item>
                 <Fragment>
