@@ -69,7 +69,7 @@ class LandingTryForkBase extends React.Component {
                   variant="contained"
                   className={classes.button}
                   component={Link}
-                  to={`/demo-features`}
+                  to={`/contact`}
                 >
                   Schedule a demo
                 </Button>

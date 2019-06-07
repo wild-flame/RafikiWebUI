@@ -24,7 +24,7 @@ function ContactComponents(props) {
         </Typography>
         <div className="section_center">
           <Typography variant="h5" gutterBottom marked="center" align="left">
-            DBsystem NUS School of Computing
+            <b>DBsystem NUS School of Computing</b>
           </Typography>
           <div className="center__description">
           <p className="description__text">
@@ -40,7 +40,7 @@ Professor Ooi Beng Chin: ooibc@comp.nus.edu.sg
           </div>
 
           <Typography variant="h5" gutterBottom marked="center" align="left">
-            Find us on GitHub
+            <b>Find us on GitHub</b>
           </Typography>
           <div className="center__description">
           <p className="description__text">

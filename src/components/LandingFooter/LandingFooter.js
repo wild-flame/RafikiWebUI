@@ -54,10 +54,10 @@ function AppFooter(props) {
               spacing={16}
             >
               <Grid item className={classes.icons}>
-                <a href="https://www.comp.nus.edu.sg/~dbsystem/forkbase/index.html" className={classes.icon}>
+                <a href="https://www.comp.nus.edu.sg/~dbsystem/" target="_blank" rel="noopener noreferrer" className={classes.icon}>
                   <Public />
                 </a>
-                <a href="https://www.comp.nus.edu.sg/~dbsystem/forkbase/index.html" className={classes.icon}>
+                <a href="https://github.com/streamjoin/forkbase-doc" target="_blank" rel="noopener noreferrer" className={classes.icon}>
                   <GithubIcon />
                 </a>
               </Grid>
