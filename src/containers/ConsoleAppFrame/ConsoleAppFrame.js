@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux"
 import { compose } from "redux"
 import PropTypes from 'prop-types';
-import { Route } from "react-router-dom"
+import { Route, Redirect } from "react-router-dom"
 
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
@@ -28,15 +28,6 @@ import BranchDataSet from "../RowTableCmds/BranchDataSet"
 import * as actions from "./actions"
 
 import LoadingBar from 'react-redux-loading-bar'
-
-// import { Redirect } from "react-router-dom"
-
-/*
-    const { authStatus } = this.props
-    if (!authStatus) {
-      return <Redirect to="/sign-in" />
-    }
-*/
 
 
 const drawerWidth = 256;
@@ -72,6 +63,7 @@ class ConsoleAppFrame extends React.Component {
 
   render() {
     const {
+      authStatus,
       classes,
       handleDrawerToggle,
       headerTitle,
@@ -79,6 +71,10 @@ class ConsoleAppFrame extends React.Component {
       DBSize,
       StorageBarStatus
     } = this.props;
+
+    if (!authStatus) {
+      return <Redirect to="/sign-in" />
+    }
 
     return (
       <MuiThemeProvider theme={ConsoleTheme}>
@@ -181,6 +177,7 @@ class ConsoleAppFrame extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  authStatus: !!state.Root.token,
   mobileOpen: state.ConsoleAppFrame.mobileOpen,
   headerTitle: state.ConsoleAppFrame.headerTitle,
   DBSize: state.StorageOverview.DBSize,
