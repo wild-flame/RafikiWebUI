@@ -143,7 +143,7 @@ class LandingNavBar extends React.Component {
                 backgroundColor: "orange" //bgColor
               }}
             >
-              {"KY" /*initials*/}
+              {"LQ" /*initials*/}
             </Avatar>
           </IconButton>
           <Menu

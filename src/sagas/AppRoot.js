@@ -13,7 +13,8 @@ function* authLogin(action) {
   try{
     yield put(actions.authStart())
     const res = yield call(api.requestSignIn, action.authData)
-    const token = res.data.key
+    console.log("Auth Response: ", res)
+    const token = res.data.token
     // 1 hour expirationTime?
     const expirationTime = 3600 * 1000
     const expirationDate = new Date(new Date().getTime() + expirationTime);
@@ -70,6 +71,7 @@ function* watchAuthStateRequest() {
 
 function* autoHideNotification() {
   yield delay(3000);
+  console.log("Auto Hide the Notification area")
   yield put(actions.notificationHide());
 }
 

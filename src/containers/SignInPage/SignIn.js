@@ -55,7 +55,15 @@ class SignIn extends React.Component {
 
   handleSubmit = (values) => {
     console.log(values)
-    this.props.signInRequest(values)
+    const authData = Object.assign(
+      {},
+      {
+        username: values.username,
+        password: values.password
+      }
+    )
+    this.props.signInRequest(authData)
+    console.log(authData)
   };
 
   render() {
@@ -86,7 +94,7 @@ class SignIn extends React.Component {
               </Link>
             </Typography>
           </React.Fragment>
-          {authError}
+          {authError && "Log in Error " + authError}
           <Form
             onSubmit={this.handleSubmit}
             subscription={{
