@@ -118,7 +118,7 @@ class Header extends React.Component {
                         backgroundColor: "orange" //bgColor
                       }}
                     >
-                      {"KY" /*initials*/}
+                      {"LQ" /*initials*/}
                     </Avatar>
                   </IconButton>
                   <Menu
