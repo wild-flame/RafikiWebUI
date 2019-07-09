@@ -15,6 +15,7 @@ import StorageBar from "../../components/ConsoleContents/StorageBar"
 import StorageOverview from "../StorageOverview/StorageOverview"
 
 import PutDataByCSV from "../Datasets/UploadDataset"
+import Datasets from "../Datasets/Datasets"
 import ListDataSet from "../Datasets/ListDataSet"
 import PutDataEntry from "../Datasets/PutDataEntry"
 import GetDataSet from "../Datasets/GetDataSet"
@@ -38,7 +39,7 @@ const styles = theme => ({
     minHeight: '100vh',
   },
   drawer: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       width: drawerWidth,
       flexShrink: 0,
     },
@@ -93,7 +94,7 @@ class ConsoleAppFrame extends React.Component {
         />
         <div className={classes.root}>
           <nav className={classes.drawer}>
-            <Hidden smUp implementation="js">
+            <Hidden mdUp implementation="js">
               <Navigator
                 PaperProps={{ style: { width: drawerWidth } }}
                 variant="temporary"
@@ -101,7 +102,7 @@ class ConsoleAppFrame extends React.Component {
                 onClose={handleDrawerToggle}
               />
             </Hidden>
-            <Hidden xsDown implementation="css">
+            <Hidden smDown implementation="css">
               <Navigator PaperProps={{ style: { width: drawerWidth } }} />
             </Hidden>
           </nav>
@@ -109,10 +110,6 @@ class ConsoleAppFrame extends React.Component {
             <Header
               onDrawerToggle={handleDrawerToggle}
               title={headerTitle}
-            />
-            <StorageBar
-              StorageSize={DBSize}
-              StorageBarStatus={StorageBarStatus}
             />
             <Route
               exact

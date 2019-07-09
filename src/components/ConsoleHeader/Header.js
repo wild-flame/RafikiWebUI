@@ -81,7 +81,7 @@ class Header extends React.Component {
         <AppBar color="primary" position="sticky" elevation={0}>
           <Toolbar>
             <Grid container spacing={8} alignItems="center">
-              <Hidden smUp>
+              <Hidden mdUp>
                 <Grid item>
                   <IconButton
                     color="inherit"
@@ -93,7 +93,7 @@ class Header extends React.Component {
                   </IconButton>
                 </Grid>
               </Hidden>
-              <Grid item xs>
+              <Grid item sm>
                 <Typography color="inherit" variant="h5">
                   {title}
                 </Typography>

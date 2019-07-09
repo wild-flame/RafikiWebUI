@@ -261,7 +261,6 @@ https://stackoverflow.com/questions/47508564/migrating-create-react-app-from-jav
 
 - Add test to the whole app
     - Add test to sagas
-- Try to implement the redux
 
 # For Developers
 

@@ -32,6 +32,8 @@ import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
 import BranchDsIcon from '@material-ui/icons/CallSplit'
 import DiffDsIcon from '@material-ui/icons/Compare'
 
+import * as moment from 'moment';
+
 import Chip from '@material-ui/core/Chip';
 
 
@@ -96,10 +98,59 @@ class ListDataSetTable extends React.Component {
   render() {
     const {
       classes,
-      DatasetList,
-      handleClickHistory,
-      Cache_Version_History
     } = this.props
+
+    const Datasets = [
+      {
+          "datetime_created": "Wed, 19 Jun 2019 13:31:56 GMT",
+          "id": "59fe7d7a-7056-4f40-bafc-35da06e08766",
+          "name": "fashion_minist_app_train",
+          "size_bytes": 34864119,
+          "task": "IMAGE_CLASSIFICATION"
+      },
+      {
+          "datetime_created": "Wed, 19 Jun 2019 13:32:23 GMT",
+          "id": "65500bed-338e-4491-9761-dbbecb811c90",
+          "name": "fashion_minist_app_test",
+          "size_bytes": 6116386,
+          "task": "IMAGE_CLASSIFICATION"
+      },
+      {
+          "datetime_created": "Wed, 19 Jun 2019 13:54:04 GMT",
+          "id": "75ba930a-e021-4626-9bf1-3a88ecd8ae33",
+          "name": "fashion_minist_app_val",
+          "size_bytes": 1830882,
+          "task": "IMAGE_CLASSIFICATION"
+      },
+      {
+          "datetime_created": "Wed, 19 Jun 2019 13:55:36 GMT",
+          "id": "22bf449e-da09-45c9-af22-22c0be400e95",
+          "name": "fashion_minist_app_val_2",
+          "size_bytes": 1830882,
+          "task": "IMAGE_CLASSIFICATION"
+      },
+      {
+          "datetime_created": "Wed, 19 Jun 2019 13:56:12 GMT",
+          "id": "623c71a2-6bed-4981-9435-638182a8c7f5",
+          "name": "fashion_minist_app_val_3",
+          "size_bytes": 1830882,
+          "task": "IMAGE_CLASSIFICATION"
+      },
+      {
+          "datetime_created": "Wed, 19 Jun 2019 13:58:14 GMT",
+          "id": "2943057b-26b1-4b76-b408-2362e2d81433",
+          "name": "fashion_minist_app_val_4",
+          "size_bytes": 1830882,
+          "task": "IMAGE_CLASSIFICATION"
+      },
+      {
+          "datetime_created": "Thu, 20 Jun 2019 03:03:41 GMT",
+          "id": "d59cdb66-6745-4f02-9d25-6c06f1277805",
+          "name": "fashion_minist_app_train_v2",
+          "size_bytes": 34864119,
+          "task": "IMAGE_CLASSIFICATION"
+      }
+  ]
 
     const {
       currentDataset,
@@ -111,176 +162,27 @@ class ListDataSetTable extends React.Component {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell>Dataset Name</TableCell>
-              <TableCell>Branches</TableCell>
-              <TableCell style={{ width: "39%" }}>Actions</TableCell>
+              <TableCell>ID</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Task</TableCell>
+              <TableCell>Size</TableCell>
+              <TableCell>Uploaded At</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {DatasetList.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell component="th" scope="row" className={classes.DsName}>
-                  {item["dataset"]}
-                </TableCell>
-                <TableCell>
-                  {item["branches"].map((branch, index) =>
-                    <Chip
-                      key={index}
-                      variant="outlined"
-                      label={branch}
-                      className={classes.chip}
-                      onClick={e => this.onShowChipMenu(
-                        item["dataset"],
-                        branch,
-                        e
-                      )}
-                    />
-                  )}
-                </TableCell>
-                <TableCell>
-                  <Button
-                    className={classes.tableButtons}
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => handleClickHistory(item)}
-                    disabled={
-                      (item["dataset"] === "...") ||
-                      (Object.keys(Cache_Version_History).length === 0)
-                    }
-                  >
-                    View History
-                  </Button>
-                  {item["dataset"] === "..."
-                    ? ""
-                    : (
-                      <React.Fragment>
-                        <Tooltip title="Put Data">
-                          <IconButton
-                            className={classes.tableButtons}
-                            onClick={e => this.onShowEditMenu(item["dataset"], e)}
-                          >
-                            <EditIcon />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Delete Dataset">
-                          <IconButton
-                            className={classes.tableButtons}
-                            component={Link}
-                            to={`/console/datasets/delete-dataset?dataset=${item["dataset"]}`}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Export Dataset">
-                          <IconButton
-                            className={classes.tableButtons}
-                            component={Link}
-                            to={`/console/datasets/export-dataset?dataset=${item["dataset"]}`}
-                          >
-                            <ExportDsIcon />
-                          </IconButton>
-                        </Tooltip>
-                      </React.Fragment>
-                    )
-                  }
-                </TableCell>
+          {Datasets.map(x => {
+            return (
+              <TableRow key={x.id} hover>
+                <TableCell>{x.id}</TableCell>
+                <TableCell>{x.name}</TableCell>
+                <TableCell>{x.task}</TableCell>
+                <TableCell>{x.size_bytes} bytes</TableCell>
+                <TableCell>{moment(x.datetime_created).fromNow()}</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
+            );
+          })}
+        </TableBody>
         </Table>
-        {currentDataset && currentBranch && (
-          <Popper
-            anchorEl={this.state.menuAnchor}
-            open
-            placement="bottom"
-            transition
-          >
-            <Paper>
-              <ClickAwayListener onClickAway={this.onCloseChipMenu}>
-                <MenuList>
-                  <MenuItem
-                    component={Link}
-                    to={`/console/datasets/get-dataset?dataset=${currentDataset}&branch=${currentBranch}`}
-                  >
-                    <ListItemIcon>
-                      <DnsRoundedIcon />
-                    </ListItemIcon>
-                    <ListItemText>Get Dataset</ListItemText>
-                  </MenuItem>
-                  <MenuItem
-                    component={Link}
-                    to={`/console/datasets/get-dataset-schema?dataset=${currentDataset}&branch=${currentBranch}`}
-                  >
-                    <ListItemIcon>
-                      <DnsRoundedIcon />
-                    </ListItemIcon>
-                    <ListItemText>Get Dataset Schema</ListItemText>
-                  </MenuItem>
-                  <MenuItem
-                    component={Link}
-                    to={`/console/datasets/get-data-entry?dataset=${currentDataset}&branch=${currentBranch}`}
-                  >
-                    <ListItemIcon>
-                      <DnsRoundedIcon />
-                    </ListItemIcon>
-                    <ListItemText>Get Data Entry</ListItemText>
-                  </MenuItem>
-                  <MenuItem
-                    component={Link}
-                    to={`/console/datasets/branch-dataset?dataset=${currentDataset}&branch=${currentBranch}`}
-                  >
-                    <ListItemIcon>
-                      <BranchDsIcon />
-                    </ListItemIcon>
-                    <ListItemText>Branch Dataset</ListItemText>
-                  </MenuItem>
-                  <MenuItem
-                    component={Link}
-                    to={`/console/datasets/diff-dataset?dataset=${currentDataset}&branch=${currentBranch}`}
-                  >
-                    <ListItemIcon>
-                      <DiffDsIcon />
-                    </ListItemIcon>
-                    <ListItemText>Diff Dataset</ListItemText>
-                  </MenuItem>
-                </MenuList>
-              </ClickAwayListener>
-            </Paper>
-          </Popper>
-        )}
-        {currentDataset && !currentBranch && (
-          <Popper
-            anchorEl={this.state.menuAnchor}
-            open
-            placement="bottom"
-            transition
-          >
-            <Paper>
-              <ClickAwayListener onClickAway={this.onCloseEditMenu}>
-                <MenuList>
-                  <MenuItem
-                    component={Link}
-                    to={`/console/datasets/upload-datasets?dataset=${currentDataset}`}
-                  >
-                    <ListItemIcon>
-                      <PutDataCSVIcon />
-                    </ListItemIcon>
-                    <ListItemText>Put Data by CSV</ListItemText>
-                  </MenuItem>
-                  <MenuItem
-                    component={Link}
-                    to={`/console/datasets/put-data-entry?dataset=${currentDataset}`}
-                  >
-                    <ListItemIcon>
-                      <PutDeIcon />
-                    </ListItemIcon>
-                    <ListItemText>Put Data Entry</ListItemText>
-                  </MenuItem>
-                </MenuList>
-              </ClickAwayListener>
-            </Paper>
-          </Popper>
-        )}
       </Fragment>
     )
   }

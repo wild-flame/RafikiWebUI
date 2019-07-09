@@ -9,6 +9,7 @@
     "axios": "^0.18.0",
     "final-form": "^4.11.0",
     "gitgraph.js": "^1.15.1",
+    "moment": "^2.24.0",
     "query-string": "^6.2.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
