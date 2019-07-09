@@ -9,7 +9,7 @@ import heroImage from "../../assets/electrical-2476782_960_720.jpg"
 
 const backgroundImage = heroImage
   //'https://www.ebetfinder.com/wp-content/uploads/2016/11/dota-2-gameplay-ebetfinder-resized.jpg';
-  //'https://www.comp.nus.edu.sg/~dbsystem/forkbase/pic/stack.jpg'
+  //'https://www.comp.nus.edu.sg/~dbsystem/rafiki/pic/stack.jpg'
   //'https://www.geek.com/wp-content/uploads/2010/12/asfMod_02.jpg'
   //'https://cdn.pixabay.com/photo/2017/07/06/03/00/electrical-2476782_960_720.jpg'
 
@@ -42,10 +42,10 @@ function ProductHero(props) {
       {/* Increase the network loading priority of the background image. */}
       <img style={{ display: 'none' }} src={backgroundImage} alt="" />
       <Typography color="inherit" align="center" variant="h2" marked="center">
-        Git For Data
+        Rafiki
       </Typography>
       <Typography color="inherit" align="center" variant="h5" className={classes.h5}>
-        Collaboration-oriented Data Management with Ease and Efficiency
+        Rafiki is a distributed system that trains machine learning (ML) models and deploys trained models, built with ease-of-use in mind. 
       </Typography>
       <Button
         color="secondary"
@@ -53,9 +53,9 @@ function ProductHero(props) {
         size="large"
         className={classes.button}
         component={Link}
-        to={`/demo-features`}
+        to={`/console`}
       >
-        Schedule Demo
+        Try Rafiki
       </Button>
       <Typography variant="body2" color="inherit" className={classes.more}>
         Discover the experience

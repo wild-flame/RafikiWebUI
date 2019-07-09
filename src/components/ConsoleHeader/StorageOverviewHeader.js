@@ -26,9 +26,6 @@ function Header(props) {
       >
         <Tabs value={0} textColor="inherit">
           <Tab textColor="inherit" label="Information" />
-          <Tab textColor="inherit" label="Users" />
-          <Tab textColor="inherit" label="Deployment" />
-          <Tab textColor="inherit" label="Settings" />
         </Tabs>
       </AppBar>
     </React.Fragment>

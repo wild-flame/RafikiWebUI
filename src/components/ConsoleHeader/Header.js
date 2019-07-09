@@ -14,8 +14,10 @@ import { withStyles } from '@material-ui/core/styles';
 // for login menu
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
-import Avatar from '@material-ui/core/Avatar';
 import AppBarMenuItems from "../LandingNavBar/AppBarMenuItems"
+
+// Icons
+import ExitToApp from "@material-ui/icons/ExitToApp";
 
 import * as actions from "../../containers/Root/actions"
 
@@ -97,11 +99,6 @@ class Header extends React.Component {
                 </Typography>
               </Grid>
               <Grid item>
-                <Typography className={classes.link} component="a" href="/docs/basic/get">
-                  Go to docs
-                </Typography>
-              </Grid>
-              <Grid item>
                 <Fragment>
                   <IconButton
                     aria-haspopup="true"
@@ -112,14 +109,7 @@ class Header extends React.Component {
                     onClick={this.handleMenuOpen}
                     className={classes.iconButtonAvatar}
                   >
-                    <Avatar
-                      className={classes.avatar}
-                      style={{
-                        backgroundColor: "orange" //bgColor
-                      }}
-                    >
-                      {"LQ" /*initials*/}
-                    </Avatar>
+                    <ExitToApp />
                   </IconButton>
                   <Menu
                     anchorEl={

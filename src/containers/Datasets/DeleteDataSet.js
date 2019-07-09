@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { compose } from "redux"
 
 import * as ConsoleActions from "../ConsoleAppFrame/actions"
+import * as OverviewActions from "../StorageOverview/actions"
 import * as actions from "./actions"
 
 import { withStyles } from '@material-ui/core/styles';
@@ -17,8 +18,7 @@ import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
 import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
-import ForkbaseStatus from "../../components/ConsoleContents/ForkbaseStatus"
-import GetDatasetResponse from "../../components/ConsoleContents/GetDatasetResponse"
+import RafikiStatus from "../../components/ConsoleContents/RafikiStatus"
 
 // read query-string
 import queryString from 'query-string'
@@ -31,10 +31,10 @@ const styles = () => ({
 })
 
 
-class GetDataSet extends React.Component {
+class DeleteDataSet extends React.Component {
   state = {
     dataset:"",
-    branch:"master",
+    branch:"",
     FormIsValid: false
   }
 
@@ -42,27 +42,29 @@ class GetDataSet extends React.Component {
     classes: PropTypes.object.isRequired,
 
     handleHeaderTitleChange: PropTypes.func,
-    requestGetDataset: PropTypes.func,
-    requestListDS: PropTypes.func,
+    requestDeleteDataset: PropTypes.func,
     resetResponses: PropTypes.func,
+
+    requestListDS: PropTypes.func,
+    requestDBSize: PropTypes.func,
     resetLoadingBar: PropTypes.func,
 
     DatasetList: PropTypes.array,
 
-    Response_GetDataset: PropTypes.array,
+    Response_DeleteDS: PropTypes.array,
 
     formState: PropTypes.string,
     loadingFormState: PropTypes.func
   }
 
   componentDidMount() {
-    this.props.handleHeaderTitleChange("Dataset > Get Dataset")
+    this.props.handleHeaderTitleChange("Dataset > Delete Dataset")
+    this.props.requestDBSize()
     // read the query string from URL
     const values = queryString.parse(this.props.location.search)
-    if (values.dataset && values.branch) {
+    if (values.dataset) {
       this.setState({
-        dataset: values.dataset,
-        branch: values.branch
+        dataset: values.dataset
       })
     }
     this.props.requestListDS()
@@ -71,7 +73,7 @@ class GetDataSet extends React.Component {
   handleChange = name => event => {
     if (name === "dataset") {
       this.setState({
-        branch: "master"
+        branch: ""
       })
     }
     this.setState({
@@ -80,7 +82,7 @@ class GetDataSet extends React.Component {
   };
 
   handleCommit = () => {
-    // reset the ForkBase Status field:
+    // reset the Rafiki Status field:
     this.props.resetResponses()
     // first reset COMMIT disabled
     this.setState({
@@ -89,14 +91,19 @@ class GetDataSet extends React.Component {
     // set formState to loading
     this.props.loadingFormState()
     // create inputs
-    const dataEntryForGetDS = Object.assign(
+    const dataEntryForDeleteDS = Object.assign(
       {
         "dataset": this.state.dataset,
         "branch": this.state.branch
       },
       {}
     )
-    this.props.requestGetDataset(dataEntryForGetDS)
+    // reset dataset ro prevent BranchName from crashing
+    this.setState({
+      dataset: ""
+    })
+    // dispatch DeleteSD
+    this.props.requestDeleteDataset(dataEntryForDeleteDS)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -117,6 +124,13 @@ class GetDataSet extends React.Component {
         })
       }
     }
+    // for DS commands with updates,
+    // call ls-ds again after result from ustore has returned
+    if (prevProps.formState !== this.props.formState) {
+      if (this.props.formState === "idle") {
+        this.props.requestListDS()
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -128,7 +142,7 @@ class GetDataSet extends React.Component {
     const {
       classes,
       DatasetList,
-      Response_GetDataset,
+      Response_DeleteDS,
       formState
     } = this.props;
 
@@ -138,7 +152,7 @@ class GetDataSet extends React.Component {
           <ContentBar>
             <Toolbar>
               <Typography variant="h5" gutterBottom>
-                Get Dataset
+                Delete Dataset
               </Typography>
             </Toolbar>
           </ContentBar>
@@ -191,7 +205,7 @@ class GetDataSet extends React.Component {
                 </Grid>
               </Grid>
               <Grid item xs={6}>
-                <ForkbaseStatus
+                <RafikiStatus
                   formState={formState}
                 >
                   {formState === "loading" &&
@@ -201,16 +215,12 @@ class GetDataSet extends React.Component {
                     </React.Fragment>
                   }
                   <Typography component="p">
-                    <b>{Response_GetDataset[0]}</b>
+                    <b>{Response_DeleteDS[0]}</b>
                     <br />
+                    {Response_DeleteDS[1]}
                   </Typography>
-                  <GetDatasetResponse
-                    entries={Response_GetDataset[1]}
-                    dataset={this.state.dataset}
-                    branch={this.state.branch}
-                  />
                   <br />
-                </ForkbaseStatus>
+                </RafikiStatus>
               </Grid>
             </Grid>
           </div>
@@ -223,20 +233,21 @@ class GetDataSet extends React.Component {
 
 const mapStateToProps = state => ({
   DatasetList: state.RowTableCmds.DatasetList,
-  Response_GetDataset: state.RowTableCmds.Response_GetDataset,
+  Response_DeleteDS: state.RowTableCmds.Response_DeleteDS,
   formState: state.RowTableCmds.formState
 })
 
 const mapDispatchToProps = {
   handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
   requestListDS: actions.requestListDS,
-  requestGetDataset: actions.requestGetDataset,
+  requestDeleteDataset: actions.requestDeleteDataset,
   resetResponses: actions.resetResponses,
   resetLoadingBar: ConsoleActions.resetLoadingBar,
+  requestDBSize: OverviewActions.requestDBSize,
   loadingFormState: actions.loadingFormState
 }
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles)
-)(GetDataSet)
+)(DeleteDataSet)

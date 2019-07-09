@@ -19,10 +19,9 @@ import Avatar from '@material-ui/core/Avatar';
 import AppBarMenuItems from "./AppBarMenuItems"
 
 import Toolbar, { styles as toolbarStyles } from '../LandingComponents/Toolbar';
-import Logo from "../../assets/Logo-cleaned.png"
+import Logo from "../../assets/Logo-Light.png"
 
 import * as actions from "../../containers/Root/actions"
-
 
 const styles = theme => ({
   LandingAppBar: {
@@ -31,7 +30,7 @@ const styles = theme => ({
   title: {
     font: '500 25px Roboto,sans-serif',
     cursor: "pointer",
-    color: "white",
+    color: "#89F2FF",
     textDecoration: "none",
     marginRight: 20
   },
@@ -50,7 +49,7 @@ const styles = theme => ({
     marginRight: 10
   },
   leftLinkActive: {
-    color: theme.palette.common.white,
+    color: theme.palette.secondary.dark,
   },
   right: {
     flex: 1,
@@ -87,7 +86,7 @@ const styles = theme => ({
   },
   menuButton: {
     marginLeft: -theme.spacing.unit,
-    marginRight: theme.spacing.unit *2,
+    marginRight: theme.spacing.unit * 2,
   },
 });
 
@@ -101,7 +100,6 @@ class LandingNavBar extends React.Component {
   };
 
   handleLogout = () => {
-    console.log("logging out, clearing token")
     localStorage.removeItem('token');
     localStorage.removeItem('expirationDate');
     this.props.history.push(`/`);
@@ -124,7 +122,7 @@ class LandingNavBar extends React.Component {
           <Typography
             variant="h6"
           >
-            <Link to="/console/row-based-table/list-dataset" className={classes.rightLink}>
+            <Link to="/console/datasets/list-dataset" className={classes.rightLink}>
               {'Go To Console'}
             </Link>
           </Typography>
@@ -180,28 +178,24 @@ class LandingNavBar extends React.Component {
       )
 
     const navLinks = [
-      {
-        url: "/demo-features",
-        label: "Demo",
-      },
-      {
+      /*{
         url: "/publications",
         label: "Publicationcs",
-      },
-      {
-        url: "/docs/basic/get",
-        label: "Docs",
-      },
+      },*/
       {
         url: "/contact",
         label: "Contact",
+      },
+      {
+        url: "https://nginyc.github.io/rafiki/docs/latest/src/user/index.html",
+        label: "Docs",
       },
     ]
 
     return (
       <div>
         <LandingNavigator
-          PaperProps={{ style: { width: 250, backgroundColor: "rgb(35, 47, 62)" } }}
+          PaperProps={{ style: { width: 250, backgroundColor: "rgb(0,0,0)" } }}
           variant="temporary"
           open={RootMobileOpen}
           onClose={handleDrawerToggle}
@@ -225,14 +219,12 @@ class LandingNavBar extends React.Component {
                 <img alt="logo" src={Logo} className={classes.logo} />
               </Link>
               <Link to="/" className={classes.title}>
-                {'ForkBase'}
+                {'Rafiki'}
               </Link>
               <Hidden smDown>
                 {navLinks.map((link, index) => (
-                  <Link
-                    key={index}
-                    to={link.url}
-                    className={
+                  /^https?:\/\//.test(link.url) ? // test if the url is external 
+                    <a key={index} href={link.url} className={
                       location.pathname === link.url
                         ? (
                           classes.rightLinkActive
@@ -240,10 +232,25 @@ class LandingNavBar extends React.Component {
                         : (
                           classes.rightLink
                         )
+                    }>
+                      {link.label}
+                    </a>
+                    :
+                    <Link
+                      key={index}
+                      to={link.url}
+                      className={
+                        location.pathname === link.url
+                          ? (
+                            classes.rightLinkActive
+                          )
+                          : (
+                            classes.rightLink
+                          )
                       }
-                  >
-                    {link.label}
-                  </Link>
+                    >
+                      {link.label}
+                    </Link>
                 ))}
               </Hidden>
             </div>

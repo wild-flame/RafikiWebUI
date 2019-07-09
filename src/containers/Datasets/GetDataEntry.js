@@ -22,7 +22,7 @@ import ContentBar from "../../components/ConsoleContents/ContentBar"
 import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
 import RowEntryName from "../../components/ConsoleContents/RowEntryName"
-import ForkbaseStatus from "../../components/ConsoleContents/ForkbaseStatus"
+import RafikiStatus from "../../components/ConsoleContents/RafikiStatus"
 import GetDataEntryResponse from "../../components/ConsoleContents/GetDataEntryResponse"
 
 // read query-string
@@ -112,7 +112,7 @@ class GetDataEntry extends React.Component {
   };
 
   handleCommit = () => {
-    // reset the ForkBase Status field:
+    // reset the Rafiki Status field:
     this.props.resetResponses()
     // first reset COMMIT disabled
     this.setState({
@@ -272,7 +272,7 @@ class GetDataEntry extends React.Component {
                 </Grid>
               </Grid>
               <Grid item xs={6}>
-                <ForkbaseStatus
+                <RafikiStatus
                   formState={formState}
                 >
                   {formState === "loading" &&
@@ -295,13 +295,13 @@ class GetDataEntry extends React.Component {
                       color="primary"
                       className={classes.button}
                       component={Link}
-                      to={`/console/row-based-table/put-data-entry?dataset=${this.state.dataset}&branch=${this.state.branch}&entry=${this.state.entry}`}
+                      to={`/console/datasets/put-data-entry?dataset=${this.state.dataset}&branch=${this.state.branch}&entry=${this.state.entry}`}
                     >
                       <PutDeIcon className={classes.leftIcon} />
                       Put Data Entry
                     </Button>
                   }
-                </ForkbaseStatus>
+                </RafikiStatus>
               </Grid>
             </Grid>
           </div>

@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import LandingNavBar from "../../components/LandingNavBar/LandingNavBar"
 import LandingProductHero from "../../components/LandingProductHero/LandingProductHero"
-import LandingProductValues from "../../components/LandingMainPage/LandingProductValues"
 import LandingProductCategories from "../../components/LandingMainPage/LandingProductCategories"
-import LandingTryForkBase from '../../components/LandingTryForkBase/LandingTryForkBase'
+import LandingTryRafiki from '../../components/LandingTryRafiki/LandingTryRafiki'
 import LandingFooter from '../../components/LandingFooter/LandingFooter'
 
 
@@ -25,9 +24,8 @@ class LandingPage extends React.Component {
       <Fragment>
         <LandingNavBar auth={auth} />
         <LandingProductHero />
-        <LandingProductValues />
         <LandingProductCategories />
-        <LandingTryForkBase />
+        <LandingTryRafiki />
         <LandingFooter />
       </Fragment>
     )

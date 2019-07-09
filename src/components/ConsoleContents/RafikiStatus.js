@@ -12,13 +12,13 @@ const styles = () => ({
   subPaper: {
     minHeight: 150
   },
-  forkbaseStatus: {
+  RafikiStatus: {
     padding: 20,
     overflowWrap: "break-word"
   }
 })
 
-class ForkbaseStatus extends React.Component {
+class RafikiStatus extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     children: PropTypes.node,
@@ -30,9 +30,9 @@ class ForkbaseStatus extends React.Component {
     return (
       <Paper className={classes.subPaper}>
         <Typography variant="h5" gutterBottom align="center">
-          Forkbase Status:
+          rafiki Status:
         </Typography>
-        <div className={classes.forkbaseStatus}>
+        <div className={classes.RafikiStatus}>
           {formState === "init"
             ? <LinearProgress color="secondary" variant="determinate" value={0} />
             : children
@@ -43,5 +43,5 @@ class ForkbaseStatus extends React.Component {
   }
 }
 
-export default withStyles(styles)(ForkbaseStatus)
+export default withStyles(styles)(RafikiStatus)
 

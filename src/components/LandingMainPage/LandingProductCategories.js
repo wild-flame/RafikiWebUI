@@ -6,7 +6,7 @@ import LayoutBody from '../LandingComponents/LayoutBody';
 import Typography from '../LandingComponents/Typography';
 
 import './Overview.css'
-import forkbaseArch from "../../assets/forkbaseArch.png"
+import rafikiArch from "../../assets/rafikiArch.png"
 
 
 const styles = theme => ({
@@ -28,17 +28,11 @@ function ProductCategories(props) {
         <div className="section_center">
           <div className="center__description">
             <p className="description__text">
-ForkBase internally implements Git-compatible <b>data version control </b>
-and <b>branch management</b> based on Merkle directed acyclic
-graph (DAG), which empowers tamper evidence and efficient
-tracking of data provenance. ForkBase also uses a novel content-based <b>data deduplication</b> technology
-that can remarkably reduce data redundancy between different data versions in the physical storage as well as efficiently
-support differential queries between data versions.
-{' '}
+            Rafiki’s system architecture consists of 3 static components, 2 central databases, 3 types of dynamic components, and 1 client-side SDK, which can be illustrated with a 3-layer architecture diagram.
             </p>
           </div>
           <div className="img-container">
-            <img src={forkbaseArch} alt="forkbaseArch" className="fullWidthImg" />
+            <img src={rafikiArch} alt="rafikiArch" className="fullWidthImg" />
           </div>
         </div>
       </LayoutBody>

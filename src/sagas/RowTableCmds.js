@@ -7,7 +7,7 @@ import {
   takeEvery
 } from "redux-saga/effects"
 import { showLoading, hideLoading, resetLoading } from 'react-redux-loading-bar'
-import * as actions from "../containers/RowTableCmds/actions"
+import * as actions from "../containers/Datasets/actions"
 import * as api from "../services/RowTableAPI"
 import * as OverviewActions from "../containers/StorageOverview/actions"
 import * as ConsoleActions from "../containers/ConsoleAppFrame/actions"

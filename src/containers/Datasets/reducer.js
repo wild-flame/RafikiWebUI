@@ -22,7 +22,7 @@ const StatesToReset = {
   Response_DeleteDS: [],
   // export-ds-bin
   Response_ExportDS: [],
-  // ForkBase Status
+  // Rafiki Status
   formState: "init",
   // getDE for diff-DS
   GetDEforDiff_1_Response: "",

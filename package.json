@@ -1,7 +1,7 @@
 {
-  "name": "forkbase-webapp",
-  "description": "web application serving forkbase engine",
-  "version": "0.1.0",
+  "name": "rafiki-webapp",
+  "description": "web application serving rafiki engine",
+  "version": "0.3.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.0",

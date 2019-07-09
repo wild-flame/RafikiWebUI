@@ -8,7 +8,7 @@ import Typography from '../LandingComponents/Typography';
 import LayoutBody from '../LandingComponents/LayoutBody';
 import Button from '../LandingComponents/Button';
 
-import tryForkBase from "../../assets/tryForkBase.png"
+import tryRafiki from "../../assets/tryRafiki.png"
 
 const styles = theme => ({
   root: {
@@ -46,7 +46,7 @@ const styles = theme => ({
   },
 });
 
-class LandingTryForkBase extends React.Component {
+class LandingTryRafiki extends React.Component {
   render() {
     const { classes } = this.props;
 
@@ -57,10 +57,10 @@ class LandingTryForkBase extends React.Component {
             <div className={classes.card}>
               <div className={classes.cardContent}>
                 <Typography variant="h2" component="h2" gutterBottom>
-                  Try Forkbase
+                  Try rafiki
                 </Typography>
                 <Typography variant="h5">
-                  Collaboration-oriented data management with ease and efficiency
+                a distributed system that trains machine learning (ML) models and deploys trained models
                 </Typography>
                 <br />
                 <Button
@@ -71,7 +71,7 @@ class LandingTryForkBase extends React.Component {
                   component={Link}
                   to={`/contact`}
                 >
-                  Schedule a demo
+                  Find and Contact Us
                 </Button>
               </div>
             </div>
@@ -79,8 +79,8 @@ class LandingTryForkBase extends React.Component {
           <Grid item xs={12} md={6} className={classes.imagesWrapper}>
             <Hidden smDown>
               <img
-                src={tryForkBase}
-                alt="tryForkBase"
+                src={tryRafiki}
+                alt="tryRafiki"
                 className={classes.image}
               />
             </Hidden>
@@ -91,4 +91,4 @@ class LandingTryForkBase extends React.Component {
   }
 }
 
-export default withStyles(styles)(LandingTryForkBase);
+export default withStyles(styles)(LandingTryRafiki);

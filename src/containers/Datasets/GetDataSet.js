@@ -17,10 +17,8 @@ import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
 import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
-import ForkbaseStatus from "../../components/ConsoleContents/ForkbaseStatus"
-
-// RegExp rules
-import { validDsAndBranch } from "../../regexp-rules";
+import RafikiStatus from "../../components/ConsoleContents/RafikiStatus"
+import GetDatasetResponse from "../../components/ConsoleContents/GetDatasetResponse"
 
 // read query-string
 import queryString from 'query-string'
@@ -33,13 +31,10 @@ const styles = () => ({
 })
 
 
-class BranchDataSet extends React.Component {
+class GetDataSet extends React.Component {
   state = {
     dataset:"",
-    branch:"",
-    newBranch: "",
-    referBranch:"",
-    validBranchName: true,
+    branch:"master",
     FormIsValid: false
   }
 
@@ -47,28 +42,27 @@ class BranchDataSet extends React.Component {
     classes: PropTypes.object.isRequired,
 
     handleHeaderTitleChange: PropTypes.func,
-
+    requestGetDataset: PropTypes.func,
     requestListDS: PropTypes.func,
     resetResponses: PropTypes.func,
     resetLoadingBar: PropTypes.func,
 
     DatasetList: PropTypes.array,
 
-    triggerBranchDS_Combo: PropTypes.func,
-    Response_BranchDS: PropTypes.array,
+    Response_GetDataset: PropTypes.array,
 
     formState: PropTypes.string,
     loadingFormState: PropTypes.func
   }
 
   componentDidMount() {
-    this.props.handleHeaderTitleChange("Dataset > Branch Dataset")
+    this.props.handleHeaderTitleChange("Dataset > Get Dataset")
     // read the query string from URL
     const values = queryString.parse(this.props.location.search)
     if (values.dataset && values.branch) {
       this.setState({
         dataset: values.dataset,
-        referBranch: values.branch
+        branch: values.branch
       })
     }
     this.props.requestListDS()
@@ -77,27 +71,8 @@ class BranchDataSet extends React.Component {
   handleChange = name => event => {
     if (name === "dataset") {
       this.setState({
-        newBranch: "",
-        referBranch: "",
+        branch: "master"
       })
-    }
-    if (name === "newBranch") {
-      if (
-        validDsAndBranch.test(event.target.value) &&
-        event.target.value.length <= 50
-      ) {
-        this.setState({
-          validBranchName: true
-        });
-      } else if (event.target.value === "") {
-        this.setState({
-          validBranchName: true
-        });
-      } else {
-        this.setState({
-          validBranchName: false
-        });
-      }
     }
     this.setState({
       [name]: event.target.value,
@@ -105,7 +80,7 @@ class BranchDataSet extends React.Component {
   };
 
   handleCommit = () => {
-    // reset the ForkBase Status field:
+    // reset the Rafiki Status field:
     this.props.resetResponses()
     // first reset COMMIT disabled
     this.setState({
@@ -114,29 +89,24 @@ class BranchDataSet extends React.Component {
     // set formState to loading
     this.props.loadingFormState()
     // create inputs
-    const dataEntryForBranchDS = Object.assign(
+    const dataEntryForGetDS = Object.assign(
       {
         "dataset": this.state.dataset,
-        "branch": this.state.newBranch,
-        "referBranch": this.state.referBranch
+        "branch": this.state.branch
       },
       {}
     )
-    this.props.triggerBranchDS_Combo(dataEntryForBranchDS)
+    this.props.requestGetDataset(dataEntryForGetDS)
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // validate when to enable COMMIT button
     if (
       this.state.dataset !== prevState.dataset ||
-      this.state.newBranch !== prevState.newBranch ||
-      this.state.referBranch !== prevState.referBranch
+      this.state.branch !== prevState.branch
     ) {
       if (
         this.state.dataset &&
-        this.state.newBranch &&
-        this.state.validBranchName &&
-        this.state.referBranch
+        this.state.branch
       ) {
         this.setState({
           FormIsValid: true
@@ -145,13 +115,6 @@ class BranchDataSet extends React.Component {
         this.setState({
           FormIsValid: false
         })
-      }
-    }
-    // for DS commands with updates,
-    // call ls-ds again after result from ustore has returned
-    if (prevProps.formState !== this.props.formState) {
-      if (this.props.formState === "idle") {
-        this.props.requestListDS()
       }
     }
   }
@@ -165,7 +128,7 @@ class BranchDataSet extends React.Component {
     const {
       classes,
       DatasetList,
-      Response_BranchDS,
+      Response_GetDataset,
       formState
     } = this.props;
 
@@ -175,7 +138,7 @@ class BranchDataSet extends React.Component {
           <ContentBar>
             <Toolbar>
               <Typography variant="h5" gutterBottom>
-                Branch Dataset
+                Get Dataset
               </Typography>
             </Toolbar>
           </ContentBar>
@@ -199,16 +162,16 @@ class BranchDataSet extends React.Component {
                   title="2. Branch Name"
                   dsList={DatasetList}
                   checkedNewDataset={false}
-                  checkedNewBranch={true}
+                  checkedNewBranch={this.state.checkedNewBranch}
                   dataset={this.state.dataset}
                   branch={this.state.branch}
                   newBranch={this.state.newBranch}
                   referBranch={this.state.referBranch}
                   onHandleChange={this.handleChange}
                   BranchState={"branch"}
-                  onHandleSwitch={() => {}}
+                  onHandleSwitch={this.handleSwitch}
                   AllowNewBranch={false}
-                  isCorrectInput={this.state.validBranchName}
+                  isCorrectInput={true}
                 />
                 <br />
                 <Grid
@@ -228,7 +191,7 @@ class BranchDataSet extends React.Component {
                 </Grid>
               </Grid>
               <Grid item xs={6}>
-                <ForkbaseStatus
+                <RafikiStatus
                   formState={formState}
                 >
                   {formState === "loading" &&
@@ -238,12 +201,16 @@ class BranchDataSet extends React.Component {
                     </React.Fragment>
                   }
                   <Typography component="p">
-                    <b>{Response_BranchDS[0]}</b>
+                    <b>{Response_GetDataset[0]}</b>
                     <br />
-                    {Response_BranchDS[1]}
                   </Typography>
+                  <GetDatasetResponse
+                    entries={Response_GetDataset[1]}
+                    dataset={this.state.dataset}
+                    branch={this.state.branch}
+                  />
                   <br />
-                </ForkbaseStatus>
+                </RafikiStatus>
               </Grid>
             </Grid>
           </div>
@@ -256,20 +223,20 @@ class BranchDataSet extends React.Component {
 
 const mapStateToProps = state => ({
   DatasetList: state.RowTableCmds.DatasetList,
-  Response_BranchDS: state.RowTableCmds.Response_BranchDS,
+  Response_GetDataset: state.RowTableCmds.Response_GetDataset,
   formState: state.RowTableCmds.formState
 })
 
 const mapDispatchToProps = {
   handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
   requestListDS: actions.requestListDS,
+  requestGetDataset: actions.requestGetDataset,
   resetResponses: actions.resetResponses,
   resetLoadingBar: ConsoleActions.resetLoadingBar,
-  triggerBranchDS_Combo: actions.triggerBranchDS_Combo,
   loadingFormState: actions.loadingFormState
 }
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles)
-)(BranchDataSet)
+)(GetDataSet)

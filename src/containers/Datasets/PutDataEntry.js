@@ -20,7 +20,7 @@ import ContentBar from "../../components/ConsoleContents/ContentBar"
 import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
 import RowEntryName from "../../components/ConsoleContents/RowEntryName"
-import ForkbaseStatus from "../../components/ConsoleContents/ForkbaseStatus"
+import RafikiStatus from "../../components/ConsoleContents/RafikiStatus"
 
 // RegExp rules
 import { validDsAndBranch } from "../../regexp-rules";
@@ -176,7 +176,7 @@ class PutDataEntry extends React.Component {
   }
 
   handleCommit = () => {
-    // reset the ForkBase Status field:
+    // reset the Rafiki Status field:
     this.props.resetResponses()
     // first reset COMMIT disabled
     this.setState({
@@ -524,7 +524,7 @@ class PutDataEntry extends React.Component {
                 </Grid>
               </Grid>
               <Grid item xs={6}>
-                <ForkbaseStatus
+                <RafikiStatus
                   formState={formState}
                 >
                   {formState === "loading" &&
@@ -545,7 +545,7 @@ class PutDataEntry extends React.Component {
                     {Response_PutDE[1]}
                   </Typography>
                   <br />
-                </ForkbaseStatus>
+                </RafikiStatus>
               </Grid>
             </Grid>
           </div>

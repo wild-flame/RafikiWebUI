@@ -7,9 +7,6 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import createSagaMiddleware from 'redux-saga'
 
-//Google Analytics
-import ReactGA from 'react-ga';
-
 // Material-UI
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -43,11 +40,6 @@ const store = createStore(
 
 // then run the saga
 sagaMiddleware.run(rootSaga)
-
-// tracking ID for "ForBase-App" on Google Analytics
-ReactGA.initialize('UA-48967212-5');
-ReactGA.pageview(window.location.pathname + window.location.search);
-
 
 ReactDOM.render(
   <ErrorBoundary

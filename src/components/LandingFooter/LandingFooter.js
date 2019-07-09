@@ -57,16 +57,16 @@ function AppFooter(props) {
                 <a href="https://www.comp.nus.edu.sg/~dbsystem/" target="_blank" rel="noopener noreferrer" className={classes.icon}>
                   <Public />
                 </a>
-                <a href="https://github.com/streamjoin/forkbase-doc" target="_blank" rel="noopener noreferrer" className={classes.icon}>
+                <a href="https://github.com/nginyc/rafiki" target="_blank" rel="noopener noreferrer" className={classes.icon}>
                   <GithubIcon />
                 </a>
               </Grid>
-              <Grid item>© 2019 ForkBase</Grid>
+              <Grid item>© 2019 Rafiki</Grid>
             </Grid>
           </Grid>
           <Grid item>
             <Typography variant="caption">
-              {'ForkBase is brought to you by the team from DBsystem NUS School of Computing'}
+              {'Rafiki is brought to you by the team from DBsystem NUS School of Computing'}
             </Typography>
           </Grid>
         </Grid>

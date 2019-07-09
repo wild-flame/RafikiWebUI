@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from "react-redux"
 import { compose } from "redux"
 
+import HTTPconfig from "../../HTTPConfig"
+
 import * as ConsoleActions from "../ConsoleAppFrame/actions"
 import * as actions from "./actions"
 
@@ -11,30 +13,42 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
 import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
-import ForkbaseStatus from "../../components/ConsoleContents/ForkbaseStatus"
-import GetSchemaResponse from '../../components/ConsoleContents/GetSchemaResponse';
+import RafikiStatus from "../../components/ConsoleContents/RafikiStatus"
+
+// RegExp rules
+import { validDsAndBranch } from "../../regexp-rules";
 
 // read query-string
 import queryString from 'query-string'
 
 
-const styles = () => ({
+const styles = theme => ({
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
+  },
   contentWrapper: {
     margin: '10px 16px',
   }
 })
 
 
-class GetDatasetSchema extends React.Component {
+class ExportDataSet extends React.Component {
   state = {
     dataset:"",
     branch:"master",
+    filename:"",
+    filePath:"",
+    validFileName: true,
     FormIsValid: false
   }
 
@@ -42,36 +56,54 @@ class GetDatasetSchema extends React.Component {
     classes: PropTypes.object.isRequired,
 
     handleHeaderTitleChange: PropTypes.func,
-    requestGetDSSchema: PropTypes.func,
     requestListDS: PropTypes.func,
     resetResponses: PropTypes.func,
     resetLoadingBar: PropTypes.func,
 
     DatasetList: PropTypes.array,
 
-    Response_GetDSSchema: PropTypes.array,
+    requestExportDS: PropTypes.func,
+    Response_ExportDS: PropTypes.array,
 
     formState: PropTypes.string,
     loadingFormState: PropTypes.func
   }
 
   componentDidMount() {
-    this.props.handleHeaderTitleChange("Dataset > Get Dataset Schema")
+    this.props.handleHeaderTitleChange("Dataset > Export Dataset")
     // read the query string from URL
     const values = queryString.parse(this.props.location.search)
-    if (values.dataset && values.branch) {
+    if (values.dataset) {
       this.setState({
-        dataset: values.dataset,
-        branch: values.branch
+        dataset: values.dataset
       })
     }
     this.props.requestListDS()
   }
 
   handleChange = name => event => {
+    if (name === "filename") {
+      if (
+        validDsAndBranch.test(event.target.value) &&
+        event.target.value.length <= 50
+      ) {
+        this.setState({
+          validFileName: true
+        });
+      } else if (event.target.value === "") {
+        this.setState({
+          validFileName: true
+        });
+      } else {
+        this.setState({
+          validFileName: false
+        });
+      }
+    }
     if (name === "dataset") {
       this.setState({
-        branch: "master"
+        branch: "master",
+        filename: ""
       })
     }
     this.setState({
@@ -80,7 +112,7 @@ class GetDatasetSchema extends React.Component {
   };
 
   handleCommit = () => {
-    // reset the ForkBase Status field:
+    // reset the Rafiki Status field:
     this.props.resetResponses()
     // first reset COMMIT disabled
     this.setState({
@@ -88,25 +120,50 @@ class GetDatasetSchema extends React.Component {
     })
     // set formState to loading
     this.props.loadingFormState()
-    // create inputs
-    const dataEntryForGetDSSchema = Object.assign(
+    // append timestamp with UTC time
+    const CommitTime = new Date()
+    const formatTime = CommitTime
+      .toUTCString()
+      .replace(/\s+/g, "")
+      .replace(/,+/g, "")
+      .replace(/:+/g, "")
+    //  = Wed13Feb2019101814GMT
+    // temp ID random number 100,000 - 999,999
+    const generateRandommID = Math.floor(Math.random()*(999999-100000+1)+100000)
+  
+    const nativeFilePath = "static/ExportDsBinary/" +
+      "RafikiExport-" + formatTime +
+      "-ID" + generateRandommID + "/" +
+      this.state.filename + ".csv"
+
+    const filePath = "../../frontend/build/" + nativeFilePath
+
+    this.setState({
+      filePath: `${HTTPconfig.gateway}${nativeFilePath}`
+    })
+
+    const dataEntryForExportDS = Object.assign(
       {
         "dataset": this.state.dataset,
-        "branch": this.state.branch
+        "branch": this.state.branch,
+        "filename": filePath
       },
       {}
     )
-    this.props.requestGetDSSchema(dataEntryForGetDSSchema)
+    this.props.requestExportDS(dataEntryForExportDS)
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (
       this.state.dataset !== prevState.dataset ||
-      this.state.branch !== prevState.branch
+      this.state.branch !== prevState.branch ||
+      this.state.filename !== prevState.filename
     ) {
       if (
         this.state.dataset &&
-        this.state.branch
+        this.state.branch &&
+        this.state.filename &&
+        this.state.validFileName
       ) {
         this.setState({
           FormIsValid: true
@@ -128,7 +185,7 @@ class GetDatasetSchema extends React.Component {
     const {
       classes,
       DatasetList,
-      Response_GetDSSchema,
+      Response_ExportDS,
       formState
     } = this.props;
 
@@ -138,7 +195,7 @@ class GetDatasetSchema extends React.Component {
           <ContentBar>
             <Toolbar>
               <Typography variant="h5" gutterBottom>
-                Get Dataset Schema
+                Export Dataset
               </Typography>
             </Toolbar>
           </ContentBar>
@@ -153,7 +210,7 @@ class GetDatasetSchema extends React.Component {
                   newDataset=""
                   onHandleChange={this.handleChange}
                   DatasetState={"dataset"}
-                  onHandleSwitch={this.handleSwitch}
+                  onHandleSwitch={() => {}}
                   AllowNewDataset={false}
                   isCorrectInput={true}
                 />
@@ -162,17 +219,47 @@ class GetDatasetSchema extends React.Component {
                   title="2. Branch Name"
                   dsList={DatasetList}
                   checkedNewDataset={false}
-                  checkedNewBranch={this.state.checkedNewBranch}
+                  checkedNewBranch={false}
                   dataset={this.state.dataset}
                   branch={this.state.branch}
-                  newBranch={this.state.newBranch}
-                  referBranch={this.state.referBranch}
+                  newBranch=""
+                  referBranch=""
                   onHandleChange={this.handleChange}
                   BranchState={"branch"}
-                  onHandleSwitch={this.handleSwitch}
+                  onHandleSwitch={() => {}}
                   AllowNewBranch={false}
                   isCorrectInput={true}
                 />
+                <br />
+                <Typography variant="h5" gutterBottom align="center">
+                  3. Export as
+                </Typography>
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-evenly"
+                  alignItems="center"
+                >
+                  <Grid item>
+                    <TextField
+                      id="outlined-adornment-weight"
+                      className={classes.textField}
+                      variant="outlined"
+                      label="Filename"
+                      value={this.state.filename}
+                      onChange={this.handleChange('filename')}
+                      error={!this.state.validFileName}
+                      helperText={
+                        this.state.validFileName
+                        ? "Export as filename"
+                        :"invalid filename"
+                      }
+                      InputProps={{
+                        endAdornment: <InputAdornment position="end">.csv</InputAdornment>,
+                      }}
+                    />
+                  </Grid>
+                </Grid>
                 <br />
                 <Grid
                   container
@@ -191,7 +278,7 @@ class GetDatasetSchema extends React.Component {
                 </Grid>
               </Grid>
               <Grid item xs={6}>
-                <ForkbaseStatus
+                <RafikiStatus
                   formState={formState}
                 >
                   {formState === "loading" &&
@@ -201,14 +288,22 @@ class GetDatasetSchema extends React.Component {
                     </React.Fragment>
                   }
                   <Typography component="p">
-                    <b>{Response_GetDSSchema[0]}</b>
+                    <b>{Response_ExportDS[0]}</b>
                     <br />
+                    {Response_ExportDS[1]}
+                    <br />
+                    {Response_ExportDS[2]}
                   </Typography>
-                  <GetSchemaResponse
-                    schemaResponse={Response_GetDSSchema[1]}
-                  />
                   <br />
-                </ForkbaseStatus>
+                  {this.state.filePath && Response_ExportDS[2] &&
+                    <Button
+                      variant="outlined"
+                      href={this.state.filePath}
+                    >
+                      Download CSV
+                    </Button>
+                  }
+                </RafikiStatus>
               </Grid>
             </Grid>
           </div>
@@ -221,14 +316,14 @@ class GetDatasetSchema extends React.Component {
 
 const mapStateToProps = state => ({
   DatasetList: state.RowTableCmds.DatasetList,
-  Response_GetDSSchema: state.RowTableCmds.Response_GetDSSchema,
+  Response_ExportDS: state.RowTableCmds.Response_ExportDS,
   formState: state.RowTableCmds.formState
 })
 
 const mapDispatchToProps = {
   handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
+  requestExportDS: actions.requestExportDS,
   requestListDS: actions.requestListDS,
-  requestGetDSSchema: actions.requestGetDSSchema,
   resetResponses: actions.resetResponses,
   resetLoadingBar: ConsoleActions.resetLoadingBar,
   loadingFormState: actions.loadingFormState
@@ -237,4 +332,4 @@ const mapDispatchToProps = {
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles)
-)(GetDatasetSchema)
+)(ExportDataSet)

@@ -166,7 +166,7 @@ class ListDataSetTable extends React.Component {
                           <IconButton
                             className={classes.tableButtons}
                             component={Link}
-                            to={`/console/row-based-table/delete-dataset?dataset=${item["dataset"]}`}
+                            to={`/console/datasets/delete-dataset?dataset=${item["dataset"]}`}
                           >
                             <DeleteIcon />
                           </IconButton>
@@ -175,7 +175,7 @@ class ListDataSetTable extends React.Component {
                           <IconButton
                             className={classes.tableButtons}
                             component={Link}
-                            to={`/console/row-based-table/export-dataset?dataset=${item["dataset"]}`}
+                            to={`/console/datasets/export-dataset?dataset=${item["dataset"]}`}
                           >
                             <ExportDsIcon />
                           </IconButton>
@@ -200,7 +200,7 @@ class ListDataSetTable extends React.Component {
                 <MenuList>
                   <MenuItem
                     component={Link}
-                    to={`/console/row-based-table/get-dataset?dataset=${currentDataset}&branch=${currentBranch}`}
+                    to={`/console/datasets/get-dataset?dataset=${currentDataset}&branch=${currentBranch}`}
                   >
                     <ListItemIcon>
                       <DnsRoundedIcon />
@@ -209,7 +209,7 @@ class ListDataSetTable extends React.Component {
                   </MenuItem>
                   <MenuItem
                     component={Link}
-                    to={`/console/row-based-table/get-dataset-schema?dataset=${currentDataset}&branch=${currentBranch}`}
+                    to={`/console/datasets/get-dataset-schema?dataset=${currentDataset}&branch=${currentBranch}`}
                   >
                     <ListItemIcon>
                       <DnsRoundedIcon />
@@ -218,7 +218,7 @@ class ListDataSetTable extends React.Component {
                   </MenuItem>
                   <MenuItem
                     component={Link}
-                    to={`/console/row-based-table/get-data-entry?dataset=${currentDataset}&branch=${currentBranch}`}
+                    to={`/console/datasets/get-data-entry?dataset=${currentDataset}&branch=${currentBranch}`}
                   >
                     <ListItemIcon>
                       <DnsRoundedIcon />
@@ -227,7 +227,7 @@ class ListDataSetTable extends React.Component {
                   </MenuItem>
                   <MenuItem
                     component={Link}
-                    to={`/console/row-based-table/branch-dataset?dataset=${currentDataset}&branch=${currentBranch}`}
+                    to={`/console/datasets/branch-dataset?dataset=${currentDataset}&branch=${currentBranch}`}
                   >
                     <ListItemIcon>
                       <BranchDsIcon />
@@ -236,7 +236,7 @@ class ListDataSetTable extends React.Component {
                   </MenuItem>
                   <MenuItem
                     component={Link}
-                    to={`/console/row-based-table/diff-dataset?dataset=${currentDataset}&branch=${currentBranch}`}
+                    to={`/console/datasets/diff-dataset?dataset=${currentDataset}&branch=${currentBranch}`}
                   >
                     <ListItemIcon>
                       <DiffDsIcon />
@@ -260,7 +260,7 @@ class ListDataSetTable extends React.Component {
                 <MenuList>
                   <MenuItem
                     component={Link}
-                    to={`/console/row-based-table/put-data-by-csv?dataset=${currentDataset}`}
+                    to={`/console/datasets/upload-datasets?dataset=${currentDataset}`}
                   >
                     <ListItemIcon>
                       <PutDataCSVIcon />
@@ -269,7 +269,7 @@ class ListDataSetTable extends React.Component {
                   </MenuItem>
                   <MenuItem
                     component={Link}
-                    to={`/console/row-based-table/put-data-entry?dataset=${currentDataset}`}
+                    to={`/console/datasets/put-data-entry?dataset=${currentDataset}`}
                   >
                     <ListItemIcon>
                       <PutDeIcon />

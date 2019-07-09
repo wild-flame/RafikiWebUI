@@ -11,6 +11,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@material-ui/core/Typography'
 
 // for icons
 import HomeIcon from '@material-ui/icons/Home';
@@ -29,7 +30,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
-import Logo from "../../assets/Logo-cleaned.png"
+import Logo from "../../assets/Logo-Dark.png"
 
 // customize scrollbar for the fixed-div navigator
 import SimpleBar from 'simplebar-react';
@@ -68,6 +69,9 @@ const styles = theme => ({
     height: 28,
     marginRight: 10
   },
+  logoText: {
+    color: "#61ADB1 "
+  },
   itemActionable: {
     '&:hover': {
       backgroundColor: 'rgba(255, 255, 255, 0.08)',
@@ -102,22 +106,22 @@ class Navigator extends React.Component {
   }
 
   state = {
-    RowBasedTableOpen: true,
-    ColBasedTableOpen: false,
+    DatasetsTableOpen: true,
+    JobsTableOpen: false,
     DataStorageOpen: false,
     KeyValueDBOpen: false
   };
 
   handleClick = (categoryHeader) => {
     switch(categoryHeader) {
-      case "Row":
+      case "Datasets":
         this.setState(state => (
-          { RowBasedTableOpen: !state.RowBasedTableOpen }
+          { DatasetsTableOpen: !state.DatasetsTableOpen }
         ));
         break
-      case "Col":
+      case "Jobs":
         this.setState(state => (
-          { ColBasedTableOpen: !state.ColBasedTableOpen }
+          { JobsTableOpen: !state.JobsTableOpen }
         ));
         break
       case "Storage":
@@ -132,7 +136,7 @@ class Navigator extends React.Component {
         break
       default:
         this.setState(state => (
-          { RowBasedTableOpen: !state.RowBasedTableOpen }
+          { JobsTableOpen: !state.DatasetsTableOpen }
         ));
         return
     }
@@ -142,65 +146,30 @@ class Navigator extends React.Component {
     const categories = [
       {
         id: 'Dataset',
-        collapseID: "Row",
-        collapseIn: this.state.RowBasedTableOpen,
+        collapseID: "Datasets",
+        collapseIn: this.state.DatasetsTableOpen,
         children: [
           {
             id: 'List Dataset',
             icon: <ListDSIcon />,
-            pathname: "/console/row-based-table/list-dataset"
+            pathname: "/console/datasets/list-dataset"
           },
           {
-            id: 'Put Data by CSV',
+            id: 'Upload Dataset',
             icon: <PutDataCSVIcon />,
-            pathname: "/console/row-based-table/put-data-by-csv"
-          },
-          {
-            id: 'Put Data Entry',
-            icon: <PutDeIcon />,
-            pathname: "/console/row-based-table/put-data-entry"
-          },
-          {
-            id: 'Branch Dataset',
-            icon: <BranchDsIcon />,
-            pathname: "/console/row-based-table/branch-dataset"
-          },
-          {
-            id: 'Get Dataset',
-            icon: <DnsRoundedIcon />,
-            pathname: "/console/row-based-table/get-dataset"
-          },
-          {
-            id: 'Get Dataset Schema',
-            icon: <DnsRoundedIcon />,
-            pathname: "/console/row-based-table/get-dataset-schema"
-          },
-          {
-            id: 'Get Data Entry',
-            icon: <DnsRoundedIcon />,
-            pathname: "/console/row-based-table/get-data-entry"
-          },
-          {
-            id: 'Diff Dataset',
-            icon: <DiffDsIcon />,
-            pathname: "/console/row-based-table/diff-dataset"
+            pathname: "/console/datasets/upload-datasets"
           },
           {
             id: 'Delete Dataset',
             icon: <DeleteDsIcon />,
-            pathname: "/console/row-based-table/delete-dataset"
-          },
-          {
-            id: 'Export Dataset',
-            icon: <ExportDsIcon />,
-            pathname: "/console/row-based-table/export-dataset"
+            pathname: "/console/datasets/delete-dataset"
           },
         ],
       },
       {
-        id: 'Column-based Table',
-        collapseID: "Col",
-        collapseIn: this.state.ColBasedTableOpen,
+        id: 'Training Jobs',
+        collapseID: "Jobs",
+        collapseIn: this.state.JobsTableOpen,
         children: [
           {
             id: 'Work in progress',
@@ -248,21 +217,9 @@ class Navigator extends React.Component {
         ],
       },
       {
-        id: 'Data Storage',
+        id: 'Application',
         collapseID: "Storage",
         collapseIn: this.state.DataStorageOpen,
-        children: [
-          {
-            id: 'Work in progress',
-            icon: <DnsRoundedIcon />,
-            pathname: "#"
-          }
-        ],
-      },
-      {
-        id: 'Basic Key-Value',
-        collapseID: "KeyValue",
-        collapseIn: this.state.KeyValueDBOpen,
         children: [
           {
             id: 'Work in progress',
@@ -300,7 +257,7 @@ class Navigator extends React.Component {
                 classes.itemCategory)}
             >
               <img alt="logo" src={Logo} className={classes.logo} />
-              ForkBase
+              <span className={classes.logoText}>Rafiki</span>
             </ListItem>
             <ListItem 
               component={Link}

@@ -47,7 +47,7 @@ class GetDatasetResponse extends React.Component {
             button
             key={entry}
             component={Link}
-            to={`/console/row-based-table/get-data-entry?dataset=${dataset}&branch=${branch}&entry=${entry}`}
+            to={`/console/datasets/get-data-entry?dataset=${dataset}&branch=${branch}&entry=${entry}`}
           >
             <ListItemIcon>
               <DnsRoundedIcon />

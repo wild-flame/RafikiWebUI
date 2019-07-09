@@ -11,7 +11,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import Logo from "../../assets/Logo-cleaned.png"
+import Logo from "../../assets/Logo-Light.png"
 
 
 // Navigator basic color dark blue specified in
@@ -75,22 +75,15 @@ class Navigator extends React.Component {
     } = this.props;
 
     const navLinks = [
-      {
-        url: "/demo-features",
-        label: "Demo",
-      },
-      {
+      /*{
         url: "/publications",
         label: "Publicationcs",
-      },
-      {
-        url: "/docs/basic/get",
-        label: "Docs",
-      },
+      },*/
       {
         url: "/contact",
         label: "Contact",
       },
+     ,
     ]
 
     return (
@@ -110,7 +103,7 @@ class Navigator extends React.Component {
               classes.itemCategory)}
           >
             <img alt="logo" src={Logo} className={classes.logo} />
-            ForkBase
+            Rafiki
           </ListItem>
           {navLinks.map((link, index) => (
             <ListItem
@@ -152,4 +145,4 @@ class Navigator extends React.Component {
 export default compose(
   withRouter,
   withStyles(styles)
-)(Navigator)
+)(Navigator) // This is Navgigator 

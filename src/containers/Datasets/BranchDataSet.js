@@ -4,7 +4,6 @@ import { connect } from "react-redux"
 import { compose } from "redux"
 
 import * as ConsoleActions from "../ConsoleAppFrame/actions"
-import * as OverviewActions from "../StorageOverview/actions"
 import * as actions from "./actions"
 
 import { withStyles } from '@material-ui/core/styles';
@@ -18,7 +17,10 @@ import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
 import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
-import ForkbaseStatus from "../../components/ConsoleContents/ForkbaseStatus"
+import RafikiStatus from "../../components/ConsoleContents/RafikiStatus"
+
+// RegExp rules
+import { validDsAndBranch } from "../../regexp-rules";
 
 // read query-string
 import queryString from 'query-string'
@@ -31,10 +33,13 @@ const styles = () => ({
 })
 
 
-class DeleteDataSet extends React.Component {
+class BranchDataSet extends React.Component {
   state = {
     dataset:"",
     branch:"",
+    newBranch: "",
+    referBranch:"",
+    validBranchName: true,
     FormIsValid: false
   }
 
@@ -42,29 +47,28 @@ class DeleteDataSet extends React.Component {
     classes: PropTypes.object.isRequired,
 
     handleHeaderTitleChange: PropTypes.func,
-    requestDeleteDataset: PropTypes.func,
-    resetResponses: PropTypes.func,
 
     requestListDS: PropTypes.func,
-    requestDBSize: PropTypes.func,
+    resetResponses: PropTypes.func,
     resetLoadingBar: PropTypes.func,
 
     DatasetList: PropTypes.array,
 
-    Response_DeleteDS: PropTypes.array,
+    triggerBranchDS_Combo: PropTypes.func,
+    Response_BranchDS: PropTypes.array,
 
     formState: PropTypes.string,
     loadingFormState: PropTypes.func
   }
 
   componentDidMount() {
-    this.props.handleHeaderTitleChange("Dataset > Delete Dataset")
-    this.props.requestDBSize()
+    this.props.handleHeaderTitleChange("Dataset > Branch Dataset")
     // read the query string from URL
     const values = queryString.parse(this.props.location.search)
-    if (values.dataset) {
+    if (values.dataset && values.branch) {
       this.setState({
-        dataset: values.dataset
+        dataset: values.dataset,
+        referBranch: values.branch
       })
     }
     this.props.requestListDS()
@@ -73,8 +77,27 @@ class DeleteDataSet extends React.Component {
   handleChange = name => event => {
     if (name === "dataset") {
       this.setState({
-        branch: ""
+        newBranch: "",
+        referBranch: "",
       })
+    }
+    if (name === "newBranch") {
+      if (
+        validDsAndBranch.test(event.target.value) &&
+        event.target.value.length <= 50
+      ) {
+        this.setState({
+          validBranchName: true
+        });
+      } else if (event.target.value === "") {
+        this.setState({
+          validBranchName: true
+        });
+      } else {
+        this.setState({
+          validBranchName: false
+        });
+      }
     }
     this.setState({
       [name]: event.target.value,
@@ -82,7 +105,7 @@ class DeleteDataSet extends React.Component {
   };
 
   handleCommit = () => {
-    // reset the ForkBase Status field:
+    // reset the Rafiki Status field:
     this.props.resetResponses()
     // first reset COMMIT disabled
     this.setState({
@@ -91,29 +114,29 @@ class DeleteDataSet extends React.Component {
     // set formState to loading
     this.props.loadingFormState()
     // create inputs
-    const dataEntryForDeleteDS = Object.assign(
+    const dataEntryForBranchDS = Object.assign(
       {
         "dataset": this.state.dataset,
-        "branch": this.state.branch
+        "branch": this.state.newBranch,
+        "referBranch": this.state.referBranch
       },
       {}
     )
-    // reset dataset ro prevent BranchName from crashing
-    this.setState({
-      dataset: ""
-    })
-    // dispatch DeleteSD
-    this.props.requestDeleteDataset(dataEntryForDeleteDS)
+    this.props.triggerBranchDS_Combo(dataEntryForBranchDS)
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // validate when to enable COMMIT button
     if (
       this.state.dataset !== prevState.dataset ||
-      this.state.branch !== prevState.branch
+      this.state.newBranch !== prevState.newBranch ||
+      this.state.referBranch !== prevState.referBranch
     ) {
       if (
         this.state.dataset &&
-        this.state.branch
+        this.state.newBranch &&
+        this.state.validBranchName &&
+        this.state.referBranch
       ) {
         this.setState({
           FormIsValid: true
@@ -142,7 +165,7 @@ class DeleteDataSet extends React.Component {
     const {
       classes,
       DatasetList,
-      Response_DeleteDS,
+      Response_BranchDS,
       formState
     } = this.props;
 
@@ -152,7 +175,7 @@ class DeleteDataSet extends React.Component {
           <ContentBar>
             <Toolbar>
               <Typography variant="h5" gutterBottom>
-                Delete Dataset
+                Branch Dataset
               </Typography>
             </Toolbar>
           </ContentBar>
@@ -176,16 +199,16 @@ class DeleteDataSet extends React.Component {
                   title="2. Branch Name"
                   dsList={DatasetList}
                   checkedNewDataset={false}
-                  checkedNewBranch={this.state.checkedNewBranch}
+                  checkedNewBranch={true}
                   dataset={this.state.dataset}
                   branch={this.state.branch}
                   newBranch={this.state.newBranch}
                   referBranch={this.state.referBranch}
                   onHandleChange={this.handleChange}
                   BranchState={"branch"}
-                  onHandleSwitch={this.handleSwitch}
+                  onHandleSwitch={() => {}}
                   AllowNewBranch={false}
-                  isCorrectInput={true}
+                  isCorrectInput={this.state.validBranchName}
                 />
                 <br />
                 <Grid
@@ -205,7 +228,7 @@ class DeleteDataSet extends React.Component {
                 </Grid>
               </Grid>
               <Grid item xs={6}>
-                <ForkbaseStatus
+                <RafikiStatus
                   formState={formState}
                 >
                   {formState === "loading" &&
@@ -215,12 +238,12 @@ class DeleteDataSet extends React.Component {
                     </React.Fragment>
                   }
                   <Typography component="p">
-                    <b>{Response_DeleteDS[0]}</b>
+                    <b>{Response_BranchDS[0]}</b>
                     <br />
-                    {Response_DeleteDS[1]}
+                    {Response_BranchDS[1]}
                   </Typography>
                   <br />
-                </ForkbaseStatus>
+                </RafikiStatus>
               </Grid>
             </Grid>
           </div>
@@ -233,21 +256,20 @@ class DeleteDataSet extends React.Component {
 
 const mapStateToProps = state => ({
   DatasetList: state.RowTableCmds.DatasetList,
-  Response_DeleteDS: state.RowTableCmds.Response_DeleteDS,
+  Response_BranchDS: state.RowTableCmds.Response_BranchDS,
   formState: state.RowTableCmds.formState
 })
 
 const mapDispatchToProps = {
   handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
   requestListDS: actions.requestListDS,
-  requestDeleteDataset: actions.requestDeleteDataset,
   resetResponses: actions.resetResponses,
   resetLoadingBar: ConsoleActions.resetLoadingBar,
-  requestDBSize: OverviewActions.requestDBSize,
+  triggerBranchDS_Combo: actions.triggerBranchDS_Combo,
   loadingFormState: actions.loadingFormState
 }
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles)
-)(DeleteDataSet)
+)(BranchDataSet)

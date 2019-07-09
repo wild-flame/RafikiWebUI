@@ -14,16 +14,16 @@ import StorageBar from "../../components/ConsoleContents/StorageBar"
 
 import StorageOverview from "../StorageOverview/StorageOverview"
 
-import PutDataByCSV from "../RowTableCmds/PutDataByCSV"
-import ListDataSet from "../RowTableCmds/ListDataSet"
-import PutDataEntry from "../RowTableCmds/PutDataEntry"
-import GetDataSet from "../RowTableCmds/GetDataSet"
-import GetDatasetSchema from "../RowTableCmds/GetDatasetSchema"
-import GetDataEntry from "../RowTableCmds/GetDataEntry"
-import DiffDataSet from "../RowTableCmds/DiffDataSet"
-import DeleteDataSet from "../RowTableCmds/DeleteDataSet"
-import ExportDataSet from "../RowTableCmds/ExportDataSet"
-import BranchDataSet from "../RowTableCmds/BranchDataSet"
+import PutDataByCSV from "../Datasets/UploadDataset"
+import ListDataSet from "../Datasets/ListDataSet"
+import PutDataEntry from "../Datasets/PutDataEntry"
+import GetDataSet from "../Datasets/GetDataSet"
+import GetDatasetSchema from "../Datasets/GetDatasetSchema"
+import GetDataEntry from "../Datasets/GetDataEntry"
+import DiffDataSet from "../Datasets/DiffDataSet"
+import DeleteDataSet from "../Datasets/DeleteDataSet"
+import ExportDataSet from "../Datasets/ExportDataSet"
+import BranchDataSet from "../Datasets/BranchDataSet"
 
 import * as actions from "./actions"
 
@@ -72,9 +72,9 @@ class ConsoleAppFrame extends React.Component {
       StorageBarStatus
     } = this.props;
 
-    if (!authStatus) {
-      return <Redirect to="/sign-in" />
-    }
+ //   if (!authStatus) {
+ //     return <Redirect to="/sign-in" />
+ //   }
 
     return (
       <MuiThemeProvider theme={ConsoleTheme}>
@@ -121,52 +121,52 @@ class ConsoleAppFrame extends React.Component {
             />
             <Route
               exact
-              path='/console/row-based-table/list-dataset'
+              path='/console/datasets/list-dataset'
               component={ListDataSet}
             />
             <Route
               exact
-              path='/console/row-based-table/put-data-by-csv'
+              path='/console/datasets/upload-datasets'
               component={PutDataByCSV}
             />
             <Route
               exact
-              path='/console/row-based-table/put-data-entry'
+              path='/console/datasets/put-data-entry'
               component={PutDataEntry}
             />
             <Route
               exact
-              path='/console/row-based-table/branch-dataset'
+              path='/console/datasets/branch-dataset'
               component={BranchDataSet}
             />
             <Route
               exact
-              path='/console/row-based-table/get-dataset'
+              path='/console/datasets/get-dataset'
               component={GetDataSet}
             />
             <Route
               exact
-              path='/console/row-based-table/get-dataset-schema'
+              path='/console/datasets/get-dataset-schema'
               component={GetDatasetSchema}
             />
             <Route
               exact
-              path='/console/row-based-table/get-data-entry'
+              path='/console/datasets/get-data-entry'
               component={GetDataEntry}
             />
             <Route
               exact
-              path='/console/row-based-table/diff-dataset'
+              path='/console/datasets/diff-dataset'
               component={DiffDataSet}
             />
             <Route
               exact
-              path='/console/row-based-table/delete-dataset'
+              path='/console/datasets/delete-dataset'
               component={DeleteDataSet}
             />
             <Route
               exact
-              path='/console/row-based-table/export-dataset'
+              path='/console/datasets/export-dataset'
               component={ExportDataSet}
             />
           </div>

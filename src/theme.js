@@ -3,20 +3,20 @@ import green from '@material-ui/core/colors/green';
 import grey from '@material-ui/core/colors/grey';
 import red from '@material-ui/core/colors/red';
 import teal from '@material-ui/core/colors/teal';
-import blueGrey from '@material-ui/core/colors/blueGrey';
+import cyan from '@material-ui/core/colors/cyan';
 
 
 const rawTheme = createMuiTheme({
   palette: {
     primary: {
-      light: blueGrey[100],
-      main: blueGrey[900], // almost black
-      dark: '#1e1e1f',
+      light: cyan[100],
+      main: cyan[800], // almost black
+      dark: cyan[900],
     },
     secondary: {
       light: teal[50],
-      main: teal[200],
-      dark: teal[800],
+      main: teal[100],
+      dark: teal[900],
     },
     warning: {
       main: '#ffc071',

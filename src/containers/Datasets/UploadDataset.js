@@ -21,12 +21,12 @@ import ContentBar from "../../components/ConsoleContents/ContentBar"
 import CsvDropzone from "../../components/ConsoleContents/CsvDropzone"
 import DatasetName from "../../components/ConsoleContents/DatasetName"
 import BranchName from "../../components/ConsoleContents/BranchName"
-import ForkbaseStatus from "../../components/ConsoleContents/ForkbaseStatus"
+import RafikiStatus from "../../components/ConsoleContents/RafikiStatus"
 
 // RegExp rules
 import { validDsAndBranch } from "../../regexp-rules";
 
-// Forkbase Status
+// rafiki Status
 import UploadProgressBar from "../../components/ConsoleContents/UploadProgressBar"
 
 // read query-string
@@ -166,7 +166,7 @@ class PutDataByCSV extends React.Component {
   }
   
   handleCommit = () => {
-    // reset the ForkBase Status field:
+    // reset the Rafiki Status field:
     this.props.resetResponses()
     // first reset COMMIT disabled
     this.setState({
@@ -354,7 +354,7 @@ class PutDataByCSV extends React.Component {
           <ContentBar>
             <Toolbar>
               <Typography variant="h5" gutterBottom>
-                Put Data Entry by CSV
+                Upload Datasets 
               </Typography>
             </Toolbar>
           </ContentBar>
@@ -471,7 +471,7 @@ class PutDataByCSV extends React.Component {
                 </Grid>
               </Grid>
               <Grid item xs={6}>
-                <ForkbaseStatus
+                <RafikiStatus
                   formState={formState}
                 >
                   {formState === "loading" &&
@@ -507,7 +507,7 @@ class PutDataByCSV extends React.Component {
                     <br />
                     {Response_PutDataCSV[2]}
                   </Typography>
-                </ForkbaseStatus>
+                </RafikiStatus>
               </Grid>
             </Grid>
           </div>

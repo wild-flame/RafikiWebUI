@@ -9,9 +9,7 @@ import {
  import LinearProgress from "@material-ui/core/LinearProgress";
 
 import LandingPage from "./containers/LandingPage/LandingPage"
-import DemoFeaturesPage from "./containers/DemoFeaturesPage/DemoFeaturesPage"
 import PublicationsPage from "./containers/PublicationsPage/PublicationsPage"
-import DocsPage from './containers/DocsPage/DocsPage'
 import ContactPage from "./containers/ContactPage/ContactPage"
 
 function Loading(props) {
@@ -54,17 +52,8 @@ class App extends Component {
           />
           <Route
             exact
-            path='/demo-features'
-            component={DemoFeaturesPage}
-          />
-          <Route
-            exact
             path='/publications'
             component={PublicationsPage}
-          />
-          <Route
-            path='/docs'
-            component={DocsPage}
           />
           <Route
             exact

@@ -51,14 +51,14 @@ class MainContent extends React.Component {
       <main className={classes.mainContent}>
         <Paper className={classes.paper}>
           {children}
-          {location.pathname === "/console/row-based-table/list-dataset"
+          {location.pathname === "/console/datasets/list-dataset"
             ? (
               <Zoom in={true} unmountOnExit>
                 <Fab
                   className={classes.fab}
                   color="primary"
                   component={Link}
-                  to="/console/row-based-table/put-data-by-csv?addNewDS=TRUE"
+                  to="/console/datasets/upload-datasets?addNewDS=TRUE"
                 >
                   <AddIcon />
                 </Fab>
@@ -71,7 +71,7 @@ class MainContent extends React.Component {
                   className={classes.fab}
                   color="primary"
                   component={Link}
-                  to="/console/row-based-table/list-dataset"
+                  to="/console/datasets/list-dataset"
                 >
                   <ListDSIcon className={classes.extendedIcon} />
                   List Dataset

@@ -76,7 +76,7 @@ class SignIn extends React.Component {
     //const { sent } = this.state;
 
     if (authStatus) {
-      return <Redirect to="/console/row-based-table/list-dataset" />
+      return <Redirect to="/console/datasets/list-dataset" />
     }
 
     return (
@@ -88,10 +88,8 @@ class SignIn extends React.Component {
               Sign In
             </Typography>
             <Typography variant="body2" align="center">
-              {'Not a member yet? '}
-              <Link href="/contact" align="center" underline="always">
-                Contact Us
-              </Link>
+              {'Not a user yet? '}
+                Contact the administrator to create an account for you first.
             </Typography>
           </React.Fragment>
           {authError && "Log in Error " + authError}
