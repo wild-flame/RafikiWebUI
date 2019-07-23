@@ -10,18 +10,8 @@ import Hidden from '@material-ui/core/Hidden';
 import Header from '../../components/ConsoleHeader/Header';
 import Navigator from '../../components/ConsoleSideBar/Navigator';
 import ConsoleTheme from "./ConsoleTheme"
-import StorageBar from "../../components/ConsoleContents/StorageBar"
 
-import PutDataByCSV from "../Datasets/UploadDataset"
 import ListDataSet from "../Datasets/ListDataSet"
-import PutDataEntry from "../Datasets/PutDataEntry"
-import GetDataSet from "../Datasets/GetDataSet"
-import GetDatasetSchema from "../Datasets/GetDatasetSchema"
-import GetDataEntry from "../Datasets/GetDataEntry"
-import DiffDataSet from "../Datasets/DiffDataSet"
-import DeleteDataSet from "../Datasets/DeleteDataSet"
-import ExportDataSet from "../Datasets/ExportDataSet"
-import BranchDataSet from "../Datasets/BranchDataSet"
 
 import * as actions from "./actions"
 
@@ -82,7 +72,7 @@ class ConsoleAppFrame extends React.Component {
           updateTime={300}
           progressIncrease={10}
           style={{
-            backgroundColor: '#009688',
+            backgroundColor: '#fc6e43',
             height: 8,
             zIndex: 2000,
             position: "fixed",
@@ -112,51 +102,6 @@ class ConsoleAppFrame extends React.Component {
               exact
               path='/console/datasets/list-dataset'
               component={ListDataSet}
-            />
-            <Route
-              exact
-              path='/console/datasets/upload-datasets'
-              component={PutDataByCSV}
-            />
-            <Route
-              exact
-              path='/console/datasets/put-data-entry'
-              component={PutDataEntry}
-            />
-            <Route
-              exact
-              path='/console/datasets/branch-dataset'
-              component={BranchDataSet}
-            />
-            <Route
-              exact
-              path='/console/datasets/get-dataset'
-              component={GetDataSet}
-            />
-            <Route
-              exact
-              path='/console/datasets/get-dataset-schema'
-              component={GetDatasetSchema}
-            />
-            <Route
-              exact
-              path='/console/datasets/get-data-entry'
-              component={GetDataEntry}
-            />
-            <Route
-              exact
-              path='/console/datasets/diff-dataset'
-              component={DiffDataSet}
-            />
-            <Route
-              exact
-              path='/console/datasets/delete-dataset'
-              component={DeleteDataSet}
-            />
-            <Route
-              exact
-              path='/console/datasets/export-dataset'
-              component={ExportDataSet}
             />
           </div>
         </div>

@@ -44,12 +44,7 @@ class ListDataSet extends React.Component {
     handleHeaderTitleChange: PropTypes.func,
     DatasetList: PropTypes.array,
     requestListDS: PropTypes.func,
-    requestDBSize: PropTypes.func,
     resetLoadingBar: PropTypes.func,
-
-    requestVersionHistory: PropTypes.func,
-
-    Cache_Version_History: PropTypes.object,
   }
 
   state = {
@@ -76,14 +71,7 @@ class ListDataSet extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.DatasetList !== this.props.DatasetList) {
-      if (this.props.DatasetList) {
-          for (let item of this.props.DatasetList) {
-            // sagas for version history
-            this.props.requestVersionHistory(item)
-          }
-      }
-    }
+    
   }
 
   componentWillUnmount() {
@@ -113,7 +101,7 @@ class ListDataSet extends React.Component {
                     color="primary"
                     className={classes.addDS}
                     component={Link}
-                    to="/console/datasets/upload-datasets?addNewDS=TRUE"
+                    to="/console/datasets/upload-datasets"
                   >
                     Add Dataset
                   </Button>
@@ -140,15 +128,6 @@ class ListDataSet extends React.Component {
               handleClickHistory={this.handleClickHistory}
             />
           </div>
-          {this.state.open &&
-            <GitGraphDialog
-              open={this.state.open}
-              onClose={this.handleClose}
-              datasetSelected={this.state.datasetSelected}
-              branchesSelected={this.state.branchesSelected}
-            />
-          }
-        </MainContent>
       </React.Fragment>
     )
   }
@@ -162,8 +141,6 @@ const mapDispatchToProps = {
   handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
   requestListDS: actions.requestListDS,
   resetLoadingBar: ConsoleActions.resetLoadingBar,
-  requestVersionHistory: actions.requestVersionHistory,
-  transferCachedHistory: actions.transferCachedHistory,
 }
 
 export default compose(
