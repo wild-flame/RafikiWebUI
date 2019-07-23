@@ -128,6 +128,7 @@ class ListDataSet extends React.Component {
               handleClickHistory={this.handleClickHistory}
             />
           </div>
+        </MainContent>
       </React.Fragment>
     )
   }

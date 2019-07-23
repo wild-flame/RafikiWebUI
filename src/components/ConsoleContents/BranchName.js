@@ -9,8 +9,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from '@material-ui/core/Switch';
 
-
-
 const styles = theme => ({
   menu: {
     width: 200,
