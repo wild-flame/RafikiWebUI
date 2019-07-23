@@ -12,6 +12,7 @@ import Navigator from '../../components/ConsoleSideBar/Navigator';
 import ConsoleTheme from "./ConsoleTheme"
 
 import ListDataSet from "../Datasets/ListDataSet"
+import UploadDataset from "../Datasets/UploadDataset"
 
 import * as actions from "./actions"
 
@@ -56,8 +57,6 @@ class ConsoleAppFrame extends React.Component {
       handleDrawerToggle,
       headerTitle,
       mobileOpen,
-      DBSize,
-      StorageBarStatus
     } = this.props;
 
  //   if (!authStatus) {
@@ -102,6 +101,11 @@ class ConsoleAppFrame extends React.Component {
               exact
               path='/console/datasets/list-dataset'
               component={ListDataSet}
+            />
+            <Route
+              exact
+              path='/console/datasets/upload-datasets'
+              component={UploadDataset}
             />
           </div>
         </div>

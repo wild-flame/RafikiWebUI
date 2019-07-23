@@ -20,7 +20,6 @@ import AppBarMenuItems from "../LandingNavBar/AppBarMenuItems"
 import ExitToApp from "@material-ui/icons/ExitToApp";
 
 import * as actions from "../../containers/Root/actions"
-import { AST_ClassExpression } from 'terser';
 
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';

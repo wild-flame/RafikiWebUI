@@ -19,9 +19,7 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import MainContent from '../../components/ConsoleContents/MainContent'
 import ContentBar from "../../components/ConsoleContents/ContentBar"
 
-import GitGraphDialog from "../../components/GitGraphComponents/GitGraphDialog"
 import ListDataSetTable from '../../components/ConsoleContents/ListDataSetTable'
-
 
 const styles = theme => ({
   block: {
@@ -50,14 +48,12 @@ class ListDataSet extends React.Component {
   state = {
     open: false,
     datasetSelected: "",
-    branchesSelected: [],
   }
 
   handleClose = () => {
     this.setState({
       open: false,
       datasetSelected: "",
-      branchesSelected: [],
     })
   }
 

@@ -20,7 +20,7 @@ const styles = theme => ({
     background: '#eaeff1', // light grey
   },
   paper: {
-    maxWidth: 936,
+    maxWidth: 1280,
     margin: 'auto',
     overflow: 'hidden',
     marginBottom: 20,
