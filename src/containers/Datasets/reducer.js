@@ -6,11 +6,7 @@ const StatesToReset = {
 
 const initialState = {
   // Ls-ds
-  DatasetList: [
-    {
-      'dataset': '...',
-    }
-  ],
+  DatasetList: [ ],
   ...StatesToReset
 };
 

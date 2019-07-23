@@ -28,6 +28,7 @@ const lightColor = 'rgba(255, 255, 255, 0.7)';
 const styles = theme => ({
   appBar: {
     backgroundColor: "#eaeff1",
+    color: "#000"
   },
   avatar: {
     margin: 10,
@@ -82,7 +83,7 @@ class Header extends React.Component {
   
     return (
       <Fragment>
-        <AppBar class={classes.appBar} color="white" position="sticky" elevation={0}>
+        <AppBar className={classes.appBar} position="sticky" elevation={0}>
           <Toolbar>
             <Grid container spacing={8} alignItems="center">
               <Hidden mdUp>

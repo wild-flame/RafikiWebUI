@@ -5,43 +5,13 @@ import {
   put,
   take,
   takeEvery,
-  select
 } from "redux-saga/effects"
-import { showLoading, hideLoading, resetLoading } from 'react-redux-loading-bar'
+import { resetLoading } from 'react-redux-loading-bar'
 import * as actions from "../containers/Datasets/actions"
 import * as api from "../services/RowTableAPI"
-import * as datasetsApi from "../services/DatasetsAPI"
 import * as OverviewActions from "../containers/StorageOverview/actions"
 import * as ConsoleActions from "../containers/ConsoleAppFrame/actions"
 import { uploadAPI } from "./uploadAPI_saga"
-
-function getState(state) {
-  return state
-}
-
-// Datasets
-function* watchGetDSListRequest() {
-  console.log("watchGetDSListRequest")
-  yield takeLatest(actions.Types.REQUEST_LS_DS, getDatasetList)
-}
-
-/* for List Dataset command */
-function* getDatasetList() {
-  try {
-      yield put(showLoading())
-      const state = yield select(getState)
-      console.log(state)
-      const token = yield select(getToken)
-      const DSList = yield call(datasetsApi.requestListDataset, {},token)
-      yield put(actions.populateDSList(DSList.data.DSList))
-      yield put(hideLoading())
-  } catch (e) {
-      console.error(e)
-      console.error(e.response)
-      // TODO: implement notification for success and error of api actions
-      // yield put(actions.getErrorStatus("failed to deleteUser"))
-  }
-}
 
 /* Shared Util commands */
 function * CreateDS(action) {
@@ -421,7 +391,6 @@ const RowTableCmdsSagas = [
   fork(watchGetDataEntry),
   fork(watchDiffSameDS),
   fork(watchDiffDifferentDS),
-  fork(watchGetDSListRequest),
   fork(watchGetDEforDiff_1),
   fork(watchGetDEforDiff_2),
   fork(watchDeleteDS),
