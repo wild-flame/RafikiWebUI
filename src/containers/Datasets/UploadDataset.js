@@ -4,7 +4,6 @@ import { connect } from "react-redux"
 import { compose } from "redux"
 
 import * as ConsoleActions from "../ConsoleAppFrame/actions"
-import * as OverviewActions from "../StorageOverview/actions"
 import * as actions from "./actions"
 
 import { withStyles } from '@material-ui/core/styles';
@@ -150,7 +149,6 @@ class PutDataByCSV extends React.Component {
 
   componentDidMount() {
     this.props.handleHeaderTitleChange("Dataset > Put Data By CSV")
-    this.props.requestDBSize()
     // read the query string from URL
     const values = queryString.parse(this.props.location.search)
     if (values.addNewDS === "TRUE") {
@@ -536,7 +534,6 @@ const mapDispatchToProps = {
   triggerPutCSV_Combo: actions.triggerPutCSV_Combo,
   resetResponses: actions.resetResponses,
   resetLoadingBar: ConsoleActions.resetLoadingBar,
-  requestDBSize: OverviewActions.requestDBSize,
   loadingFormState: actions.loadingFormState,
   requestVersionHistory: actions.requestVersionHistory,
 }

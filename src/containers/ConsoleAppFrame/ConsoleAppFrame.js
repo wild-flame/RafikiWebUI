@@ -12,8 +12,6 @@ import Navigator from '../../components/ConsoleSideBar/Navigator';
 import ConsoleTheme from "./ConsoleTheme"
 import StorageBar from "../../components/ConsoleContents/StorageBar"
 
-import StorageOverview from "../StorageOverview/StorageOverview"
-
 import PutDataByCSV from "../Datasets/UploadDataset"
 import ListDataSet from "../Datasets/ListDataSet"
 import PutDataEntry from "../Datasets/PutDataEntry"
@@ -112,11 +110,6 @@ class ConsoleAppFrame extends React.Component {
             />
             <Route
               exact
-              path='/console'
-              component={StorageOverview}
-            />
-            <Route
-              exact
               path='/console/datasets/list-dataset'
               component={ListDataSet}
             />
@@ -176,8 +169,6 @@ const mapStateToProps = state => ({
   authStatus: !!state.Root.token,
   mobileOpen: state.ConsoleAppFrame.mobileOpen,
   headerTitle: state.ConsoleAppFrame.headerTitle,
-  DBSize: state.StorageOverview.DBSize,
-  StorageBarStatus: state.StorageOverview.StorageBarStatus
 })
 
 const mapDispatchToProps = {

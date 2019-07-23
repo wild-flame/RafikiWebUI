@@ -5,7 +5,6 @@ import { compose } from "redux"
 import { Link } from 'react-router-dom'
 
 import * as ConsoleActions from "../ConsoleAppFrame/actions"
-import * as OverviewActions from "../StorageOverview/actions"
 import * as actions from "./actions"
 
 import { withStyles } from '@material-ui/core/styles';
@@ -68,13 +67,11 @@ class ListDataSet extends React.Component {
   }
 
   reloadSizeAndDS = () => {
-    this.props.requestDBSize()
     this.props.requestListDS()
   }
 
   componentDidMount() {
     this.props.handleHeaderTitleChange("Dataset > List Dataset")
-    this.props.requestDBSize()
     this.props.requestListDS()
   }
 
@@ -164,7 +161,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
   requestListDS: actions.requestListDS,
-  requestDBSize: OverviewActions.requestDBSize,
   resetLoadingBar: ConsoleActions.resetLoadingBar,
   requestVersionHistory: actions.requestVersionHistory,
   transferCachedHistory: actions.transferCachedHistory,
