@@ -3,38 +3,32 @@ import {
   call,
   fork,
   put,
-  delay
+  delay,
+  all
 } from "redux-saga/effects"
 import * as actions from "../containers/Root/actions"
 import * as api from "../services/AuthAPI"
 
 
-function* authLogin(action) {
+export function* authLogin(action) {
   try{
     yield put(actions.authStart())
     const res = yield call(api.requestSignIn, action.authData)
-    console.log("Auth Response: ", res)
     const token = res.data.token
     // 1 hour expirationTime?
     const expirationTime = 3600 * 1000
     const expirationDate = new Date(new Date().getTime() + expirationTime);
     localStorage.setItem('token', token);
     localStorage.setItem('expirationDate', expirationDate);
-    yield put(actions.authSuccess(token))
-    yield put(actions.notificationShow("Successfully signed in"))
-    // after expiration auto logout
-    yield delay(expirationTime)
-    localStorage.removeItem('token');
-    localStorage.removeItem('expirationDate');
-    yield put(actions.logout())
+    yield all([put(actions.notificationShow("Successfully signed in")),put(actions.authSuccess(token))])
   } catch(e) {
     console.error(e)
+    yield put(actions.authFail(e))
     yield put(actions.notificationShow("Failed to sign in"));
-    yield put(actions.authFail(e.response.statusText))
   }
 }
 
-function* watchSignInRequest() {
+export function* watchSignInRequest() {
   yield takeLatest(actions.Types.SIGN_IN_REQUEST, authLogin)
 }
 

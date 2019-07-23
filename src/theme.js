@@ -2,8 +2,8 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
 import grey from '@material-ui/core/colors/grey';
 import red from '@material-ui/core/colors/red';
-import teal from '@material-ui/core/colors/teal';
-import cyan from '@material-ui/core/colors/cyan';
+import deepOrange from '@material-ui/core/colors/deepOrange';
+import cyan from '@material-ui/core/colors/brown';
 
 
 const rawTheme = createMuiTheme({
@@ -14,9 +14,9 @@ const rawTheme = createMuiTheme({
       dark: cyan[900],
     },
     secondary: {
-      light: teal[50],
-      main: teal[100],
-      dark: teal[900],
+      light: deepOrange[50],
+      main: deepOrange[400],
+      dark: deepOrange[900],
     },
     warning: {
       main: '#ffc071',
@@ -31,6 +31,14 @@ const rawTheme = createMuiTheme({
       xLight: green[50],
       dark: green[700],
     },
+    common: {
+      black: '#000',
+      white: '#fff',
+      neutral: '#E4E7EB',
+      muted: '#9EA0A4'
+    },
+    border: '#DFE3E8',
+    divider: '#DFE3E8'
   },
   typography: {
     fontFamily: "'Roboto', sans-serif",

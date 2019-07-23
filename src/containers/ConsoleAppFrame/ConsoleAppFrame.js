@@ -15,7 +15,6 @@ import StorageBar from "../../components/ConsoleContents/StorageBar"
 import StorageOverview from "../StorageOverview/StorageOverview"
 
 import PutDataByCSV from "../Datasets/UploadDataset"
-import Datasets from "../Datasets/Datasets"
 import ListDataSet from "../Datasets/ListDataSet"
 import PutDataEntry from "../Datasets/PutDataEntry"
 import GetDataSet from "../Datasets/GetDataSet"

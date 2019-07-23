@@ -1,5 +1,7 @@
 import theme from "../../theme"
 
+import teal from '@material-ui/core/colors/teal';
+import cyan from '@material-ui/core/colors/cyan';
 
 const ConsoleTheme = {
   ...theme,
@@ -7,6 +9,11 @@ const ConsoleTheme = {
     MuiDrawer: {
       paper: {
         backgroundColor: '#18202c',
+      },
+    },
+    MuiToolbar: {
+      regular: {
+        minHeight: 80,
       },
     },
     MuiButton: {

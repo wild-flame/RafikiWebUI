@@ -30,7 +30,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
-import Logo from "../../assets/Logo-Dark.png"
+import Logo from "../../assets/Logo-Rafiki-cleaned.png"
 
 // customize scrollbar for the fixed-div navigator
 import SimpleBar from 'simplebar-react';
@@ -70,7 +70,7 @@ const styles = theme => ({
     marginRight: 10
   },
   logoText: {
-    color: "#61ADB1 "
+    // color: "#61ADB1 "
   },
   itemActionable: {
     '&:hover': {

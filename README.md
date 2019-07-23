@@ -262,6 +262,9 @@ https://stackoverflow.com/questions/47508564/migrating-create-react-app-from-jav
 - Add test to the whole app
     - Add test to sagas
 
+- [ ] Implement Authorization
+- Help 
+
 # For Developers
 
 This app use redux to manage the state and the state shape is like this 

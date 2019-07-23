@@ -9,6 +9,7 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = () => ({
   secondaryBar: {
     zIndex: 0,
+    backgroundColor: "#eaeff1"
   },
 });
 
@@ -20,7 +21,6 @@ function Header(props) {
       <AppBar
         component="div"
         className={classes.secondaryBar}
-        color="primary"
         position="static"
         elevation={0}
       >

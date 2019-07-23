@@ -20,11 +20,15 @@ import AppBarMenuItems from "../LandingNavBar/AppBarMenuItems"
 import ExitToApp from "@material-ui/icons/ExitToApp";
 
 import * as actions from "../../containers/Root/actions"
+import { AST_ClassExpression } from 'terser';
 
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
 const styles = theme => ({
+  appBar: {
+    backgroundColor: "#eaeff1",
+  },
   avatar: {
     margin: 10,
     color: '#fff',
@@ -78,7 +82,7 @@ class Header extends React.Component {
   
     return (
       <Fragment>
-        <AppBar color="primary" position="sticky" elevation={0}>
+        <AppBar class={classes.appBar} color="white" position="sticky" elevation={0}>
           <Toolbar>
             <Grid container spacing={8} alignItems="center">
               <Hidden mdUp>

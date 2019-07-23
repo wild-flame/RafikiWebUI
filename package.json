@@ -6,6 +6,7 @@
   "dependencies": {
     "@material-ui/core": "^3.9.0",
     "@material-ui/icons": "^3.0.2",
+    "@redux-saga/testing-utils": "^1.0.5",
     "axios": "^0.18.0",
     "final-form": "^4.11.0",
     "gitgraph.js": "^1.15.1",
@@ -33,7 +34,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "CI=true react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom --verbose=false",
     "coverage": "CI=true react-scripts test --env=jsdom --coverage",
     "eject": "react-scripts eject"
   },

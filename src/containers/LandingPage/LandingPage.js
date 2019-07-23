@@ -26,6 +26,7 @@ class LandingPage extends React.Component {
         <LandingProductHero />
         <LandingProductCategories />
         <LandingTryRafiki />
+        <hr />
         <LandingFooter />
       </Fragment>
     )

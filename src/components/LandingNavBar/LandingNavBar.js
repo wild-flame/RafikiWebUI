@@ -19,18 +19,20 @@ import Avatar from '@material-ui/core/Avatar';
 import AppBarMenuItems from "./AppBarMenuItems"
 
 import Toolbar, { styles as toolbarStyles } from '../LandingComponents/Toolbar';
-import Logo from "../../assets/Logo-Light.png"
+import Logo from "../../assets/LOGO_Rafiki-4.svg"
 
 import * as actions from "../../containers/Root/actions"
 
 const styles = theme => ({
   LandingAppBar: {
+    // borderBottom: `1px solid ${theme.palette.border}`,
+    // backgroundColor: theme.palette.common.white,
     zIndex: theme.zIndex.drawer + 1,
   },
   title: {
     font: '500 25px Roboto,sans-serif',
     cursor: "pointer",
-    color: "#89F2FF",
+    color: "#FFF",
     textDecoration: "none",
     marginRight: 20
   },

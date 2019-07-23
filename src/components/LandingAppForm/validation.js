@@ -1,4 +1,8 @@
-import isEmail from 'validator/lib/isEmail';
+function isEmail(value) {
+  const expression = /^[a-zA-Z0-9._%+-]+\@[a-zA-Z0-9.-]+$/
+  return expression.test(value)
+} 
+
 
 export function email(value) {
   return value && !isEmail(value.trim()) ? 'Invalid email' : null;

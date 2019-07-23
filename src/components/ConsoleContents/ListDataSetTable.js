@@ -98,59 +98,8 @@ class ListDataSetTable extends React.Component {
   render() {
     const {
       classes,
+      Datasets
     } = this.props
-
-    const Datasets = [
-      {
-          "datetime_created": "Wed, 19 Jun 2019 13:31:56 GMT",
-          "id": "59fe7d7a-7056-4f40-bafc-35da06e08766",
-          "name": "fashion_minist_app_train",
-          "size_bytes": 34864119,
-          "task": "IMAGE_CLASSIFICATION"
-      },
-      {
-          "datetime_created": "Wed, 19 Jun 2019 13:32:23 GMT",
-          "id": "65500bed-338e-4491-9761-dbbecb811c90",
-          "name": "fashion_minist_app_test",
-          "size_bytes": 6116386,
-          "task": "IMAGE_CLASSIFICATION"
-      },
-      {
-          "datetime_created": "Wed, 19 Jun 2019 13:54:04 GMT",
-          "id": "75ba930a-e021-4626-9bf1-3a88ecd8ae33",
-          "name": "fashion_minist_app_val",
-          "size_bytes": 1830882,
-          "task": "IMAGE_CLASSIFICATION"
-      },
-      {
-          "datetime_created": "Wed, 19 Jun 2019 13:55:36 GMT",
-          "id": "22bf449e-da09-45c9-af22-22c0be400e95",
-          "name": "fashion_minist_app_val_2",
-          "size_bytes": 1830882,
-          "task": "IMAGE_CLASSIFICATION"
-      },
-      {
-          "datetime_created": "Wed, 19 Jun 2019 13:56:12 GMT",
-          "id": "623c71a2-6bed-4981-9435-638182a8c7f5",
-          "name": "fashion_minist_app_val_3",
-          "size_bytes": 1830882,
-          "task": "IMAGE_CLASSIFICATION"
-      },
-      {
-          "datetime_created": "Wed, 19 Jun 2019 13:58:14 GMT",
-          "id": "2943057b-26b1-4b76-b408-2362e2d81433",
-          "name": "fashion_minist_app_val_4",
-          "size_bytes": 1830882,
-          "task": "IMAGE_CLASSIFICATION"
-      },
-      {
-          "datetime_created": "Thu, 20 Jun 2019 03:03:41 GMT",
-          "id": "d59cdb66-6745-4f02-9d25-6c06f1277805",
-          "name": "fashion_minist_app_train_v2",
-          "size_bytes": 34864119,
-          "task": "IMAGE_CLASSIFICATION"
-      }
-  ]
 
     const {
       currentDataset,

@@ -10,7 +10,8 @@ import GithubIcon from "../../assets/GithubIcon"
 const styles = theme => ({
   root: {
     display: 'flex',
-    backgroundColor: theme.palette.secondary.light,
+    backgroundColor: theme.palette.common.white,
+    // borderTop: `1px solid ${theme.palette.border}`,
   },
   layoutBody: {
     marginTop: theme.spacing.unit * 8,

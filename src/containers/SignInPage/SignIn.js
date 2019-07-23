@@ -41,7 +41,7 @@ class SignIn extends React.Component {
   };
 
   validate = values => {
-    const errors = required(['email', 'username', 'password'], values, this.props);
+    const errors = required(['email', 'password'], values, this.props);
 
     if (!errors.email) {
       const emailError = email(values.email, values, this.props);
@@ -58,12 +58,11 @@ class SignIn extends React.Component {
     const authData = Object.assign(
       {},
       {
-        username: values.username,
+        email: values.email,
         password: values.password
       }
     )
     this.props.signInRequest(authData)
-    console.log(authData)
   };
 
   render() {
@@ -112,16 +111,6 @@ class SignIn extends React.Component {
                   label="Email"
                   margin="normal"
                   name="email"
-                  required
-                  size="large"
-                />
-                <Field
-                  component={RFTextField}
-                  disabled={submitting}
-                  fullWidth
-                  label="Username"
-                  margin="normal"
-                  name="username"
                   required
                   size="large"
                 />

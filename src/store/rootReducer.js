@@ -5,7 +5,7 @@ import { loadingBarReducer } from 'react-redux-loading-bar'
 import { Root } from "../containers/Root/reducer"
 import { ConsoleAppFrame } from "../containers/ConsoleAppFrame/reducer"
 import { StorageOverview } from "../containers/StorageOverview/reducer"
-import { RowTableCmds } from "../containers/Datasets/reducer"
+import { DatasetsReducer } from "../containers/Datasets/reducer"
 
 
 const rootReducer = combineReducers({
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   Root,
   ConsoleAppFrame,
   StorageOverview,
-  RowTableCmds
+  DatasetsReducer
 })
 
 export default rootReducer;

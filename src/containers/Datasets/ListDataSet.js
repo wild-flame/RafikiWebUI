@@ -49,28 +49,14 @@ class ListDataSet extends React.Component {
     resetLoadingBar: PropTypes.func,
 
     requestVersionHistory: PropTypes.func,
-    Response_Version_History: PropTypes.object,
 
     Cache_Version_History: PropTypes.object,
-    clearVersionHistory: PropTypes.func
   }
 
   state = {
     open: false,
     datasetSelected: "",
     branchesSelected: [],
-  }
-
-  handleClickHistory = item => {
-    console.log("View history of: ", item)
-    this.setState({
-      open: true,
-      datasetSelected: item.dataset,
-      branchesSelected: item.branches,
-    })
-    // transfer cached part of cache_version_history to
-    // Response_Version_History
-    this.props.transferCachedHistory(item)
   }
 
   handleClose = () => {
@@ -111,9 +97,6 @@ class ListDataSet extends React.Component {
     const {
       classes,
       DatasetList,
-      Response_Version_History,
-      clearVersionHistory,
-      Cache_Version_History
     } = this.props;
 
     return (
@@ -152,13 +135,12 @@ class ListDataSet extends React.Component {
             <Typography color="textSecondary" align="center">
               {DatasetList.length === 0
                   ? "You do not have any dataset"
-                  : "Datasets and Branches"
+                  : "Datasets"
               }
             </Typography>
             <ListDataSetTable
-              DatasetList={DatasetList}
+              Datasets={DatasetList}
               handleClickHistory={this.handleClickHistory}
-              Cache_Version_History={Cache_Version_History}
             />
           </div>
           {this.state.open &&
@@ -167,8 +149,6 @@ class ListDataSet extends React.Component {
               onClose={this.handleClose}
               datasetSelected={this.state.datasetSelected}
               branchesSelected={this.state.branchesSelected}
-              Response_Version_History={Response_Version_History}
-              clearVersionHistory={clearVersionHistory}
             />
           }
         </MainContent>
@@ -177,11 +157,8 @@ class ListDataSet extends React.Component {
   }
 }
 
-
 const mapStateToProps = state => ({
-  DatasetList: state.RowTableCmds.DatasetList,
-  Response_Version_History: state.RowTableCmds.Response_Version_History,
-  Cache_Version_History: state.RowTableCmds.Cache_Version_History
+  DatasetList: state.DatasetsReducer.DatasetList,
 })
 
 const mapDispatchToProps = {
@@ -190,7 +167,6 @@ const mapDispatchToProps = {
   requestDBSize: OverviewActions.requestDBSize,
   resetLoadingBar: ConsoleActions.resetLoadingBar,
   requestVersionHistory: actions.requestVersionHistory,
-  clearVersionHistory: actions.clearVersionHistory,
   transferCachedHistory: actions.transferCachedHistory,
 }
 

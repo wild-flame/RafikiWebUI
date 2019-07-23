@@ -11,7 +11,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import Logo from "../../assets/Logo-Light.png"
+import Logo from "../../assets/Logo-Rafiki-cleaned.png"
 
 
 // Navigator basic color dark blue specified in

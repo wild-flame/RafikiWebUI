@@ -4,15 +4,44 @@ import {
   fork,
   put,
   take,
-  takeEvery
+  takeEvery,
+  select
 } from "redux-saga/effects"
 import { showLoading, hideLoading, resetLoading } from 'react-redux-loading-bar'
 import * as actions from "../containers/Datasets/actions"
 import * as api from "../services/RowTableAPI"
+import * as datasetsApi from "../services/DatasetsAPI"
 import * as OverviewActions from "../containers/StorageOverview/actions"
 import * as ConsoleActions from "../containers/ConsoleAppFrame/actions"
 import { uploadAPI } from "./uploadAPI_saga"
 
+function getState(state) {
+  return state
+}
+
+// Datasets
+function* watchGetDSListRequest() {
+  console.log("watchGetDSListRequest")
+  yield takeLatest(actions.Types.REQUEST_LS_DS, getDatasetList)
+}
+
+/* for List Dataset command */
+function* getDatasetList() {
+  try {
+      yield put(showLoading())
+      const state = yield select(getState)
+      console.log(state)
+      const token = yield select(getToken)
+      const DSList = yield call(datasetsApi.requestListDataset, {},token)
+      yield put(actions.populateDSList(DSList.data.DSList))
+      yield put(hideLoading())
+  } catch (e) {
+      console.error(e)
+      console.error(e.response)
+      // TODO: implement notification for success and error of api actions
+      // yield put(actions.getErrorStatus("failed to deleteUser"))
+  }
+}
 
 /* Shared Util commands */
 function * CreateDS(action) {
@@ -54,25 +83,6 @@ function* UploadCSV(action) {
   } catch(e) {
     console.error(e)
   }
-}
-
-
-/* for List Dataset command */
-function* getDatasetList() {
-  try{
-    yield put(showLoading())
-    const DSList = yield call(api.requestListDataset)
-    yield put(actions.populateDSList(DSList.data.DSList))
-    yield put(hideLoading())
-  } catch(e) {
-    console.error(e)
-    // TODO: implement notification for success and error of api actions
-    // yield put(actions.getErrorStatus("failed to deleteUser"))
-  }
-}
-
-function* watchGetDSListRequest() {
-  yield takeLatest(actions.Types.REQUEST_LS_DS, getDatasetList)
 }
 
 /* reset loadingBar caused by List Dataset command */
@@ -399,7 +409,6 @@ function* watchReqVerionHistory() {
 
 // fork is for process creation, run in separate processes
 const RowTableCmdsSagas = [
-  fork(watchGetDSListRequest),
   fork(watchResetLoadingBar),
   fork(watchGetPutDEresponse),
   fork(watchBranchDSPutDECombo),
@@ -412,6 +421,7 @@ const RowTableCmdsSagas = [
   fork(watchGetDataEntry),
   fork(watchDiffSameDS),
   fork(watchDiffDifferentDS),
+  fork(watchGetDSListRequest),
   fork(watchGetDEforDiff_1),
   fork(watchGetDEforDiff_2),
   fork(watchDeleteDS),

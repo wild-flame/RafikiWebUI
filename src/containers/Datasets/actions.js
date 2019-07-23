@@ -1,6 +1,6 @@
 export const Types = {
-  REQUEST_LS_DS: "RowTableCmds/request_ls_ds",
-  POPULATE_DS_LIST: "RowTableCmds/populate_ds_list",
+  REQUEST_LS_DS: "Datasets/request_ls_ds",
+  POPULATE_DS_LIST: "Datasets/populate_ds_list",
   REQUEST_PUT_DE: "RowTableCmds/request_put_de",
   POPULATE_PUT_DE_RESPONSE: "RowTableCmds/populate_put_de_response",
   REQUEST_PUT_DATA_CSV: "RowTableCmds/request_put_data_csv",
