@@ -14,12 +14,12 @@ import { withStyles } from '@material-ui/core/styles';
 // for login menu
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
-import AppBarMenuItems from "../LandingNavBar/AppBarMenuItems"
+import AppBarMenuItems from "../../LandingNavBar/AppBarMenuItems"
 
 // Icons
 import ExitToApp from "@material-ui/icons/ExitToApp";
 
-import * as actions from "../../containers/Root/actions"
+import * as actions from "../../../containers/Root/actions"
 
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
