@@ -7,7 +7,7 @@ and https://decembersoft.com/posts/file-upload-progress-with-redux-saga/
 import { eventChannel, END } from "redux-saga";
 //axios to send ajax request
 import axios from 'axios'
-import HTTPconfig from "../HTTPConfig"
+import HTTPconfig from "../HTTPconfig"
 
 
 export const uploadAPI = (formData) => {

@@ -1,6 +1,6 @@
 //axios to send ajax request
 import axios from 'axios'
-import HTTPconfig from "../HTTPConfig"
+import HTTPconfig from "../HTTPconfig"
 
 export const requestSignIn = (authData) => {
   // console.log("requestSignIn", `${HTTPconfig.gateway}tokens`)

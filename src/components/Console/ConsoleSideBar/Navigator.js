@@ -11,7 +11,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography'
 
 // for icons
 import HomeIcon from '@material-ui/icons/Home';
@@ -19,18 +18,14 @@ import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
 // row-based table (dataset)
 import ListDSIcon from '@material-ui/icons/FormatListBulleted'
 import PutDataCSVIcon from '@material-ui/icons/CloudUploadOutlined'
-import PutDeIcon from '@material-ui/icons/PlaylistAdd'
-import BranchDsIcon from '@material-ui/icons/CallSplit'
-import DiffDsIcon from '@material-ui/icons/Compare'
 import DeleteDsIcon from '@material-ui/icons/Delete'
-import ExportDsIcon from '@material-ui/icons/SaveAlt'
 
 // for nested list
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
-import Logo from "../../assets/Logo-Rafiki-cleaned.png"
+import Logo from "assets/Logo-Rafiki-cleaned.png"
 
 // customize scrollbar for the fixed-div navigator
 import SimpleBar from 'simplebar-react';

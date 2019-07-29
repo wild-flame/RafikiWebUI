@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux"
 import { compose } from "redux"
-import { Link } from 'react-router-dom'
 
 import * as ConsoleActions from "../ConsoleAppFrame/actions"
 import * as actions from "./actions"
@@ -11,15 +10,11 @@ import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import FormHelperText from '@material-ui/core/FormHelperText'
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
 
-import MainContent from '../../components/ConsoleContents/MainContent'
-import ContentBar from "../../components/ConsoleContents/ContentBar"
-import ConsoleForm from "../../components/ConsoleForms/Form"
+import UploadDatasetsForm from "components/Console/ConsoleContents/UploadDatasetsForm"
+
+import MainContent from 'components/Console/ConsoleContents/MainContent'
+import ContentBar from "components/Console/ConsoleContents/ContentBar"
 
 const styles = theme => ({
     block: {
@@ -29,14 +24,20 @@ const styles = theme => ({
         marginRight: theme.spacing.unit,
     },
     contentWrapper: {
-        margin: '40px 16px',
         //position: "relative",
         minHeight: 200,
+        // display: "flex",
+        // alignItems: "center",
+        // justifyContent: "center"
     },
+    formWrapper: {
+        maxWidth: "720px",
+        // minWidth: "60%"
+    }
 })
 
 
-class ListDataSet extends React.Component {
+class UploadDataSet extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
         handleHeaderTitleChange: PropTypes.func,
@@ -47,7 +48,6 @@ class ListDataSet extends React.Component {
     componentDidMount() {
         this.props.handleHeaderTitleChange("Dataset > New Dataset")
     }
-
 
     componentWillUnmount() {
         this.props.resetLoadingBar()
@@ -71,9 +71,9 @@ class ListDataSet extends React.Component {
                         </Toolbar>
                     </ContentBar>
                     <div className={classes.contentWrapper}>
-                        <ConsoleForm>
-                            
-                        </ConsoleForm> 
+                        <div className={classes.formWrapper}>
+                            <UploadDatasetsForm />
+                        </div>
                     </div>
                 </MainContent>
             </React.Fragment>
@@ -94,4 +94,4 @@ const mapDispatchToProps = {
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     withStyles(styles)
-)(ListDataSet)
+)(UploadDataSet)

@@ -83,7 +83,6 @@ class Navigator extends React.Component {
         url: "/contact",
         label: "Contact",
       },
-     ,
     ]
 
     return (

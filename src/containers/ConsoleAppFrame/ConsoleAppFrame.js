@@ -7,8 +7,8 @@ import { Route, Redirect } from "react-router-dom"
 import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
 import Hidden from '@material-ui/core/Hidden';
 
-import Header from '../../components/ConsoleHeader/Header';
-import Navigator from '../../components/ConsoleSideBar/Navigator';
+import Header from 'components/Console/ConsoleHeader/Header';
+import Navigator from 'components/Console/ConsoleSideBar/Navigator';
 import ConsoleTheme from "./ConsoleTheme"
 
 import ListDataSet from "../Datasets/ListDataSet"
@@ -59,9 +59,9 @@ class ConsoleAppFrame extends React.Component {
       mobileOpen,
     } = this.props;
 
- //   if (!authStatus) {
- //     return <Redirect to="/sign-in" />
- //   }
+    if (!authStatus) {
+      return <Redirect to="/sign-in" />
+    }
 
     return (
       <MuiThemeProvider theme={ConsoleTheme}>

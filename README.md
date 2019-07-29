@@ -12,7 +12,6 @@ yarn start
 rafiki $ source env.sh
 ```
 
-
 ```
 rafiki/web $ vim .env
 ```
@@ -22,6 +21,18 @@ PORT=$WEB_ADMIN_EXT_PORT
 NODE_PATH=./src
 REACT_APP_API_POINT_HOST=$RAFIKI_ADDR
 REACT_APP_API_POINT_PORT=$ADMIN_EXT_PORT
+```
+
+## How to SET input path
+
+- https://facebook.github.io/create-react-app/docs/importing-a-component#absolute-imports
+
+## How to SET docker to auto recompile when file changed
+- https://stackoverflow.com/questions/46379727/react-webpack-not-rebuilding-when-edited-file-outside-docker-container-on-mac
+
+```
+ENV CHOKIDAR_USEPOLLING=true
+ENV CHOKIDAR_INTERVAL=1000
 ```
 
 ## How to TEST the app
@@ -265,6 +276,12 @@ https://stackoverflow.com/questions/47508564/migrating-create-react-app-from-jav
 - [ ] Implement Authorization
 - Help 
 
+## Dependencies
+
+This is for MUI-form-field
+```
+yarn add @date-io/core @date-io/moment @material-ui/core @material-ui/icons classnames core-js css-vendor final-form is-plain-object jss moment react react-dom react-dropzone react-final-form react-select react-number-format
+```
 # For Developers
 
 This app use redux to manage the state and the state shape is like this 

@@ -1,5 +1,5 @@
 function isEmail(value) {
-  const expression = /^[a-zA-Z0-9._%+-]+\@[a-zA-Z0-9.-]+$/
+  const expression = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+$/
   return expression.test(value)
 } 
 

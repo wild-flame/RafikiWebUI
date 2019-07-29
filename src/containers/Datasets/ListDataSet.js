@@ -16,10 +16,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh';
 
-import MainContent from '../../components/ConsoleContents/MainContent'
-import ContentBar from "../../components/ConsoleContents/ContentBar"
+import MainContent from 'components/Console/ConsoleContents/MainContent'
+import ContentBar from "components/Console/ConsoleContents/ContentBar"
 
-import ListDataSetTable from '../../components/ConsoleContents/ListDataSetTable'
+import ListDataSetTable from '../../components/Console/ConsoleContents/ListDataSetTable'
 
 const styles = theme => ({
   block: {

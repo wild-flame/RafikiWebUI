@@ -41,6 +41,7 @@ const ConsoleAppFrameLoadable = Loadable({
 
 
 class App extends Component {
+  debbuger;
   render() {
     return (
       <BrowserRouter>
