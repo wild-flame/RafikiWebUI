@@ -1,6 +1,11 @@
 import React from "react"
+import { bindActionCreators, compose } from 'redux'
+import PropTypes from 'prop-types';
+import { connect } from "react-redux"
+import * as actions from "containers/Datasets/actions"
+import { withRouter } from "react-router-dom"
 
-import { Button } from "@material-ui/core"
+import { Button, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 
 // Third part dependencies
@@ -14,7 +19,7 @@ const useStyles = makeStyles({
         borderRadius: 1,
         padding: "5px",
         margin: "10px",
-        textAlign: "center" 
+        textAlign: "center"
     }
 })
 
@@ -23,7 +28,7 @@ function DatasetsDropzone(props) {
     const { getRootProps, getInputProps, acceptedFiles, isDragActive } = useDropzone()
 
     return (
-        <Field name="Datasets" lable="Upload Datasets from your Computer">
+        <Field name="dataset" lable="Upload Datasets from your Computer">
             {
                 ({ input, meta }) => {
                     React.useEffect(
@@ -50,38 +55,78 @@ function DatasetsDropzone(props) {
 }
 
 class UploadDatasetsForm extends React.Component {
+    static propTypes = {
+        // classes: PropTypes.object.isRequired,
+        postCreateDataset: PropTypes.func,
+    }
+
     state = {
         fromLocal: false
     }
 
+    onSubmit = (values) => {
+        console.log("submit values", values)
+        alert(JSON.stringify(values))
+        // Dispatch actions 
+        if (this.state.fromLocal) {
+            this.props.postCreateDataset(values.name, "IMAGE_CLASSIFICATION", values.dataset[0])
+        } else {
+            this.props.postCreateDataset(values.name, "IMAGE_CLASSIFICATION", undefined, values.dataset_url)
+        }
+        this.props.history.push("/console/datasets/list-dataset") // redirect to list dataset
+    }
+
     render() {
         return (
-            <Form onSubmit={console.log}>
-                {
-                    (handleSubmit, values) => {
-                        return (
-                            <React.Fragment>
-                                <FormTextField icon="chrome_reader_mode" name="name" label="Dataset Name" />
-                                <FormSwitchField
-                                    icon="attach_file"
-                                    onClick={event => {
-                                        const value = Boolean(event.target.checked);
-                                        this.setState({ fromLocal: value });
-                                    }}
-                                    name="fromLocal"
-                                    label="Upload from Computer"
-                                />
-                                { this.state.fromLocal ? <DatasetsDropzone /> :
-                                <FormTextField icon="cloud_upload" name="datasets_url" label="Upload Datasets From url" /> }
-                                <pre>{JSON.stringify(this.state)}</pre>
-                            </React.Fragment>
-                        )
+            <div style={{ textAlign: "center" }}>
+                <Form onSubmit={this.onSubmit}>
+                    {
+                        ({ handleSubmit, values, invalid }) => {
+                            return (
+                                <React.Fragment>
+                                    <Grid container spacing={3}>
+                                        <Grid item md={12} lg={7}>
+                                            <FormTextField icon="chrome_reader_mode" name="name" label="Dataset Name" />
+                                            <FormSwitchField
+                                                icon="attach_file"
+                                                onClick={event => {
+                                                    const value = Boolean(event.target.checked);
+                                                    this.setState({ fromLocal: value });
+                                                }}
+                                                name="fromLocal"
+                                                label="Upload from Computer"
+                                            />
+                                            {this.state.fromLocal ? <DatasetsDropzone /> :
+                                                <FormTextField icon="cloud_upload" name="dataset_url" label="Upload Datasets From url" />}
+                                            <Button
+                                                style={{ width: "200px" }}
+                                                variant="contained" color="primary" disabled={invalid} onClick={(event) => {
+                                                    handleSubmit(event)
+                                                }}>
+                                                Submit
+                                            </Button>
+                                        </Grid>
+                                        <Grid item md={12} lg={4}>
+                                            <div style={{ background: "#ddd" }}>
+                                                <p>{JSON.stringify(values, null, 2)}</p>
+                                            </div>
+                                        </Grid>
+                                    </Grid>
+                                </React.Fragment>
+                            )
+                        }
                     }
-                }
-            </Form>
+                </Form>
+            </div>
         )
     }
 }
 
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ postCreateDataset: actions.postCreateDataset }, dispatch)
+}
 
-export default UploadDatasetsForm;
+export default compose(
+    withRouter,
+    connect(null, mapDispatchToProps)
+)(UploadDatasetsForm);

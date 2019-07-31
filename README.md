@@ -271,10 +271,14 @@ https://stackoverflow.com/questions/47508564/migrating-create-react-app-from-jav
 #### TODO
 
 - Add test to the whole app
-    - Add test to sagas
-
-- [ ] Implement Authorization
-- Help 
+    - Unit test
+        - Add test to sagas
+        - Add test to redux action and reducer
+    - Integreted Tests
+    - End to end test
+- Implement Authorization [Done]
+- Redesign the Datasets Page with Gridsystem
+- Redirect to mainpage
 
 ## Dependencies
 

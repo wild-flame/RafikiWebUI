@@ -14,6 +14,7 @@ function getToken(state) {
     return state.Root.token
 }
 
+// List Datasets
 function* watchGetDSListRequest() {
     console.log("watchGetDSListRequest Saga is now running")
     yield takeLatest(actions.Types.REQUEST_LS_DS, getDatasetList)
@@ -37,6 +38,27 @@ function* getDatasetList() {
     }
 }
 
-// fork is for process creation, run in separate processes
+function* watchPostDatasetsRequest() {
+    yield takeLatest(actions.Types.CREATE_DATASET, createDataset)
+}
 
-export default [fork(watchGetDSListRequest)]
+function* createDataset(action) {
+    const {name, task, file, dataset_url} = action
+    try {
+        const token = yield select(getToken)
+        yield call(api.postCreateDataset, name, task, file, dataset_url, token)
+        console.log("Create Dataset success")
+        yield put(notificationShow("Create DatasetList Successfully")); // no need to write test for this 
+    } catch(e) {
+        console.error(e.response)
+        console.error(e)
+        console.error(e.response.data)
+        yield put(notificationShow("Failed to Create Dataset"));
+    }
+}
+
+// fork is for process creation, run in separate processes
+export default [
+                fork(watchGetDSListRequest),
+                fork(watchPostDatasetsRequest)
+               ]

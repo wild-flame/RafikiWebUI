@@ -13,4 +13,22 @@ describe("Unit Tests Datasets Sage", function () {
             //TODO
         })
     })
+
+    describe("UploadDatasetTest", function() {
+        describe("watchPostDatasetsRequest", function () {
+            it("should be able to listen to action request Datasets", function () {
+                //TODO
+            })
+        })
+
+        describe("generator *createDataset()", function() {
+            it("should be able to call Create Datasets API", function() {
+
+            })
+
+            it("should be able to redirect to dataset list page after success", function() {
+
+            })
+        })
+    })
 })

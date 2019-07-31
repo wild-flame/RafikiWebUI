@@ -24,14 +24,14 @@ const styles = theme => ({
         marginRight: theme.spacing.unit,
     },
     contentWrapper: {
-        //position: "relative",
+        // position: "relative",
         minHeight: 200,
         // display: "flex",
         // alignItems: "center",
         // justifyContent: "center"
     },
     formWrapper: {
-        maxWidth: "720px",
+        width: "100%"
         // minWidth: "60%"
     }
 })
@@ -42,8 +42,6 @@ class UploadDataSet extends React.Component {
         classes: PropTypes.object.isRequired,
         handleHeaderTitleChange: PropTypes.func,
     }
-
-    state = {}
 
     componentDidMount() {
         this.props.handleHeaderTitleChange("Dataset > New Dataset")
@@ -87,7 +85,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     handleHeaderTitleChange: ConsoleActions.handleHeaderTitleChange,
-    requestListDS: actions.requestListDS,
+    postCreateDataset: actions.postCreateDataset,
     resetLoadingBar: ConsoleActions.resetLoadingBar,
 }
 
